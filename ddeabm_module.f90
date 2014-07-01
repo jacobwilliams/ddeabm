@@ -35,14 +35,15 @@
 
 	type,public :: ddeabm_class
 	
-		!private
+		private
 		
+		integer :: neq = 0		! the number of (first order) differential equations to be integrated (>=0)
+				
 		!  the expense of solving the problem is monitored by counting the
 		!  number of  steps attempted. when this exceeds  maxnum, the counter
 		!  is reset to zero and the user is informed about possible excessive
 		!  work.
-		integer :: maxnum = 500
-		
+		integer :: maxnum = 500		
 		
 		!  to define the system of first order differential equations
 		!  which is to be solved.  for the given values of x and the
@@ -52,11 +53,30 @@
 		!  array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
 		!  equations i=1,...,neq.
 		procedure(func),pointer :: df => null()
+
+		!work arrays:
+		real(wp),dimension(:),allocatable	:: rwork
+		integer 							:: lrw	= 0
+		integer,dimension(:),allocatable	:: iwork
+		integer 							:: liw	= 0
+		
+		!tolerances
+		logical :: scalar_tols = .true.
+		real(wp),dimension(:),allocatable :: rtol, atol	!the user input tols
+		real(wp),dimension(:),allocatable :: rtol_tmp, atol_tmp	!the tols used internally
+		
+		!info array:
+		integer,dimension(4) :: info = 0
 		
 	contains
 	
-		procedure,public :: integrate => ddeabm	
-				
+		procedure,public :: initialize 	=> ddeabm_initialize
+		procedure,public :: integrate 	=> ddeabm_wrapper
+		procedure,public :: destroy 	=> destroy_ddeabm
+		procedure,public :: first_call 	=> ddeabm_new_problem
+		
+		!support routines:					
+		procedure :: ddeabm
 		procedure :: ddes
 		procedure :: dhstrt
 		procedure :: dsteps
@@ -75,6 +95,172 @@
 	end interface
     
     contains
+!*****************************************************************************************    
+    
+!*****************************************************************************************    
+    subroutine ddeabm_new_problem(me)
+!***************************************************************************************** 
+!
+!  Call this to indicate that a new problem is being solved (see ddeabm documentation).
+!
+!***************************************************************************************** 
+    
+    implicit none
+    
+  	class(ddeabm_class),intent(inout)	:: me	
+    
+    me%info(1) = 0
+    
+!*****************************************************************************************    
+   end subroutine ddeabm_new_problem
+!*****************************************************************************************    
+   
+!*****************************************************************************************    
+    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol)
+!*****************************************************************************************   
+!
+!  Initialize the class, and set the variables that cannot be changed during a problem. 
+!
+!*****************************************************************************************   
+    
+    implicit none
+    
+  	class(ddeabm_class),intent(inout)	:: me	
+  	integer,intent(in)					:: neq
+  	integer,intent(in) 					:: maxnum
+  	procedure(func) 					:: df
+  	real(wp),dimension(:),intent(in)	:: rtol
+  	real(wp),dimension(:),intent(in)	:: atol
+  	
+  	logical :: vector_tols
+  	
+  	!initialize the class:
+  	
+  	call me%destroy()
+  	
+  	!number of equations:
+  	
+  	me%neq = neq
+  	
+  	!maximum number of steps:
+  	
+  	me%maxnum = maxnum
+  	
+  	!set the derivative routine pointer:
+  	
+  	me%df => df
+  	
+  	!allocate the work arrays:
+
+ 	me%lrw	= 130+21*neq
+ 	me%liw	= 51
+ 	
+ 	allocate(me%rwork(me%lrw))
+ 	me%rwork = 0.0_wp
+ 	
+ 	allocate(me%iwork(me%liw))
+    me%iwork = 0
+    
+    !tolerances:   
+	! [for now, we are considering these unchangeable, although they don't have to be]
+
+	vector_tols = size(rtol)==neq .and. size(atol)==neq .and. neq>1
+    me%scalar_tols = .not. vector_tols
+    					
+    if (me%scalar_tols) then
+    	allocate(me%rtol(1)) ; allocate(me%rtol_tmp(1))
+    	allocate(me%atol(1)) ; allocate(me%atol_tmp(1))
+    	me%rtol = rtol(1)
+    	me%atol = atol(1)
+    else
+    	allocate(me%rtol(size(rtol))) ; allocate(me%rtol_tmp(size(rtol)))
+    	allocate(me%atol(size(atol))) ; allocate(me%atol_tmp(size(atol)))
+    	me%rtol = rtol
+    	me%atol = atol
+    end if
+    
+!*****************************************************************************************    
+    end subroutine ddeabm_initialize
+!*****************************************************************************************    
+        
+!*****************************************************************************************    
+    subroutine destroy_ddeabm(me)
+!*****************************************************************************************    
+    
+    implicit none
+    
+   	class(ddeabm_class),intent(out)	:: me	
+   	
+!*****************************************************************************************    
+    end subroutine destroy_ddeabm
+!*****************************************************************************************    
+            
+!*****************************************************************************************    
+    subroutine ddeabm_wrapper(me,t,y,tout,tstop,intermediate_steps,idid)
+!*****************************************************************************************    
+    
+	implicit none
+
+	class(ddeabm_class),intent(inout) 		:: me	
+	real(wp),intent(inout) 					:: t
+	real(wp),dimension(me%neq),intent(inout):: y
+	real(wp),intent(in)						:: tout
+	real(wp),intent(in),optional			:: tstop			  !not used if not present
+	logical,intent(in),optional				:: intermediate_steps	 !false if not present
+	integer,intent(out)						:: idid
+	
+	!set info array:
+		
+	!info(1) is set when ddeabm_new_problem is called
+	
+	!info(2)
+	if (me%scalar_tols) then
+		me%info(2) = 0
+	else
+		me%info(2) = 1
+	end if
+	
+	!info(3)
+	if (present(intermediate_steps)) then
+		if (intermediate_steps) then
+			me%info(3) = 1
+		else
+			me%info(3) = 0
+		end if
+	else
+		me%info(3) = 0
+	end if
+			
+	!info(4)
+	if (present(tstop)) then
+		me%info(4) = 1
+		me%rwork(1) = tstop
+	else
+		me%info(4) = 0
+	end if
+	
+	!make a copy of the tols, since the routine might change them:
+	me%rtol_tmp = me%rtol
+	me%atol_tmp = me%atol
+	
+   	!call the lower-level routine:
+	call me%ddeabm( neq		= me%neq,&
+					t		= t,&
+					y		= y,&
+					tout	= tout,&
+					info	= me%info,&
+					rtol 	= me%rtol_tmp,&
+					atol	= me%atol_tmp,&
+					idid	= idid,&
+					rwork	= me%rwork,&
+					lrw		= me%lrw,&
+					iwork	= me%iwork,&
+					liw		= me%liw)
+	
+	!Note: currently not using the recommended tols if idid=-2
+					  
+!*****************************************************************************************    
+    end subroutine ddeabm_wrapper
 !*****************************************************************************************    
     
 !*****************************************************************************************    
@@ -223,9 +409,7 @@
 !
 !      info(*) -- use the info array to give the code more details about
 !             how you want your problem solved.  this array should be
-!             dimensioned of length 15 to accommodate other members of
-!             depac or possible future extensions, though ddeabm uses
-!             only the first four entries.  you must respond to all of
+!             dimensioned of length 4.  you must respond to all of
 !             the following items which are arranged as questions.  the
 !             simplest use of the code corresponds to answering all
 !             questions as yes ,i.e. setting all entries of info to 0.
@@ -594,7 +778,7 @@
 	real(wp),intent(inout)					:: t
 	real(wp),dimension(neq),intent(inout)	:: y
 	real(wp),intent(in)						:: tout
-	integer,dimension(15),intent(inout)		:: info
+	integer,dimension(4),intent(inout)		:: info
 	real(wp),dimension(:),intent(inout)		:: rtol
 	real(wp),dimension(:),intent(inout)		:: atol
 	integer,intent(out)						:: idid
@@ -609,7 +793,7 @@
 	logical start,phase1,nornd,stiff,intout
 	character(len=8) :: xern1
 	character(len=16) :: xern3
-      
+	      
 !
 !     check for an apparent infinite loop
 !
@@ -646,6 +830,14 @@
             'with liw = ' // xern1, 2, 1)
          idid=-33
       end if
+      
+	!make sure the deriv function was set:
+		if (.not. associated(me%df)) then
+         call xermsg ('slatec', 'ddeabm', 'the derivative function DF '//&
+         				' has not been associated.' // xern1, 0, 0)		
+         idid=-33
+		end if
+    
 !
 !     compute the indices for the arrays to be stored in the work array
 !
@@ -751,7 +943,7 @@
 	real(wp),intent(inout)						:: t
 	real(wp),dimension(neq),intent(inout)		:: y
 	real(wp),intent(in)							:: tout
-	integer,dimension(15),intent(inout)			:: info
+	integer,dimension(4),intent(inout)			:: info
 	real(wp),dimension(:),intent(inout)			:: rtol
 	real(wp),dimension(:),intent(inout)			:: atol
 	integer,intent(inout)						:: idid
