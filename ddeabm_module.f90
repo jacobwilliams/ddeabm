@@ -1,7 +1,28 @@
 !*****************************************************************************************    
     module ddeabm_module
-!*****************************************************************************************    
-   
+!*****************************************************************************************
+!****h* DDEABM/ddeabm_module
+!
+!  NAME
+!    ddeabm_module
+!
+!  DESCRIPTION
+!    Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
+!
+!  SEE ALSO
+!	http://www.netlib.org/slatec/src/
+!
+!  HISTORY
+!	Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
+!
+!  LICENSE
+!	The original SLATEC code is a public domain work of the US Government.
+!
+!	The modifications are Copyright (c) 2014, Jacob Williams.
+!	See https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE for license terms.
+!
+!*****************************************************************************************
+
     use, intrinsic :: iso_fortran_env, wp=>real64    !double precision
     
 	implicit none
@@ -547,9 +568,6 @@
 !	M. K. gordon
 !	
 !  SEE ALSO
-!
-!	SAND79-2374 , DEPAC - design of a user oriented package of ode solvers.
-!
 !	l. f. shampine and h. a. watts, depac - design of a user
 !		oriented package of ode solvers, report sand79-2374,
 !		sandia laboratories, 1979.
@@ -607,8 +625,8 @@
                'way you have set parameters for the call to the ' //&
                'code, particularly info(1).', 13, 2)
             return
-         endif
-      endif
+         end if
+      end if
 !
 !     check lrw and liw for sufficient storage allocation
 !
@@ -619,7 +637,7 @@
             'array must be at least 130 + 21*neq.$$' //&
             'you have called the code with lrw = ' // xern1, 1, 1)
          idid=-33
-      endif
+      end if
 
       if (liw < 51) then
          write (xern1, '(i8)') liw
@@ -627,7 +645,7 @@
             'array must be at least 51.$$you have called the code ' //&
             'with liw = ' // xern1, 2, 1)
          idid=-33
-      endif
+      end if
 !
 !     compute the indices for the arrays to be stored in the work array
 !
@@ -654,14 +672,16 @@
       ifouru = 1 + itwou
 
       rwork(itstar) = t
-      if (info(1) == 0) go to 50
-      start = iwork(21) /= (-1)
-      phase1 = iwork(22) /= (-1)
-      nornd = iwork(23) /= (-1)
-      stiff = iwork(24) /= (-1)
-      intout = iwork(25) /= (-1)
+      
+      if (info(1) /= 0) then      
+		  start = iwork(21) /= (-1)
+		  phase1 = iwork(22) /= (-1)
+		  nornd = iwork(23) /= (-1)
+		  stiff = iwork(24) /= (-1)
+		  intout = iwork(25) /= (-1)
+      end if
 
- 50   call me%ddes(neq,t,y,tout,info,rtol,atol,idid,rwork(iypout),&
+      call me%ddes(neq,t,y,tout,info,rtol,atol,idid,rwork(iypout),&
                rwork(iyp),rwork(iyy),rwork(iwt),rwork(ip),rwork(iphi),&
                rwork(ialpha),rwork(ibeta),rwork(ipsi),rwork(iv),&
                rwork(iw),rwork(isig),rwork(ig),rwork(igi),rwork(11),&
@@ -696,21 +716,23 @@
          phase1, nornd, stiff, intout, ns, kord, kold, init, ksteps,&
          kle4, iquit, kprev, ivc, iv, kgi)
 !*****************************************************************************************    
-!***begin prologue  ddes
-!***subsidiary
-!***purpose  subsidiary to ddeabm
-!***library   slatec
-!***type      double precision (des-s, ddes-d)
-!***author  watts, h. a., (snla)
-!***description
+!****f* ddeabm_module/ddeabm
 !
+!  NAME
+!    ddeabm
+!
+!  DESCRIPTION
 !   ddeabm merely allocates storage for ddes to relieve the user of the
-!   inconvenience of a long call list.  consequently  ddes  is used as
-!   described in the comments for  ddeabm .
+!   inconvenience of a long call list.  consequently ddes is used as
+!   described in the comments for ddeabm.
 !
-!***see also  ddeabm
-!***routines called  dintp, dsteps, xermsg
-!***revision history  (yymmdd)
+!  AUTHOR
+!	watts, h. a., (snla)
+!
+!  SEE ALSO
+!	ddeabm
+!
+!  HISTORY
 !   820301  date written
 !   890531  changed all specific intrinsics to generic.  (wrb)
 !   890831  modified array declarations.  (wrb)
@@ -782,39 +804,24 @@
 	
 !.......................................................................
 !
-!***first executable statement  ddes
-      if (info(1) == 0) then
-!
 ! on the first call , perform initialization --
 
-!        define the machine unit roundoff quantity  u  by calling the
-!        function routine  d1mach. the user must make sure that the
-!        values set in d1mach are relevant to the computer being used.
-!
-         u=d1mach4
-!                       -- set associated machine dependent parameters
-         twou=2.d0*u
-         fouru=4.d0*u
-!                       -- set termination flag
-         iquit=0
-!                       -- set initialization indicator
-         init=0
-!                       -- set counter for attempted steps
-         ksteps=0
-!                       -- set indicator for intermediate-output
-         intout= .false.
-!                       -- set indicator for stiffness detection
-         stiff= .false.
-!                       -- set step counter for stiffness detection
-         kle4=0
-!                       -- set indicators for steps code
-         start= .true.
-         phase1= .true.
-         nornd= .true.
-!                       -- reset info(1) for subsequent calls
-         info(1)=1
-      endif
-!
+	if (info(1) == 0) then
+		u=d1mach4		! machine unit roundoff quantity
+		twou=2.d0*u   	! set associated machine dependent parameters
+		fouru=4.d0*u	!
+		iquit=0			! set termination flag
+		init=0			! set initialization indicator
+		ksteps=0		! set counter for attempted steps
+		intout= .false.	! set indicator for intermediate-output
+		stiff= .false.	! set indicator for stiffness detection
+		kle4=0			! set step counter for stiffness detection
+		start= .true. 	! set indicators for steps code
+		phase1= .true. 	!
+		nornd= .true. 	!
+		info(1)=1   	! reset info(1) for subsequent calls
+	end if
+
 !.......................................................................
 !
 !      check validity of input parameters on each entry
@@ -827,7 +834,7 @@
             'attempting to continue the integration illegally by ' //&
             'calling the code with info(1) = ' // xern1, 3, 1)
          idid=-33
-      endif
+      end if
 !
       if (info(2) /= 0  .and.  info(2) /= 1) then
          write (xern1, '(i8)') info(2)
@@ -836,7 +843,7 @@
             'respectively.  you have called the code with info(2) = ' //&
             xern1, 4, 1)
          idid=-33
-      endif
+      end if
 !
       if (info(3) /= 0  .and.  info(3) /= 1) then
          write (xern1, '(i8)') info(3)
@@ -845,7 +852,7 @@
             'mode of integration, respectively.  you have called ' //&
             'the code with  info(3) = ' // xern1, 5, 1)
          idid=-33
-      endif
+      end if
 !
       if (info(4) /= 0  .and.  info(4) /= 1) then
          write (xern1, '(i8)') info(4)
@@ -854,7 +861,7 @@
             'interval is to be restricted by a point tstop.  you ' //&
             'have called the code with info(4) = ' // xern1, 14, 1)
          idid=-33
-      endif
+      end if
 !
       if (neq < 1) then
          write (xern1, '(i8)') neq
@@ -862,7 +869,7 @@
             'equations neq must be a positive integer.  you have ' //&
             'called the code with  neq = ' // xern1, 6, 1)
          idid=-33
-      endif
+      end if
 !
       nrtolp = 0
       natolp = 0
@@ -877,7 +884,7 @@
                'no further checking of rtol components is done.', 7, 1)
             idid = -33
             nrtolp = 1
-         endif
+         end if
 !
          if (natolp == 0 .and. atol(k) < 0.d0) then
             write (xern1, '(i8)') k
@@ -889,7 +896,7 @@
                'no further checking of atol components is done.', 8, 1)
             idid = -33
             natolp = 1
-         endif
+         end if
 !
          if (info(2) == 0) go to 100
          if (natolp>0 .and. nrtolp>0) go to 100
@@ -906,8 +913,8 @@
                'integrate past the point tstop = ' // xern4 //&
                ' these instructions conflict.', 14, 1)
             idid=-33
-         endif
-      endif
+         end if
+      end if
 !
 !     check some continuation possibilities
 !
@@ -918,7 +925,7 @@
                'called the code with  t = tout = ' // xern3 //&
                '$$this is not allowed on continuation calls.', 9, 1)
             idid=-33
-         endif
+         end if
 !
          if (t /= told) then
             write (xern3, '(1pe15.6)') told
@@ -928,7 +935,7 @@
                xern4 //'  this is not allowed on continuation calls.',&
                10, 1)
             idid=-33
-         endif
+         end if
 !
          if (init /= 1) then
             if (delsgn*(tout-t) < 0.d0) then
@@ -939,9 +946,9 @@
                   'integration.$$this is not allowed without ' //&
                   'restarting.', 11, 1)
                idid=-33
-            endif
-         endif
-      endif
+            end if
+         end if
+      end if
 !
 !     invalid input detected
 !
@@ -955,9 +962,9 @@
                'impossible to proceed because you have not ' //&
                'corrected the problem, so execution is being ' //&
                'terminated.', 12, 2)
-         endif
+         end if
          return
-      endif
+      end if
 !
 !.......................................................................
 !
@@ -1028,7 +1035,7 @@
 !
 !   if already past output point, interpolate and return
 !
-  250 if(abs(x-t) < absdel) go to 260
+  250 if (abs(x-t) < absdel) go to 260
       call dintp(x,yy,tout,y,ypout,neq,kold,phi,ivc,iv,kgi,gi,&
                                               alpha,g,w,xold,p)
       idid = 3
@@ -1125,7 +1132,7 @@
 !
 !.......................................................................
 !
-      if(.not.crash) go to 420
+      if (.not.crash) go to 420
 !
 !                       tolerances too small
       idid = -2
@@ -1148,8 +1155,8 @@
 !   order of the method being less or equal to four
 !
   420 kle4 = kle4 + 1
-      if(kold > 4) kle4 = 0
-      if(kle4 >= 50) stiff = .true.
+      if (kold > 4) kle4 = 0
+      if (kle4 >= 50) stiff = .true.
       intout = .true.
       go to 250
       
@@ -1731,7 +1738,7 @@
 !   abstract
 !
 !   subroutine  dsteps  is normally used indirectly through subroutine
-!   ddeabm .  because  ddeabm  suffices for most problems and is much
+!   ddeabm .  because ddeabm suffices for most problems and is much
 !   easier to use, using it should be considered before using  dsteps
 !   alone.
 !
@@ -1957,7 +1964,7 @@
 !
 !***first executable statement  dsteps
       crash = .true.
-      if(abs(h) >= fouru*abs(x)) go to 5
+      if (abs(h) >= fouru*abs(x)) go to 5
       h = sign(fouru*abs(x),h)
       return
  5    p5eps = 0.5d0*eps
@@ -1968,14 +1975,14 @@
       do 10 l = 1,neqn
  10     round = round + (y(l)/wt(l))**2
       round = twou*sqrt(round)
-      if(p5eps >= round) go to 15
+      if (p5eps >= round) go to 15
       eps = 2.0d0*round*(1.0d0 + fouru)
       return
  15   crash = .false.
       g(1) = 1.0d0
       g(2) = 0.5d0
       sig(1) = 1.0d0
-      if(.not.start) go to 99
+      if (.not.start) go to 99
 !
 !   initialize.  compute appropriate step size for first step
 !
@@ -1987,7 +1994,7 @@
 !20     sum = sum + (yp(l)/wt(l))**2
 !     sum = sqrt(sum)
 !     absh = abs(h)
-!     if(eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
+!     if (eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
 !     h = sign(max(absh,fouru*abs(x)),h)
 !
       u = d1mach4
@@ -2002,7 +2009,7 @@
       start = .false.
       phase1 = .true.
       nornd = .true.
-      if(p5eps > 100.0d0*round) go to 99
+      if (p5eps > 100.0d0*round) go to 99
       nornd = .false.
       do 25 l = 1,neqn
  25     phi(l,15) = 0.0d0
@@ -2022,7 +2029,7 @@
 !   ns is the number of dsteps taken with size h, including the current
 !   one.  when k<ns, no coefficients change
 !
-      if(h /= hold) ns = 0
+      if (h /= hold) ns = 0
       if (ns<=kold) ns = ns+1
       nsp1 = ns+1
       if (k < ns) go to 199
@@ -2035,7 +2042,7 @@
       alpha(ns) = 1.0d0/realns
       temp1 = h*realns
       sig(nsp1) = 1.0d0
-      if(k < nsp1) go to 110
+      if (k < nsp1) go to 110
       do 105 i = nsp1,k
         im1 = i-1
         temp2 = psi(im1)
@@ -2051,7 +2058,7 @@
 !
 !   initialize v(*) and set w(*).
 !
-      if(ns > 1) go to 120
+      if (ns > 1) go to 120
       do 115 iq = 1,k
         temp3 = iq*(iq+1)
         v(iq) = 1.0d0/temp3
@@ -2065,7 +2072,7 @@
 !
 !   if order was raised, update diagonal part of v(*)
 !
- 120  if(k <= kprev) go to 130
+ 120  if (k <= kprev) go to 130
       if (ivc == 0) go to 122
       jv = kp1 - iv(ivc)
       ivc = ivc - 1
@@ -2078,7 +2085,7 @@
       kgi = 1
       gi(1) = w(2)
  123  nsm2 = ns-2
-      if(nsm2 < jv) go to 130
+      if (nsm2 < jv) go to 130
       do 125 j = jv,nsm2
         i = k-j
         v(i) = v(i) - alpha(j+1)*v(i+1)
@@ -2107,7 +2114,7 @@
 !
  140  nsp2 = ns + 2
       kprev = k
-      if(kp1 < nsp2) go to 199
+      if (kp1 < nsp2) go to 199
       do 150 i = nsp2,kp1
         limit2 = kp2 - i
         temp6 = alpha(i-1)
@@ -2129,7 +2136,7 @@
 !
 !   change phi to phi star
 !
-      if(k < nsp1) go to 215
+      if (k < nsp1) go to 215
       do 210 i = nsp1,k
         temp1 = beta(i)
         do 205 l = 1,neqn
@@ -2150,7 +2157,7 @@
           p(l) = p(l) + temp2*phi(l,i)
  225      phi(l,i) = phi(l,i) + phi(l,ip1)
  230    continue
-      if(nornd) go to 240
+      if (nornd) go to 240
       do 235 l = 1,neqn
         tau = h*p(l) - phi(l,15)
         p(l) = y(l) + tau
@@ -2171,11 +2178,11 @@
       do 265 l = 1,neqn
         temp3 = 1.0d0/wt(l)
         temp4 = yp(l) - phi(l,1)
-        if(km2)265,260,255
+        if (km2)265,260,255
  255    erkm2 = erkm2 + ((phi(l,km1)+temp4)*temp3)**2
  260    erkm1 = erkm1 + ((phi(l,k)+temp4)*temp3)**2
  265    erk = erk + (temp4*temp3)**2
-      if(km2)280,275,270
+      if (km2)280,275,270
  270  erkm2 = absh*sig(km1)*gstr(km2)*sqrt(erkm2)
  275  erkm1 = absh*sig(k)*gstr(km1)*sqrt(erkm1)
  280  temp5 = absh*sqrt(erk)
@@ -2185,14 +2192,14 @@
 !
 !   test if order should be lowered
 !
-      if(km2)299,290,285
- 285  if(max(erkm1,erkm2) <= erk) knew = km1
+      if (km2)299,290,285
+ 285  if (max(erkm1,erkm2) <= erk) knew = km1
       go to 299
- 290  if(erkm1 <= 0.5d0*erk) knew = km1
+ 290  if (erkm1 <= 0.5d0*erk) knew = km1
 !
 !   test if step successful
 !
- 299  if(err <= eps) go to 400
+ 299  if (err <= eps) go to 400
 !       ***     end block 2     ***
 !
 !       ***     begin block 3     ***
@@ -2213,7 +2220,7 @@
         do 305 l = 1,neqn
  305      phi(l,i) = temp1*(phi(l,i) - phi(l,ip1))
  310    continue
-      if(k < 2) go to 320
+      if (k < 2) go to 320
       do 315 i = 2,k
  315    psi(i-1) = psi(i) - h
 !
@@ -2222,13 +2229,13 @@
 !
  320  ifail = ifail + 1
       temp2 = 0.5d0
-      if(ifail - 3) 335,330,325
- 325  if(p5eps < 0.25d0*erk) temp2 = sqrt(p5eps/erk)
+      if (ifail - 3) 335,330,325
+ 325  if (p5eps < 0.25d0*erk) temp2 = sqrt(p5eps/erk)
  330  knew = 1
  335  h = temp2*h
       k = knew
       ns = 0
-      if(abs(h) >= fouru*abs(x)) go to 340
+      if (abs(h) >= fouru*abs(x)) go to 340
       crash = .true.
       h = sign(fouru*abs(x),h)
       eps = eps + eps
@@ -2247,7 +2254,7 @@
 !   correct and evaluate
 !
       temp1 = h*g(kp1)
-      if(nornd) go to 410
+      if (nornd) go to 410
       do 405 l = 1,neqn
         temp3 = y(l)
         rho = temp1*(yp(l) - phi(l,1)) - phi(l,16)
@@ -2277,10 +2284,10 @@
 !     step size not constant so estimate unreliable
 !
       erkp1 = 0.0d0
-      if(knew == km1  .or.  k == 12) phase1 = .false.
-      if(phase1) go to 450
-      if(knew == km1) go to 455
-      if(kp1 > ns) go to 460
+      if (knew == km1  .or.  k == 12) phase1 = .false.
+      if (phase1) go to 450
+      if (knew == km1) go to 455
+      if (kp1 > ns) go to 460
       do 440 l = 1,neqn
  440    erkp1 = erkp1 + (phi(l,kp2)/wt(l))**2
       erkp1 = absh*gstr(kp1)*sqrt(erkp1)
@@ -2288,11 +2295,11 @@
 !   using estimated error at order k+1, determine appropriate order
 !   for next step
 !
-      if(k > 1) go to 445
-      if(erkp1 >= 0.5d0*erk) go to 460
+      if (k > 1) go to 445
+      if (erkp1 >= 0.5d0*erk) go to 460
       go to 450
- 445  if(erkm1 <= min(erk,erkp1)) go to 455
-      if(erkp1 >= erk  .or.  k == 12) go to 460
+ 445  if (erkm1 <= min(erk,erkp1)) go to 455
+      if (erkp1 >= erk  .or.  k == 12) go to 460
 !
 !   here erkp1 < erk < max(erkm1,erkm2) else order would have
 !   been lowered in block 2.  thus order is to be raised
@@ -2311,10 +2318,10 @@
 !   with new order determine appropriate step size for next step
 !
  460  hnew = h + h
-      if(phase1) go to 465
-      if(p5eps >= erk*two(k+1)) go to 465
+      if (phase1) go to 465
+      if (p5eps >= erk*two(k+1)) go to 465
       hnew = h
-      if(p5eps >= erk) go to 465
+      if (p5eps >= erk) go to 465
       temp2 = k+1
       r = (p5eps/erk)**(1.0d0/temp2)
       hnew = absh*max(0.5d0,min(0.9d0,r))
