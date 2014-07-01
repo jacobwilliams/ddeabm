@@ -1,7 +1,7 @@
 !*****************************************************************************************    
     module ddeabm_module
 !*****************************************************************************************
-!****h* DDEABM/ddeabm_module
+!****h* SLATEC/ddeabm_module
 !
 !  NAME
 !    ddeabm_module
@@ -37,7 +37,8 @@
 	
 		private
 		
-		integer :: neq = 0		! the number of (first order) differential equations to be integrated (>=0)
+		! the number of (first order) differential equations to be integrated (>=0)
+		integer :: neq = 0		
 				
 		!  the expense of solving the problem is monitored by counting the
 		!  number of  steps attempted. when this exceeds  maxnum, the counter
@@ -722,10 +723,6 @@
 !                     to continue with ddeabm, set info(1)=1 and call
 !                     the code again.
 !
-!             idid = -5,-6,-7,..,-32  --- cannot occur with this code
-!                     but used by other members of depac or possible
-!                     future extensions.
-!
 !                         *** following a terminated task ***
 !         if
 !             idid = -33, you cannot continue the solution of this
@@ -996,7 +993,7 @@
 	
 !.......................................................................
 !
-! on the first call , perform initialization --
+! on the first call , perform initialization
 
 	if (info(1) == 0) then
 		u=d1mach4		! machine unit roundoff quantity
@@ -1165,26 +1162,27 @@
 !     the relative error tolerance rtol is reset to the smallest value
 !     fouru which is likely to be reasonable for this method and machine
 !
-      do 180 k=1,neq
-        if (rtol(k)+atol(k) > 0.d0) go to 170
-        rtol(k)=fouru
-        idid=-2
-  170   if (info(2) == 0) go to 190
-  180   continue
-!
-  190 if (idid /= (-2)) go to 200
-!                       rtol=atol=0 on input, so rtol is changed to a
-!                                                small positive value
-      info(1)=-1
-      return
-!
+      do k=1,neq
+        if (rtol(k)+atol(k) <= 0.d0) then
+        	rtol(k)=fouru
+        	idid=-2
+        end if
+        if (info(2) == 0) exit
+      end do
+
+      if (idid == -2) then
+		! rtol=atol=0 on input, so rtol is changed to a small positive value
+      	info(1)=-1
+      	return    
+      end if
+
 !     branch on status of initialization indicator
 !            init=0 means initial derivatives and nominal step size
 !                   and direction not yet set
 !            init=1 means nominal step size and direction not yet set
 !            init=2 means no further initialization required
 !
-  200 if (init == 0) go to 210
+      if (init == 0) go to 210
       if (init == 1) go to 220
       go to 240
 !
@@ -1198,8 +1196,9 @@
       call me%df(a,y,yp)
       if (t /= tout) go to 220
       idid=2
-      do 215 l = 1,neq
-  215    ypout(l) = yp(l)
+      do l = 1,neq
+         ypout(l) = yp(l)
+      end do
       told=t
       return
 !
@@ -1210,8 +1209,9 @@
 !
   220 init = 2
       x = t
-      do 230 l = 1,neq
-  230   yy(l) = y(l)
+      do l = 1,neq
+        yy(l) = y(l)
+      end do
       delsgn = sign(1.0d0,tout-t)
       h = sign(max(fouru*abs(x),abs(tout-x)),tout-x)
 !
@@ -1227,39 +1227,41 @@
 !
 !   if already past output point, interpolate and return
 !
-  250 if (abs(x-t) < absdel) go to 260
-      call dintp(x,yy,tout,y,ypout,neq,kold,phi,ivc,iv,kgi,gi,&
-                                              alpha,g,w,xold,p)
-      idid = 3
-      if (x /= tout) go to 255
-      idid = 2
-      intout = .false.
-  255 t = tout
-      told = t
-      return
-!
-!   if cannot go past tstop and sufficiently close,
-!   extrapolate and return
-!
-  260 if (info(4) /= 1) go to 280
-      if (abs(tstop-x) >= fouru*abs(x)) go to 280
-      dt = tout - x
-      do 270 l = 1,neq
-  270   y(l) = yy(l) + dt*yp(l)
-      call me%df(tout,y,ypout)
-      idid = 3
-      t = tout
-      told = t
-      return
-!
-  280 if (info(3) == 0  .or.  .not.intout) go to 300
+  250 if (abs(x-t) >= absdel) then
+		  call dintp(x,yy,tout,y,ypout,neq,kold,phi,ivc,iv,kgi,gi,alpha,g,w,xold,p)
+		  idid = 3
+		  if (x == tout) then
+			 idid = 2
+			 intout = .false.
+		  end if
+		  t = tout
+		  told = t
+		  return	  
+      end if
+      
+!   if cannot go past tstop and sufficiently close, extrapolate and return
+
+      if (info(4)==1 .and. abs(tstop-x)<fouru*abs(x)) then
+		  dt = tout - x
+		  do l = 1,neq
+			y(l) = yy(l) + dt*yp(l)
+		  end do
+		  call me%df(tout,y,ypout)
+		  idid = 3
+		  t = tout
+		  told = t
+		  return
+      end if
+      
+    if (info(3) == 0  .or.  .not.intout) go to 300
 !
 !   intermediate-output mode
 !
       idid = 1
-      do 290 l = 1,neq
+      do l = 1,neq
         y(l)=yy(l)
-  290   ypout(l) = yp(l)
+        ypout(l) = yp(l)
+      end do
       t = x
       told = t
       intout = .false.
@@ -1269,26 +1271,29 @@
 !
 !     monitor number of steps attempted
 !
-  300 if (ksteps <= me%maxnum) go to 330
-!
-!                       a significant amount of work has been expended
+  300 if (ksteps > me%maxnum) then
+  
+	! a significant amount of work has been expended
       idid=-1
       ksteps=0
-      if (.not. stiff) go to 310
-!
-!                       problem appears to be stiff
-      idid=-4
-      stiff= .false.
-      kle4=0
-!
-  310 do 320 l = 1,neq
+      if (stiff) then
+		! problem appears to be stiff
+      	idid=-4
+      	stiff= .false.
+      	kle4=0
+      end if
+
+      do l = 1,neq
         y(l) = yy(l)
-  320   ypout(l) = yp(l)
+        ypout(l) = yp(l)
+      end do
       t = x
       told = t
       info(1) = -1
       intout = .false.
       return
+      
+    end if
 !
 !.......................................................................
 !
@@ -1710,39 +1715,27 @@
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-	double precision function dhvnrm (v, ncomp)
+	function dhvnrm (v, n) result(m)
+!*****************************************************************************************
+!
+!  NAME
+!	dhvnrm
+!	
+!  DESCRIPTION
+!	Compute the maximum norm of the vector v of length n
+!
+!  HISTORY
+!	JW : 7/1/2014 : replace original routine
+!
 !*****************************************************************************************    
-!***subsidiary
-!***purpose  subsidiary to ddeabm, ddebdf and dderkf
-!***library   slatec
-!***type      double precision (hvnrm-s, dhvnrm-d)
-!***author  watts, h. a., (snla)
-!***description
-!
-!     compute the maximum norm of the vector v(*) of length ncomp and
-!     return the result as dhvnrm
-!
-!***see also  ddeabm, ddebdf, dderkf
-!***routines called  (none)
-!***revision history  (yymmdd)
-!   820301  date written
-!   890531  changed all specific intrinsics to generic.  (wrb)
-!   890831  modified array declarations.  (wrb)
-!   891024  changed references from dvnorm to dhvnrm.  (wrb)
-!   891024  changed routine name from dvnorm to dhvnrm.  (wrb)
-!   891214  prologue converted to version 4.0 format.  (bab)
-!   900328  added type section.  (wrb)
-!   910722  updated author section.  (als)
-!***end prologue  dhvnrm
-!
-      integer k, ncomp
-      double precision v
-      dimension v(*)
-      
-      dhvnrm = 0.0d0
-      do 10 k = 1, ncomp
-         dhvnrm = max(dhvnrm,abs(v(k)))
-   10 continue
+
+	implicit none
+	
+	real(wp)		 					:: m
+	integer,intent(in) 					:: n
+	real(wp),dimension(:),intent(in) 	:: v
+   
+	m = maxval(abs(v(1:n)))
 
 !*****************************************************************************************    
 	end function dhvnrm
@@ -1802,6 +1795,8 @@
 !
 !*****************************************************************************************    
 
+	implicit none
+	
 	integer,intent(in)						:: neqn
 	real(wp),intent(in)						:: x
 	real(wp),dimension(neqn),intent(in)		:: y
@@ -1826,23 +1821,22 @@
 						 hmu, rmu, sigma, temp1, temp2, temp3,&
 						 w(13), xi, xim1, xiq
 
-!
-!***first executable statement  dintp
       kp1 = kold + 1
       kp2 = kold + 2
-!
+
       hi = xout - ox
       h = x - ox
       xi = hi/h
       xim1 = xi - 1.d0
-!
+
 !   initialize w(*) for computing g(*)
-!
+
       xiq = xi
-      do 10 iq = 1,kp1
+      do iq = 1,kp1
         xiq = xi*xiq
         temp1 = iq*(iq+1)
- 10     w(iq) = xiq/temp1
+        w(iq) = xiq/temp1
+      end do
 !
 !   compute the double integral term gdi
 !
@@ -2079,6 +2073,8 @@
 !
 !*****************************************************************************************    
 
+	implicit none
+	
 	class(ddeabm_class),intent(inout) :: me	
     real(wp),intent(inout) :: x
 	real(wp),intent(inout) :: h
@@ -2120,30 +2116,38 @@
 		reali, realns, rho, round, tau, temp1,&
 		temp2, temp3, temp4, temp5, temp6, u
 	  
-	
-	!parameters:
-	real(wp),dimension(13),parameter :: two = [	2.0d0,4.0d0,8.0d0,16.0d0,32.0d0,64.0d0,128.0d0,256.0d0,&
-												512.0d0,1024.0d0,2048.0d0,4096.0d0,8192.0d0	]
+	!parameters:            
+	real(wp),dimension(13),parameter :: two = [	2.0_wp, &
+												4.0_wp, &
+												8.0_wp, &
+												16.0_wp, &
+												32.0_wp, &
+												64.0_wp, &
+												128.0_wp, &
+												256.0_wp, &
+												512.0_wp, &
+												1024.0_wp, &
+												2048.0_wp, &
+												4096.0_wp, &
+												8192.0_wp]
  
-	!real(wp),dimension(13),parameter :: gstr = [0.5d0,0.0833d0,0.0417d0,0.0264d0,0.0188d0,0.0143d0,0.0114d0,&
-	!											0.00936d0,0.00789d0,0.00679d0,0.00592d0,0.00524d0,0.00468d0]
-	            
-    !full precision of the gstr coefficients (see book for formula...)
-	real(wp),dimension(13),parameter :: gstr = [	0.5000000000000000D+00,&
-													0.8333333333333331D-01,&
-													0.4166666666666669D-01,&
-													0.2638888888888891D-01,&
-													0.1874999999999996D-01,&
-													0.1426917989417992D-01,&
-													0.1136739417989419D-01,&
-													0.9356536596119916D-02,&
-													0.7892554012345690D-02,&
-													0.6785849984634704D-02,&
-													0.5924056412337661D-02,&
-													0.5236693257950287D-02,&
-													0.4677498407042263D-02]
-            
-            
+ 	!note: this is a modification of the original code.
+ 	! The full-precision coefficients are used here, instead 
+ 	!	of the less precise ones in the original code
+ 	real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
+ 												0.8333333333333331E-01_wp, &
+ 												0.4166666666666669E-01_wp, &
+ 												0.2638888888888891E-01_wp, &
+ 												0.1874999999999996E-01_wp, &
+ 												0.1426917989417992E-01_wp, &
+ 												0.1136739417989419E-01_wp, &
+ 												0.9356536596119916E-02_wp, &
+ 												0.7892554012345690E-02_wp, &
+ 												0.6785849984634704E-02_wp, &
+ 												0.5924056412337661E-02_wp, &
+ 												0.5236693257950287E-02_wp, &
+ 												0.4677498407042263E-02_wp]
+           
             
 !
 !       ***     begin block 0     ***
