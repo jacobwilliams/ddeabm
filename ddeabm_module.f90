@@ -56,7 +56,7 @@
         procedure(func),pointer :: df => null()
 
         !work arrays:
-        real(wp),dimension(:),allocatable    :: rwork
+        real(wp),dimension(:),allocatable   :: rwork
         integer                             :: lrw    = 0
         integer,dimension(:),allocatable    :: iwork
         integer                             :: liw    = 0
@@ -190,7 +190,7 @@
     
     implicit none
     
-	class(ddeabm_class),intent(out)    :: me    
+    class(ddeabm_class),intent(out)    :: me    
        
 !*****************************************************************************************    
     end subroutine destroy_ddeabm
