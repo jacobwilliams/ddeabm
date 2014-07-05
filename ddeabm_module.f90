@@ -1024,7 +1024,7 @@
             'calling the code with info(1) = ' // xern1, 3, 1)
          idid=-33
       end if
-!
+
       if (info(2) /= 0  .and.  info(2) /= 1) then
          write (xern1, '(i8)') info(2)
          call xermsg ('slatec', 'ddes', 'in ddeabm, info(2) must be ' //&
@@ -1033,7 +1033,7 @@
             xern1, 4, 1)
          idid=-33
       end if
-!
+
       if (info(3) /= 0  .and.  info(3) /= 1) then
          write (xern1, '(i8)') info(3)
          call xermsg ('slatec', 'ddes', 'in ddeabm, info(3) must be ' //&
@@ -1042,7 +1042,7 @@
             'the code with  info(3) = ' // xern1, 5, 1)
          idid=-33
       end if
-!
+
       if (info(4) /= 0  .and.  info(4) /= 1) then
          write (xern1, '(i8)') info(4)
          call xermsg ('slatec', 'ddes', 'in ddeabm, info(4) must be ' //&
@@ -1051,7 +1051,7 @@
             'have called the code with info(4) = ' // xern1, 14, 1)
          idid=-33
       end if
-!
+
       if (neq < 1) then
          write (xern1, '(i8)') neq
          call xermsg ('slatec', 'ddes', 'in ddeabm,  the number of ' //&
@@ -1059,7 +1059,7 @@
             'called the code with  neq = ' // xern1, 6, 1)
          idid=-33
       end if
-!
+
       nrtolp = 0
       natolp = 0
       do 90 k=1,neq
@@ -1074,7 +1074,7 @@
             idid = -33
             nrtolp = 1
          end if
-!
+
          if (natolp == 0 .and. atol(k) < 0.d0) then
             write (xern1, '(i8)') k
             write (xern3, '(1pe15.6)') atol(k)
@@ -1086,11 +1086,11 @@
             idid = -33
             natolp = 1
          end if
-!
+
          if (info(2) == 0) go to 100
          if (natolp>0 .and. nrtolp>0) go to 100
    90 continue
-!
+
   100 if (info(4) == 1) then
          if (sign(1.d0,tout-t) /= sign(1.d0,tstop-t)&
             .or. abs(tout-t) > abs(tstop-t)) then
@@ -1104,9 +1104,9 @@
             idid=-33
          end if
       end if
-!
+
 !     check some continuation possibilities
-!
+
       if (init /= 0) then
          if (t == tout) then
             write (xern3, '(1pe15.6)') t
@@ -1115,7 +1115,7 @@
                '$$this is not allowed on continuation calls.', 9, 1)
             idid=-33
          end if
-!
+
          if (t /= told) then
             write (xern3, '(1pe15.6)') told
             write (xern4, '(1pe15.6)') t
@@ -1125,7 +1125,7 @@
                10, 1)
             idid=-33
          end if
-!
+
          if (init /= 1) then
             if (delsgn*(tout-t) < 0.d0) then
                write (xern3, '(1pe15.6)') tout
@@ -1138,11 +1138,11 @@
             end if
          end if
       end if
-!
+
 !     invalid input detected
-!
-      if (idid == (-33)) then
-         if (iquit /= (-33)) then
+
+      if (idid == -33) then
+         if (iquit /= -33) then
             iquit = -33
             info(1) = -1
          else
@@ -1154,7 +1154,7 @@
          end if
          return
       end if
-!
+
 !.......................................................................
 !
 !     rtol = atol = 0. is allowed as valid input and interpreted as
@@ -2092,20 +2092,20 @@
     integer,intent(inout)  :: kgi
     integer,intent(in)	   :: neqn
     logical,intent(inout)  :: start,crash,phase1,nornd
-    real(wp),intent(inout) :: y(neqn)
-    real(wp),intent(inout) :: wt(neqn)
-    real(wp),intent(inout) :: phi(neqn,16)
-    real(wp),intent(inout) :: p(neqn)
-    real(wp),intent(inout) :: yp(neqn)
-    real(wp),intent(inout) :: psi(12)
-	real(wp),intent(inout) :: alpha(12)
-	real(wp),intent(inout) :: beta(12)
-	real(wp),intent(inout) :: sig(13)
-	real(wp),intent(inout) :: v(12)
-	real(wp),intent(inout) :: w(12)
-	real(wp),intent(inout) :: g(13)
-	real(wp),intent(inout) :: gi(11)
-	integer,intent(inout)  :: iv(10)
+    real(wp),dimension(neqn),intent(inout) :: y
+    real(wp),dimension(neqn),intent(inout) :: wt
+    real(wp),dimension(neqn,16),intent(inout) :: phi
+    real(wp),dimension(neqn),intent(inout) :: p
+    real(wp),dimension(neqn),intent(inout) :: yp
+    real(wp),dimension(12),intent(inout) :: psi
+	real(wp),dimension(12),intent(inout) :: alpha
+	real(wp),dimension(12),intent(inout) :: beta
+	real(wp),dimension(13),intent(inout) :: sig
+	real(wp),dimension(12),intent(inout) :: v
+	real(wp),dimension(12),intent(inout) :: w
+	real(wp),dimension(13),intent(inout) :: g
+	real(wp),dimension(11),intent(inout) :: gi
+	integer, dimension(10),intent(inout)  :: iv
 
 	integer i, ifail, im1, ip1, iq, j, km1, km2, knew,&
 		kp1, kp2, l, limit1, limit2, nsm2,&
@@ -2133,85 +2133,96 @@
  
  	!note: this is a modification of the original code.
  	! The full-precision coefficients are used here, instead 
- 	!	of the less precise ones in the original code
- 	real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
- 												0.8333333333333331E-01_wp, &
- 												0.4166666666666669E-01_wp, &
- 												0.2638888888888891E-01_wp, &
- 												0.1874999999999996E-01_wp, &
- 												0.1426917989417992E-01_wp, &
- 												0.1136739417989419E-01_wp, &
- 												0.9356536596119916E-02_wp, &
- 												0.7892554012345690E-02_wp, &
- 												0.6785849984634704E-02_wp, &
- 												0.5924056412337661E-02_wp, &
- 												0.5236693257950287E-02_wp, &
- 												0.4677498407042263E-02_wp]
-           
-            
+ 	!	of the less precise ones in the original.
+ 	! These were computed from the equation on p. 159 of Shampine/Gordon, 
+ 	!	"Computer Solution of Ordinary Differential Equations", 1975.
+  	real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
+  												0.8333333333333331E-01_wp, &
+  												0.4166666666666669E-01_wp, &
+  												0.2638888888888891E-01_wp, &
+  												0.1874999999999996E-01_wp, &
+  												0.1426917989417992E-01_wp, &
+  												0.1136739417989419E-01_wp, &
+  												0.9356536596119916E-02_wp, &
+  												0.7892554012345690E-02_wp, &
+  												0.6785849984634704E-02_wp, &
+  												0.5924056412337661E-02_wp, &
+  												0.5236693257950287E-02_wp, &
+  												0.4677498407042263E-02_wp]
+ 												         
 !
 !       ***     begin block 0     ***
 !   check if step size or error tolerance is too small for machine
 !   precision.  if first step, initialize phi array and estimate a
 !   starting step size.
 !                   ***
-!
+
 !   if step size is too small, determine an acceptable one
-!
-!***first executable statement  dsteps
       crash = .true.
-      if (abs(h) >= fouru*abs(x)) go to 5
-      h = sign(fouru*abs(x),h)
-      return
- 5    p5eps = 0.5d0*eps
-!
+      if (abs(h) < fouru*abs(x)) then
+      	h = sign(fouru*abs(x),h)
+      	return
+      end if
+      
+      p5eps = 0.5d0*eps
+
 !   if error tolerance is too small, increase it to an acceptable value
-!
       round = 0.0d0
-      do 10 l = 1,neqn
- 10     round = round + (y(l)/wt(l))**2
+      do l = 1,neqn
+        round = round + (y(l)/wt(l))**2
+ 	  end do
       round = twou*sqrt(round)
-      if (p5eps >= round) go to 15
-      eps = 2.0d0*round*(1.0d0 + fouru)
-      return
- 15   crash = .false.
+      if (p5eps < round) then
+      	eps = 2.0d0*round*(1.0d0 + fouru)
+      	return
+      end if
+      
+      crash = .false.
       g(1) = 1.0d0
       g(2) = 0.5d0
       sig(1) = 1.0d0
-      if (.not.start) go to 99
-!
-!   initialize.  compute appropriate step size for first step
-!
-!     call me%df(x,y,yp)
-!     sum = 0.0
-      do 20 l = 1,neqn
-        phi(l,1) = yp(l)
-   20   phi(l,2) = 0.0d0
-!20     sum = sum + (yp(l)/wt(l))**2
-!     sum = sqrt(sum)
-!     absh = abs(h)
-!     if (eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
-!     h = sign(max(absh,fouru*abs(x)),h)
-!
-      u = d1mach4
-      big = sqrt(d1mach2)
-      call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
-                   phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
-!
-      hold = 0.0d0
-      k = 1
-      kold = 0
-      kprev = 0
-      start = .false.
-      phase1 = .true.
-      nornd = .true.
-      if (p5eps > 100.0d0*round) go to 99
-      nornd = .false.
-      do 25 l = 1,neqn
- 25     phi(l,15) = 0.0d0
- 99   ifail = 0
+      
+      if (start) then
+
+	!   initialize.  compute appropriate step size for first step
+	!     call me%df(x,y,yp)
+	!     sum = 0.0
+		  do l = 1,neqn
+			phi(l,1) = yp(l)
+			phi(l,2) = 0.0d0
+		  end do
+	!       sum = sum + (yp(l)/wt(l))**2
+	!     end do
+	!     sum = sqrt(sum)
+	!     absh = abs(h)
+	!     if (eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
+	!     h = sign(max(absh,fouru*abs(x)),h)
+	!
+		  u = d1mach4
+		  big = sqrt(d1mach2)
+		  call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
+					   phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
+
+		  hold = 0.0d0
+		  k = 1
+		  kold = 0
+		  kprev = 0
+		  start = .false.
+		  phase1 = .true.
+		  nornd = .true.
+		  if (p5eps <= 100.0d0*round) then
+			  nornd = .false.
+			  do l = 1,neqn
+				phi(l,15) = 0.0d0
+			  end do
+		  end if
+	  
+	  end if
+	  
+      ifail = 0
+ 
 !       ***     end block 0     ***
-!
+
 !       ***     begin block 1     ***
 !   compute coefficients of formulas for this step.  avoid computing
 !   those quantities not changed when step size is not changed.
@@ -2538,7 +2549,7 @@
     character(len=*),intent(in) :: librar, subrou, messg
     integer,intent(in) :: nerr, level
 
-    write(*,'(a)') 'Error in '//trim(subrou)//': '//trim(messg)      
+    write(*,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)      
 
 !*****************************************************************************************    
     end subroutine xermsg
