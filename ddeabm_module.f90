@@ -10,90 +10,90 @@
 !    Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
 !
 !  SEE ALSO
-!	http://www.netlib.org/slatec/src/
+!    http://www.netlib.org/slatec/src/
 !
 !  HISTORY
-!	Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
+!    Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
 !
 !  LICENSE
-!	The original SLATEC code is a public domain work of the US Government.
+!    The original SLATEC code is a public domain work of the US Government.
 !
-!	The modifications are Copyright (c) 2014, Jacob Williams.
-!	See https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE for license terms.
+!    The modifications are Copyright (c) 2014, Jacob Williams.
+!    See https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE for license terms.
 !
 !*****************************************************************************************
 
     use, intrinsic :: iso_fortran_env, wp=>real64    !double precision
     
-	implicit none
+    implicit none
 
     private
-		    
+            
     !parameters:    
     real(wp),parameter :: d1mach2 = huge(1.0_wp)                        ! the largest magnitude
     real(wp),parameter :: d1mach4 = radix(1.0_wp)**(1-digits(1.0_wp))   ! the largest relative spacing
 
-	type,public :: ddeabm_class
-	
-		private
-		
-		! the number of (first order) differential equations to be integrated (>=0)
-		integer :: neq = 0		
-				
-		!  the expense of solving the problem is monitored by counting the
-		!  number of  steps attempted. when this exceeds  maxnum, the counter
-		!  is reset to zero and the user is informed about possible excessive
-		!  work.
-		integer :: maxnum = 500		
-		
-		!  to define the system of first order differential equations
-		!  which is to be solved.  for the given values of x and the
-		!  vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
-		!  evaluate the neq components of the system of differential
-		!  equations  du/dx=df(x,u)  and store the derivatives in the
-		!  array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
-		!  equations i=1,...,neq.
-		procedure(func),pointer :: df => null()
+    type,public :: ddeabm_class
+    
+        private
+        
+        ! the number of (first order) differential equations to be integrated (>=0)
+        integer :: neq = 0        
+                
+        !  the expense of solving the problem is monitored by counting the
+        !  number of  steps attempted. when this exceeds  maxnum, the counter
+        !  is reset to zero and the user is informed about possible excessive
+        !  work.
+        integer :: maxnum = 500        
+        
+        !  to define the system of first order differential equations
+        !  which is to be solved.  for the given values of x and the
+        !  vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
+        !  evaluate the neq components of the system of differential
+        !  equations  du/dx=df(x,u)  and store the derivatives in the
+        !  array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
+        !  equations i=1,...,neq.
+        procedure(func),pointer :: df => null()
 
-		!work arrays:
-		real(wp),dimension(:),allocatable	:: rwork
-		integer 							:: lrw	= 0
-		integer,dimension(:),allocatable	:: iwork
-		integer 							:: liw	= 0
-		
-		!tolerances
-		logical :: scalar_tols = .true.
-		real(wp),dimension(:),allocatable :: rtol, atol	!the user input tols
-		real(wp),dimension(:),allocatable :: rtol_tmp, atol_tmp	!the tols used internally
-		
-		!info array:
-		integer,dimension(4) :: info = 0
-		
-	contains
-	
-		procedure,public :: initialize 	=> ddeabm_initialize
-		procedure,public :: integrate 	=> ddeabm_wrapper
-		procedure,public :: destroy 	=> destroy_ddeabm
-		procedure,public :: first_call 	=> ddeabm_new_problem
-		
-		!support routines:					
-		procedure :: ddeabm
-		procedure :: ddes
-		procedure :: dhstrt
-		procedure :: dsteps
-		
-	end type ddeabm_class
-	
-	abstract interface
-		subroutine func(me,t,x,xdot)
-		import :: wp,ddeabm_class
-		implicit none
-		class(ddeabm_class),intent(inout) :: me
-		real(wp),intent(in) :: t
-		real(wp),dimension(:),intent(in) :: x
-		real(wp),dimension(:),intent(out) :: xdot
-		end subroutine func
-	end interface
+        !work arrays:
+        real(wp),dimension(:),allocatable    :: rwork
+        integer                             :: lrw    = 0
+        integer,dimension(:),allocatable    :: iwork
+        integer                             :: liw    = 0
+        
+        !tolerances
+        logical :: scalar_tols = .true.
+        real(wp),dimension(:),allocatable :: rtol, atol    !the user input tols
+        real(wp),dimension(:),allocatable :: rtol_tmp, atol_tmp    !the tols used internally
+        
+        !info array:
+        integer,dimension(4) :: info = 0
+        
+    contains
+    
+        procedure,public :: initialize     => ddeabm_initialize
+        procedure,public :: integrate      => ddeabm_wrapper
+        procedure,public :: destroy        => destroy_ddeabm
+        procedure,public :: first_call     => ddeabm_new_problem
+        
+        !support routines:                    
+        procedure :: ddeabm
+        procedure :: ddes
+        procedure :: dhstrt
+        procedure :: dsteps
+        
+    end type ddeabm_class
+    
+    abstract interface
+        subroutine func(me,t,x,xdot)
+        import :: wp,ddeabm_class
+        implicit none
+        class(ddeabm_class),intent(inout) :: me
+        real(wp),intent(in) :: t
+        real(wp),dimension(:),intent(in) :: x
+        real(wp),dimension(:),intent(out) :: xdot
+        end subroutine func
+    end interface
     
     contains
 !*****************************************************************************************    
@@ -108,7 +108,7 @@
     
     implicit none
     
-  	class(ddeabm_class),intent(inout)	:: me	
+    class(ddeabm_class),intent(inout)    :: me    
     
     me%info(1) = 0
     
@@ -125,59 +125,59 @@
 !*****************************************************************************************   
     
     implicit none
-    
-  	class(ddeabm_class),intent(inout)	:: me	
-  	integer,intent(in)					:: neq
-  	integer,intent(in) 					:: maxnum
-  	procedure(func) 					:: df
-  	real(wp),dimension(:),intent(in)	:: rtol
-  	real(wp),dimension(:),intent(in)	:: atol
-  	
-  	logical :: vector_tols
-  	
-  	!initialize the class:
-  	
-  	call me%destroy()
-  	
-  	!number of equations:
-  	
-  	me%neq = neq
-  	
-  	!maximum number of steps:
-  	
-  	me%maxnum = maxnum
-  	
-  	!set the derivative routine pointer:
-  	
-  	me%df => df
-  	
-  	!allocate the work arrays:
 
- 	me%lrw	= 130+21*neq
- 	me%liw	= 51
- 	
- 	allocate(me%rwork(me%lrw))
- 	me%rwork = 0.0_wp
- 	
- 	allocate(me%iwork(me%liw))
+    class(ddeabm_class),intent(inout)   :: me    
+    integer,intent(in)                  :: neq
+    integer,intent(in)                  :: maxnum
+    procedure(func)                     :: df
+    real(wp),dimension(:),intent(in)    :: rtol
+    real(wp),dimension(:),intent(in)    :: atol
+
+    logical :: vector_tols
+
+    !initialize the class:
+
+    call me%destroy()
+
+    !number of equations:
+
+    me%neq = neq
+
+    !maximum number of steps:
+
+    me%maxnum = maxnum
+
+    !set the derivative routine pointer:
+
+    me%df => df
+
+    !allocate the work arrays:
+
+    me%lrw    = 130+21*neq
+    me%liw    = 51
+
+    allocate(me%rwork(me%lrw))
+    me%rwork = 0.0_wp
+
+    allocate(me%iwork(me%liw))
     me%iwork = 0
-    
-    !tolerances:   
-	! [for now, we are considering these unchangeable, although they don't have to be]
 
-	vector_tols = size(rtol)==neq .and. size(atol)==neq .and. neq>1
+    !tolerances:   
+    ! [for now, we are considering these unchangeable, although they don't have to be]
+
+    vector_tols = size(rtol)==neq .and. size(atol)==neq .and. neq>1
     me%scalar_tols = .not. vector_tols
-    					
+            
     if (me%scalar_tols) then
-    	allocate(me%rtol(1)) ; allocate(me%rtol_tmp(1))
-    	allocate(me%atol(1)) ; allocate(me%atol_tmp(1))
-    	me%rtol = rtol(1)
-    	me%atol = atol(1)
+        allocate(me%rtol(1)) ; allocate(me%rtol_tmp(1))
+        allocate(me%atol(1)) ; allocate(me%atol_tmp(1))
+        me%rtol = rtol(1)
+        me%atol = atol(1)
     else
-    	allocate(me%rtol(size(rtol))) ; allocate(me%rtol_tmp(size(rtol)))
-    	allocate(me%atol(size(atol))) ; allocate(me%atol_tmp(size(atol)))
-    	me%rtol = rtol
-    	me%atol = atol
+        allocate(me%rtol(size(rtol))) ; allocate(me%rtol_tmp(size(rtol)))
+        allocate(me%atol(size(atol))) ; allocate(me%atol_tmp(size(atol)))
+        me%rtol = rtol
+        me%atol = atol
     end if
     
 !*****************************************************************************************    
@@ -190,8 +190,8 @@
     
     implicit none
     
-   	class(ddeabm_class),intent(out)	:: me	
-   	
+	class(ddeabm_class),intent(out)    :: me    
+       
 !*****************************************************************************************    
     end subroutine destroy_ddeabm
 !*****************************************************************************************    
@@ -200,72 +200,72 @@
     subroutine ddeabm_wrapper(me,t,y,tout,tstop,intermediate_steps,idid)
 !*****************************************************************************************    
     
-	implicit none
+    implicit none
 
-	class(ddeabm_class),intent(inout) 		:: me	
-	real(wp),intent(inout) 					:: t
-	real(wp),dimension(me%neq),intent(inout):: y
-	real(wp),intent(in)						:: tout
-	real(wp),intent(in),optional			:: tstop			  !not used if not present
-	logical,intent(in),optional				:: intermediate_steps	 !false if not present
-	integer,intent(out)						:: idid
-	
-	!set info array:
-		
-	!info(1) is set when ddeabm_new_problem is called
-	
-	!info(2)
-	if (me%scalar_tols) then
-		me%info(2) = 0
-	else
-		me%info(2) = 1
-	end if
-	
-	!info(3)
-	if (present(intermediate_steps)) then
-		if (intermediate_steps) then
-			me%info(3) = 1
-		else
-			me%info(3) = 0
-		end if
-	else
-		me%info(3) = 0
-	end if
-			
-	!info(4)
-	if (present(tstop)) then
-		me%info(4) = 1
-		me%rwork(1) = tstop
-	else
-		me%info(4) = 0
-	end if
-	
-	!make a copy of the tols, since the routine might change them:
-	me%rtol_tmp = me%rtol
-	me%atol_tmp = me%atol
-	
-   	!call the lower-level routine:
-	call me%ddeabm( neq		= me%neq,&
-					t		= t,&
-					y		= y,&
-					tout	= tout,&
-					info	= me%info,&
-					rtol 	= me%rtol_tmp,&
-					atol	= me%atol_tmp,&
-					idid	= idid,&
-					rwork	= me%rwork,&
-					lrw		= me%lrw,&
-					iwork	= me%iwork,&
-					liw		= me%liw)
-	
-	!Note: currently not using the recommended tols if idid=-2
-					  
+    class(ddeabm_class),intent(inout)          :: me    
+    real(wp),intent(inout)                     :: t
+    real(wp),dimension(me%neq),intent(inout)   :: y
+    real(wp),intent(in)                        :: tout
+    real(wp),intent(in),optional               :: tstop           !not used if not present
+    logical,intent(in),optional                :: intermediate_steps !false if not present
+    integer,intent(out)                        :: idid
+    
+    !set info array:
+        
+    !info(1) is set when ddeabm_new_problem is called
+    
+    !info(2)
+    if (me%scalar_tols) then
+        me%info(2) = 0
+    else
+        me%info(2) = 1
+    end if
+    
+    !info(3)
+    if (present(intermediate_steps)) then
+        if (intermediate_steps) then
+            me%info(3) = 1
+        else
+            me%info(3) = 0
+        end if
+    else
+        me%info(3) = 0
+    end if
+            
+    !info(4)
+    if (present(tstop)) then
+        me%info(4) = 1
+        me%rwork(1) = tstop
+    else
+        me%info(4) = 0
+    end if
+    
+    !make a copy of the tols, since the routine might change them:
+    me%rtol_tmp = me%rtol
+    me%atol_tmp = me%atol
+    
+       !call the lower-level routine:
+    call me%ddeabm( neq      = me%neq,&
+                    t        = t,&
+                    y        = y,&
+                    tout     = tout,&
+                    info     = me%info,&
+                    rtol     = me%rtol_tmp,&
+                    atol     = me%atol_tmp,&
+                    idid     = idid,&
+                    rwork    = me%rwork,&
+                    lrw      = me%lrw,&
+                    iwork    = me%iwork,&
+                    liw      = me%liw)
+    
+    !Note: currently not using the recommended tols if idid=-2
+                      
 !*****************************************************************************************    
     end subroutine ddeabm_wrapper
 !*****************************************************************************************    
     
 !*****************************************************************************************    
-	subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw)
+    subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw)
 !*****************************************************************************************
 !****f* ddeabm_module/ddeabm
 !
@@ -274,8 +274,8 @@
 !   
 !  DESCRIPTION
 !   
-!	solve an initial value problem in ordinary differential
-!	equations using an adams-bashforth method.
+!    solve an initial value problem in ordinary differential
+!    equations using an adams-bashforth method.
 !
 !   subroutine ddeabm uses the adams-bashforth-moulton
 !   predictor-corrector formulas of orders one through twelve to
@@ -744,14 +744,14 @@
 !
 !  AUTHORS
 !
-!	L. F. shampine 
-!	H. A. Watts 
-!	M. K. gordon
-!	
+!    L. F. shampine 
+!    H. A. Watts 
+!    M. K. gordon
+!    
 !  SEE ALSO
-!	l. f. shampine and h. a. watts, depac - design of a user
-!		oriented package of ode solvers, report sand79-2374,
-!		sandia laboratories, 1979.
+!    l. f. shampine and h. a. watts, depac - design of a user
+!        oriented package of ode solvers, report sand79-2374,
+!        sandia laboratories, 1979.
 !
 !  HISTORY
 !
@@ -764,33 +764,33 @@
 !   891214  prologue converted to version 4.0 format.  (bab)
 !   900510  convert xerrwv calls to xermsg calls.  (rwc)
 !   920501  reformatted the references section.  (wrb)
-!	July, 2014 : Major refactoring into modern Fortran (jw)
+!    July, 2014 : Major refactoring into modern Fortran (jw)
 !
 !*****************************************************************************************    
 
-	implicit none
+    implicit none
 
-	class(ddeabm_class),intent(inout)		:: me	
-	integer,intent(in)						:: neq
-	real(wp),intent(inout)					:: t
-	real(wp),dimension(neq),intent(inout)	:: y
-	real(wp),intent(in)						:: tout
-	integer,dimension(4),intent(inout)		:: info
-	real(wp),dimension(:),intent(inout)		:: rtol
-	real(wp),dimension(:),intent(inout)		:: atol
-	integer,intent(out)						:: idid
-	real(wp),dimension(lrw),intent(inout)	:: rwork
-	integer,intent(in)						:: lrw
-	integer,dimension(liw),intent(inout)	:: iwork
-	integer,intent(in)						:: liw
+    class(ddeabm_class),intent(inout)         :: me    
+    integer,intent(in)                        :: neq
+    real(wp),intent(inout)                    :: t
+    real(wp),dimension(neq),intent(inout)     :: y
+    real(wp),intent(in)                       :: tout
+    integer,dimension(4),intent(inout)        :: info
+    real(wp),dimension(:),intent(inout)       :: rtol
+    real(wp),dimension(:),intent(inout)       :: atol
+    integer,intent(out)                       :: idid
+    real(wp),dimension(lrw),intent(inout)     :: rwork
+    integer,intent(in)                        :: lrw
+    integer,dimension(liw),intent(inout)      :: iwork
+    integer,intent(in)                        :: liw
 
-	integer ialpha, ibeta, idelsn, ifouru, ig, ihold,&
-		ip, iphi, ipsi, isig, itold, itstar, itwou,&
-		iv, iw, iwt, iyp, iypout, iyy, igi,ixold
-	logical start,phase1,nornd,stiff,intout
-	character(len=8) :: xern1
-	character(len=16) :: xern3
-	      
+    integer ialpha, ibeta, idelsn, ifouru, ig, ihold,&
+        ip, iphi, ipsi, isig, itold, itstar, itwou,&
+        iv, iw, iwt, iyp, iypout, iyy, igi,ixold
+    logical start,phase1,nornd,stiff,intout
+    character(len=8) :: xern1
+    character(len=16) :: xern3
+          
 !
 !     check for an apparent infinite loop
 !
@@ -828,12 +828,12 @@
          idid=-33
       end if
       
-	!make sure the deriv function was set:
-		if (.not. associated(me%df)) then
+    !make sure the deriv function was set:
+        if (.not. associated(me%df)) then
          call xermsg ('slatec', 'ddeabm', 'the derivative function DF '//&
-         				' has not been associated.' // xern1, 0, 0)		
+                         ' has not been associated.' // xern1, 0, 0)        
          idid=-33
-		end if
+        end if
     
 !
 !     compute the indices for the arrays to be stored in the work array
@@ -863,11 +863,11 @@
       rwork(itstar) = t
       
       if (info(1) /= 0) then      
-		  start = iwork(21) /= (-1)
-		  phase1 = iwork(22) /= (-1)
-		  nornd = iwork(23) /= (-1)
-		  stiff = iwork(24) /= (-1)
-		  intout = iwork(25) /= (-1)
+          start = iwork(21) /= (-1)
+          phase1 = iwork(22) /= (-1)
+          nornd = iwork(23) /= (-1)
+          stiff = iwork(24) /= (-1)
+          intout = iwork(25) /= (-1)
       end if
 
       call me%ddes(neq,t,y,tout,info,rtol,atol,idid,rwork(iypout),&
@@ -895,11 +895,11 @@
       if (t /= rwork(itstar)) iwork(liw) = 0
 
 !*****************************************************************************************    
-	end subroutine ddeabm
+    end subroutine ddeabm
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-	subroutine ddes (me, neq, t, y, tout, info, rtol, atol, idid,&
+    subroutine ddes (me, neq, t, y, tout, info, rtol, atol, idid,&
          ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi,&
          h, eps, x, xold, hold, told, delsgn, tstop, twou, fouru, start,&
          phase1, nornd, stiff, intout, ns, kord, kold, init, ksteps,&
@@ -916,10 +916,10 @@
 !   described in the comments for ddeabm.
 !
 !  AUTHOR
-!	watts, h. a., (snla)
+!    watts, h. a., (snla)
 !
 !  SEE ALSO
-!	ddeabm
+!    ddeabm
 !
 !  HISTORY
 !   820301  date written
@@ -933,83 +933,83 @@
 !
 !*****************************************************************************************    
 
-	implicit none
-	
-	class(ddeabm_class),intent(inout)			:: me
-	integer,intent(in)							:: neq
-	real(wp),intent(inout)						:: t
-	real(wp),dimension(neq),intent(inout)		:: y
-	real(wp),intent(in)							:: tout
-	integer,dimension(4),intent(inout)			:: info
-	real(wp),dimension(:),intent(inout)			:: rtol
-	real(wp),dimension(:),intent(inout)			:: atol
-	integer,intent(inout)						:: idid
-	real(wp),dimension(neq),intent(inout)		:: ypout
-	real(wp),dimension(neq),intent(inout)		:: yp
-	real(wp),dimension(neq),intent(inout)		:: yy
-	real(wp),dimension(neq),intent(inout)		:: wt
-	real(wp),dimension(neq),intent(inout)		:: p
-	real(wp),dimension(neq,16),intent(inout)	:: phi
-	real(wp),dimension(12),intent(inout)		:: alpha
-	real(wp),dimension(12),intent(inout)		:: beta
-	real(wp),dimension(12),intent(inout)		:: psi
-	real(wp),dimension(12),intent(inout)		:: v
-	real(wp),dimension(12),intent(inout)		:: w
-	real(wp),dimension(13),intent(inout)		:: sig
-	real(wp),dimension(13),intent(inout)		:: g
-	real(wp),dimension(11),intent(inout)		:: gi
-	real(wp),intent(inout)						:: h
-	real(wp),intent(inout)						:: eps
-	real(wp),intent(inout)						:: x
-	real(wp),intent(inout)						:: xold
-	real(wp),intent(inout)						:: hold
-	real(wp),intent(inout)						:: told
-	real(wp),intent(inout)						:: delsgn
-	real(wp),intent(inout)						:: tstop
-	real(wp),intent(inout)						:: twou
-	real(wp),intent(inout)						:: fouru
-	logical,intent(inout)						:: start
-	logical,intent(inout)						:: phase1
-	logical,intent(inout)						:: nornd
-	logical,intent(inout)						:: stiff
-	logical,intent(inout)						:: intout
-	integer,intent(inout)						:: ns
-	integer,intent(inout)						:: kord
-	integer,intent(inout)						:: kold
-	integer,intent(inout)						:: init
-	integer,intent(inout)						:: ksteps
-	integer,intent(inout)						:: kle4
-	integer,intent(inout)						:: iquit
-	integer,intent(inout)						:: kprev
-	integer,intent(inout)						:: ivc
-	integer,dimension(10),intent(inout)			:: iv
-	integer,intent(inout)						:: kgi
-	
-	integer k, l, ltol, natolp, nrtolp
-	real(wp) a, absdel, del, dt, ha, u
-	logical :: crash
-	character(len=8) :: xern1
-	character(len=16) :: xern3, xern4
-	
+    implicit none
+    
+    class(ddeabm_class),intent(inout)             :: me
+    integer,intent(in)                            :: neq
+    real(wp),intent(inout)                        :: t
+    real(wp),dimension(neq),intent(inout)         :: y
+    real(wp),intent(in)                           :: tout
+    integer,dimension(4),intent(inout)            :: info
+    real(wp),dimension(:),intent(inout)           :: rtol
+    real(wp),dimension(:),intent(inout)           :: atol
+    integer,intent(inout)                         :: idid
+    real(wp),dimension(neq),intent(inout)         :: ypout
+    real(wp),dimension(neq),intent(inout)         :: yp
+    real(wp),dimension(neq),intent(inout)         :: yy
+    real(wp),dimension(neq),intent(inout)         :: wt
+    real(wp),dimension(neq),intent(inout)         :: p
+    real(wp),dimension(neq,16),intent(inout)      :: phi
+    real(wp),dimension(12),intent(inout)          :: alpha
+    real(wp),dimension(12),intent(inout)          :: beta
+    real(wp),dimension(12),intent(inout)          :: psi
+    real(wp),dimension(12),intent(inout)          :: v
+    real(wp),dimension(12),intent(inout)          :: w
+    real(wp),dimension(13),intent(inout)          :: sig
+    real(wp),dimension(13),intent(inout)          :: g
+    real(wp),dimension(11),intent(inout)          :: gi
+    real(wp),intent(inout)                        :: h
+    real(wp),intent(inout)                        :: eps
+    real(wp),intent(inout)                        :: x
+    real(wp),intent(inout)                        :: xold
+    real(wp),intent(inout)                        :: hold
+    real(wp),intent(inout)                        :: told
+    real(wp),intent(inout)                        :: delsgn
+    real(wp),intent(inout)                        :: tstop
+    real(wp),intent(inout)                        :: twou
+    real(wp),intent(inout)                        :: fouru
+    logical,intent(inout)                         :: start
+    logical,intent(inout)                         :: phase1
+    logical,intent(inout)                         :: nornd
+    logical,intent(inout)                         :: stiff
+    logical,intent(inout)                         :: intout
+    integer,intent(inout)                         :: ns
+    integer,intent(inout)                         :: kord
+    integer,intent(inout)                         :: kold
+    integer,intent(inout)                         :: init
+    integer,intent(inout)                         :: ksteps
+    integer,intent(inout)                         :: kle4
+    integer,intent(inout)                         :: iquit
+    integer,intent(inout)                         :: kprev
+    integer,intent(inout)                         :: ivc
+    integer,dimension(10),intent(inout)           :: iv
+    integer,intent(inout)                         :: kgi
+    
+    integer k, l, ltol, natolp, nrtolp
+    real(wp) a, absdel, del, dt, ha, u
+    logical :: crash
+    character(len=8) :: xern1
+    character(len=16) :: xern3, xern4
+    
 !.......................................................................
 !
 ! on the first call , perform initialization
 
-	if (info(1) == 0) then
-		u=d1mach4		! machine unit roundoff quantity
-		twou=2.d0*u   	! set associated machine dependent parameters
-		fouru=4.d0*u	!
-		iquit=0			! set termination flag
-		init=0			! set initialization indicator
-		ksteps=0		! set counter for attempted steps
-		intout= .false.	! set indicator for intermediate-output
-		stiff= .false.	! set indicator for stiffness detection
-		kle4=0			! set step counter for stiffness detection
-		start= .true. 	! set indicators for steps code
-		phase1= .true. 	!
-		nornd= .true. 	!
-		info(1)=1   	! reset info(1) for subsequent calls
-	end if
+    if (info(1) == 0) then
+        u=d1mach4         ! machine unit roundoff quantity
+        twou=2.d0*u       ! set associated machine dependent parameters
+        fouru=4.d0*u      !
+        iquit=0           ! set termination flag
+        init=0            ! set initialization indicator
+        ksteps=0          ! set counter for attempted steps
+        intout= .false.   ! set indicator for intermediate-output
+        stiff= .false.    ! set indicator for stiffness detection
+        kle4=0            ! set step counter for stiffness detection
+        start= .true.     ! set indicators for steps code
+        phase1= .true.    !
+        nornd= .true.     !
+        info(1)=1         ! reset info(1) for subsequent calls
+    end if
 
 !.......................................................................
 !
@@ -1164,16 +1164,16 @@
 !
       do k=1,neq
         if (rtol(k)+atol(k) <= 0.d0) then
-        	rtol(k)=fouru
-        	idid=-2
+            rtol(k)=fouru
+            idid=-2
         end if
         if (info(2) == 0) exit
       end do
 
       if (idid == -2) then
-		! rtol=atol=0 on input, so rtol is changed to a small positive value
-      	info(1)=-1
-      	return    
+        ! rtol=atol=0 on input, so rtol is changed to a small positive value
+          info(1)=-1
+          return    
       end if
 
 !     branch on status of initialization indicator
@@ -1228,29 +1228,29 @@
 !   if already past output point, interpolate and return
 !
   250 if (abs(x-t) >= absdel) then
-		  call dintp(x,yy,tout,y,ypout,neq,kold,phi,ivc,iv,kgi,gi,alpha,g,w,xold,p)
-		  idid = 3
-		  if (x == tout) then
-			 idid = 2
-			 intout = .false.
-		  end if
-		  t = tout
-		  told = t
-		  return	  
+          call dintp(x,yy,tout,y,ypout,neq,kold,phi,ivc,iv,kgi,gi,alpha,g,w,xold,p)
+          idid = 3
+          if (x == tout) then
+             idid = 2
+             intout = .false.
+          end if
+          t = tout
+          told = t
+          return      
       end if
       
 !   if cannot go past tstop and sufficiently close, extrapolate and return
 
       if (info(4)==1 .and. abs(tstop-x)<fouru*abs(x)) then
-		  dt = tout - x
-		  do l = 1,neq
-			y(l) = yy(l) + dt*yp(l)
-		  end do
-		  call me%df(tout,y,ypout)
-		  idid = 3
-		  t = tout
-		  told = t
-		  return
+          dt = tout - x
+          do l = 1,neq
+            y(l) = yy(l) + dt*yp(l)
+          end do
+          call me%df(tout,y,ypout)
+          idid = 3
+          t = tout
+          told = t
+          return
       end if
       
     if (info(3) == 0  .or.  .not.intout) go to 300
@@ -1273,14 +1273,14 @@
 !
   300 if (ksteps > me%maxnum) then
   
-	! a significant amount of work has been expended
+    ! a significant amount of work has been expended
       idid=-1
       ksteps=0
       if (stiff) then
-		! problem appears to be stiff
-      	idid=-4
-      	stiff= .false.
-      	kle4=0
+        ! problem appears to be stiff
+          idid=-4
+          stiff= .false.
+          kle4=0
       end if
 
       do l = 1,neq
@@ -1358,11 +1358,11 @@
       go to 250
       
 !*****************************************************************************************    
-	end subroutine ddes
+    end subroutine ddes
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-	subroutine dhstrt (me,neq,a,b,y,yprime,etol,morder,small,big,spy,pv,yp,sf,h)
+    subroutine dhstrt (me,neq,a,b,y,yprime,etol,morder,small,big,spy,pv,yp,sf,h)
 !*****************************************************************************************    
 !***begin prologue  dhstrt
 !***subsidiary
@@ -1493,10 +1493,10 @@
 ! 
 !*****************************************************************************************    
 
-	class(ddeabm_class),intent(inout) :: me	
-	integer,intent(in) :: neq
-	real(wp),intent(in) :: a
-	real(wp),intent(in) :: b	
+    class(ddeabm_class),intent(inout) :: me    
+    integer,intent(in) :: neq
+    real(wp),intent(in) :: a
+    real(wp),intent(in) :: b    
     real(wp),intent(in),dimension(neq) :: y
     real(wp),intent(in),dimension(neq) :: yprime
     real(wp),intent(in),dimension(neq) :: etol
@@ -1508,13 +1508,13 @@
     real(wp),dimension(neq),intent(inout) :: pv
     real(wp),dimension(neq),intent(inout) :: yp
     real(wp),dimension(neq),intent(inout) :: sf
-	
-	integer j, k, lk
-	real(wp) absdx, da, delf, dely,&
-		dfdub, dfdxb,&
-		dx, dy, fbnd, relper,&
-		srydpb, tolexp, tolmin, tolp, tolsum, ydpb
-	
+    
+    integer j, k, lk
+    real(wp) absdx, da, delf, dely,&
+        dfdub, dfdxb,&
+        dx, dy, fbnd, relper,&
+        srydpb, tolexp, tolmin, tolp, tolsum, ydpb
+    
 !     ..................................................................
 !
 !     begin block permitting ...exits to 160
@@ -1711,38 +1711,38 @@
       h = sign(h,dx)
 
 !*****************************************************************************************    
-	end subroutine dhstrt
+    end subroutine dhstrt
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-	function dhvnrm (v, n) result(m)
+    function dhvnrm (v, n) result(m)
 !*****************************************************************************************
 !
 !  NAME
-!	dhvnrm
-!	
+!    dhvnrm
+!    
 !  DESCRIPTION
-!	Compute the maximum norm of the vector v of length n
+!    Compute the maximum norm of the vector v of length n
 !
 !  HISTORY
-!	JW : 7/1/2014 : replace original routine
+!    JW : 7/1/2014 : replace original routine
 !
 !*****************************************************************************************    
 
-	implicit none
-	
-	real(wp)		 					:: m
-	integer,intent(in) 					:: n
-	real(wp),dimension(:),intent(in) 	:: v
+    implicit none
+    
+    real(wp)                             :: m
+    integer,intent(in)                   :: n
+    real(wp),dimension(:),intent(in)     :: v
    
-	m = maxval(abs(v(1:n)))
+    m = maxval(abs(v(1:n)))
 
 !*****************************************************************************************    
-	end function dhvnrm
+    end function dhvnrm
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-	subroutine dintp (x,y,xout,yout,ypout,neqn,kold,phi,ivc,iv,kgi,gi,alpha,og,ow,ox,oy)
+    subroutine dintp (x,y,xout,yout,ypout,neqn,kold,phi,ivc,iv,kgi,gi,alpha,og,ow,ox,oy)
 !*****************************************************************************************    
 !***purpose  approximate the solution at xout by evaluating the
 !            polynomial computed in dsteps at xout.  must be used in
@@ -1795,31 +1795,31 @@
 !
 !*****************************************************************************************    
 
-	implicit none
-	
-	integer,intent(in)						:: neqn
-	real(wp),intent(in)						:: x
-	real(wp),dimension(neqn),intent(in)		:: y
-	real(wp),intent(in)						:: xout
-	integer,intent(in)						:: kold
-	real(wp),dimension(neqn,16),intent(in)	:: phi
-	integer,intent(in)						:: ivc
-	integer,dimension(10),intent(in)		:: iv
-	integer,intent(in)						:: kgi
-	real(wp),dimension(11),intent(in)		:: gi
-	real(wp),dimension(12),intent(in)		:: alpha
-	real(wp),dimension(13),intent(in)		:: og
-	real(wp),dimension(12),intent(in)		:: ow
-	real(wp),dimension(neqn),intent(in)		:: oy
-	real(wp),intent(in)						:: ox	
-	real(wp),dimension(neqn),intent(out)	:: yout		! solution at xout
-	real(wp),dimension(neqn),intent(out)	:: ypout	! derivative of solution at xout
-	
-	!local variables:
-	integer :: i, iq, iw, j, jq, kp1, kp2, l, m
-	real(wp) :: alp, c(13), g(13), gdi, gdif, gamma, h, hi,&
-						 hmu, rmu, sigma, temp1, temp2, temp3,&
-						 w(13), xi, xim1, xiq
+    implicit none
+    
+    integer,intent(in)                         :: neqn
+    real(wp),intent(in)                        :: x
+    real(wp),dimension(neqn),intent(in)        :: y
+    real(wp),intent(in)                        :: xout
+    integer,intent(in)                         :: kold
+    real(wp),dimension(neqn,16),intent(in)     :: phi
+    integer,intent(in)                         :: ivc
+    integer,dimension(10),intent(in)           :: iv
+    integer,intent(in)                         :: kgi
+    real(wp),dimension(11),intent(in)          :: gi
+    real(wp),dimension(12),intent(in)          :: alpha
+    real(wp),dimension(13),intent(in)          :: og
+    real(wp),dimension(12),intent(in)          :: ow
+    real(wp),dimension(neqn),intent(in)        :: oy
+    real(wp),intent(in)                        :: ox    
+    real(wp),dimension(neqn),intent(out)       :: yout   ! solution at xout
+    real(wp),dimension(neqn),intent(out)       :: ypout  ! derivative of solution at xout
+    
+    !local variables:
+    integer :: i, iq, iw, j, jq, kp1, kp2, l, m
+    real(wp) :: alp, c(13), g(13), gdi, gdif, gamma, h, hi,&
+                         hmu, rmu, sigma, temp1, temp2, temp3,&
+                         w(13), xi, xim1, xiq
 
       kp1 = kold + 1
       kp2 = kold + 2
@@ -1898,11 +1898,11 @@
                       (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
 
 !*****************************************************************************************    
-	end subroutine dintp
+    end subroutine dintp
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-	subroutine dsteps (me, neqn, y, x, h, eps, wt, start, hold, k,&
+    subroutine dsteps (me, neqn, y, x, h, eps, wt, start, hold, k,&
          kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g,&
          phase1, ns, nornd, ksteps, twou, fouru, xold, kprev, ivc, iv,&
          kgi, gi)
@@ -2073,14 +2073,14 @@
 !
 !*****************************************************************************************    
 
-	implicit none
-	
-	class(ddeabm_class),intent(inout) :: me	
+    implicit none
+    
+    class(ddeabm_class),intent(inout) :: me    
     real(wp),intent(inout) :: x
-	real(wp),intent(inout) :: h
-	real(wp),intent(inout) :: eps
-	real(wp),intent(inout) :: hold
-	integer,intent(inout)  :: k
+    real(wp),intent(inout) :: h
+    real(wp),intent(inout) :: eps
+    real(wp),intent(inout) :: hold
+    integer,intent(inout)  :: k
     integer,intent(inout)  :: kold 
     integer,intent(inout)  :: ns
     integer,intent(inout)  :: ksteps
@@ -2090,7 +2090,7 @@
     integer,intent(inout)  :: kprev
     integer,intent(inout)  :: ivc
     integer,intent(inout)  :: kgi
-    integer,intent(in)	   :: neqn
+    integer,intent(in)       :: neqn
     logical,intent(inout)  :: start,crash,phase1,nornd
     real(wp),dimension(neqn),intent(inout) :: y
     real(wp),dimension(neqn),intent(inout) :: wt
@@ -2098,58 +2098,58 @@
     real(wp),dimension(neqn),intent(inout) :: p
     real(wp),dimension(neqn),intent(inout) :: yp
     real(wp),dimension(12),intent(inout) :: psi
-	real(wp),dimension(12),intent(inout) :: alpha
-	real(wp),dimension(12),intent(inout) :: beta
-	real(wp),dimension(13),intent(inout) :: sig
-	real(wp),dimension(12),intent(inout) :: v
-	real(wp),dimension(12),intent(inout) :: w
-	real(wp),dimension(13),intent(inout) :: g
-	real(wp),dimension(11),intent(inout) :: gi
-	integer, dimension(10),intent(inout)  :: iv
+    real(wp),dimension(12),intent(inout) :: alpha
+    real(wp),dimension(12),intent(inout) :: beta
+    real(wp),dimension(13),intent(inout) :: sig
+    real(wp),dimension(12),intent(inout) :: v
+    real(wp),dimension(12),intent(inout) :: w
+    real(wp),dimension(13),intent(inout) :: g
+    real(wp),dimension(11),intent(inout) :: gi
+    integer, dimension(10),intent(inout)  :: iv
 
-	integer i, ifail, im1, ip1, iq, j, km1, km2, knew,&
-		kp1, kp2, l, limit1, limit2, nsm2,&
-		nsp1, nsp2, jv
-	real(wp) absh, big,&
-		erk, erkm1, erkm2, erkp1, err,&
-		hnew, p5eps, r,&
-		reali, realns, rho, round, tau, temp1,&
-		temp2, temp3, temp4, temp5, temp6, u
-	  
-	!parameters:            
-	real(wp),dimension(13),parameter :: two = [	2.0_wp, &
-												4.0_wp, &
-												8.0_wp, &
-												16.0_wp, &
-												32.0_wp, &
-												64.0_wp, &
-												128.0_wp, &
-												256.0_wp, &
-												512.0_wp, &
-												1024.0_wp, &
-												2048.0_wp, &
-												4096.0_wp, &
-												8192.0_wp]
+    integer i, ifail, im1, ip1, iq, j, km1, km2, knew,&
+        kp1, kp2, l, limit1, limit2, nsm2,&
+        nsp1, nsp2, jv
+    real(wp) absh, big,&
+        erk, erkm1, erkm2, erkp1, err,&
+        hnew, p5eps, r,&
+        reali, realns, rho, round, tau, temp1,&
+        temp2, temp3, temp4, temp5, temp6, u
+      
+    !parameters:            
+    real(wp),dimension(13),parameter :: two = [    2.0_wp, &
+                                                4.0_wp, &
+                                                8.0_wp, &
+                                                16.0_wp, &
+                                                32.0_wp, &
+                                                64.0_wp, &
+                                                128.0_wp, &
+                                                256.0_wp, &
+                                                512.0_wp, &
+                                                1024.0_wp, &
+                                                2048.0_wp, &
+                                                4096.0_wp, &
+                                                8192.0_wp]
  
- 	!note: this is a modification of the original code.
- 	! The full-precision coefficients are used here, instead 
- 	!	of the less precise ones in the original.
- 	! These were computed from the equation on p. 159 of Shampine/Gordon, 
- 	!	"Computer Solution of Ordinary Differential Equations", 1975.
-  	real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
-  												0.8333333333333331E-01_wp, &
-  												0.4166666666666669E-01_wp, &
-  												0.2638888888888891E-01_wp, &
-  												0.1874999999999996E-01_wp, &
-  												0.1426917989417992E-01_wp, &
-  												0.1136739417989419E-01_wp, &
-  												0.9356536596119916E-02_wp, &
-  												0.7892554012345690E-02_wp, &
-  												0.6785849984634704E-02_wp, &
-  												0.5924056412337661E-02_wp, &
-  												0.5236693257950287E-02_wp, &
-  												0.4677498407042263E-02_wp]
- 												         
+     !note: this is a modification of the original code.
+     ! The full-precision coefficients are used here, instead 
+     !    of the less precise ones in the original.
+     ! These were computed from the equation on p. 159 of Shampine/Gordon, 
+     !    "Computer Solution of Ordinary Differential Equations", 1975.
+      real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
+                                                  0.8333333333333331E-01_wp, &
+                                                  0.4166666666666669E-01_wp, &
+                                                  0.2638888888888891E-01_wp, &
+                                                  0.1874999999999996E-01_wp, &
+                                                  0.1426917989417992E-01_wp, &
+                                                  0.1136739417989419E-01_wp, &
+                                                  0.9356536596119916E-02_wp, &
+                                                  0.7892554012345690E-02_wp, &
+                                                  0.6785849984634704E-02_wp, &
+                                                  0.5924056412337661E-02_wp, &
+                                                  0.5236693257950287E-02_wp, &
+                                                  0.4677498407042263E-02_wp]
+                                                          
 !
 !       ***     begin block 0     ***
 !   check if step size or error tolerance is too small for machine
@@ -2160,8 +2160,8 @@
 !   if step size is too small, determine an acceptable one
       crash = .true.
       if (abs(h) < fouru*abs(x)) then
-      	h = sign(fouru*abs(x),h)
-      	return
+          h = sign(fouru*abs(x),h)
+          return
       end if
       
       p5eps = 0.5d0*eps
@@ -2170,11 +2170,11 @@
       round = 0.0d0
       do l = 1,neqn
         round = round + (y(l)/wt(l))**2
- 	  end do
+       end do
       round = twou*sqrt(round)
       if (p5eps < round) then
-      	eps = 2.0d0*round*(1.0d0 + fouru)
-      	return
+          eps = 2.0d0*round*(1.0d0 + fouru)
+          return
       end if
       
       crash = .false.
@@ -2184,41 +2184,41 @@
       
       if (start) then
 
-	!   initialize.  compute appropriate step size for first step
-	!     call me%df(x,y,yp)
-	!     sum = 0.0
-		  do l = 1,neqn
-			phi(l,1) = yp(l)
-			phi(l,2) = 0.0d0
-		  end do
-	!       sum = sum + (yp(l)/wt(l))**2
-	!     end do
-	!     sum = sqrt(sum)
-	!     absh = abs(h)
-	!     if (eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
-	!     h = sign(max(absh,fouru*abs(x)),h)
-	!
-		  u = d1mach4
-		  big = sqrt(d1mach2)
-		  call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
-					   phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
+    !   initialize.  compute appropriate step size for first step
+    !     call me%df(x,y,yp)
+    !     sum = 0.0
+          do l = 1,neqn
+            phi(l,1) = yp(l)
+            phi(l,2) = 0.0d0
+          end do
+    !       sum = sum + (yp(l)/wt(l))**2
+    !     end do
+    !     sum = sqrt(sum)
+    !     absh = abs(h)
+    !     if (eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
+    !     h = sign(max(absh,fouru*abs(x)),h)
+    !
+          u = d1mach4
+          big = sqrt(d1mach2)
+          call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
+                       phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
 
-		  hold = 0.0d0
-		  k = 1
-		  kold = 0
-		  kprev = 0
-		  start = .false.
-		  phase1 = .true.
-		  nornd = .true.
-		  if (p5eps <= 100.0d0*round) then
-			  nornd = .false.
-			  do l = 1,neqn
-				phi(l,15) = 0.0d0
-			  end do
-		  end if
-	  
-	  end if
-	  
+          hold = 0.0d0
+          k = 1
+          kold = 0
+          kprev = 0
+          start = .false.
+          phase1 = .true.
+          nornd = .true.
+          if (p5eps <= 100.0d0*round) then
+              nornd = .false.
+              do l = 1,neqn
+                phi(l,15) = 0.0d0
+              end do
+          end if
+      
+      end if
+      
       ifail = 0
  
 !       ***     end block 0     ***
@@ -2537,11 +2537,13 @@
 !       ***     end block 4     ***
 
 !*****************************************************************************************    
-	end subroutine dsteps
+    end subroutine dsteps
 !*****************************************************************************************    
 
 !*****************************************************************************************    
     subroutine xermsg (librar, subrou, messg, nerr, level)
+!*****************************************************************************************    
+!  Replacement for original routine
 !*****************************************************************************************    
 
     implicit none
