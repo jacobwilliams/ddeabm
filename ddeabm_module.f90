@@ -499,7 +499,7 @@
 !             reliable idea of the true error in the solution at the
 !             bigger tolerances.
 !
-!             setting atol=0.d0 results in a pure relative error test on
+!             setting atol=0.0_wp results in a pure relative error test on
 !             that component. setting rtol=0. results in a pure absolute
 !             error test on that component.  a mixed test with non-zero
 !             rtol and atol corresponds roughly to a relative error
@@ -997,8 +997,8 @@
 
     if (info(1) == 0) then
         u=d1mach4         ! machine unit roundoff quantity
-        twou=2.d0*u       ! set associated machine dependent parameters
-        fouru=4.d0*u      !
+        twou=2.0_wp*u     ! set associated machine dependent parameters
+        fouru=4.0_wp*u    !
         iquit=0           ! set termination flag
         init=0            ! set initialization indicator
         ksteps=0          ! set counter for attempted steps
@@ -1063,7 +1063,7 @@
       nrtolp = 0
       natolp = 0
       do 90 k=1,neq
-         if (nrtolp == 0 .and. rtol(k) < 0.d0) then
+         if (nrtolp == 0 .and. rtol(k) < 0.0_wp) then
             write (xern1, '(i8)') k
             write (xern3, '(1pe15.6)') rtol(k)
             call xermsg ('slatec', 'ddes', 'in ddeabm, the relative ' //&
@@ -1075,7 +1075,7 @@
             nrtolp = 1
          end if
 
-         if (natolp == 0 .and. atol(k) < 0.d0) then
+         if (natolp == 0 .and. atol(k) < 0.0_wp) then
             write (xern1, '(i8)') k
             write (xern3, '(1pe15.6)') atol(k)
             call xermsg ('slatec', 'ddes', 'in ddeabm, the absolute ' //&
@@ -1092,7 +1092,7 @@
    90 continue
 
   100 if (info(4) == 1) then
-         if (sign(1.d0,tout-t) /= sign(1.d0,tstop-t)&
+         if (sign(1.0_wp,tout-t) /= sign(1.0_wp,tstop-t)&
             .or. abs(tout-t) > abs(tstop-t)) then
             write (xern3, '(1pe15.6)') tout
             write (xern4, '(1pe15.6)') tstop
@@ -1127,7 +1127,7 @@
          end if
 
          if (init /= 1) then
-            if (delsgn*(tout-t) < 0.d0) then
+            if (delsgn*(tout-t) < 0.0_wp) then
                write (xern3, '(1pe15.6)') tout
                call xermsg ('slatec', 'ddes', 'in ddeabm, by ' //&
                   'calling the code with tout = ' // xern3 //&
@@ -1163,7 +1163,7 @@
 !     fouru which is likely to be reasonable for this method and machine
 !
       do k=1,neq
-        if (rtol(k)+atol(k) <= 0.d0) then
+        if (rtol(k)+atol(k) <= 0.0_wp) then
             rtol(k)=fouru
             idid=-2
         end if
@@ -1212,7 +1212,7 @@
       do l = 1,neq
         yy(l) = y(l)
       end do
-      delsgn = sign(1.0d0,tout-t)
+      delsgn = sign(1.0_wp,tout-t)
       h = sign(max(fouru*abs(x),abs(tout-x)),tout-x)
 !
 !.......................................................................
@@ -1303,12 +1303,12 @@
       if (info(4) /= 1) go to 340
       ha = min(ha,abs(tstop-x))
   340 h = sign(ha,h)
-      eps = 1.0d0
+      eps = 1.0_wp
       ltol = 1
       do 350 l = 1,neq
         if (info(2) == 1) ltol = l
         wt(l) = rtol(ltol)*abs(yy(l)) + atol(ltol)
-        if (wt(l) <= 0.0d0) go to 360
+        if (wt(l) <= 0.0_wp) go to 360
   350   continue
       go to 380
 !
@@ -1521,7 +1521,7 @@
 !***first executable statement  dhstrt
          dx = b - a
          absdx = abs(dx)
-         relper = small**0.375d0
+         relper = small**0.375_wp
 !
 !        ...............................................................
 !
@@ -1532,8 +1532,8 @@
 !             locally.
 !
          da = sign(max(min(relper*abs(a),absdx),&
-                          100.0d0*small*abs(a)),dx)
-         if (da == 0.0d0) da = relper*dx
+                          100.0_wp*small*abs(a)),dx)
+         if (da == 0.0_wp) da = relper*dx
          call me%df(a+da,y,sf)
          do 10 j = 1, neq
             yp(j) = sf(j) - yprime(j)
@@ -1569,11 +1569,11 @@
 !                                       size of the vector of initial
 !                                       values.
          dely = relper*dhvnrm(y,neq)
-         if (dely == 0.0d0) dely = relper
+         if (dely == 0.0_wp) dely = relper
          dely = sign(dely,dx)
          delf = dhvnrm(yprime,neq)
          fbnd = max(fbnd,delf)
-         if (delf == 0.0d0) go to 30
+         if (delf == 0.0_wp) go to 30
 !           use initial derivatives for first perturbation
             do 20 j = 1, neq
                spy(j) = yprime(j)
@@ -1583,13 +1583,13 @@
    30    continue
 !           cannot have a null perturbation vector
             do 40 j = 1, neq
-               spy(j) = 0.0d0
-               yp(j) = 1.0d0
+               spy(j) = 0.0_wp
+               yp(j) = 1.0_wp
    40       continue
             delf = dhvnrm(yp,neq)
    50    continue
 !
-         dfdub = 0.0d0
+         dfdub = 0.0_wp
          lk = min(neq+1,3)
          do 140 k = 1, lk
 !           define perturbed vector of initial values
@@ -1622,18 +1622,18 @@
 !     ......exit
             if (k == lk) go to 160
 !           choose next perturbation vector
-            if (delf == 0.0d0) delf = 1.0d0
+            if (delf == 0.0_wp) delf = 1.0_wp
             do 130 j = 1, neq
                if (k == 2) go to 110
                   dy = abs(pv(j))
-                  if (dy == 0.0d0) dy = delf
+                  if (dy == 0.0_wp) dy = delf
                go to 120
   110          continue
                   dy = y(j)
-                  if (dy == 0.0d0) dy = dely/relper
+                  if (dy == 0.0_wp) dy = dely/relper
   120          continue
-               if (spy(j) == 0.0d0) spy(j) = yp(j)
-               if (spy(j) /= 0.0d0) dy = sign(dy,spy(j))
+               if (spy(j) == 0.0_wp) spy(j) = yp(j)
+               if (spy(j) /= 0.0_wp) dy = sign(dy,spy(j))
                yp(j) = dy
   130       continue
             delf = dhvnrm(yp,neq)
@@ -1657,13 +1657,13 @@
 !          tolerance range is selected.
 !
       tolmin = big
-      tolsum = 0.0d0
+      tolsum = 0.0_wp
       do 170 k = 1, neq
          tolexp = log10(etol(k))
          tolmin = min(tolmin,tolexp)
          tolsum = tolsum + tolexp
   170 continue
-      tolp = 10.0d0**(0.5d0*(tolsum/neq + tolmin)/(morder+1))
+      tolp = 10.0_wp**(0.5_wp*(tolsum/neq + tolmin)/(morder+1))
 !
 !     ..................................................................
 !
@@ -1675,15 +1675,15 @@
 !                            to  a)
       h = absdx
 !
-      if (ydpb /= 0.0d0 .or. fbnd /= 0.0d0) go to 180
+      if (ydpb /= 0.0_wp .or. fbnd /= 0.0_wp) go to 180
 !
 !        both first derivative term (fbnd) and second
 !                     derivative term (ydpb) are zero
-         if (tolp < 1.0d0) h = absdx*tolp
+         if (tolp < 1.0_wp) h = absdx*tolp
       go to 200
   180 continue
 !
-      if (ydpb /= 0.0d0) go to 190
+      if (ydpb /= 0.0_wp) go to 190
 !
 !        only second derivative term (ydpb) is zero
          if (tolp < fbnd*absdx) h = tolp/fbnd
@@ -1691,21 +1691,21 @@
   190 continue
 !
 !        second derivative term (ydpb) is non-zero
-         srydpb = sqrt(0.5d0*ydpb)
+         srydpb = sqrt(0.5_wp*ydpb)
          if (tolp < srydpb*absdx) h = tolp/srydpb
   200 continue
 !
 !     further restrict the step length to be not
 !                               bigger than  1/dfdub
-      if (h*dfdub > 1.0d0) h = 1.0d0/dfdub
+      if (h*dfdub > 1.0_wp) h = 1.0_wp/dfdub
 !
 !     finally, restrict the step length to be not
 !     smaller than  100*small*abs(a).  however, if
 !     a=0. and the computed h underflowed to zero,
 !     the algorithm returns  small*abs(b)  for the
 !                                     step length.
-      h = max(h,100.0d0*small*abs(a))
-      if (h == 0.0d0) h = small*abs(b)
+      h = max(h,100.0_wp*small*abs(a))
+      if (h == 0.0_wp) h = small*abs(b)
 !
 !     now set direction of integration
       h = sign(h,dx)
@@ -1827,7 +1827,7 @@
       hi = xout - ox
       h = x - ox
       xi = hi/h
-      xim1 = xi - 1.d0
+      xim1 = xi - 1.0_wp
 
 !   initialize w(*) for computing g(*)
 
@@ -1842,7 +1842,7 @@
 !
       if (kold <= kgi) go to 50
       if (ivc > 0) go to 20
-      gdi = 1.0d0/temp1
+      gdi = 1.0_wp/temp1
       m = 2
       go to 30
  20   iw = iv(ivc)
@@ -1857,13 +1857,13 @@
 !   compute g(*) and c(*)
 !
  60   g(1) = xi
-      g(2) = 0.5d0*xi*xi
-      c(1) = 1.0d0
+      g(2) = 0.5_wp*xi*xi
+      c(1) = 1.0_wp
       c(2) = xi
       if (kold < 2) go to 90
       do 80 i = 2,kold
         alp = alpha(i)
-        gamma = 1.0d0 + xim1*alp
+        gamma = 1.0_wp + xim1*alp
         l = kp2 - i
         do 70 jq = 1,l
  70       w(jq) = gamma*w(jq) - alp*w(jq+1)
@@ -1880,8 +1880,8 @@
 !   and for the derivative of the solution -- ypout
 !
       do 100 l = 1,neqn
-        yout(l) = 0.0d0
- 100    ypout(l) = 0.0d0
+        yout(l) = 0.0_wp
+ 100    ypout(l) = 0.0_wp
       do 120 j = 1,kold
         i = kp2 - j
         gdif = og(i) - og(i-1)
@@ -1892,7 +1892,7 @@
  110      ypout(l) = ypout(l) + temp3*phi(l,i)
  120    continue
       do 130 l = 1,neqn
-        yout(l) = ((1.0d0 - sigma)*oy(l) + sigma*y(l)) +&
+        yout(l) = ((1.0_wp - sigma)*oy(l) + sigma*y(l)) +&
                    h*(yout(l) + (g(1) - sigma*og(1))*phi(l,1))
  130    ypout(l) = hmu*(oy(l) - y(l)) +&
                       (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
@@ -2164,32 +2164,32 @@
           return
       end if
       
-      p5eps = 0.5d0*eps
+      p5eps = 0.5_wp*eps
 
 !   if error tolerance is too small, increase it to an acceptable value
-      round = 0.0d0
+      round = 0.0_wp
       do l = 1,neqn
         round = round + (y(l)/wt(l))**2
        end do
       round = twou*sqrt(round)
       if (p5eps < round) then
-          eps = 2.0d0*round*(1.0d0 + fouru)
+          eps = 2.0_wp*round*(1.0_wp + fouru)
           return
       end if
       
       crash = .false.
-      g(1) = 1.0d0
-      g(2) = 0.5d0
-      sig(1) = 1.0d0
+      g(1) = 1.0_wp
+      g(2) = 0.5_wp
+      sig(1) = 1.0_wp
       
       if (start) then
 
     !   initialize.  compute appropriate step size for first step
     !     call me%df(x,y,yp)
-    !     sum = 0.0
+    !     sum = 0.0_wp
           do l = 1,neqn
             phi(l,1) = yp(l)
-            phi(l,2) = 0.0d0
+            phi(l,2) = 0.0_wp
           end do
     !       sum = sum + (yp(l)/wt(l))**2
     !     end do
@@ -2203,17 +2203,17 @@
           call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
                        phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
 
-          hold = 0.0d0
+          hold = 0.0_wp
           k = 1
           kold = 0
           kprev = 0
           start = .false.
           phase1 = .true.
           nornd = .true.
-          if (p5eps <= 100.0d0*round) then
+          if (p5eps <= 100.0_wp*round) then
               nornd = .false.
               do l = 1,neqn
-                phi(l,15) = 0.0d0
+                phi(l,15) = 0.0_wp
               end do
           end if
       
@@ -2244,11 +2244,11 @@
 !   compute those components of alpha(*),beta(*),psi(*),sig(*) which
 !   are changed
 !
-      beta(ns) = 1.0d0
+      beta(ns) = 1.0_wp
       realns = ns
-      alpha(ns) = 1.0d0/realns
+      alpha(ns) = 1.0_wp/realns
       temp1 = h*realns
-      sig(nsp1) = 1.0d0
+      sig(nsp1) = 1.0_wp
       if (k < nsp1) go to 110
       do 105 i = nsp1,k
         im1 = i-1
@@ -2268,7 +2268,7 @@
       if (ns > 1) go to 120
       do 115 iq = 1,k
         temp3 = iq*(iq+1)
-        v(iq) = 1.0d0/temp3
+        v(iq) = 1.0_wp/temp3
  115    w(iq) = v(iq)
       ivc = 0
       kgi = 0
@@ -2286,7 +2286,7 @@
       go to 123
  122  jv = 1
       temp4 = k*kp1
-      v(k) = 1.0d0/temp4
+      v(k) = 1.0_wp/temp4
       w(k) = v(k)
       if (k /= 2) go to 123
       kgi = 1
@@ -2354,8 +2354,8 @@
 !
  215  do 220 l = 1,neqn
         phi(l,kp2) = phi(l,kp1)
-        phi(l,kp1) = 0.0d0
- 220    p(l) = 0.0d0
+        phi(l,kp1) = 0.0_wp
+ 220    p(l) = 0.0_wp
       do 230 j = 1,k
         i = kp1 - j
         ip1 = i+1
@@ -2379,11 +2379,11 @@
 !
 !   estimate errors at orders k,k-1,k-2
 !
-      erkm2 = 0.0d0
-      erkm1 = 0.0d0
-      erk = 0.0d0
+      erkm2 = 0.0_wp
+      erkm1 = 0.0_wp
+      erk = 0.0_wp
       do 265 l = 1,neqn
-        temp3 = 1.0d0/wt(l)
+        temp3 = 1.0_wp/wt(l)
         temp4 = yp(l) - phi(l,1)
         if (km2)265,260,255
  255    erkm2 = erkm2 + ((phi(l,km1)+temp4)*temp3)**2
@@ -2402,7 +2402,7 @@
       if (km2)299,290,285
  285  if (max(erkm1,erkm2) <= erk) knew = km1
       go to 299
- 290  if (erkm1 <= 0.5d0*erk) knew = km1
+ 290  if (erkm1 <= 0.5_wp*erk) knew = km1
 !
 !   test if step successful
 !
@@ -2422,7 +2422,7 @@
       phase1 = .false.
       x = xold
       do 310 i = 1,k
-        temp1 = 1.0d0/beta(i)
+        temp1 = 1.0_wp/beta(i)
         ip1 = i+1
         do 305 l = 1,neqn
  305      phi(l,i) = temp1*(phi(l,i) - phi(l,ip1))
@@ -2435,9 +2435,9 @@
 !   size
 !
  320  ifail = ifail + 1
-      temp2 = 0.5d0
+      temp2 = 0.5_wp
       if (ifail - 3) 335,330,325
- 325  if (p5eps < 0.25d0*erk) temp2 = sqrt(p5eps/erk)
+ 325  if (p5eps < 0.25_wp*erk) temp2 = sqrt(p5eps/erk)
  330  knew = 1
  335  h = temp2*h
       k = knew
@@ -2490,7 +2490,7 @@
 !     already decided to lower order,
 !     step size not constant so estimate unreliable
 !
-      erkp1 = 0.0d0
+      erkp1 = 0.0_wp
       if (knew == km1  .or.  k == 12) phase1 = .false.
       if (phase1) go to 450
       if (knew == km1) go to 455
@@ -2503,7 +2503,7 @@
 !   for next step
 !
       if (k > 1) go to 445
-      if (erkp1 >= 0.5d0*erk) go to 460
+      if (erkp1 >= 0.5_wp*erk) go to 460
       go to 450
  445  if (erkm1 <= min(erk,erkp1)) go to 455
       if (erkp1 >= erk  .or.  k == 12) go to 460
@@ -2530,8 +2530,8 @@
       hnew = h
       if (p5eps >= erk) go to 465
       temp2 = k+1
-      r = (p5eps/erk)**(1.0d0/temp2)
-      hnew = absh*max(0.5d0,min(0.9d0,r))
+      r = (p5eps/erk)**(1.0_wp/temp2)
+      hnew = absh*max(0.5_wp,min(0.9_wp,r))
       hnew = sign(max(hnew,fouru*abs(x)),h)
  465  h = hnew
 !       ***     end block 4     ***
