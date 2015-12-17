@@ -1,4 +1,4 @@
-!*****************************************************************************************    
+!*****************************************************************************************
 !>
 !  Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
 !
@@ -18,30 +18,30 @@
     module ddeabm_module
 
     use, intrinsic :: iso_fortran_env, wp=>real64    !double precision
-    
+
     implicit none
 
     private
-            
-    !parameters:    
+
+    !parameters:
     real(wp),parameter :: d1mach2 = huge(1.0_wp)                        !! the largest magnitude
     real(wp),parameter :: d1mach4 = radix(1.0_wp)**(1-digits(1.0_wp))   !! the largest relative spacing
 
     type,public :: ddeabm_class
-    
+
         !! The main integration class.
-    
+
         private
-        
-        integer :: neq = 0    
-            !! the number of (first order) differential equations to be integrated (>=0)     
-                
-        integer :: maxnum = 500        
+
+        integer :: neq = 0
+            !! the number of (first order) differential equations to be integrated (>=0)
+
+        integer :: maxnum = 500
             !!  the expense of solving the problem is monitored by counting the
             !!  number of  steps attempted. when this exceeds  maxnum, the counter
             !!  is reset to zero and the user is informed about possible excessive
             !!  work.
-        
+
         procedure(func),pointer :: df => null()
             !!  to define the system of first order differential equations
             !!  which is to be solved.  for the given values of x and the
@@ -56,31 +56,31 @@
         integer                             :: lrw    = 0
         integer,dimension(:),allocatable    :: iwork
         integer                             :: liw    = 0
-        
+
         !tolerances
         logical :: scalar_tols = .true.
         real(wp),dimension(:),allocatable :: rtol        !! the user input rel tol
         real(wp),dimension(:),allocatable :: atol        !! the user input abs tol
         real(wp),dimension(:),allocatable :: rtol_tmp    !! rel tol used internally
         real(wp),dimension(:),allocatable :: atol_tmp    !! abs tol used internally
-        
+
         integer,dimension(4) :: info = 0  !! info array
-        
+
     contains
-    
+
         procedure,public :: initialize     => ddeabm_initialize
         procedure,public :: integrate      => ddeabm_wrapper
         procedure,public :: destroy        => destroy_ddeabm
         procedure,public :: first_call     => ddeabm_new_problem
-        
-        !support routines:                    
+
+        !support routines:
         procedure :: ddeabm
         procedure :: ddes
         procedure :: dhstrt
         procedure :: dsteps
-        
+
     end type ddeabm_class
-    
+
     abstract interface
         subroutine func(me,t,x,xdot)
         import :: wp,ddeabm_class
@@ -91,34 +91,34 @@
         real(wp),dimension(:),intent(out) :: xdot
         end subroutine func
     end interface
-    
+
     contains
-!*****************************************************************************************    
-    
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  Call this to indicate that a new problem is being solved (see ddeabm documentation).
 
     subroutine ddeabm_new_problem(me)
-    
+
     implicit none
-    
-    class(ddeabm_class),intent(inout)    :: me    
-    
+
+    class(ddeabm_class),intent(inout)    :: me
+
     me%info(1) = 0
-    
+
    end subroutine ddeabm_new_problem
-!*****************************************************************************************    
-   
-!*****************************************************************************************   
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
-!  Initialize the class, and set the variables that cannot be changed during a problem. 
+!  Initialize the class, and set the variables that cannot be changed during a problem.
 
     subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol)
-    
+
     implicit none
 
-    class(ddeabm_class),intent(inout)   :: me    
+    class(ddeabm_class),intent(inout)   :: me
     integer,intent(in)                  :: neq
     integer,intent(in)                  :: maxnum
     procedure(func)                     :: df
@@ -154,12 +154,12 @@
     allocate(me%iwork(me%liw))
     me%iwork = 0
 
-    !tolerances:   
+    !tolerances:
     ! [for now, we are considering these unchangeable, although they don't have to be]
 
     vector_tols = size(rtol)==neq .and. size(atol)==neq .and. neq>1
     me%scalar_tols = .not. vector_tols
-            
+
     if (me%scalar_tols) then
         allocate(me%rtol(1)) ; allocate(me%rtol_tmp(1))
         allocate(me%atol(1)) ; allocate(me%atol_tmp(1))
@@ -171,51 +171,51 @@
         me%rtol = rtol
         me%atol = atol
     end if
-    
-!*****************************************************************************************    
+
+!*****************************************************************************************
     end subroutine ddeabm_initialize
-!*****************************************************************************************    
-        
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  Destructor for [[ddeabm_class]].
 
     subroutine destroy_ddeabm(me)
-    
+
     implicit none
-    
-    class(ddeabm_class),intent(out) :: me    
-       
+
+    class(ddeabm_class),intent(out) :: me
+
     end subroutine destroy_ddeabm
-!*****************************************************************************************    
-            
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  Wrapper routine for [[ddeabm]].
 
     subroutine ddeabm_wrapper(me,t,y,tout,tstop,intermediate_steps,idid)
-    
+
     implicit none
 
-    class(ddeabm_class),intent(inout)          :: me    
+    class(ddeabm_class),intent(inout)          :: me
     real(wp),intent(inout)                     :: t
     real(wp),dimension(me%neq),intent(inout)   :: y
     real(wp),intent(in)                        :: tout
     real(wp),intent(in),optional               :: tstop              !! not used if not present
     logical,intent(in),optional                :: intermediate_steps !! false if not present
     integer,intent(out)                        :: idid
-    
+
     !set info array:
-        
+
     !info(1) is set when ddeabm_new_problem is called
-    
+
     !info(2)
     if (me%scalar_tols) then
         me%info(2) = 0
     else
         me%info(2) = 1
     end if
-    
+
     !info(3)
     if (present(intermediate_steps)) then
         if (intermediate_steps) then
@@ -226,7 +226,7 @@
     else
         me%info(3) = 0
     end if
-            
+
     !info(4)
     if (present(tstop)) then
         me%info(4) = 1
@@ -234,11 +234,11 @@
     else
         me%info(4) = 0
     end if
-    
+
     !make a copy of the tols, since the routine might change them:
     me%rtol_tmp = me%rtol
     me%atol_tmp = me%atol
-    
+
     !call the lower-level routine:
     call me%ddeabm( neq      = me%neq,&
                     t        = t,&
@@ -252,14 +252,14 @@
                     lrw      = me%lrw,&
                     iwork    = me%iwork,&
                     liw      = me%liw)
-    
+
     !Note: currently not using the recommended tols if idid=-2
-                      
-!*****************************************************************************************    
+
+!*****************************************************************************************
     end subroutine ddeabm_wrapper
-!*****************************************************************************************    
-    
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  solve an initial value problem in ordinary differential
 !  equations using an adams-bashforth method.
@@ -712,10 +712,10 @@
 !
 !# Authors
 !
-!   * L. F. shampine 
-!   * H. A. Watts 
+!   * L. F. shampine
+!   * H. A. Watts
 !   * M. K. gordon
-!    
+!
 !# See also
 !
 !   * l. f. shampine and h. a. watts, depac - design of a user
@@ -735,13 +735,13 @@
 !   * 920501  reformatted the references section.  (wrb)
 !   * July, 2014 : Major refactoring into modern Fortran (jw)
 !
-!*****************************************************************************************    
+!*****************************************************************************************
 
     subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw)
 
     implicit none
 
-    class(ddeabm_class),intent(inout)         :: me    
+    class(ddeabm_class),intent(inout)         :: me
     integer,intent(in)                        :: neq
     real(wp),intent(inout)                    :: t
     real(wp),dimension(neq),intent(inout)     :: y
@@ -750,10 +750,10 @@
     real(wp),dimension(:),intent(inout)       :: rtol
     real(wp),dimension(:),intent(inout)       :: atol
     integer,intent(out)                       :: idid
-    real(wp),dimension(lrw),intent(inout)     :: rwork
     integer,intent(in)                        :: lrw
-    integer,dimension(liw),intent(inout)      :: iwork
+    real(wp),dimension(lrw),intent(inout)     :: rwork
     integer,intent(in)                        :: liw
+    integer,dimension(liw),intent(inout)      :: iwork
 
     integer ialpha, ibeta, idelsn, ifouru, ig, ihold,&
         ip, iphi, ipsi, isig, itold, itstar, itwou,&
@@ -761,7 +761,7 @@
     logical start,phase1,nornd,stiff,intout
     character(len=8) :: xern1
     character(len=16) :: xern3
-          
+
 !
 !     check for an apparent infinite loop
 !
@@ -798,14 +798,14 @@
             'with liw = ' // xern1, 2, 1)
          idid=-33
       end if
-      
+
     !make sure the deriv function was set:
         if (.not. associated(me%df)) then
          call xermsg ('slatec', 'ddeabm', 'the derivative function DF '//&
-                         ' has not been associated.' // xern1, 0, 0)        
+                         ' has not been associated.' // xern1, 0, 0)
          idid=-33
         end if
-    
+
 !
 !     compute the indices for the arrays to be stored in the work array
 !
@@ -832,8 +832,8 @@
       ifouru = 1 + itwou
 
       rwork(itstar) = t
-      
-      if (info(1) /= 0) then      
+
+      if (info(1) /= 0) then
           start = iwork(21) /= (-1)
           phase1 = iwork(22) /= (-1)
           nornd = iwork(23) /= (-1)
@@ -865,11 +865,11 @@
       if (idid /= (-2)) iwork(liw) = iwork(liw) + 1
       if (t /= rwork(itstar)) iwork(liw) = 0
 
-!*****************************************************************************************    
+!*****************************************************************************************
     end subroutine ddeabm
-!*****************************************************************************************    
-      
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  ddeabm merely allocates storage for ddes to relieve the user of the
 !  inconvenience of a long call list.  consequently ddes is used as
@@ -896,7 +896,7 @@
          kle4, iquit, kprev, ivc, iv, kgi)
 
     implicit none
-    
+
     class(ddeabm_class),intent(inout)             :: me
     integer,intent(in)                            :: neq
     real(wp),intent(inout)                        :: t
@@ -946,13 +946,13 @@
     integer,intent(inout)                         :: ivc
     integer,dimension(10),intent(inout)           :: iv
     integer,intent(inout)                         :: kgi
-    
+
     integer k, l, ltol, natolp, nrtolp
     real(wp) a, absdel, del, dt, ha, u
     logical :: crash
     character(len=8) :: xern1
     character(len=16) :: xern3, xern4
-    
+
 !.......................................................................
 !
 ! on the first call , perform initialization
@@ -1135,7 +1135,7 @@
       if (idid == -2) then
         ! rtol=atol=0 on input, so rtol is changed to a small positive value
           info(1)=-1
-          return    
+          return
       end if
 
 !     branch on status of initialization indicator
@@ -1198,9 +1198,9 @@
           end if
           t = tout
           told = t
-          return      
+          return
       end if
-      
+
 !   if cannot go past tstop and sufficiently close, extrapolate and return
 
       if (info(4)==1 .and. abs(tstop-x)<fouru*abs(x)) then
@@ -1214,7 +1214,7 @@
           told = t
           return
       end if
-      
+
     if (info(3) == 0  .or.  .not.intout) go to 300
 !
 !   intermediate-output mode
@@ -1234,7 +1234,7 @@
 !     monitor number of steps attempted
 !
   300 if (ksteps > me%maxnum) then
-  
+
     ! a significant amount of work has been expended
       idid=-1
       ksteps=0
@@ -1254,7 +1254,7 @@
       info(1) = -1
       intout = .false.
       return
-      
+
     end if
 !
 !.......................................................................
@@ -1267,18 +1267,19 @@
   340 h = sign(ha,h)
       eps = 1.0_wp
       ltol = 1
-      do 350 l = 1,neq
+      do l = 1,neq
         if (info(2) == 1) ltol = l
         wt(l) = rtol(ltol)*abs(yy(l)) + atol(ltol)
         if (wt(l) <= 0.0_wp) go to 360
-  350   continue
+      end do
       go to 380
 !
 !                       relative error criterion inappropriate
   360 idid = -3
-      do 370 l = 1,neq
+      do l = 1,neq
         y(l) = yy(l)
-  370   ypout(l) = yp(l)
+        ypout(l) = yp(l)
+      end do
       t = x
       told = t
       info(1) = -1
@@ -1297,13 +1298,16 @@
       idid = -2
       rtol(1) = eps*rtol(1)
       atol(1) = eps*atol(1)
-      if (info(2) == 0) go to 400
-      do 390 l = 2,neq
-        rtol(l) = eps*rtol(l)
-  390   atol(l) = eps*atol(l)
-  400 do 410 l = 1,neq
+      if (info(2) /= 0) then
+          do l = 2,neq
+            rtol(l) = eps*rtol(l)
+            atol(l) = eps*atol(l)
+          end do
+      end if
+      do l = 1,neq
         y(l) = yy(l)
-  410   ypout(l) = yp(l)
+        ypout(l) = yp(l)
+      end do
       t = x
       told = t
       info(1) = -1
@@ -1318,12 +1322,12 @@
       if (kle4 >= 50) stiff = .true.
       intout = .true.
       go to 250
-      
-!*****************************************************************************************    
+
+!*****************************************************************************************
     end subroutine ddes
-!*****************************************************************************************    
-      
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  dhstrt computes a starting step size to be used in solving initial
 !  value problems in ordinary differential equations.
@@ -1436,13 +1440,13 @@
 !   * 910722  updated author section.  (als)
 
     subroutine dhstrt (me,neq,a,b,y,yprime,etol,morder,small,big,spy,pv,yp,sf,h)
-    
+
     implicit none
 
-    class(ddeabm_class),intent(inout) :: me    
+    class(ddeabm_class),intent(inout) :: me
     integer,intent(in) :: neq
     real(wp),intent(in) :: a
-    real(wp),intent(in) :: b    
+    real(wp),intent(in) :: b
     real(wp),intent(in),dimension(neq) :: y
     real(wp),intent(in),dimension(neq) :: yprime
     real(wp),intent(in),dimension(neq) :: etol
@@ -1454,13 +1458,13 @@
     real(wp),dimension(neq),intent(inout) :: pv
     real(wp),dimension(neq),intent(inout) :: yp
     real(wp),dimension(neq),intent(inout) :: sf
-    
+
     integer j, k, lk
     real(wp) absdx, da, delf, dely,&
         dfdub, dfdxb,&
         dx, dy, fbnd, relper,&
         srydpb, tolexp, tolmin, tolp, tolsum, ydpb
-    
+
 !     ..................................................................
 !
 !     begin block permitting ...exits to 160
@@ -1528,10 +1532,10 @@
          go to 50
    30    continue
 !           cannot have a null perturbation vector
-            do 40 j = 1, neq
+            do j = 1, neq
                spy(j) = 0.0_wp
                yp(j) = 1.0_wp
-   40       continue
+            end do
             delf = dhvnrm(yp,neq)
    50    continue
 !
@@ -1539,9 +1543,9 @@
          lk = min(neq+1,3)
          do 140 k = 1, lk
 !           define perturbed vector of initial values
-            do 60 j = 1, neq
+            do j = 1, neq
                pv(j) = y(j) + dely*(yp(j)/delf)
-   60       continue
+            end do
             if (k == 2) go to 80
 !              evaluate derivatives associated with perturbed
 !              vector  and  compute corresponding differences
@@ -1657,8 +1661,8 @@
       h = sign(h,dx)
 
     end subroutine dhstrt
-!*****************************************************************************************    
-      
+!*****************************************************************************************
+
 !*****************************************************************************************
 !>
 !  Compute the maximum norm of the vector v of length n.
@@ -1669,17 +1673,17 @@
     function dhvnrm (v, n) result(m)
 
     implicit none
-    
+
     real(wp)                             :: m
     integer,intent(in)                   :: n
     real(wp),dimension(:),intent(in)     :: v
-   
+
     m = maxval(abs(v(1:n)))
 
     end function dhvnrm
-!*****************************************************************************************    
-      
-!*****************************************************************************************    
+!*****************************************************************************************
+
+!*****************************************************************************************
 !>
 !  approximate the solution at xout by evaluating the
 !  polynomial computed in dsteps at xout.  must be used in
@@ -1708,7 +1712,7 @@
     subroutine dintp (x,y,xout,yout,ypout,neqn,kold,phi,ivc,iv,kgi,gi,alpha,og,ow,ox,oy)
 
     implicit none
-    
+
     integer,intent(in)                         :: neqn
     real(wp),intent(in)                        :: x
     real(wp),dimension(neqn),intent(in)        :: y
@@ -1723,10 +1727,10 @@
     real(wp),dimension(13),intent(in)          :: og
     real(wp),dimension(12),intent(in)          :: ow
     real(wp),dimension(neqn),intent(in)        :: oy
-    real(wp),intent(in)                        :: ox    
+    real(wp),intent(in)                        :: ox
     real(wp),dimension(neqn),intent(out)       :: yout   !! solution at xout
     real(wp),dimension(neqn),intent(out)       :: ypout  !! derivative of solution at xout
-    
+
     !local variables:
     integer :: i, iq, iw, j, jq, kp1, kp2, l, m
     real(wp) :: alp, c(13), g(13), gdi, gdif, gamma, h, hi,&
@@ -1761,8 +1765,9 @@
       gdi = ow(iw)
       m = kold - iw + 3
  30   if (m > kold) go to 60
-      do 40 i = m,kold
- 40     gdi = ow(kp2-i) - alpha(i)*gdi
+      do i = m,kold
+        gdi = ow(kp2-i) - alpha(i)*gdi
+      end do
       go to 60
  50   gdi = gi(kold)
 !
@@ -1773,14 +1778,16 @@
       c(1) = 1.0_wp
       c(2) = xi
       if (kold < 2) go to 90
-      do 80 i = 2,kold
+      do i = 2,kold
         alp = alpha(i)
         gamma = 1.0_wp + xim1*alp
         l = kp2 - i
-        do 70 jq = 1,l
- 70       w(jq) = gamma*w(jq) - alp*w(jq+1)
+        do jq = 1,l
+          w(jq) = gamma*w(jq) - alp*w(jq+1)
+        end do
         g(i+1) = w(1)
- 80     c(i+1) = gamma*c(i)
+        c(i+1) = gamma*c(i)
+      end do
 !
 !   define interpolation parameters
 !
@@ -1791,30 +1798,32 @@
 !   interpolate for the solution -- yout
 !   and for the derivative of the solution -- ypout
 !
-      do 100 l = 1,neqn
+      do l = 1,neqn
         yout(l) = 0.0_wp
- 100    ypout(l) = 0.0_wp
-      do 120 j = 1,kold
+        ypout(l) = 0.0_wp
+      end do
+      do j = 1,kold
         i = kp2 - j
         gdif = og(i) - og(i-1)
         temp2 = (g(i) - g(i-1)) - sigma*gdif
         temp3 = (c(i) - c(i-1)) + rmu*gdif
-        do 110 l = 1,neqn
+        do l = 1,neqn
           yout(l) = yout(l) + temp2*phi(l,i)
- 110      ypout(l) = ypout(l) + temp3*phi(l,i)
- 120    continue
-      do 130 l = 1,neqn
+          ypout(l) = ypout(l) + temp3*phi(l,i)
+        end do
+      end do
+      do l = 1,neqn
         yout(l) = ((1.0_wp - sigma)*oy(l) + sigma*y(l)) +&
                    h*(yout(l) + (g(1) - sigma*og(1))*phi(l,1))
- 130    ypout(l) = hmu*(oy(l) - y(l)) +&
+        ypout(l) = hmu*(oy(l) - y(l)) +&
                       (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
+      end do
 
-!*****************************************************************************************    
     end subroutine dintp
-!*****************************************************************************************    
-      
-!***************************************************************************************** 
-!>   
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
 !  integrate a system of first order ordinary differential equations one step.
 !
 !   subroutine dsteps is normally used indirectly through subroutine
@@ -1960,7 +1969,7 @@
 !     report sla-73-1060, sandia laboratories, 1973.
 !
 !# History
-!   * 740101  date written --  
+!   * 740101  date written --
 !     shampine, l. f., (snla)
 !     gordon, m. k., (snla)
 !     modified by h.a. watts
@@ -1976,14 +1985,14 @@
                        kgi, gi)
 
     implicit none
-    
-    class(ddeabm_class),intent(inout) :: me    
+
+    class(ddeabm_class),intent(inout) :: me
     real(wp),intent(inout) :: x
     real(wp),intent(inout) :: h
     real(wp),intent(inout) :: eps
     real(wp),intent(inout) :: hold
     integer,intent(inout)  :: k
-    integer,intent(inout)  :: kold 
+    integer,intent(inout)  :: kold
     integer,intent(inout)  :: ns
     integer,intent(inout)  :: ksteps
     real(wp),intent(inout) :: twou
@@ -2017,8 +2026,8 @@
         hnew, p5eps, r,&
         reali, realns, rho, round, tau, temp1,&
         temp2, temp3, temp4, temp5, temp6, u
-      
-    !parameters:            
+
+    !parameters:
     real(wp),dimension(13),parameter :: two = [ 2.0_wp, &
                                                 4.0_wp, &
                                                 8.0_wp, &
@@ -2032,11 +2041,11 @@
                                                 2048.0_wp, &
                                                 4096.0_wp, &
                                                 8192.0_wp]
- 
+
      !note: this is a modification of the original code.
-     ! The full-precision coefficients are used here, instead 
+     ! The full-precision coefficients are used here, instead
      !    of the less precise ones in the original.
-     ! These were computed from the equation on p. 159 of Shampine/Gordon, 
+     ! These were computed from the equation on p. 159 of Shampine/Gordon,
      !    "Computer Solution of Ordinary Differential Equations", 1975.
       real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
                                                   0.8333333333333331E-01_wp, &
@@ -2051,7 +2060,7 @@
                                                   0.5924056412337661E-02_wp, &
                                                   0.5236693257950287E-02_wp, &
                                                   0.4677498407042263E-02_wp]
-                                                          
+
 !
 !       ***     begin block 0     ***
 !   check if step size or error tolerance is too small for machine
@@ -2065,7 +2074,7 @@
           h = sign(fouru*abs(x),h)
           return
       end if
-      
+
       p5eps = 0.5_wp*eps
 
 !   if error tolerance is too small, increase it to an acceptable value
@@ -2078,12 +2087,12 @@
           eps = 2.0_wp*round*(1.0_wp + fouru)
           return
       end if
-      
+
       crash = .false.
       g(1) = 1.0_wp
       g(2) = 0.5_wp
       sig(1) = 1.0_wp
-      
+
       if (start) then
 
     !   initialize.  compute appropriate step size for first step
@@ -2118,11 +2127,11 @@
                 phi(l,15) = 0.0_wp
               end do
           end if
-      
+
       end if
-      
+
       ifail = 0
- 
+
 !       ***     end block 0     ***
 
 !       ***     begin block 1     ***
@@ -2152,7 +2161,7 @@
       temp1 = h*realns
       sig(nsp1) = 1.0_wp
       if (k < nsp1) go to 110
-      do 105 i = nsp1,k
+      do i = nsp1,k
         im1 = i-1
         temp2 = psi(im1)
         psi(im1) = temp1
@@ -2160,7 +2169,8 @@
         temp1 = temp2 + h
         alpha(i) = h/temp1
         reali = i
- 105    sig(i+1) = reali*alpha(i)*sig(i)
+        sig(i+1) = reali*alpha(i)*sig(i)
+      end do
  110  psi(k) = temp1
 !
 !   compute coefficients g(*)
@@ -2168,10 +2178,11 @@
 !   initialize v(*) and set w(*).
 !
       if (ns > 1) go to 120
-      do 115 iq = 1,k
+      do iq = 1,k
         temp3 = iq*(iq+1)
         v(iq) = 1.0_wp/temp3
- 115    w(iq) = v(iq)
+        w(iq) = v(iq)
+      end do
       ivc = 0
       kgi = 0
       if (k == 1) go to 140
@@ -2195,10 +2206,11 @@
       gi(1) = w(2)
  123  nsm2 = ns-2
       if (nsm2 < jv) go to 130
-      do 125 j = jv,nsm2
+      do j = jv,nsm2
         i = k-j
         v(i) = v(i) - alpha(j+1)*v(i+1)
- 125    w(i) = v(i)
+        w(i) = v(i)
+      end do
       if (i /= 2) go to 130
       kgi = ns - 1
       gi(kgi) = w(2)
@@ -2207,9 +2219,10 @@
 !
  130  limit1 = kp1 - ns
       temp5 = alpha(ns)
-      do 135 iq = 1,limit1
+      do iq = 1,limit1
         v(iq) = v(iq) - temp5*v(iq+1)
- 135    w(iq) = v(iq)
+        w(iq) = v(iq)
+      end do
       g(nsp1) = w(1)
       if (limit1 == 1) go to 137
       kgi = ns
@@ -2224,12 +2237,15 @@
  140  nsp2 = ns + 2
       kprev = k
       if (kp1 < nsp2) go to 199
-      do 150 i = nsp2,kp1
+      do i = nsp2,kp1
         limit2 = kp2 - i
         temp6 = alpha(i-1)
-        do 145 iq = 1,limit2
- 145      w(iq) = w(iq) - temp6*w(iq+1)
- 150    g(i) = w(1)
+        do iq = 1,limit2
+          w(iq) = w(iq) - temp6*w(iq+1)
+        end do
+        g(i) = w(1)
+      end do
+
  199    continue
 !       ***     end block 1     ***
 !
@@ -2248,32 +2264,38 @@
       if (k < nsp1) go to 215
       do 210 i = nsp1,k
         temp1 = beta(i)
-        do 205 l = 1,neqn
- 205      phi(l,i) = temp1*phi(l,i)
+        do l = 1,neqn
+          phi(l,i) = temp1*phi(l,i)
+        end do
  210    continue
 !
 !   predict solution and differences
 !
- 215  do 220 l = 1,neqn
+ 215  do l = 1,neqn
         phi(l,kp2) = phi(l,kp1)
         phi(l,kp1) = 0.0_wp
- 220    p(l) = 0.0_wp
-      do 230 j = 1,k
+        p(l) = 0.0_wp
+      end do
+      do j = 1,k
         i = kp1 - j
         ip1 = i+1
         temp2 = g(i)
-        do 225 l = 1,neqn
+        do l = 1,neqn
           p(l) = p(l) + temp2*phi(l,i)
- 225      phi(l,i) = phi(l,i) + phi(l,ip1)
- 230    continue
+          phi(l,i) = phi(l,i) + phi(l,ip1)
+        end do
+      end do
       if (nornd) go to 240
-      do 235 l = 1,neqn
+      do l = 1,neqn
         tau = h*p(l) - phi(l,15)
         p(l) = y(l) + tau
- 235    phi(l,16) = (p(l) - y(l)) - tau
+        phi(l,16) = (p(l) - y(l)) - tau
+      end do
       go to 250
- 240  do 245 l = 1,neqn
- 245    p(l) = y(l) + h*p(l)
+
+ 240  do l = 1,neqn
+        p(l) = y(l) + h*p(l)
+      end do
  250  xold = x
       x = x + h
       absh = abs(h)
@@ -2323,15 +2345,17 @@
 !
       phase1 = .false.
       x = xold
-      do 310 i = 1,k
+      do i = 1,k
         temp1 = 1.0_wp/beta(i)
         ip1 = i+1
-        do 305 l = 1,neqn
- 305      phi(l,i) = temp1*(phi(l,i) - phi(l,ip1))
- 310    continue
+        do l = 1,neqn
+          phi(l,i) = temp1*(phi(l,i) - phi(l,ip1))
+        end do
+      end do
       if (k < 2) go to 320
-      do 315 i = 2,k
- 315    psi(i-1) = psi(i) - h
+      do i = 2,k
+        psi(i-1) = psi(i) - h
+      end do
 !
 !   on third failure, set order to one.  thereafter, use optimal step
 !   size
@@ -2364,28 +2388,32 @@
 !
       temp1 = h*g(kp1)
       if (nornd) go to 410
-      do 405 l = 1,neqn
+      do l = 1,neqn
         temp3 = y(l)
         rho = temp1*(yp(l) - phi(l,1)) - phi(l,16)
         y(l) = p(l) + rho
         phi(l,15) = (y(l) - p(l)) - rho
- 405    p(l) = temp3
+        p(l) = temp3
+      end do
       go to 420
- 410  do 415 l = 1,neqn
+ 410  do l = 1,neqn
         temp3 = y(l)
         y(l) = p(l) + temp1*(yp(l) - phi(l,1))
- 415    p(l) = temp3
+        p(l) = temp3
+      end do
  420  call me%df(x,y,yp)
 !
 !   update differences for next step
 !
-      do 425 l = 1,neqn
+      do l = 1,neqn
         phi(l,kp1) = yp(l) - phi(l,1)
- 425    phi(l,kp2) = phi(l,kp1) - phi(l,kp2)
-      do 435 i = 1,k
-        do 430 l = 1,neqn
- 430      phi(l,i) = phi(l,i) + phi(l,kp1)
- 435    continue
+        phi(l,kp2) = phi(l,kp1) - phi(l,kp2)
+      end do
+      do i = 1,k
+        do l = 1,neqn
+          phi(l,i) = phi(l,i) + phi(l,kp1)
+        end do
+      end do
 !
 !   estimate error at order k+1 unless:
 !     in first phase when always raise order,
@@ -2397,8 +2425,9 @@
       if (phase1) go to 450
       if (knew == km1) go to 455
       if (kp1 > ns) go to 460
-      do 440 l = 1,neqn
- 440    erkp1 = erkp1 + (phi(l,kp2)/wt(l))**2
+      do l = 1,neqn
+        erkp1 = erkp1 + (phi(l,kp2)/wt(l))**2
+      end do
       erkp1 = absh*gstr(kp1)*sqrt(erkp1)
 !
 !   using estimated error at order k+1, determine appropriate order
@@ -2438,11 +2467,11 @@
  465  h = hnew
 !       ***     end block 4     ***
 
-!*****************************************************************************************    
+!*****************************************************************************************
     end subroutine dsteps
-!*****************************************************************************************    
+!*****************************************************************************************
 
-!*****************************************************************************************    
+!*****************************************************************************************
 !>
 !  Replacement for original routine.
 
@@ -2453,11 +2482,11 @@
     character(len=*),intent(in) :: librar, subrou, messg
     integer,intent(in) :: nerr, level
 
-    write(*,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)      
+    write(*,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)
 
     end subroutine xermsg
-!*****************************************************************************************    
+!*****************************************************************************************
 
-!*****************************************************************************************    
+!*****************************************************************************************
     end module ddeabm_module
-!*****************************************************************************************    
+!*****************************************************************************************
