@@ -1,27 +1,21 @@
 !*****************************************************************************************    
+!>
+!  Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
+!
+!# See also
+!   * [SLATEC](http://www.netlib.org/slatec/src/)
+!
+!# History
+!   * Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
+!
+!# License
+!  The original SLATEC code is a public domain work of the US Government.
+!  The modifications are
+!  [Copyright (c) 2014-2015, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
+!
+!*****************************************************************************************
+
     module ddeabm_module
-!*****************************************************************************************
-!****h* SLATEC/ddeabm_module
-!
-!  NAME
-!    ddeabm_module
-!
-!  DESCRIPTION
-!    Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
-!
-!  SEE ALSO
-!    http://www.netlib.org/slatec/src/
-!
-!  HISTORY
-!    Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
-!
-!  LICENSE
-!    The original SLATEC code is a public domain work of the US Government.
-!
-!    The modifications are Copyright (c) 2014, Jacob Williams.
-!    See https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE for license terms.
-!
-!*****************************************************************************************
 
     use, intrinsic :: iso_fortran_env, wp=>real64    !double precision
     
@@ -30,30 +24,32 @@
     private
             
     !parameters:    
-    real(wp),parameter :: d1mach2 = huge(1.0_wp)                        ! the largest magnitude
-    real(wp),parameter :: d1mach4 = radix(1.0_wp)**(1-digits(1.0_wp))   ! the largest relative spacing
+    real(wp),parameter :: d1mach2 = huge(1.0_wp)                        !! the largest magnitude
+    real(wp),parameter :: d1mach4 = radix(1.0_wp)**(1-digits(1.0_wp))   !! the largest relative spacing
 
     type,public :: ddeabm_class
     
+        !! The main integration class.
+    
         private
         
-        ! the number of (first order) differential equations to be integrated (>=0)
-        integer :: neq = 0        
+        integer :: neq = 0    
+            !! the number of (first order) differential equations to be integrated (>=0)     
                 
-        !  the expense of solving the problem is monitored by counting the
-        !  number of  steps attempted. when this exceeds  maxnum, the counter
-        !  is reset to zero and the user is informed about possible excessive
-        !  work.
         integer :: maxnum = 500        
+            !!  the expense of solving the problem is monitored by counting the
+            !!  number of  steps attempted. when this exceeds  maxnum, the counter
+            !!  is reset to zero and the user is informed about possible excessive
+            !!  work.
         
-        !  to define the system of first order differential equations
-        !  which is to be solved.  for the given values of x and the
-        !  vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
-        !  evaluate the neq components of the system of differential
-        !  equations  du/dx=df(x,u)  and store the derivatives in the
-        !  array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
-        !  equations i=1,...,neq.
         procedure(func),pointer :: df => null()
+            !!  to define the system of first order differential equations
+            !!  which is to be solved.  for the given values of x and the
+            !!  vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
+            !!  evaluate the neq components of the system of differential
+            !!  equations  du/dx=df(x,u)  and store the derivatives in the
+            !!  array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
+            !!  equations i=1,...,neq.
 
         !work arrays:
         real(wp),dimension(:),allocatable   :: rwork
@@ -63,11 +59,12 @@
         
         !tolerances
         logical :: scalar_tols = .true.
-        real(wp),dimension(:),allocatable :: rtol, atol    !the user input tols
-        real(wp),dimension(:),allocatable :: rtol_tmp, atol_tmp    !the tols used internally
+        real(wp),dimension(:),allocatable :: rtol        !! the user input rel tol
+        real(wp),dimension(:),allocatable :: atol        !! the user input abs tol
+        real(wp),dimension(:),allocatable :: rtol_tmp    !! rel tol used internally
+        real(wp),dimension(:),allocatable :: atol_tmp    !! abs tol used internally
         
-        !info array:
-        integer,dimension(4) :: info = 0
+        integer,dimension(4) :: info = 0  !! info array
         
     contains
     
@@ -99,12 +96,10 @@
 !*****************************************************************************************    
     
 !*****************************************************************************************    
-    subroutine ddeabm_new_problem(me)
-!***************************************************************************************** 
-!
+!>
 !  Call this to indicate that a new problem is being solved (see ddeabm documentation).
-!
-!***************************************************************************************** 
+
+    subroutine ddeabm_new_problem(me)
     
     implicit none
     
@@ -112,17 +107,14 @@
     
     me%info(1) = 0
     
-!*****************************************************************************************    
    end subroutine ddeabm_new_problem
 !*****************************************************************************************    
    
-!*****************************************************************************************    
-    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol)
 !*****************************************************************************************   
-!
+!>
 !  Initialize the class, and set the variables that cannot be changed during a problem. 
-!
-!*****************************************************************************************   
+
+    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol)
     
     implicit none
 
@@ -185,20 +177,23 @@
 !*****************************************************************************************    
         
 !*****************************************************************************************    
+!>
+!  Destructor for [[ddeabm_class]].
+
     subroutine destroy_ddeabm(me)
-!*****************************************************************************************    
     
     implicit none
     
-    class(ddeabm_class),intent(out)    :: me    
+    class(ddeabm_class),intent(out) :: me    
        
-!*****************************************************************************************    
     end subroutine destroy_ddeabm
 !*****************************************************************************************    
             
 !*****************************************************************************************    
+!>
+!  Wrapper routine for [[ddeabm]].
+
     subroutine ddeabm_wrapper(me,t,y,tout,tstop,intermediate_steps,idid)
-!*****************************************************************************************    
     
     implicit none
 
@@ -206,8 +201,8 @@
     real(wp),intent(inout)                     :: t
     real(wp),dimension(me%neq),intent(inout)   :: y
     real(wp),intent(in)                        :: tout
-    real(wp),intent(in),optional               :: tstop           !not used if not present
-    logical,intent(in),optional                :: intermediate_steps !false if not present
+    real(wp),intent(in),optional               :: tstop              !! not used if not present
+    logical,intent(in),optional                :: intermediate_steps !! false if not present
     integer,intent(out)                        :: idid
     
     !set info array:
@@ -244,7 +239,7 @@
     me%rtol_tmp = me%rtol
     me%atol_tmp = me%atol
     
-       !call the lower-level routine:
+    !call the lower-level routine:
     call me%ddeabm( neq      = me%neq,&
                     t        = t,&
                     y        = y,&
@@ -265,33 +260,34 @@
 !*****************************************************************************************    
     
 !*****************************************************************************************    
-    subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw)
-!*****************************************************************************************
-!****f* ddeabm_module/ddeabm
+!>
+!  solve an initial value problem in ordinary differential
+!  equations using an adams-bashforth method.
 !
-!  NAME
-!    ddeabm
-!   
-!  DESCRIPTION
-!   
-!    solve an initial value problem in ordinary differential
-!    equations using an adams-bashforth method.
+!  subroutine ddeabm uses the adams-bashforth-moulton
+!  predictor-corrector formulas of orders one through twelve to
+!  integrate a system of neq first order ordinary differential
+!  equations of the form `du/dx = df(x,u)`
+!  when the vector `y(*)` of initial values for `u(*)` at x=t is given.
+!  the subroutine integrates from t to tout. it is easy to continue the
+!  integration to get results at additional tout.  this is the interval
+!  mode of operation.  it is also easy for the routine to return with
+!  the solution at each intermediate step on the way to tout.  this is
+!  the intermediate-output mode of operation.
 !
-!   subroutine ddeabm uses the adams-bashforth-moulton
-!   predictor-corrector formulas of orders one through twelve to
-!   integrate a system of neq first order ordinary differential
-!   equations of the form
-!                         du/dx = df(x,u)
-!   when the vector y(*) of initial values for u(*) at x=t is given.
-!   the subroutine integrates from t to tout. it is easy to continue the
-!   integration to get results at additional tout.  this is the interval
-!   mode of operation.  it is also easy for the routine to return with
-!   the solution at each intermediate step on the way to tout.  this is
-!   the intermediate-output mode of operation.
+!  ddeabm is primarily designed to solve non-stiff and
+!  mildly stiff differential equations when derivative evaluations
+!  are expensive, high accuracy results are needed or answers at
+!  many specific points are required. ddeabm attempts to discover
+!  when it is not suitable for the task posed.
 !
-! **********************************************************************
-! * description of the arguments to ddeabm (an overview) *
-! **********************************************************************
+!  **quantities which are used as input items are:**
+!    `neq, t, y(*), tout, info(*), rtol, atol, rwork(1), lrw and liw.`
+!
+!  **quantities which may be altered by the code are:**
+!    `t, y(*), info(1), rtol, atol, idid, rwork(*) and iwork(*).`
+!
+!# description of the arguments to ddeabm (an overview)
 !
 !   the parameters are
 !
@@ -334,17 +330,7 @@
 !             which provides the code with needed storage space and an
 !             across call flag.
 !
-!  quantities which are used as input items are
-!             neq, t, y(*), tout, info(*),
-!             rtol, atol, rwork(1), lrw and liw.
-!
-!  quantities which may be altered by the code are
-!             t, y(*), info(1), rtol, atol,
-!             idid, rwork(*) and iwork(*).
-!
-! **********************************************************************
-! * input -- what to do on the first call to ddeabm *
-! **********************************************************************
+!# input -- what to do on the first call to ddeabm
 !
 !   the first call of the code is defined to be the start of each new
 !   problem.  read through the descriptions of all the following items,
@@ -542,9 +528,7 @@
 !      liw -- set it to the declared length of the iwork array.
 !             you must have  liw >= 51
 !
-! **********************************************************************
-! * output -- after any return from ddeabm *
-! **********************************************************************
+!# output -- after any return from ddeabm
 !
 !   the principal aim of the code is to return a computed solution at
 !   tout, although it is also possible to obtain intermediate results
@@ -637,10 +621,7 @@
 !                        y(*) when idid=1 or 2, and by interpolation
 !                        when idid=3.
 !
-! **********************************************************************
-! * input -- what to do to continue the integration *
-! *             (calls after the first)             *
-! **********************************************************************
+!# input -- what to do to continue the integration (calls after the first)
 !
 !        this code is organized so that subsequent calls to continue the
 !        integration involve little (if any) additional effort on your
@@ -729,44 +710,34 @@
 !                     problem.  an attempt to do so will result in your
 !                     run being terminated.
 !
-! **********************************************************************
-! *long description:
+!# Authors
 !
-! ....   ddeabm is a variable order (one through twelve) adams code.
-! ....   its complexity lies somewhere between that of dderkf and
-! ....   ddebdf.  ddeabm is primarily designed to solve non-stiff and
-! ....   mildly stiff differential equations when derivative evaluations
-! ....   are expensive, high accuracy results are needed or answers at
-! ....   many specific points are required. ddeabm attempts to discover
-! ....   when it is not suitable for the task posed.
-!
-! *********************************************************************
-!
-!  AUTHORS
-!
-!    L. F. shampine 
-!    H. A. Watts 
-!    M. K. gordon
+!   * L. F. shampine 
+!   * H. A. Watts 
+!   * M. K. gordon
 !    
-!  SEE ALSO
-!    l. f. shampine and h. a. watts, depac - design of a user
-!        oriented package of ode solvers, report sand79-2374,
-!        sandia laboratories, 1979.
+!# See also
 !
-!  HISTORY
+!   * l. f. shampine and h. a. watts, depac - design of a user
+!     oriented package of ode solvers, report sand79-2374,
+!     sandia laboratories, 1979.
 !
-!   820301  date written
-!   890531  changed all specific intrinsics to generic.  (wrb)
-!   890831  modified array declarations.  (wrb)
-!   891006  cosmetic changes to prologue.  (wrb)
-!   891024  changed references from dvnorm to dhvnrm.  (wrb)
-!   891024  revision date from version 3.2
-!   891214  prologue converted to version 4.0 format.  (bab)
-!   900510  convert xerrwv calls to xermsg calls.  (rwc)
-!   920501  reformatted the references section.  (wrb)
-!    July, 2014 : Major refactoring into modern Fortran (jw)
+!# History
+!
+!   * 820301  date written
+!   * 890531  changed all specific intrinsics to generic.  (wrb)
+!   * 890831  modified array declarations.  (wrb)
+!   * 891006  cosmetic changes to prologue.  (wrb)
+!   * 891024  changed references from dvnorm to dhvnrm.  (wrb)
+!   * 891024  revision date from version 3.2
+!   * 891214  prologue converted to version 4.0 format.  (bab)
+!   * 900510  convert xerrwv calls to xermsg calls.  (rwc)
+!   * 920501  reformatted the references section.  (wrb)
+!   * July, 2014 : Major refactoring into modern Fortran (jw)
 !
 !*****************************************************************************************    
+
+    subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw)
 
     implicit none
 
@@ -899,39 +870,30 @@
 !*****************************************************************************************    
       
 !*****************************************************************************************    
+!>
+!  ddeabm merely allocates storage for ddes to relieve the user of the
+!  inconvenience of a long call list.  consequently ddes is used as
+!  described in the comments for ddeabm.
+!
+!# Author
+!   * watts, h. a., (snla)
+!
+!# History
+!   * 820301  date written
+!   * 890531  changed all specific intrinsics to generic.  (wrb)
+!   * 890831  modified array declarations.  (wrb)
+!   * 891214  prologue converted to version 4.0 format.  (bab)
+!   * 900328  added type section.  (wrb)
+!   * 900510  convert xerrwv calls to xermsg calls, cvt gotos to if-then-else.  (rwc)
+!   * 910722  updated author section.  (als)
+!
+!*****************************************************************************************
+
     subroutine ddes (me, neq, t, y, tout, info, rtol, atol, idid,&
          ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi,&
          h, eps, x, xold, hold, told, delsgn, tstop, twou, fouru, start,&
          phase1, nornd, stiff, intout, ns, kord, kold, init, ksteps,&
          kle4, iquit, kprev, ivc, iv, kgi)
-!*****************************************************************************************    
-!****f* ddeabm_module/ddeabm
-!
-!  NAME
-!    ddeabm
-!
-!  DESCRIPTION
-!   ddeabm merely allocates storage for ddes to relieve the user of the
-!   inconvenience of a long call list.  consequently ddes is used as
-!   described in the comments for ddeabm.
-!
-!  AUTHOR
-!    watts, h. a., (snla)
-!
-!  SEE ALSO
-!    ddeabm
-!
-!  HISTORY
-!   820301  date written
-!   890531  changed all specific intrinsics to generic.  (wrb)
-!   890831  modified array declarations.  (wrb)
-!   891214  prologue converted to version 4.0 format.  (bab)
-!   900328  added type section.  (wrb)
-!   900510  convert xerrwv calls to xermsg calls, cvt gotos to
-!           if-then-else.  (rwc)
-!   910722  updated author section.  (als)
-!
-!*****************************************************************************************    
 
     implicit none
     
@@ -1362,40 +1324,27 @@
 !*****************************************************************************************    
       
 !*****************************************************************************************    
-    subroutine dhstrt (me,neq,a,b,y,yprime,etol,morder,small,big,spy,pv,yp,sf,h)
-!*****************************************************************************************    
-!***begin prologue  dhstrt
-!***subsidiary
-!***purpose  subsidiary to ddeabm, ddebdf and dderkf
-!***library   slatec
-!***type      double precision (hstart-s, dhstrt-d)
-!***author  watts, h. a., (snla)
-!***description
+!>
+!  dhstrt computes a starting step size to be used in solving initial
+!  value problems in ordinary differential equations.
 !
-!   dhstrt computes a starting step size to be used in solving initial
-!   value problems in ordinary differential equations.
+!  subroutine dhstrt computes a starting step size to be used by an
+!  initial value method in solving ordinary differential equations.
+!  it is based on an estimate of the local lipschitz constant for the
+!  differential equation   (lower bound on a norm of the jacobian) ,
+!  a bound on the differential equation  (first derivative) , and
+!  a bound on the partial derivative of the equation with respect to
+!  the independent variable.
+!  (all approximated near the initial point a)
 !
-! **********************************************************************
-!  abstract
+!  subroutine dhstrt uses a function subprogram dhvnrm for computing
+!  a vector norm. the maximum norm is presently utilized though it
+!  can easily be replaced by any other vector norm. it is presumed
+!  that any replacement norm routine would be carefully coded to
+!  prevent unnecessary underflows or overflows from occurring, and
+!  also, would not alter the vector or number of components.
 !
-!     subroutine dhstrt computes a starting step size to be used by an
-!     initial value method in solving ordinary differential equations.
-!     it is based on an estimate of the local lipschitz constant for the
-!     differential equation   (lower bound on a norm of the jacobian) ,
-!     a bound on the differential equation  (first derivative) , and
-!     a bound on the partial derivative of the equation with respect to
-!     the independent variable.
-!     (all approximated near the initial point a)
-!
-!     subroutine dhstrt uses a function subprogram dhvnrm for computing
-!     a vector norm. the maximum norm is presently utilized though it
-!     can easily be replaced by any other vector norm. it is presumed
-!     that any replacement norm routine would be carefully coded to
-!     prevent unnecessary underflows or overflows from occurring, and
-!     also, would not alter the vector or number of components.
-!
-! **********************************************************************
-!  on input you must provide the following
+!# on input you must provide the following
 !
 !      df -- this is a subroutine of the form
 !                               df(x,u,uprime)
@@ -1468,8 +1417,7 @@
 !             arrays of length neq which provide the routine with needed
 !             storage space.
 !
-! **********************************************************************
-!  on output  (after the return from dhstrt),
+!# on output  (after the return from dhstrt),
 !
 !      h -- is an appropriate starting step size to be attempted by the
 !             differential equation method.
@@ -1477,21 +1425,19 @@
 !           all parameters in the call list remain unchanged except for
 !           the working arrays spy(*),pv(*),yp(*), and sf(*).
 !
-! **********************************************************************
-!
-!***see also  ddeabm, ddebdf, dderkf
-!***routines called  dhvnrm
-!***revision history  (yymmdd)
-!   820301  date written
-!   890531  changed all specific intrinsics to generic.  (wrb)
-!   890831  modified array declarations.  (wrb)
-!   890911  removed unnecessary intrinsics.  (wrb)
-!   891024  changed references from dvnorm to dhvnrm.  (wrb)
-!   891214  prologue converted to version 4.0 format.  (bab)
-!   900328  added type section.  (wrb)
-!   910722  updated author section.  (als)
-! 
-!*****************************************************************************************    
+!# History
+!   * 820301  date written -- watts, h. a., (snla)
+!   * 890531  changed all specific intrinsics to generic.  (wrb)
+!   * 890831  modified array declarations.  (wrb)
+!   * 890911  removed unnecessary intrinsics.  (wrb)
+!   * 891024  changed references from dvnorm to dhvnrm.  (wrb)
+!   * 891214  prologue converted to version 4.0 format.  (bab)
+!   * 900328  added type section.  (wrb)
+!   * 910722  updated author section.  (als)
+
+    subroutine dhstrt (me,neq,a,b,y,yprime,etol,morder,small,big,spy,pv,yp,sf,h)
+    
+    implicit none
 
     class(ddeabm_class),intent(inout) :: me    
     integer,intent(in) :: neq
@@ -1710,24 +1656,17 @@
 !     now set direction of integration
       h = sign(h,dx)
 
-!*****************************************************************************************    
     end subroutine dhstrt
 !*****************************************************************************************    
       
-!*****************************************************************************************    
-    function dhvnrm (v, n) result(m)
 !*****************************************************************************************
+!>
+!  Compute the maximum norm of the vector v of length n.
 !
-!  NAME
-!    dhvnrm
-!    
-!  DESCRIPTION
-!    Compute the maximum norm of the vector v of length n
-!
-!  HISTORY
-!    JW : 7/1/2014 : replace original routine
-!
-!*****************************************************************************************    
+!# History
+!   * JW : 7/1/2014 : replace original routine
+
+    function dhvnrm (v, n) result(m)
 
     implicit none
     
@@ -1737,70 +1676,43 @@
    
     m = maxval(abs(v(1:n)))
 
-!*****************************************************************************************    
     end function dhvnrm
 !*****************************************************************************************    
       
 !*****************************************************************************************    
+!>
+!  approximate the solution at xout by evaluating the
+!  polynomial computed in dsteps at xout.  must be used in
+!  conjunction with dsteps.
+!
+!  the methods in subroutine  dsteps  approximate the solution near  x
+!  by a polynomial.  subroutine  dintp  approximates the solution at
+!  xout  by evaluating the polynomial there.  information defining this
+!  polynomial is passed from  dsteps  so  dintp  cannot be used alone.
+!
+!  subroutine dsteps is completely explained and documented in the text
+!  "computer solution of ordinary differential equations, the initial
+!  value problem"  by l. f. shampine and m. k. gordon.
+!
+!# References
+!   * h. a. watts, a smoother interpolant for de/step, intrp
+!     ii, report sand84-0293, sandia laboratories, 1984.
+!
+!# History
+!   * 840201  date written -- watts, h. a., (snla)
+!   * 890831  modified array declarations.  (wrb)
+!   * 890831  revision date from version 3.2
+!   * 891214  prologue converted to version 4.0 format.  (bab)
+!   * 920501  reformatted the references section.  (wrb)
+
     subroutine dintp (x,y,xout,yout,ypout,neqn,kold,phi,ivc,iv,kgi,gi,alpha,og,ow,ox,oy)
-!*****************************************************************************************    
-!***purpose  approximate the solution at xout by evaluating the
-!            polynomial computed in dsteps at xout.  must be used in
-!            conjunction with dsteps.
-!***library   slatec (depac)
-!***category  i1a1b
-!***type      double precision (sintrp-s, dintp-d)
-!***keywords  adams method, depac, initial value problems, ode,
-!             ordinary differential equations, predictor-corrector,
-!             smooth interpolant
-!***author  watts, h. a., (snla)
-!***description
-!
-!   the methods in subroutine  dsteps  approximate the solution near  x
-!   by a polynomial.  subroutine  dintp  approximates the solution at
-!   xout  by evaluating the polynomial there.  information defining this
-!   polynomial is passed from  dsteps  so  dintp  cannot be used alone.
-!
-!   subroutine dsteps is completely explained and documented in the text
-!   "computer solution of ordinary differential equations, the initial
-!   value problem"  by l. f. shampine and m. k. gordon.
-!
-!   input to dintp --
-!
-!   the user provides storage in the calling program for the arrays in
-!   the call list
-!      dimension y(neqn),yout(neqn),ypout(neqn),phi(neqn,16),oy(neqn)
-!                and alpha(12),og(13),ow(12),gi(11),iv(10)
-!   and defines
-!      xout -- point at which solution is desired.
-!   the remaining parameters are defined in  dsteps  and passed to
-!   dintp  from that subroutine
-!
-!   output from  dintp --
-!
-!      yout(*) -- solution at  xout
-!      ypout(*) -- derivative of solution at  xout
-!   the remaining parameters are returned unaltered from their input
-!   values.  integration with  dsteps  may be continued.
-!
-!***references  h. a. watts, a smoother interpolant for de/step, intrp
-!                 ii, report sand84-0293, sandia laboratories, 1984.
-!***routines called  (none)
-!***revision history  (yymmdd)
-!   840201  date written
-!   890831  modified array declarations.  (wrb)
-!   890831  revision date from version 3.2
-!   891214  prologue converted to version 4.0 format.  (bab)
-!   920501  reformatted the references section.  (wrb)
-!
-!*****************************************************************************************    
 
     implicit none
     
     integer,intent(in)                         :: neqn
     real(wp),intent(in)                        :: x
     real(wp),dimension(neqn),intent(in)        :: y
-    real(wp),intent(in)                        :: xout
+    real(wp),intent(in)                        :: xout   !! point at which solution is desired
     integer,intent(in)                         :: kold
     real(wp),dimension(neqn,16),intent(in)     :: phi
     integer,intent(in)                         :: ivc
@@ -1812,8 +1724,8 @@
     real(wp),dimension(12),intent(in)          :: ow
     real(wp),dimension(neqn),intent(in)        :: oy
     real(wp),intent(in)                        :: ox    
-    real(wp),dimension(neqn),intent(out)       :: yout   ! solution at xout
-    real(wp),dimension(neqn),intent(out)       :: ypout  ! derivative of solution at xout
+    real(wp),dimension(neqn),intent(out)       :: yout   !! solution at xout
+    real(wp),dimension(neqn),intent(out)       :: ypout  !! derivative of solution at xout
     
     !local variables:
     integer :: i, iq, iw, j, jq, kp1, kp2, l, m
@@ -1901,30 +1813,12 @@
     end subroutine dintp
 !*****************************************************************************************    
       
-!*****************************************************************************************    
-    subroutine dsteps (me, neqn, y, x, h, eps, wt, start, hold, k,&
-         kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g,&
-         phase1, ns, nornd, ksteps, twou, fouru, xold, kprev, ivc, iv,&
-         kgi, gi)
-!*****************************************************************************************    
-!***purpose  integrate a system of first order ordinary differential
-!            equations one step.
-!***library   slatec (depac)
-!***category  i1a1b
-!***type      double precision (steps-s, dsteps-d)
-!***keywords  adams method, depac, initial value problems, ode,
-!             ordinary differential equations, predictor-corrector
-!***author  shampine, l. f., (snla)
-!           gordon, m. k., (snla)
-!             modified by h.a. watts
-!***description
+!***************************************************************************************** 
+!>   
+!  integrate a system of first order ordinary differential equations one step.
 !
-!   written by l. f. shampine and m. k. gordon
-!
-!   abstract
-!
-!   subroutine  dsteps  is normally used indirectly through subroutine
-!   ddeabm .  because ddeabm suffices for most problems and is much
+!   subroutine dsteps is normally used indirectly through subroutine
+!   ddeabm.  because ddeabm suffices for most problems and is much
 !   easier to use, using it should be considered before using  dsteps
 !   alone.
 !
@@ -1944,8 +1838,8 @@
 !   ordinary differential equations with ode, step, and intrp",
 !   by l. f. shampine and m. k. gordon, sla-73-1060.
 !
+!# the parameters represent
 !
-!   the parameters represent --
 !      df -- subroutine to evaluate derivatives
 !      neqn -- number of equations to be integrated
 !      y(*) -- solution vector at x
@@ -1966,14 +1860,15 @@
 !      ksteps -- counter on attempted steps
 !      twou -- 2.*u where u is machine unit roundoff quantity
 !      fouru -- 4.*u where u is machine unit roundoff quantity
+!
 !   the variables x,xold,kold,kgi and ivc and the arrays y,phi,alpha,g,
 !   w,p,iv and gi are required for the interpolation subroutine sintrp.
 !   the remaining variables and arrays are included in the call list
 !   only to eliminate local retention of variables between calls.
 !
-!   input to dsteps
+!# input to dsteps
 !
-!      first call --
+!   **first call**
 !
 !   the user must provide storage in his calling program for all arrays
 !   in the call list, namely
@@ -1981,7 +1876,7 @@
 !     dimension y(neqn),wt(neqn),phi(neqn,16),p(neqn),yp(neqn),psi(12),
 !    1  alpha(12),beta(12),sig(13),v(12),w(12),g(13),gi(11),iv(10)
 !
-!    **note**
+!   **note**
 !
 !   the user must also declare  start ,  crash ,  phase1  and  nornd
 !   logical variables and  df  an external subroutine, supply the
@@ -2021,7 +1916,7 @@
 !                 error,  abserr  is absolute error and  eps =
 !                 max(relerr,abserr) .
 !
-!      subsequent calls --
+!# subsequent calls
 !
 !   subroutine  dsteps  is designed so that all information needed to
 !   continue the integration, including the step size  h  and the order
@@ -2038,9 +1933,9 @@
 !   calling  dsteps  again.  this is the only situation in which  start
 !   should be altered.
 !
-!   output from dsteps
+!# output from dsteps
 !
-!      successful step --
+!   **successful step**
 !
 !   the subroutine returns after each successful step with  start  and
 !   crash  set .false. .  x  represents the independent variable
@@ -2049,7 +1944,7 @@
 !   represent information corresponding to the new  x  needed to
 !   continue the integration.
 !
-!      unsuccessful step --
+!   **unsuccessful step**
 !
 !   when the error tolerance is too small for the machine precision,
 !   the subroutine returns without taking a step and  crash = .true. .
@@ -2059,19 +1954,26 @@
 !   just calls the code again.  a restart is neither required nor
 !   desirable.
 !
-!***references  l. f. shampine and m. k. gordon, solving ordinary
-!                 differential equations with ode, step, and intrp,
-!                 report sla-73-1060, sandia laboratories, 1973.
-!***routines called  d1mach, dhstrt
-!***revision history  (yymmdd)
-!   740101  date written
-!   890531  changed all specific intrinsics to generic.  (wrb)
-!   890831  modified array declarations.  (wrb)
-!   890831  revision date from version 3.2
-!   891214  prologue converted to version 4.0 format.  (bab)
-!   920501  reformatted the references section.  (wrb)
+!# Reference
+!   * l. f. shampine and m. k. gordon, solving ordinary
+!     differential equations with ode, step, and intrp,
+!     report sla-73-1060, sandia laboratories, 1973.
 !
-!*****************************************************************************************    
+!# History
+!   * 740101  date written --  
+!     shampine, l. f., (snla)
+!     gordon, m. k., (snla)
+!     modified by h.a. watts
+!   * 890531  changed all specific intrinsics to generic.  (wrb)
+!   * 890831  modified array declarations.  (wrb)
+!   * 890831  revision date from version 3.2
+!   * 891214  prologue converted to version 4.0 format.  (bab)
+!   * 920501  reformatted the references section.  (wrb)
+
+    subroutine dsteps (me, neqn, y, x, h, eps, wt, start, hold, k,&
+                       kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g,&
+                       phase1, ns, nornd, ksteps, twou, fouru, xold, kprev, ivc, iv,&
+                       kgi, gi)
 
     implicit none
     
@@ -2090,7 +1992,7 @@
     integer,intent(inout)  :: kprev
     integer,intent(inout)  :: ivc
     integer,intent(inout)  :: kgi
-    integer,intent(in)       :: neqn
+    integer,intent(in)     :: neqn  !! number of equations to be integrated
     logical,intent(inout)  :: start,crash,phase1,nornd
     real(wp),dimension(neqn),intent(inout) :: y
     real(wp),dimension(neqn),intent(inout) :: wt
@@ -2117,7 +2019,7 @@
         temp2, temp3, temp4, temp5, temp6, u
       
     !parameters:            
-    real(wp),dimension(13),parameter :: two = [    2.0_wp, &
+    real(wp),dimension(13),parameter :: two = [ 2.0_wp, &
                                                 4.0_wp, &
                                                 8.0_wp, &
                                                 16.0_wp, &
@@ -2541,10 +2443,10 @@
 !*****************************************************************************************    
 
 !*****************************************************************************************    
+!>
+!  Replacement for original routine.
+
     subroutine xermsg (librar, subrou, messg, nerr, level)
-!*****************************************************************************************    
-!  Replacement for original routine
-!*****************************************************************************************    
 
     implicit none
 
@@ -2553,7 +2455,6 @@
 
     write(*,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)      
 
-!*****************************************************************************************    
     end subroutine xermsg
 !*****************************************************************************************    
 
