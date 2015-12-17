@@ -68,6 +68,8 @@
 
     contains
 
+        private
+
         procedure,public :: initialize     => ddeabm_initialize
         procedure,public :: integrate      => ddeabm_wrapper
         procedure,public :: destroy        => destroy_ddeabm
@@ -91,6 +93,8 @@
         real(wp),dimension(:),intent(out) :: xdot
         end subroutine func
     end interface
+
+    public :: ddeabm_test
 
     contains
 !*****************************************************************************************
@@ -1558,9 +1562,9 @@
 !              use a shifted value of the independent variable
 !                                    in computing one estimate
                call me%df(a+da,pv,yp)
-               do 90 j = 1, neq
+               do j = 1, neq
                   pv(j) = yp(j) - sf(j)
-   90          continue
+               end do
   100       continue
 !           choose largest bounds on the first derivative
 !                          and a local lipschitz constant
@@ -1573,7 +1577,7 @@
             if (k == lk) go to 160
 !           choose next perturbation vector
             if (delf == 0.0_wp) delf = 1.0_wp
-            do 130 j = 1, neq
+            do j = 1, neq
                if (k == 2) go to 110
                   dy = abs(pv(j))
                   if (dy == 0.0_wp) dy = delf
@@ -1585,7 +1589,7 @@
                if (spy(j) == 0.0_wp) spy(j) = yp(j)
                if (spy(j) /= 0.0_wp) dy = sign(dy,spy(j))
                yp(j) = dy
-  130       continue
+            end do
             delf = dhvnrm(yp,neq)
   140    continue
   150    continue
@@ -1608,11 +1612,11 @@
 !
       tolmin = big
       tolsum = 0.0_wp
-      do 170 k = 1, neq
+      do k = 1, neq
          tolexp = log10(etol(k))
          tolmin = min(tolmin,tolexp)
          tolsum = tolsum + tolexp
-  170 continue
+      end do
       tolp = 10.0_wp**(0.5_wp*(tolsum/neq + tolmin)/(morder+1))
 !
 !     ..................................................................
@@ -1674,9 +1678,9 @@
 
     implicit none
 
-    real(wp)                             :: m
-    integer,intent(in)                   :: n
-    real(wp),dimension(:),intent(in)     :: v
+    real(wp)                         :: m
+    integer,intent(in)               :: n
+    real(wp),dimension(:),intent(in) :: v
 
     m = maxval(abs(v(1:n)))
 
@@ -1713,23 +1717,23 @@
 
     implicit none
 
-    integer,intent(in)                         :: neqn
-    real(wp),intent(in)                        :: x
-    real(wp),dimension(neqn),intent(in)        :: y
-    real(wp),intent(in)                        :: xout   !! point at which solution is desired
-    integer,intent(in)                         :: kold
-    real(wp),dimension(neqn,16),intent(in)     :: phi
-    integer,intent(in)                         :: ivc
-    integer,dimension(10),intent(in)           :: iv
-    integer,intent(in)                         :: kgi
-    real(wp),dimension(11),intent(in)          :: gi
-    real(wp),dimension(12),intent(in)          :: alpha
-    real(wp),dimension(13),intent(in)          :: og
-    real(wp),dimension(12),intent(in)          :: ow
-    real(wp),dimension(neqn),intent(in)        :: oy
-    real(wp),intent(in)                        :: ox
-    real(wp),dimension(neqn),intent(out)       :: yout   !! solution at xout
-    real(wp),dimension(neqn),intent(out)       :: ypout  !! derivative of solution at xout
+    integer,intent(in)                     :: neqn
+    real(wp),intent(in)                    :: x
+    real(wp),dimension(neqn),intent(in)    :: y
+    real(wp),intent(in)                    :: xout   !! point at which solution is desired
+    integer,intent(in)                     :: kold
+    real(wp),dimension(neqn,16),intent(in) :: phi
+    integer,intent(in)                     :: ivc
+    integer,dimension(10),intent(in)       :: iv
+    integer,intent(in)                     :: kgi
+    real(wp),dimension(11),intent(in)      :: gi
+    real(wp),dimension(12),intent(in)      :: alpha
+    real(wp),dimension(13),intent(in)      :: og
+    real(wp),dimension(12),intent(in)      :: ow
+    real(wp),dimension(neqn),intent(in)    :: oy
+    real(wp),intent(in)                    :: ox
+    real(wp),dimension(neqn),intent(out)   :: yout   !! solution at xout
+    real(wp),dimension(neqn),intent(out)   :: ypout  !! derivative of solution at xout
 
     !local variables:
     integer :: i, iq, iw, j, jq, kp1, kp2, l, m
@@ -1813,10 +1817,10 @@
         end do
       end do
       do l = 1,neqn
-        yout(l) = ((1.0_wp - sigma)*oy(l) + sigma*y(l)) +&
+        yout(l) = ((1.0_wp - sigma)*oy(l) + sigma*y(l)) + &
                    h*(yout(l) + (g(1) - sigma*og(1))*phi(l,1))
-        ypout(l) = hmu*(oy(l) - y(l)) +&
-                      (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
+        ypout(l) = hmu*(oy(l) - y(l)) + &
+                   (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
       end do
 
     end subroutine dintp
@@ -2306,13 +2310,14 @@
       erkm2 = 0.0_wp
       erkm1 = 0.0_wp
       erk = 0.0_wp
-      do 265 l = 1,neqn
+      do l = 1,neqn
         temp3 = 1.0_wp/wt(l)
         temp4 = yp(l) - phi(l,1)
         if (km2)265,260,255
  255    erkm2 = erkm2 + ((phi(l,km1)+temp4)*temp3)**2
  260    erkm1 = erkm1 + ((phi(l,k)+temp4)*temp3)**2
  265    erk = erk + (temp4*temp3)**2
+      end do
       if (km2)280,275,270
  270  erkm2 = absh*sig(km1)*gstr(km2)*sqrt(erkm2)
  275  erkm1 = absh*sig(k)*gstr(km1)*sqrt(erkm1)
@@ -2485,6 +2490,139 @@
     write(*,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)
 
     end subroutine xermsg
+!*****************************************************************************************
+
+!*****************************************************************************************
+!> author: Jacob Williams
+!  date: 12/16/2015
+!
+!  Unit test for [[ddeabm_class]].
+!  Integrate a two-body orbit around the Earth.
+
+    subroutine ddeabm_test()
+
+    type,extends(ddeabm_class) :: spacecraft
+        !! spacecraft propagation type.
+        !! extends the [[ddeabm_class]] to include data used in the deriv routine
+        real(wp) :: mu = 0.0_wp      !! central body gravitational parameter (km3/s2)
+        integer :: fevals = 0        !! number of function evaluations
+        logical :: first = .true.    !! first point is being exported
+    end type spacecraft
+
+    integer,parameter :: n=6    !! number of state variables
+    real(wp),parameter :: tol = 1.0e-12_wp !! event location tolerance
+
+    type(spacecraft) :: s, s2
+    real(wp) :: t0,tf,x0(n),dt,xf(n),x02(n),gf,tf_actual,t,x(n)
+    integer :: idid
+
+    write(*,*) ''
+    write(*,*) '---------------'
+    write(*,*) ' ddeabm_test'
+    write(*,*) '---------------'
+    write(*,*) ''
+
+    !***************************************************************************
+
+    !constructor (main body is Earth):
+
+    call s%initialize(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp])
+    s%mu = 398600.436233_wp  !earth
+
+    !initial conditions:
+    x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
+            1.0_wp,2.0_wp,3.0_wp]
+    t0 = 0.0_wp       !initial time (sec)
+    tf = 1000.0_wp    !final time (sec)
+
+    write(*,'(A/,*(F15.6/))') 'Initial state:',x0
+    s%fevals = 0
+    s%first = .true.
+    t = t0
+    x = x0
+    call s%first_call()
+    call s%integrate(t,x,tf,idid=idid)    !forward
+    xf = x
+    write(*,*) ''
+    write(*,*) 'idid: ',idid
+    write(*,'(A/,*(F15.6/))') 'Final state:',xf
+
+    t = tf
+    x = xf
+    call s%first_call()  !restarting the integration
+    call s%integrate(t,x,t0,idid=idid)  !backwards
+    x02 = x
+
+    write(*,*) 'idid: ',idid
+    write(*,'(A/,*(F15.6/))') 'Initial state:',x02
+    write(*,*) ''
+    write(*,'(A/,*(E20.12/))') 'Error:',x02-x0
+    write(*,'(A,I5)') 'Function evaluations:', s%fevals
+    write(*,*) ''
+
+    contains
+!*****************************************************************************************
+
+    !*********************************************************
+        subroutine twobody(me,t,x,xdot)
+
+        !! derivative routine for two-body orbit propagation
+
+        implicit none
+
+        class(ddeabm_class),intent(inout) :: me
+        real(wp),intent(in)               :: t
+        real(wp),dimension(:),intent(in)  :: x
+        real(wp),dimension(:),intent(out) :: xdot
+
+        real(wp),dimension(3) :: r,v,a_grav
+        real(wp) :: rmag
+
+        select type (me)
+        class is (spacecraft)
+
+            r = x(1:3)
+            v = x(4:6)
+            rmag = norm2(r)
+            a_grav = -me%mu/rmag**3 * r !acceleration due to gravity
+
+            xdot(1:3) = v
+            xdot(4:6) = a_grav
+
+            me%fevals = me%fevals + 1
+
+        end select
+
+        end subroutine twobody
+    !*********************************************************
+
+    !*********************************************************
+        subroutine twobody_report(me,t,x)
+
+        !! report function - write time,state to console
+
+        implicit none
+
+        class(ddeabm_class),intent(inout)    :: me
+        real(wp),intent(in)                  :: t
+        real(wp),dimension(:),intent(in)     :: x
+
+        select type (me)
+        class is (spacecraft)
+            if (me%first) then  !print header
+                write(*,*) ''
+                write(*,'(*(A15,1X))')  'time (sec)','x (km)','y (km)','z (km)',&
+                                        'vx (km/s)','vy (km/s)','vz (km/s)'
+                me%first = .false.
+            end if
+        end select
+
+        write(*,'(*(F15.6,1X))') t,x
+
+        end subroutine twobody_report
+    !*********************************************************
+
+    end subroutine ddeabm_test
 !*****************************************************************************************
 
 !*****************************************************************************************
