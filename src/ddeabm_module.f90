@@ -44,36 +44,86 @@
 
         procedure(func),pointer :: df => null()
             !!  to define the system of first order differential equations
-            !!  which is to be solved.  for the given values of x and the
-            !!  vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
-            !!  evaluate the neq components of the system of differential
-            !!  equations  du/dx=df(x,u)  and store the derivatives in the
-            !!  array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
-            !!  equations i=1,...,neq.
-
-        !work arrays:
-        real(wp),dimension(:),allocatable   :: rwork
-        integer                             :: lrw    = 0
-        integer,dimension(:),allocatable    :: iwork
-        integer                             :: liw    = 0
+            !!  which is to be solved.  for the given values of `x` and the
+            !!  vector `u(*)=(u(1),u(2),...,u(neq))`, the subroutine must
+            !!  evaluate the `neq` components of the system of differential
+            !!  equations `du/dx=df(x,u)` and store the derivatives in the
+            !!  array `uprime(*)`, that is, `uprime(i) = du(i)/dx` for
+            !!  equations `i=1,...,neq`.
 
         !tolerances
         logical :: scalar_tols = .true.
-        real(wp),dimension(:),allocatable :: rtol        !! the user input rel tol
-        real(wp),dimension(:),allocatable :: atol        !! the user input abs tol
-        real(wp),dimension(:),allocatable :: rtol_tmp    !! rel tol used internally
-        real(wp),dimension(:),allocatable :: atol_tmp    !! abs tol used internally
+        real(wp),allocatable,dimension(:) :: rtol        !! the user input rel tol
+        real(wp),allocatable,dimension(:) :: atol        !! the user input abs tol
+        real(wp),allocatable,dimension(:) :: rtol_tmp    !! rel tol used internally
+        real(wp),allocatable,dimension(:) :: atol_tmp    !! abs tol used internally
 
         integer,dimension(4) :: info = 0  !! info array
+
+        !variables formerly in work arrays:
+
+        integer :: icount = 0      !! replaced `iwork(liw)` in original code
+        real(wp) :: tprev = 0.0_wp !! replaced `rwork(itstar)` in original code
+
+        real(wp),allocatable,dimension(:)    :: ypout    !! `(neq)` contains the approximate derivative
+                                                         !! of the solution component `y(i)`.  in [[ddeabm]], it
+                                                         !! is obtained by calling subroutine `df` to
+                                                         !! evaluate the differential equation using `t` and
+                                                         !! `y(*)` when `idid=1` or `2`, and by interpolation
+                                                         !! when `idid=3`.
+        real(wp),allocatable,dimension(:)    :: yp       !! `(neq)`
+        real(wp),allocatable,dimension(:)    :: yy       !! `(neq)`
+        real(wp),allocatable,dimension(:)    :: wt       !! `(neq)`
+        real(wp),allocatable,dimension(:)    :: p        !! `(neq)`
+        real(wp),allocatable,dimension(:,:)  :: phi      !! `(neq,16)`
+        real(wp),dimension(12)               :: alpha    = 0.0_wp
+        real(wp),dimension(12)               :: beta     = 0.0_wp
+        real(wp),dimension(12)               :: psi      = 0.0_wp
+        real(wp),dimension(12)               :: v        = 0.0_wp
+        real(wp),dimension(12)               :: w        = 0.0_wp
+        real(wp),dimension(13)               :: sig      = 0.0_wp
+        real(wp),dimension(13)               :: g        = 0.0_wp
+        real(wp),dimension(11)               :: gi       = 0.0_wp
+        real(wp)                             :: h        = 0.0_wp  !! the step size `h` to be attempted on the next step.
+        real(wp)                             :: eps      = 0.0_wp  !! if the tolerances have been increased by the
+                                                                   !! code (`idid=-2`), they were multiplied by `eps`.
+        real(wp)                             :: x        = 0.0_wp  !! contains the current value of the
+                                                                   !! independent variable, i.e. the farthest point
+                                                                   !! integration has reached. this will be different
+                                                                   !! from `t` only when interpolation has been
+                                                                   !! performed (`idid=3`).
+        real(wp)                             :: xold     = 0.0_wp
+        real(wp)                             :: hold     = 0.0_wp
+        real(wp)                             :: told     = 0.0_wp
+        real(wp)                             :: delsgn   = 0.0_wp
+        real(wp)                             :: tstop    = 0.0_wp  !! (see `info(4)`)
+        real(wp)                             :: twou     = 0.0_wp
+        real(wp)                             :: fouru    = 0.0_wp
+        logical                              :: start    = .false.
+        logical                              :: phase1   = .false.
+        logical                              :: nornd    = .false.
+        logical                              :: stiff    = .false.
+        logical                              :: intout   = .false.
+        integer                              :: ns       = 0
+        integer                              :: kord     = 0
+        integer                              :: kold     = 0
+        integer                              :: init     = 0
+        integer                              :: ksteps   = 0
+        integer                              :: kle4     = 0
+        integer                              :: iquit    = 0
+        integer                              :: kprev    = 0
+        integer                              :: ivc      = 0
+        integer,dimension(10)                :: iv       = 0
+        integer                              :: kgi      = 0
 
     contains
 
         private
 
-        procedure,public :: initialize     => ddeabm_initialize
-        procedure,public :: integrate      => ddeabm_wrapper
-        procedure,public :: destroy        => destroy_ddeabm
-        procedure,public :: first_call     => ddeabm_new_problem
+        procedure,public :: initialize => ddeabm_initialize
+        procedure,public :: integrate  => ddeabm_wrapper
+        procedure,public :: destroy    => destroy_ddeabm
+        procedure,public :: first_call => ddeabm_new_problem
 
         !support routines:
         procedure :: ddeabm
@@ -84,7 +134,7 @@
     end type ddeabm_class
 
     abstract interface
-        subroutine func(me,t,x,xdot)
+        subroutine func(me,t,x,xdot)  !! interface to the derivative function
         import :: wp,ddeabm_class
         implicit none
         class(ddeabm_class),intent(inout) :: me
@@ -101,7 +151,7 @@
 
 !*****************************************************************************************
 !>
-!  Call this to indicate that a new problem is being solved (see ddeabm documentation).
+!  Call this to indicate that a new problem is being solved (see [[ddeabm]] documentation).
 
     subroutine ddeabm_new_problem(me)
 
@@ -148,15 +198,12 @@
     me%df => df
 
     !allocate the work arrays:
-
-    me%lrw    = 130+21*neq
-    me%liw    = 51
-
-    allocate(me%rwork(me%lrw))
-    me%rwork = 0.0_wp
-
-    allocate(me%iwork(me%liw))
-    me%iwork = 0
+    allocate(me%ypout(neq))
+    allocate(me%yp   (neq))
+    allocate(me%yy   (neq))
+    allocate(me%wt   (neq))
+    allocate(me%p    (neq))
+    allocate(me%phi  (neq,16))
 
     !tolerances:
     ! [for now, we are considering these unchangeable, although they don't have to be]
@@ -196,18 +243,22 @@
 !*****************************************************************************************
 !>
 !  Wrapper routine for [[ddeabm]].
+!
+!  If starting a new problem, must first call `me%first_call()`.
+!
+!@note Currently not using the recommended tols if `idid=-2`.
 
     subroutine ddeabm_wrapper(me,t,y,tout,tstop,intermediate_steps,idid)
 
     implicit none
 
-    class(ddeabm_class),intent(inout)          :: me
-    real(wp),intent(inout)                     :: t
-    real(wp),dimension(me%neq),intent(inout)   :: y
-    real(wp),intent(in)                        :: tout
-    real(wp),intent(in),optional               :: tstop              !! not used if not present
-    logical,intent(in),optional                :: intermediate_steps !! false if not present
-    integer,intent(out)                        :: idid
+    class(ddeabm_class),intent(inout)        :: me
+    real(wp),intent(inout)                   :: t
+    real(wp),dimension(me%neq),intent(inout) :: y
+    real(wp),intent(in)                      :: tout
+    real(wp),intent(in),optional             :: tstop              !! not used if not present
+    logical,intent(in),optional              :: intermediate_steps !! false if not present
+    integer,intent(out)                      :: idid
 
     !set info array:
 
@@ -234,9 +285,10 @@
     !info(4)
     if (present(tstop)) then
         me%info(4) = 1
-        me%rwork(1) = tstop
+        me%tstop = tstop
     else
         me%info(4) = 0
+        me%tstop = 0.0_wp !not used
     end if
 
     !make a copy of the tols, since the routine might change them:
@@ -244,22 +296,15 @@
     me%atol_tmp = me%atol
 
     !call the lower-level routine:
-    call me%ddeabm( neq      = me%neq,&
-                    t        = t,&
-                    y        = y,&
-                    tout     = tout,&
-                    info     = me%info,&
-                    rtol     = me%rtol_tmp,&
-                    atol     = me%atol_tmp,&
-                    idid     = idid,&
-                    rwork    = me%rwork,&
-                    lrw      = me%lrw,&
-                    iwork    = me%iwork,&
-                    liw      = me%liw)
+    call me%ddeabm( neq   = me%neq,&
+                    t     = t,&
+                    y     = y,&
+                    tout  = tout,&
+                    info  = me%info,&
+                    rtol  = me%rtol_tmp,&
+                    atol  = me%atol_tmp,&
+                    idid  = idid)
 
-    !Note: currently not using the recommended tols if idid=-2
-
-!*****************************************************************************************
     end subroutine ddeabm_wrapper
 !*****************************************************************************************
 
@@ -272,11 +317,11 @@
 !  predictor-corrector formulas of orders one through twelve to
 !  integrate a system of neq first order ordinary differential
 !  equations of the form `du/dx = df(x,u)`
-!  when the vector `y(*)` of initial values for `u(*)` at x=t is given.
-!  the subroutine integrates from t to tout. it is easy to continue the
-!  integration to get results at additional tout.  this is the interval
+!  when the vector `y(*)` of initial values for `u(*)` at `x=t` is given.
+!  the subroutine integrates from `t` to `tout`. it is easy to continue the
+!  integration to get results at additional `tout`.  this is the interval
 !  mode of operation.  it is also easy for the routine to return with
-!  the solution at each intermediate step on the way to tout.  this is
+!  the solution at each intermediate step on the way to `tout`.  this is
 !  the intermediate-output mode of operation.
 !
 !  ddeabm is primarily designed to solve non-stiff and
@@ -286,10 +331,10 @@
 !  when it is not suitable for the task posed.
 !
 !  **quantities which are used as input items are:**
-!    `neq, t, y(*), tout, info(*), rtol, atol, rwork(1), lrw and liw.`
+!    `neq, t, y(*), tout, info(*), rtol, atol`
 !
 !  **quantities which may be altered by the code are:**
-!    `t, y(*), info(1), rtol, atol, idid, rwork(*) and iwork(*).`
+!    `t, y(*), info(1), rtol, atol, idid`
 !
 !# description of the arguments to ddeabm (an overview)
 !
@@ -326,14 +371,6 @@
 !             the code did.  you must monitor this integer variable to
 !             decide what action to take next.
 !
-!      rwork(*), lrw -- rwork(*) is a double precision work array of
-!             length lrw which provides the code with needed storage
-!             space.
-!
-!      iwork(*), liw -- iwork(*) is an integer work array of length liw
-!             which provides the code with needed storage space and an
-!             across call flag.
-!
 !# input -- what to do on the first call to ddeabm
 !
 !   the first call of the code is defined to be the start of each new
@@ -342,15 +379,14 @@
 !   appropriate variables for the initialization of the problem, and
 !   give information about how you want the problem to be solved.
 !
-!
 !      df -- provide a subroutine of the form
 !                               df(x,u,uprime)
 !             to define the system of first order differential equations
 !             which is to be solved.  for the given values of x and the
-!             vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
+!             vector u(*)=(u(1),u(2),...,u(neq)), the subroutine must
 !             evaluate the neq components of the system of differential
-!             equations  du/dx=df(x,u)  and store the derivatives in the
-!             array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
+!             equations du/dx=df(x,u) and store the derivatives in the
+!             array uprime(*), that is, uprime(i) = du(i)/dx for
 !             equations i=1,...,neq.
 !
 !             subroutine df must not alter x or u(*).  you must declare
@@ -371,8 +407,8 @@
 !      tout -- set it to the first point at which a solution
 !             is desired.  you can take tout = t, in which case the code
 !             will evaluate the derivative of the solution at t and
-!             return. integration either forward in t  (tout > t)  or
-!             backward in t  (tout < t)  is permitted.
+!             return. integration either forward in t (tout > t) or
+!             backward in t (tout < t) is permitted.
 !
 !             the code advances the solution from t to tout using
 !             step sizes which are automatically selected so as to
@@ -393,10 +429,9 @@
 !             for some problems it may not be permissible to integrate
 !             past a point tstop because a discontinuity occurs there
 !             or the solution or its derivative is not defined beyond
-!             tstop.  when you have declared a tstop point (see info(4)
-!             and rwork(1)), you have told the code not to integrate
-!             past tstop.  in this case any tout beyond tstop is invalid
-!             input.
+!             tstop.  when you have declared a tstop point (see info(4)),
+!             you have told the code not to integrate past tstop.
+!             in this case any tout beyond tstop is invalid input.
 !
 !      info(*) -- use the info array to give the code more details about
 !             how you want your problem solved.  this array should be
@@ -452,8 +487,7 @@
 !                 restrictions on the independent variable t ...
 !                  yes -- set info(4)=0
 !                   no -- set info(4)=1
-!                         and define the stopping point tstop by
-!                         setting rwork(1)=tstop ****
+!                         and define the stopping point me%tstop ****
 !
 !      rtol, atol -- you must assign relative (rtol) and absolute (atol)
 !             error tolerances to tell the code how accurately you want
@@ -479,7 +513,7 @@
 !             and do not even attempt to control the global error
 !             directly.  roughly speaking, they produce a solution y(t)
 !             which satisfies the differential equations with a
-!             residual r(t),    dy(t)/dt = df(t,y(t)) + r(t)   ,
+!             residual r(t), dy(t)/dt = df(t,y(t)) + r(t),
 !             and, almost always, r(t) is bounded by the error
 !             tolerances.  usually, but not always, the true accuracy of
 !             the computed y is comparable to the error tolerances. this
@@ -512,26 +546,6 @@
 !             advise you if you ask for too much accuracy and inform
 !             you as to the maximum accuracy it believes possible.
 !
-!      rwork(*) -- dimension this double precision work array of length
-!             lrw in your calling program.
-!
-!      rwork(1) -- if you have set info(4)=0, you can ignore this
-!             optional input parameter.  otherwise you must define a
-!             stopping point tstop by setting   rwork(1) = tstop.
-!             (for some problems it may not be permissible to integrate
-!             past a point tstop because a discontinuity occurs there
-!             or the solution or its derivative is not defined beyond
-!             tstop.)
-!
-!      lrw -- set it to the declared length of the rwork array.
-!             you must have  lrw >= 130+21*neq
-!
-!      iwork(*) -- dimension this integer work array of length liw in
-!             your calling program.
-!
-!      liw -- set it to the declared length of the iwork array.
-!             you must have  liw >= 51
-!
 !# output -- after any return from ddeabm
 !
 !   the principal aim of the code is to return a computed solution at
@@ -540,14 +554,12 @@
 !   or if the integration process was interrupted before the task was
 !   completed, you must check the idid parameter.
 !
-!
 !      t -- the solution was successfully advanced to the
 !             output value of t.
 !
 !      y(*) -- contains the computed solution approximation at t.
 !             you may also be interested in the approximate derivative
-!             of the solution at t.  it is contained in
-!             rwork(21),...,rwork(20+neq).
+!             of the solution at t.  it is contained in me%ypout.
 !
 !      idid -- reports what the code did
 !
@@ -601,71 +613,47 @@
 !             reported solution at t was obtained using the input values
 !             of rtol and atol.
 !
-!      rwork, iwork -- contain information which is usually of no
-!             interest to the user but necessary for subsequent calls.
-!             however, you may find use for
-!
-!             rwork(11)--which contains the step size h to be
-!                        attempted on the next step.
-!
-!             rwork(12)--if the tolerances have been increased by the
-!                        code (idid = -2) , they were multiplied by the
-!                        value in rwork(12).
-!
-!             rwork(13)--which contains the current value of the
-!                        independent variable, i.e. the farthest point
-!                        integration has reached. this will be different
-!                        from t only when interpolation has been
-!                        performed (idid=3).
-!
-!             rwork(20+i)--which contains the approximate derivative
-!                        of the solution component y(i).  in ddeabm, it
-!                        is obtained by calling subroutine df to
-!                        evaluate the differential equation using t and
-!                        y(*) when idid=1 or 2, and by interpolation
-!                        when idid=3.
-!
 !# input -- what to do to continue the integration (calls after the first)
 !
-!        this code is organized so that subsequent calls to continue the
-!        integration involve little (if any) additional effort on your
-!        part. you must monitor the idid parameter in order to determine
-!        what to do next.
+!  this code is organized so that subsequent calls to continue the
+!  integration involve little (if any) additional effort on your
+!  part. you must monitor the `idid` parameter in order to determine
+!  what to do next.
 !
-!        recalling that the principal task of the code is to integrate
-!        from t to tout (the interval mode), usually all you will need
-!        to do is specify a new tout upon reaching the current tout.
+!  recalling that the principal task of the code is to integrate
+!  from `t` to `tout` (the interval mode), usually all you will need
+!  to do is specify a new `tout` upon reaching the current `tout`.
 !
-!        do not alter any quantity not specifically permitted below,
-!        in particular do not alter neq, t, y(*), rwork(*), iwork(*) or
-!        the differential equation in subroutine df. any such alteration
-!        constitutes a new problem and must be treated as such, i.e.
-!        you must start afresh.
+!  do not alter any quantity not specifically permitted below,
+!  in particular do not alter `neq`, `t`, `y(*)`, the internal work variables
+!  or the differential equation in subroutine `df`. any such alteration
+!  constitutes a new problem and must be treated as such, i.e.
+!  you must start afresh.
 !
-!        you cannot change from vector to scalar error control or vice
-!        versa (info(2)) but you can change the size of the entries of
-!        rtol, atol.  increasing a tolerance makes the equation easier
-!        to integrate.  decreasing a tolerance will make the equation
-!        harder to integrate and should generally be avoided.
+!  you cannot change from vector to scalar error control or vice
+!  versa (`info(2)`) but you can change the size of the entries of
+!  `rtol`, `atol`.  increasing a tolerance makes the equation easier
+!  to integrate.  decreasing a tolerance will make the equation
+!  harder to integrate and should generally be avoided.
 !
-!        you can switch from the intermediate-output mode to the
-!        interval mode (info(3)) or vice versa at any time.
+!  you can switch from the intermediate-output mode to the
+!  interval mode (`info(3)`) or vice versa at any time.
 !
-!        if it has been necessary to prevent the integration from going
-!        past a point tstop (info(4), rwork(1)), keep in mind that the
-!        code will not integrate to any tout beyond the currently
-!        specified tstop.  once tstop has been reached you must change
-!        the value of tstop or set info(4)=0.  you may change info(4)
-!        or tstop at any time but you must supply the value of tstop in
-!        rwork(1) whenever you set info(4)=1.
+!  if it has been necessary to prevent the integration from going
+!  past a point tstop (`info(4)`), keep in mind that the
+!  code will not integrate to any `tout` beyond the currently
+!  specified `tstop`.  once `tstop` has been reached you must change
+!  the value of `tstop` or set `info(4)=0`.  you may change `info(4)`
+!  or `tstop` at any time but you must supply the value of `tstop`
+!  whenever you set `info(4)=1`.
 !
-!        the parameter info(1) is used by the code to indicate the
-!        beginning of a new problem and to indicate whether integration
-!        is to be continued.  you must input the value  info(1) = 0
-!        when starting a new problem.  you must input the value
-!        info(1) = 1  if you wish to continue after an interrupted task.
-!        do not set  info(1) = 0  on a continuation call unless you
-!        want the code to restart at the current t.
+!  the parameter `info(1)` is used by the code to indicate the
+!  beginning of a new problem and to indicate whether integration
+!  is to be continued.  you must input the value `info(1)=0`
+!  when starting a new problem.  you must input the value
+!  `info(1)=1` if you wish to continue after an interrupted task.
+!  do not set `info(1)=0` on a continuation call unless you
+!  want the code to restart at the current `t`.
 !
 !                         *** following a completed task ***
 !         if
@@ -716,15 +704,15 @@
 !
 !# Authors
 !
-!   * L. F. shampine
+!   * L. F. Shampine
 !   * H. A. Watts
-!   * M. K. gordon
+!   * M. K. Gordon
 !
 !# See also
 !
-!   * l. f. shampine and h. a. watts, depac - design of a user
-!     oriented package of ode solvers, report sand79-2374,
-!     sandia laboratories, 1979.
+!   * L. F. Shampine and H. A. Watts, "DEPAC - Design of a user
+!     oriented package of ode solvers", Report SAND79-2374,
+!     Sandia Laboratories, 1979.
 !
 !# History
 !
@@ -741,7 +729,7 @@
 !
 !*****************************************************************************************
 
-    subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw)
+    subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid)
 
     implicit none
 
@@ -754,53 +742,25 @@
     real(wp),dimension(:),intent(inout)       :: rtol
     real(wp),dimension(:),intent(inout)       :: atol
     integer,intent(out)                       :: idid
-    integer,intent(in)                        :: lrw
-    real(wp),dimension(lrw),intent(inout)     :: rwork
-    integer,intent(in)                        :: liw
-    integer,dimension(liw),intent(inout)      :: iwork
 
-    integer ialpha, ibeta, idelsn, ifouru, ig, ihold,&
-        ip, iphi, ipsi, isig, itold, itstar, itwou,&
-        iv, iw, iwt, iyp, iypout, iyy, igi,ixold
-    logical start,phase1,nornd,stiff,intout
     character(len=8) :: xern1
     character(len=16) :: xern3
 
-!
-!     check for an apparent infinite loop
-!
-!***first executable statement  ddeabm
-      if ( info(1) == 0 ) iwork(liw) = 0
-      if (iwork(liw) >= 5) then
-         if (t == rwork(21 + neq)) then
+    ! check for an apparent infinite loop
+
+      if ( info(1) == 0 ) me%icount = 0
+
+      if (me%icount >= 5) then
+         if (t == me%tprev) then
             write (xern3, '(1pe15.6)') t
             call xermsg ('slatec', 'ddeabm',&
-               'an apparent infinite loop has been detected.$$' //&
+               'an apparent infinite loop has been detected.  ' //&
                'you have made repeated calls at t = ' // xern3 //&
                ' and the integration has not advanced.  check the ' //&
                'way you have set parameters for the call to the ' //&
                'code, particularly info(1).', 13, 2)
             return
          end if
-      end if
-!
-!     check lrw and liw for sufficient storage allocation
-!
-      idid=0
-      if (lrw < 130+21*neq) then
-         write (xern1, '(i8)') lrw
-         call xermsg ('slatec', 'ddeabm', 'the length of the rwork ' //&
-            'array must be at least 130 + 21*neq.$$' //&
-            'you have called the code with lrw = ' // xern1, 1, 1)
-         idid=-33
-      end if
-
-      if (liw < 51) then
-         write (xern1, '(i8)') liw
-         call xermsg ('slatec', 'ddeabm', 'the length of the iwork ' //&
-            'array must be at least 51.$$you have called the code ' //&
-            'with liw = ' // xern1, 2, 1)
-         idid=-33
       end if
 
     !make sure the deriv function was set:
@@ -810,74 +770,28 @@
          idid=-33
         end if
 
-!
-!     compute the indices for the arrays to be stored in the work array
-!
-      iypout = 21
-      itstar = neq + 21
-      iyp = 1 + itstar
-      iyy = neq + iyp
-      iwt = neq + iyy
-      ip = neq + iwt
-      iphi = neq + ip
-      ialpha = (neq*16) + iphi
-      ibeta = 12 + ialpha
-      ipsi = 12 + ibeta
-      iv = 12 + ipsi
-      iw = 12 + iv
-      isig = 12 + iw
-      ig = 13 + isig
-      igi = 13 + ig
-      ixold = 11 + igi
-      ihold = 1 + ixold
-      itold = 1 + ihold
-      idelsn = 1 + itold
-      itwou = 1 + idelsn
-      ifouru = 1 + itwou
+      me%tprev = t
 
-      rwork(itstar) = t
+      call me%ddes(neq,t,y,tout,info,rtol,atol,idid,&
+                me%ypout, me%yp, me%yy, me%wt, me%p, me%phi, me%alpha, me%beta, &
+                me%psi, me%v, me%w, me%sig, me%g, me%gi,&
+                me%h, me%eps, me%x, me%xold, me%hold, me%told, me%delsgn, &
+                me%tstop, me%twou, me%fouru, me%start,&
+                me%phase1, me%nornd, me%stiff, me%intout, me%ns, me%kord, &
+                me%kold, me%init, me%ksteps,&
+                me%kle4, me%iquit, me%kprev, me%ivc, me%iv, me%kgi)
 
-      if (info(1) /= 0) then
-          start = iwork(21) /= (-1)
-          phase1 = iwork(22) /= (-1)
-          nornd = iwork(23) /= (-1)
-          stiff = iwork(24) /= (-1)
-          intout = iwork(25) /= (-1)
-      end if
+      if (idid /= (-2)) me%icount = me%icount + 1
+      if (t /= me%tprev) me%icount = 0
 
-      call me%ddes(neq,t,y,tout,info,rtol,atol,idid,rwork(iypout),&
-               rwork(iyp),rwork(iyy),rwork(iwt),rwork(ip),rwork(iphi),&
-               rwork(ialpha),rwork(ibeta),rwork(ipsi),rwork(iv),&
-               rwork(iw),rwork(isig),rwork(ig),rwork(igi),rwork(11),&
-               rwork(12),rwork(13),rwork(ixold),rwork(ihold),&
-               rwork(itold),rwork(idelsn),rwork(1),rwork(itwou),&
-               rwork(ifouru),start,phase1,nornd,stiff,intout,iwork(26),&
-               iwork(27),iwork(28),iwork(29),iwork(30),iwork(31),&
-               iwork(32),iwork(33),iwork(34),iwork(35),iwork(45))
-
-      iwork(21) = -1
-      if (start) iwork(21) = 1
-      iwork(22) = -1
-      if (phase1) iwork(22) = 1
-      iwork(23) = -1
-      if (nornd) iwork(23) = 1
-      iwork(24) = -1
-      if (stiff) iwork(24) = 1
-      iwork(25) = -1
-      if (intout) iwork(25) = 1
-
-      if (idid /= (-2)) iwork(liw) = iwork(liw) + 1
-      if (t /= rwork(itstar)) iwork(liw) = 0
-
-!*****************************************************************************************
     end subroutine ddeabm
 !*****************************************************************************************
 
 !*****************************************************************************************
 !>
-!  ddeabm merely allocates storage for ddes to relieve the user of the
+!  [[ddeabm]] merely allocates storage for ddes to relieve the user of the
 !  inconvenience of a long call list.  consequently ddes is used as
-!  described in the comments for ddeabm.
+!  described in the comments for [[ddeabm]].
 !
 !# Author
 !   * watts, h. a., (snla)
@@ -890,8 +804,6 @@
 !   * 900328  added type section.  (wrb)
 !   * 900510  convert xerrwv calls to xermsg calls, cvt gotos to if-then-else.  (rwc)
 !   * 910722  updated author section.  (als)
-!
-!*****************************************************************************************
 
     subroutine ddes (me, neq, t, y, tout, info, rtol, atol, idid,&
          ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi,&
@@ -951,8 +863,8 @@
     integer,dimension(10),intent(inout)           :: iv
     integer,intent(inout)                         :: kgi
 
-    integer k, l, ltol, natolp, nrtolp
-    real(wp) a, absdel, del, dt, ha, u
+    integer :: k, l, m, ltol, natolp, nrtolp
+    real(wp) :: a, absdel, del, dt, ha, u
     logical :: crash
     character(len=8) :: xern1
     character(len=16) :: xern3, xern4
@@ -1028,7 +940,7 @@
 
       nrtolp = 0
       natolp = 0
-      do 90 k=1,neq
+      do k=1,neq
          if (nrtolp == 0 .and. rtol(k) < 0.0_wp) then
             write (xern1, '(i8)') k
             write (xern3, '(1pe15.6)') rtol(k)
@@ -1053,11 +965,11 @@
             natolp = 1
          end if
 
-         if (info(2) == 0) go to 100
-         if (natolp>0 .and. nrtolp>0) go to 100
-   90 continue
+         if (info(2) == 0) exit
+         if (natolp>0 .and. nrtolp>0) exit
+      end do
 
-  100 if (info(4) == 1) then
+      if (info(4) == 1) then
          if (sign(1.0_wp,tout-t) /= sign(1.0_wp,tstop-t)&
             .or. abs(tout-t) > abs(tstop-t)) then
             write (xern3, '(1pe15.6)') tout
@@ -1078,7 +990,7 @@
             write (xern3, '(1pe15.6)') t
             call xermsg ('slatec', 'ddes', 'in ddeabm, you have ' //&
                'called the code with  t = tout = ' // xern3 //&
-               '$$this is not allowed on continuation calls.', 9, 1)
+               '  this is not allowed on continuation calls.', 9, 1)
             idid=-33
          end if
 
@@ -1098,7 +1010,7 @@
                call xermsg ('slatec', 'ddes', 'in ddeabm, by ' //&
                   'calling the code with tout = ' // xern3 //&
                   ' you are attempting to change the direction of ' //&
-                  'integration.$$this is not allowed without ' //&
+                  'integration.  this is not allowed without ' //&
                   'restarting.', 11, 1)
                idid=-33
             end if
@@ -1121,13 +1033,11 @@
          return
       end if
 
-!.......................................................................
-!
 !     rtol = atol = 0. is allowed as valid input and interpreted as
 !     asking for the most accurate solution possible. in this case,
 !     the relative error tolerance rtol is reset to the smallest value
 !     fouru which is likely to be reasonable for this method and machine
-!
+
       do k=1,neq
         if (rtol(k)+atol(k) <= 0.0_wp) then
             rtol(k)=fouru
@@ -1142,58 +1052,47 @@
           return
       end if
 
-!     branch on status of initialization indicator
-!            init=0 means initial derivatives and nominal step size
-!                   and direction not yet set
-!            init=1 means nominal step size and direction not yet set
-!            init=2 means no further initialization required
-!
-      if (init == 0) go to 210
-      if (init == 1) go to 220
-      go to 240
-!
-!.......................................................................
-!
-!     more initialization --
-!                         -- evaluate initial derivatives
-!
-  210 init=1
+! branch on status of initialization indicator
+!  init=0 means initial derivatives and nominal step size and direction not yet set
+!  init=1 means nominal step size and direction not yet set
+!  init=2 means no further initialization required
+
+    if (init == 0) then
+      ! more initialization --
+      ! -- evaluate initial derivatives
+      init=1
       a=t
       call me%df(a,y,yp)
-      if (t /= tout) go to 220
-      idid=2
-      do l = 1,neq
-         ypout(l) = yp(l)
-      end do
-      told=t
-      return
-!
-!                         -- set independent and dependent variables
-!                                              x and yy(*) for steps
-!                         -- set sign of integration direction
-!                         -- initialize the step size
-!
-  220 init = 2
+      if (t == tout) then
+          idid=2
+          ypout = yp
+          told=t
+          return
+      end if
+    end if
+
+    if (init == 1) then
+      ! -- set independent and dependent variables
+      !                      x and yy(*) for steps
+      ! -- set sign of integration direction
+      ! -- initialize the step size
+      init = 2
       x = t
-      do l = 1,neq
-        yy(l) = y(l)
-      end do
+      yy = y
       delsgn = sign(1.0_wp,tout-t)
       h = sign(max(fouru*abs(x),abs(tout-x)),tout-x)
-!
-!.......................................................................
-!
-!   on each call set information which determines the allowed interval
-!   of integration before returning with an answer at tout
-!
-  240 del = tout - t
-      absdel = abs(del)
-!
-!.......................................................................
-!
-!   if already past output point, interpolate and return
-!
-  250 if (abs(x-t) >= absdel) then
+    end if
+
+    ! on each call set information which determines the allowed interval
+    ! of integration before returning with an answer at tout
+
+    del = tout - t
+    absdel = abs(del)
+
+    do
+
+      ! if already past output point, interpolate and return
+      if (abs(x-t) >= absdel) then
           call dintp(x,yy,tout,y,ypout,neq,kold,phi,ivc,iv,kgi,gi,alpha,g,w,xold,p)
           idid = 3
           if (x == tout) then
@@ -1205,13 +1104,10 @@
           return
       end if
 
-!   if cannot go past tstop and sufficiently close, extrapolate and return
-
+      ! if cannot go past tstop and sufficiently close, extrapolate and return
       if (info(4)==1 .and. abs(tstop-x)<fouru*abs(x)) then
           dt = tout - x
-          do l = 1,neq
-            y(l) = yy(l) + dt*yp(l)
-          end do
+          y = yy + dt*yp
           call me%df(tout,y,ypout)
           idid = 3
           t = tout
@@ -1219,40 +1115,33 @@
           return
       end if
 
-    if (info(3) == 0  .or.  .not.intout) go to 300
-!
-!   intermediate-output mode
-!
+    ! intermediate-output mode
+    if (info(3) /= 0 .and. intout) then
       idid = 1
-      do l = 1,neq
-        y(l)=yy(l)
-        ypout(l) = yp(l)
-      end do
+      y=yy
+      ypout = yp
       t = x
       told = t
       intout = .false.
       return
-!
-!.......................................................................
-!
-!     monitor number of steps attempted
-!
-  300 if (ksteps > me%maxnum) then
+    end if
 
-    ! a significant amount of work has been expended
+    ! monitor number of steps attempted
+
+    if (ksteps > me%maxnum) then
+
+      ! a significant amount of work has been expended
       idid=-1
       ksteps=0
       if (stiff) then
-        ! problem appears to be stiff
+          ! problem appears to be stiff
           idid=-4
           stiff= .false.
           kle4=0
       end if
 
-      do l = 1,neq
-        y(l) = yy(l)
-        ypout(l) = yp(l)
-      end do
+      y = yy
+      ypout = yp
       t = x
       told = t
       info(1) = -1
@@ -1260,74 +1149,61 @@
       return
 
     end if
-!
-!.......................................................................
-!
-!   limit step size, set weight vector and take a step
-!
-  330 ha = abs(h)
-      if (info(4) /= 1) go to 340
-      ha = min(ha,abs(tstop-x))
-  340 h = sign(ha,h)
+
+    ! limit step size, set weight vector and take a step
+
+      ha = abs(h)
+      if (info(4) == 1) ha = min(ha,abs(tstop-x))
+      h = sign(ha,h)
       eps = 1.0_wp
       ltol = 1
       do l = 1,neq
         if (info(2) == 1) ltol = l
         wt(l) = rtol(ltol)*abs(yy(l)) + atol(ltol)
-        if (wt(l) <= 0.0_wp) go to 360
+        if (wt(l) <= 0.0_wp) then
+            ! relative error criterion inappropriate
+            idid = -3
+            y = yy
+            ypout = yp
+            t = x
+            told = t
+            info(1) = -1
+            intout = .false.
+            return
+        end if
       end do
-      go to 380
-!
-!                       relative error criterion inappropriate
-  360 idid = -3
-      do l = 1,neq
-        y(l) = yy(l)
-        ypout(l) = yp(l)
-      end do
-      t = x
-      told = t
-      info(1) = -1
-      intout = .false.
-      return
-!
-  380 call me%dsteps(neq,yy,x,h,eps,wt,start,hold,kord,kold,crash,phi,p,&
+
+      call me%dsteps(neq,yy,x,h,eps,wt,start,hold,kord,kold,crash,phi,p,&
                  yp,psi,alpha,beta,sig,v,w,g,phase1,ns,nornd,ksteps,&
                  twou,fouru,xold,kprev,ivc,iv,kgi,gi)
-!
-!.......................................................................
-!
-      if (.not.crash) go to 420
-!
-!                       tolerances too small
-      idid = -2
-      rtol(1) = eps*rtol(1)
-      atol(1) = eps*atol(1)
-      if (info(2) /= 0) then
-          do l = 2,neq
-            rtol(l) = eps*rtol(l)
-            atol(l) = eps*atol(l)
-          end do
-      end if
-      do l = 1,neq
-        y(l) = yy(l)
-        ypout(l) = yp(l)
-      end do
-      t = x
-      told = t
-      info(1) = -1
-      intout = .false.
-      return
-!
-!   (stiffness test) count number of consecutive steps taken with the
-!   order of the method being less or equal to four
-!
-  420 kle4 = kle4 + 1
-      if (kold > 4) kle4 = 0
-      if (kle4 >= 50) stiff = .true.
-      intout = .true.
-      go to 250
 
-!*****************************************************************************************
+      if (crash) then
+
+        ! tolerances too small
+        idid = -2
+        rtol = eps*rtol
+        atol = eps*atol
+        y = yy
+        ypout = yp
+        t = x
+        told = t
+        info(1) = -1
+        intout = .false.
+
+        return
+
+      end if
+
+      ! (stiffness test) count number of consecutive steps taken with the
+      ! order of the method being less or equal to four
+
+      kle4 = kle4 + 1
+      if (kold > 4) kle4 = 0
+      stiff = (kle4 >= 50)
+      intout = .true.
+
+    end do
+
     end subroutine ddes
 !*****************************************************************************************
 
@@ -1339,13 +1215,12 @@
 !  subroutine dhstrt computes a starting step size to be used by an
 !  initial value method in solving ordinary differential equations.
 !  it is based on an estimate of the local lipschitz constant for the
-!  differential equation   (lower bound on a norm of the jacobian) ,
-!  a bound on the differential equation  (first derivative) , and
+!  differential equation (lower bound on a norm of the jacobian) ,
+!  a bound on the differential equation (first derivative), and
 !  a bound on the partial derivative of the equation with respect to
-!  the independent variable.
-!  (all approximated near the initial point a)
+!  the independent variable. (all approximated near the initial point a)
 !
-!  subroutine dhstrt uses a function subprogram dhvnrm for computing
+!  subroutine dhstrt uses a function subprogram [[dhvnrm]] for computing
 !  a vector norm. the maximum norm is presently utilized though it
 !  can easily be replaced by any other vector norm. it is presumed
 !  that any replacement norm routine would be carefully coded to
@@ -1451,9 +1326,9 @@
     integer,intent(in) :: neq
     real(wp),intent(in) :: a
     real(wp),intent(in) :: b
-    real(wp),intent(in),dimension(neq) :: y
-    real(wp),intent(in),dimension(neq) :: yprime
-    real(wp),intent(in),dimension(neq) :: etol
+    real(wp),dimension(neq),intent(in) :: y
+    real(wp),dimension(neq),intent(in) :: yprime
+    real(wp),dimension(neq),intent(in) :: etol
     integer,intent(in) :: morder
     real(wp),intent(in) :: small
     real(wp),intent(in) :: big
@@ -1485,13 +1360,10 @@
 !             also compute a bound (fbnd) on the first derivative
 !             locally.
 !
-         da = sign(max(min(relper*abs(a),absdx),&
-                          100.0_wp*small*abs(a)),dx)
+         da = sign(max(min(relper*abs(a),absdx),100.0_wp*small*abs(a)),dx)
          if (da == 0.0_wp) da = relper*dx
          call me%df(a+da,y,sf)
-         do 10 j = 1, neq
-            yp(j) = sf(j) - yprime(j)
-   10    continue
+         yp = sf - yprime
          delf = dhvnrm(yp,neq)
          dfdxb = big
          if (delf < big*abs(da)) dfdxb = delf/abs(da)
@@ -1527,45 +1399,33 @@
          dely = sign(dely,dx)
          delf = dhvnrm(yprime,neq)
          fbnd = max(fbnd,delf)
-         if (delf == 0.0_wp) go to 30
-!           use initial derivatives for first perturbation
-            do 20 j = 1, neq
-               spy(j) = yprime(j)
-               yp(j) = yprime(j)
-   20       continue
-         go to 50
-   30    continue
-!           cannot have a null perturbation vector
-            do j = 1, neq
-               spy(j) = 0.0_wp
-               yp(j) = 1.0_wp
-            end do
+         if (delf == 0.0_wp) then
+            ! cannot have a null perturbation vector
+            spy  = 0.0_wp
+            yp   = 1.0_wp
             delf = dhvnrm(yp,neq)
-   50    continue
-!
+        else
+            ! use initial derivatives for first perturbation
+            spy = yprime
+            yp  = yprime
+        end if
+
          dfdub = 0.0_wp
          lk = min(neq+1,3)
-         do 140 k = 1, lk
+         do k = 1, lk
 !           define perturbed vector of initial values
-            do j = 1, neq
-               pv(j) = y(j) + dely*(yp(j)/delf)
-            end do
-            if (k == 2) go to 80
-!              evaluate derivatives associated with perturbed
-!              vector  and  compute corresponding differences
-               call me%df(a,pv,yp)
-               do 70 j = 1, neq
-                  pv(j) = yp(j) - yprime(j)
-   70          continue
-            go to 100
-   80       continue
-!              use a shifted value of the independent variable
-!                                    in computing one estimate
-               call me%df(a+da,pv,yp)
-               do j = 1, neq
-                  pv(j) = yp(j) - sf(j)
-               end do
-  100       continue
+            pv = y + yp * (dely/delf)
+            if (k == 2) then
+                ! use a shifted value of the independent variable
+                ! in computing one estimate
+                call me%df(a+da,pv,yp)
+                pv = yp - sf
+            else
+                ! evaluate derivatives associated with perturbed
+                ! vector and compute corresponding differences
+                call me%df(a,pv,yp)
+                pv = yp - yprime
+            end if
 !           choose largest bounds on the first derivative
 !                          and a local lipschitz constant
             fbnd = max(fbnd,dhvnrm(yp,neq))
@@ -1578,23 +1438,22 @@
 !           choose next perturbation vector
             if (delf == 0.0_wp) delf = 1.0_wp
             do j = 1, neq
-               if (k == 2) go to 110
-                  dy = abs(pv(j))
-                  if (dy == 0.0_wp) dy = delf
-               go to 120
-  110          continue
-                  dy = y(j)
-                  if (dy == 0.0_wp) dy = dely/relper
-  120          continue
+               if (k == 2) then
+                   dy = y(j)
+                   if (dy == 0.0_wp) dy = dely/relper
+               else
+                   dy = abs(pv(j))
+                   if (dy == 0.0_wp) dy = delf
+               end if
                if (spy(j) == 0.0_wp) spy(j) = yp(j)
                if (spy(j) /= 0.0_wp) dy = sign(dy,spy(j))
                yp(j) = dy
             end do
             delf = dhvnrm(yp,neq)
-  140    continue
+         end do
   150    continue
-!
-!        protect against an overflow
+
+        ! protect against an overflow
          dfdub = big
   160 continue
 !
@@ -1618,7 +1477,7 @@
          tolsum = tolsum + tolexp
       end do
       tolp = 10.0_wp**(0.5_wp*(tolsum/neq + tolmin)/(morder+1))
-!
+
 !     ..................................................................
 !
 !          compute a starting step size based on the above first and
@@ -1628,31 +1487,30 @@
 !                            than abs(b-a).   (unless  b  is too close
 !                            to  a)
       h = absdx
-!
-      if (ydpb /= 0.0_wp .or. fbnd /= 0.0_wp) go to 180
-!
-!        both first derivative term (fbnd) and second
-!                     derivative term (ydpb) are zero
-         if (tolp < 1.0_wp) h = absdx*tolp
-      go to 200
-  180 continue
-!
-      if (ydpb /= 0.0_wp) go to 190
-!
-!        only second derivative term (ydpb) is zero
-         if (tolp < fbnd*absdx) h = tolp/fbnd
-      go to 200
-  190 continue
-!
-!        second derivative term (ydpb) is non-zero
-         srydpb = sqrt(0.5_wp*ydpb)
-         if (tolp < srydpb*absdx) h = tolp/srydpb
-  200 continue
-!
+
+    if (ydpb == 0.0_wp .and. fbnd == 0.0_wp) then
+
+        ! both first derivative term (fbnd) and second
+        ! derivative term (ydpb) are zero
+        if (tolp < 1.0_wp) h = absdx*tolp
+
+    elseif (ydpb == 0.0_wp) then
+
+        ! only second derivative term (ydpb) is zero
+        if (tolp < fbnd*absdx) h = tolp/fbnd
+
+    else
+
+        ! second derivative term (ydpb) is non-zero
+        srydpb = sqrt(0.5_wp*ydpb)
+        if (tolp < srydpb*absdx) h = tolp/srydpb
+
+    end if
+
 !     further restrict the step length to be not
 !                               bigger than  1/dfdub
       if (h*dfdub > 1.0_wp) h = 1.0_wp/dfdub
-!
+
 !     finally, restrict the step length to be not
 !     smaller than  100*small*abs(a).  however, if
 !     a=0. and the computed h underflowed to zero,
@@ -1660,7 +1518,7 @@
 !                                     step length.
       h = max(h,100.0_wp*small*abs(a))
       if (h == 0.0_wp) h = small*abs(b)
-!
+
 !     now set direction of integration
       h = sign(h,dx)
 
@@ -1689,20 +1547,18 @@
 
 !*****************************************************************************************
 !>
-!  approximate the solution at xout by evaluating the
-!  polynomial computed in dsteps at xout.  must be used in
-!  conjunction with dsteps.
+!  approximate the solution at `xout` by evaluating the
+!  polynomial computed in [[dsteps]] at `xout`.  must be used in
+!  conjunction with [[dsteps]].
 !
-!  the methods in subroutine  dsteps  approximate the solution near  x
-!  by a polynomial.  subroutine  dintp  approximates the solution at
-!  xout  by evaluating the polynomial there.  information defining this
-!  polynomial is passed from  dsteps  so  dintp  cannot be used alone.
-!
-!  subroutine dsteps is completely explained and documented in the text
-!  "computer solution of ordinary differential equations, the initial
-!  value problem"  by l. f. shampine and m. k. gordon.
+!  the methods in subroutine [[dsteps]] approximate the solution near `x`
+!  by a polynomial.  subroutine [[dintp]] approximates the solution at
+!  `xout` by evaluating the polynomial there.  information defining this
+!  polynomial is passed from [[dsteps]] so [[dintp]] cannot be used alone.
 !
 !# References
+!   * "computer solution of ordinary differential equations, the initial
+!     value problem"  by l. f. shampine and m. k. gordon.
 !   * h. a. watts, a smoother interpolant for de/step, intrp
 !     ii, report sand84-0293, sandia laboratories, 1984.
 !
@@ -1736,92 +1592,89 @@
     real(wp),dimension(neqn),intent(out)   :: ypout  !! derivative of solution at xout
 
     !local variables:
-    integer :: i, iq, iw, j, jq, kp1, kp2, l, m
-    real(wp) :: alp, c(13), g(13), gdi, gdif, gamma, h, hi,&
-                         hmu, rmu, sigma, temp1, temp2, temp3,&
-                         w(13), xi, xim1, xiq
+    integer  :: i, iq, iw, j, jq, kp1, kp2, l, m
+    real(wp),dimension(13) :: c, g, w
+    real(wp) :: alp, gdi, gdif, gamma, h, hi, &
+                hmu, rmu, sigma, temp1, temp2, temp3, &
+                xi, xim1, xiq
 
-      kp1 = kold + 1
-      kp2 = kold + 2
+    kp1  = kold + 1
+    kp2  = kold + 2
+    hi   = xout - ox
+    h    = x - ox
+    xi   = hi/h
+    xim1 = xi - 1.0_wp
 
-      hi = xout - ox
-      h = x - ox
-      xi = hi/h
-      xim1 = xi - 1.0_wp
-
-!   initialize w(*) for computing g(*)
-
-      xiq = xi
-      do iq = 1,kp1
-        xiq = xi*xiq
+    ! initialize w(*) for computing g(*)
+    xiq = xi
+    do iq = 1,kp1
+        xiq   = xi*xiq
         temp1 = iq*(iq+1)
         w(iq) = xiq/temp1
-      end do
-!
-!   compute the double integral term gdi
-!
-      if (kold <= kgi) go to 50
-      if (ivc > 0) go to 20
-      gdi = 1.0_wp/temp1
-      m = 2
-      go to 30
- 20   iw = iv(ivc)
-      gdi = ow(iw)
-      m = kold - iw + 3
- 30   if (m > kold) go to 60
-      do i = m,kold
-        gdi = ow(kp2-i) - alpha(i)*gdi
-      end do
-      go to 60
- 50   gdi = gi(kold)
-!
-!   compute g(*) and c(*)
-!
- 60   g(1) = xi
-      g(2) = 0.5_wp*xi*xi
-      c(1) = 1.0_wp
-      c(2) = xi
-      if (kold < 2) go to 90
-      do i = 2,kold
-        alp = alpha(i)
-        gamma = 1.0_wp + xim1*alp
-        l = kp2 - i
-        do jq = 1,l
-          w(jq) = gamma*w(jq) - alp*w(jq+1)
+    end do
+
+    ! compute the double integral term gdi
+    if (kold <= kgi) then
+        gdi = gi(kold)
+    else
+        if (ivc > 0) then
+            iw  = iv(ivc)
+            gdi = ow(iw)
+            m   = kold - iw + 3
+        else
+            gdi = 1.0_wp/temp1
+            m   = 2
+        end if
+        if (m <= kold) then
+            do i = m,kold
+                gdi = ow(kp2-i) - alpha(i)*gdi
+            end do
+        end if
+    end if
+
+    ! compute g(*) and c(*)
+    g(1) = xi
+    g(2) = 0.5_wp*xi*xi
+    c(1) = 1.0_wp
+    c(2) = xi
+    if (kold >= 2) then
+        do i = 2,kold
+            alp = alpha(i)
+            gamma = 1.0_wp + xim1*alp
+            l = kp2 - i
+            do jq = 1,l
+                w(jq) = gamma*w(jq) - alp*w(jq+1)
+            end do
+            g(i+1) = w(1)
+            c(i+1) = gamma*c(i)
         end do
-        g(i+1) = w(1)
-        c(i+1) = gamma*c(i)
-      end do
-!
-!   define interpolation parameters
-!
- 90   sigma = (w(2) - xim1*w(1))/gdi
-      rmu = xim1*c(kp1)/gdi
-      hmu = rmu/h
-!
-!   interpolate for the solution -- yout
-!   and for the derivative of the solution -- ypout
-!
-      do l = 1,neqn
-        yout(l) = 0.0_wp
-        ypout(l) = 0.0_wp
-      end do
-      do j = 1,kold
+    end if
+
+    ! define interpolation parameters
+    sigma = (w(2) - xim1*w(1))/gdi
+    rmu   = xim1*c(kp1)/gdi
+    hmu   = rmu/h
+
+    ! interpolate for the solution -- yout
+    ! and for the derivative of the solution -- ypout
+    yout  = 0.0_wp
+    ypout = 0.0_wp
+    do j = 1,kold
         i = kp2 - j
         gdif = og(i) - og(i-1)
         temp2 = (g(i) - g(i-1)) - sigma*gdif
         temp3 = (c(i) - c(i-1)) + rmu*gdif
         do l = 1,neqn
-          yout(l) = yout(l) + temp2*phi(l,i)
-          ypout(l) = ypout(l) + temp3*phi(l,i)
+            yout(l) = yout(l) + temp2*phi(l,i)
+            ypout(l) = ypout(l) + temp3*phi(l,i)
         end do
-      end do
-      do l = 1,neqn
+    end do
+    do l = 1,neqn
         yout(l) = ((1.0_wp - sigma)*oy(l) + sigma*y(l)) + &
-                   h*(yout(l) + (g(1) - sigma*og(1))*phi(l,1))
+                    h*(yout(l) + (g(1) - sigma*og(1))*phi(l,1))
         ypout(l) = hmu*(oy(l) - y(l)) + &
-                   (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
-      end do
+                    (ypout(l) + (c(1) + rmu*og(1))*phi(l,1))
+    end do
 
     end subroutine dintp
 !*****************************************************************************************
@@ -1913,7 +1766,7 @@
 !   computing u so that u is the smallest positive number such
 !   that 1.0+u > 1.0.
 !
-!   dsteps  requires that the l2 norm of the vector with components
+!   dsteps requires that the l2 norm of the vector with components
 !   local error(l)/wt(l)  be less than  eps  for a successful step.  the
 !   array  wt  allows the user to specify an error test appropriate
 !   for his problem.  for example,
@@ -1931,30 +1784,30 @@
 !
 !# subsequent calls
 !
-!   subroutine  dsteps  is designed so that all information needed to
-!   continue the integration, including the step size  h  and the order
-!   k , is returned with each step.  with the exception of the step
+!   subroutine dsteps is designed so that all information needed to
+!   continue the integration, including the step size `h` and the order
+!   `k`, is returned with each step.  with the exception of the step
 !   size, the error tolerance, and the weights, none of the parameters
-!   should be altered.  the array  wt  must be updated after each step
+!   should be altered.  the array `wt` must be updated after each step
 !   to maintain relative error tests like those above.  normally the
 !   integration is continued just beyond the desired endpoint and the
-!   solution interpolated there with subroutine  sintrp .  if it is
+!   solution interpolated there with subroutine [[sintrp]].  if it is
 !   impossible to integrate beyond the endpoint, the step size may be
 !   reduced to hit the endpoint since the code will not take a step
-!   larger than the  h  input.  changing the direction of integration,
-!   i.e., the sign of  h , requires the user set  start = .true. before
-!   calling  dsteps  again.  this is the only situation in which  start
+!   larger than the `h` input.  changing the direction of integration,
+!   i.e., the sign of `h`, requires the user set `start = .true.` before
+!   calling dsteps again.  this is the only situation in which `start`
 !   should be altered.
 !
 !# output from dsteps
 !
 !   **successful step**
 !
-!   the subroutine returns after each successful step with  start  and
-!   crash  set .false. .  x  represents the independent variable
-!   advanced one step of length  hold  from its value on input and  y
-!   the solution vector at the new value of  x .  all other parameters
-!   represent information corresponding to the new  x  needed to
+!   the subroutine returns after each successful step with `start` and
+!   `crash` set .false. .  `x`  represents the independent variable
+!   advanced one step of length `hold` from its value on input and `y`
+!   the solution vector at the new value of `x` .  all other parameters
+!   represent information corresponding to the new `x` needed to
 !   continue the integration.
 !
 !   **unsuccessful step**
@@ -2006,7 +1859,10 @@
     integer,intent(inout)  :: ivc
     integer,intent(inout)  :: kgi
     integer,intent(in)     :: neqn  !! number of equations to be integrated
-    logical,intent(inout)  :: start,crash,phase1,nornd
+    logical,intent(inout)  :: start
+    logical,intent(inout)  :: crash
+    logical,intent(inout)  :: phase1
+    logical,intent(inout)  :: nornd
     real(wp),dimension(neqn),intent(inout) :: y
     real(wp),dimension(neqn),intent(inout) :: wt
     real(wp),dimension(neqn,16),intent(inout) :: phi
@@ -2022,14 +1878,14 @@
     real(wp),dimension(11),intent(inout) :: gi
     integer, dimension(10),intent(inout)  :: iv
 
-    integer i, ifail, im1, ip1, iq, j, km1, km2, knew,&
-        kp1, kp2, l, limit1, limit2, nsm2,&
-        nsp1, nsp2, jv
-    real(wp) absh, big,&
-        erk, erkm1, erkm2, erkp1, err,&
-        hnew, p5eps, r,&
-        reali, realns, rho, round, tau, temp1,&
-        temp2, temp3, temp4, temp5, temp6, u
+    integer  :: i, ifail, im1, ip1, iq, j, km1, km2, knew,&
+                kp1, kp2, l, limit1, limit2, nsm2,&
+                nsp1, nsp2, jv
+    real(wp) :: absh, big,&
+                erk, erkm1, erkm2, erkp1, err,&
+                hnew, p5eps, r,&
+                reali, realns, rho, round, tau, temp1,&
+                temp2, temp3, temp4, temp5, temp6, u
 
     !parameters:
     real(wp),dimension(13),parameter :: two = [ 2.0_wp, &
@@ -2164,18 +2020,19 @@
       alpha(ns) = 1.0_wp/realns
       temp1 = h*realns
       sig(nsp1) = 1.0_wp
-      if (k < nsp1) go to 110
-      do i = nsp1,k
-        im1 = i-1
-        temp2 = psi(im1)
-        psi(im1) = temp1
-        beta(i) = beta(im1)*psi(im1)/temp2
-        temp1 = temp2 + h
-        alpha(i) = h/temp1
-        reali = i
-        sig(i+1) = reali*alpha(i)*sig(i)
-      end do
- 110  psi(k) = temp1
+      if (k >= nsp1) then
+          do i = nsp1,k
+            im1 = i-1
+            temp2 = psi(im1)
+            psi(im1) = temp1
+            beta(i) = beta(im1)*psi(im1)/temp2
+            temp1 = temp2 + h
+            alpha(i) = h/temp1
+            reali = i
+            sig(i+1) = reali*alpha(i)*sig(i)
+          end do
+      end if
+      psi(k) = temp1
 !
 !   compute coefficients g(*)
 !
@@ -2265,17 +2122,18 @@
 !
 !   change phi to phi star
 !
-      if (k < nsp1) go to 215
-      do 210 i = nsp1,k
-        temp1 = beta(i)
-        do l = 1,neqn
-          phi(l,i) = temp1*phi(l,i)
-        end do
- 210    continue
+      if (k >= nsp1) then
+          do i = nsp1,k
+            temp1 = beta(i)
+            do l = 1,neqn
+              phi(l,i) = temp1*phi(l,i)
+            end do
+          end do
+      end if
 !
 !   predict solution and differences
 !
- 215  do l = 1,neqn
+      do l = 1,neqn
         phi(l,kp2) = phi(l,kp1)
         phi(l,kp1) = 0.0_wp
         p(l) = 0.0_wp
@@ -2289,18 +2147,16 @@
           phi(l,i) = phi(l,i) + phi(l,ip1)
         end do
       end do
-      if (nornd) go to 240
-      do l = 1,neqn
-        tau = h*p(l) - phi(l,15)
-        p(l) = y(l) + tau
-        phi(l,16) = (p(l) - y(l)) - tau
-      end do
-      go to 250
-
- 240  do l = 1,neqn
-        p(l) = y(l) + h*p(l)
-      end do
- 250  xold = x
+      if (nornd) then
+          p = y + h*p
+      else
+          do l = 1,neqn
+            tau = h*p(l) - phi(l,15)
+            p(l) = y(l) + tau
+            phi(l,16) = (p(l) - y(l)) - tau
+          end do
+      end if
+      xold = x
       x = x + h
       absh = abs(h)
       call me%df(x,p,yp)
@@ -2313,29 +2169,30 @@
       do l = 1,neqn
         temp3 = 1.0_wp/wt(l)
         temp4 = yp(l) - phi(l,1)
-        if (km2)265,260,255
- 255    erkm2 = erkm2 + ((phi(l,km1)+temp4)*temp3)**2
- 260    erkm1 = erkm1 + ((phi(l,k)+temp4)*temp3)**2
- 265    erk = erk + (temp4*temp3)**2
+        if (km2>=0.0_wp) then
+            if (km2>0.0_wp) erkm2 = erkm2 + ((phi(l,km1)+temp4)*temp3)**2
+            erkm1 = erkm1 + ((phi(l,k)+temp4)*temp3)**2
+        end if
+        erk = erk + (temp4*temp3)**2
       end do
-      if (km2)280,275,270
- 270  erkm2 = absh*sig(km1)*gstr(km2)*sqrt(erkm2)
- 275  erkm1 = absh*sig(k)*gstr(km1)*sqrt(erkm1)
- 280  temp5 = absh*sqrt(erk)
+      if (km2>=0.0_wp) then
+          if (km2>0.0_wp) erkm2 = absh*sig(km1)*gstr(km2)*sqrt(erkm2)
+          erkm1 = absh*sig(k)*gstr(km1)*sqrt(erkm1)
+      end if
+      temp5 = absh*sqrt(erk)
       err = temp5*(g(k)-g(kp1))
       erk = temp5*sig(kp1)*gstr(k)
       knew = k
-!
-!   test if order should be lowered
-!
-      if (km2)299,290,285
- 285  if (max(erkm1,erkm2) <= erk) knew = km1
-      go to 299
- 290  if (erkm1 <= 0.5_wp*erk) knew = km1
-!
-!   test if step successful
-!
- 299  if (err <= eps) go to 400
+
+      !   test if order should be lowered
+      if (km2>0.0_wp) then
+          if (max(erkm1,erkm2) <= erk) knew = km1
+      elseif (km2==0.0_wp) then
+          if (erkm1 <= 0.5_wp*erk) knew = km1
+      end if
+      !test if step successful
+      if (err <= eps) go to 400
+
 !       ***     end block 2     ***
 !
 !       ***     begin block 3     ***
@@ -2367,10 +2224,12 @@
 !
  320  ifail = ifail + 1
       temp2 = 0.5_wp
-      if (ifail - 3) 335,330,325
- 325  if (p5eps < 0.25_wp*erk) temp2 = sqrt(p5eps/erk)
- 330  knew = 1
- 335  h = temp2*h
+      if (ifail - 3 >= 0.0_wp) then
+          if (ifail - 3 > 0.0_wp .and. p5eps < 0.25_wp*erk) &
+           temp2 = sqrt(p5eps/erk)
+          knew = 1
+      end if
+      h = temp2*h
       k = knew
       ns = 0
       if (abs(h) >= fouru*abs(x)) go to 340
