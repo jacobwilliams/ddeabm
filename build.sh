@@ -24,26 +24,26 @@ FCOMPILERFLAGS='-c -O2 -std=f2008'
 
 if hash FoBiS.py 2>/dev/null; then
 
-	echo "Building library..."
+    echo "Building library..."
 
-	FoBiS.py build -compiler ${FCOMPILER} -cflags "${FCOMPILERFLAGS}" -dbld ${LIBDIR} -s ${SRCDIR} -dmod ./ -dobj ./ -t ${MODCODE} -o ${LIBOUT} -mklib static -colors
+    FoBiS.py build -compiler ${FCOMPILER} -cflags "${FCOMPILERFLAGS}" -dbld ${LIBDIR} -s ${SRCDIR} -dmod ./ -dobj ./ -t ${MODCODE} -o ${LIBOUT} -mklib static -colors
 
-	echo "Building test programs..."
+    echo "Building test programs..."
 
-	FoBiS.py build -compiler ${FCOMPILER} -cflags "${FCOMPILERFLAGS}" -dbld ${BINDIR} -s ${TESTSRCDIR} -dmod ./ -dobj ./ -colors -libs ${LIBDIR}${LIBOUT} --include ${LIBDIR}
+    FoBiS.py build -compiler ${FCOMPILER} -cflags "${FCOMPILERFLAGS}" -dbld ${BINDIR} -s ${TESTSRCDIR} -dmod ./ -dobj ./ -colors -libs ${LIBDIR}${LIBOUT} --include ${LIBDIR}
 
 else
-	echo "FoBiS.py not found! Cannot build library. Install using: sudo pip install FoBiS.py"
+    echo "FoBiS.py not found! Cannot build library. Install using: sudo pip install FoBiS.py"
 fi
 
 # build the documentation using FORD:
 
 if hash ford 2>/dev/null; then
 
-	echo "Building documentation..."
+    echo "Building documentation..."
 
     ford ${FORDMD}
 
 else
-	echo "Ford not found! Cannot build documentation. Install using: sudo pip install ford"
+    echo "Ford not found! Cannot build documentation. Install using: sudo pip install ford"
 fi
