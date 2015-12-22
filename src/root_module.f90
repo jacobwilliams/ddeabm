@@ -6,18 +6,18 @@
 
     module root_module
 
-    use, intrinsic :: iso_fortran_env, wp=>real64    !double precision
+    use kind_module
 
     implicit none
 
     private
 
     !real parameters:
-    real(wp),parameter :: zero = 0.0_wp
-    real(wp),parameter :: one  = 1.0_wp
-    real(wp),parameter :: two  = 2.0_wp
-    real(wp),parameter :: three= 3.0_wp
-    real(wp),parameter :: eps  = epsilon(one)    !! original code had d1mach(4)
+    real(wp),parameter :: zero  = 0.0_wp
+    real(wp),parameter :: one   = 1.0_wp
+    real(wp),parameter :: two   = 2.0_wp
+    real(wp),parameter :: three = 3.0_wp
+    real(wp),parameter :: eps   = epsilon(one)    !! original code had d1mach(4)
 
     abstract interface
         function func(t) result(f)  !! interface to the [[zeroin]] function
@@ -55,6 +55,8 @@
 !  [1] [zeroin.f](http://www.netlib.org/go/zeroin.f)
 
     subroutine zeroin(f,ax,bx,tol,xzero,fzero,iflag,fax,fbx)
+
+    use iso_fortran_env, only: error_unit
 
     implicit none
 
@@ -164,7 +166,8 @@
 
     else
         iflag = -1
-        write(*,'(A)') 'Error in zeroin: f(ax) and f(bx) do not have different signs.'
+        write(error_unit,'(A)')&
+            'Error in zeroin: f(ax) and f(bx) do not have different signs.'
     end if
 
     end subroutine zeroin

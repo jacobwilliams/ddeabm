@@ -17,7 +17,8 @@
 
     module ddeabm_module
 
-    use, intrinsic :: iso_fortran_env, wp=>real64    !double precision
+    use kind_module
+    use root_module, only: zeroin
 
     implicit none
 
@@ -392,8 +393,6 @@
 !@note Currently not using the recommended tols if `idid=-2`.
 
     subroutine ddeabm_with_event_wrapper(me,t,y,tmax,tstop,idid,gval)
-
-    use root_module
 
     implicit none
 
@@ -1469,21 +1468,21 @@
 
     implicit none
 
-    class(ddeabm_class),intent(inout) :: me
-    integer,intent(in)  :: neq  !! the number of (first order) differential equations to be integrated.
-    real(wp),intent(in) :: a    !! the initial point of integration.
-    real(wp),intent(in) :: b    !! a value of the independent variable used to define
-                                !! the direction of integration. a reasonable choice is to
-                                !! set `b` to the first point at which a solution is desired.
-                                !! you can also use `b`, if necessary, to restrict the length
-                                !! of the first integration step because the algorithm will
-                                !! not compute a starting step length which is bigger than
-                                !! `abs(b-a)`, unless `b` has been chosen too close to `a`.
-                                !! (it is presumed that dhstrt has been called with `b`
-                                !! different from `a` on the machine being used. also see the
-                                !! discussion about the parameter `small`.)
-    real(wp),dimension(neq),intent(in) :: y      !! the vector of initial values of the `neq` solution
-                                                 !! components at the initial point `a`.
+    class(ddeabm_class),intent(inout)  :: me
+    integer,intent(in)                 :: neq       !! the number of (first order) differential equations to be integrated.
+    real(wp),intent(in)                :: a         !! the initial point of integration.
+    real(wp),intent(in)                :: b         !! a value of the independent variable used to define
+                                                    !! the direction of integration. a reasonable choice is to
+                                                    !! set `b` to the first point at which a solution is desired.
+                                                    !! you can also use `b`, if necessary, to restrict the length
+                                                    !! of the first integration step because the algorithm will
+                                                    !! not compute a starting step length which is bigger than
+                                                    !! `abs(b-a)`, unless `b` has been chosen too close to `a`.
+                                                    !! (it is presumed that dhstrt has been called with `b`
+                                                    !! different from `a` on the machine being used. also see the
+                                                    !! discussion about the parameter `small`.)
+    real(wp),dimension(neq),intent(in) :: y         !! the vector of initial values of the `neq` solution
+                                                    !! components at the initial point `a`.
     real(wp),dimension(neq),intent(in) :: yprime    !! the vector of derivatives of the `neq`
                                                     !! solution components at the initial point `a`.
                                                     !! (defined by the differential equations in subroutine `me%df`)
@@ -1514,10 +1513,10 @@
                                     !! the machine.
     real(wp),intent(out) :: h       !! appropriate starting step size to be attempted by the
                                     !! differential equation method.
-    real(wp),dimension(neq),intent(inout) :: spy  !! work array of length neq which provide the routine with needed storage space.
-    real(wp),dimension(neq),intent(inout) :: pv   !! work array of length neq which provide the routine with needed storage space.
-    real(wp),dimension(neq),intent(inout) :: yp   !! work array of length neq which provide the routine with needed storage space.
-    real(wp),dimension(neq),intent(inout) :: sf   !! work array of length neq which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: spy  !! work array of length `neq` which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: pv   !! work array of length `neq` which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: yp   !! work array of length `neq` which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: sf   !! work array of length `neq` which provide the routine with needed storage space.
 
     integer :: j, k, lk
     real(wp) :: absdx, da, delf, dely,&
@@ -1711,7 +1710,7 @@
 !  date: 7/1/2014
 !
 !  Compute the maximum norm of the first `n` elements of vector `v`.
-!  Replacement for the original SLATEC routine.
+!  Replacement for the original [SLATEC](http://www.netlib.org/slatec/src/dhvnrm.f) routine.
 
     function dhvnrm (v, n) result(m)
 
@@ -2074,7 +2073,6 @@
                                                   0.5236693257950287E-02_wp, &
                                                   0.4677498407042263E-02_wp]
 
-!
 !       ***     begin block 0     ***
 !   check if step size or error tolerance is too small for machine
 !   precision.  if first step, initialize phi array and estimate a
@@ -2347,21 +2345,20 @@
       elseif (km2==0.0_wp) then
           if (erkm1 <= 0.5_wp*erk) knew = km1
       end if
-      !test if step successful
-      if (err <= eps) go to 400
+      !       ***     end block 2     ***
 
-!       ***     end block 2     ***
-!
+    !test if step successful
+    if (err > eps) then
+
 !       ***     begin block 3     ***
 !   the step is unsuccessful.  restore  x, phi(*,*), psi(*) .
 !   if third consecutive failure, set order to one.  if step fails more
 !   than three times, consider an optimal step size.  double error
 !   tolerance and return if estimated step size is too small for machine
 !   precision.
-!                   ***
-!
+
 !   restore x, phi(*,*) and psi(*)
-!
+
       phase1 = .false.
       x = xold
       do i = 1,k
@@ -2371,15 +2368,16 @@
           phi(l,i) = temp1*(phi(l,i) - phi(l,ip1))
         end do
       end do
-      if (k < 2) go to 320
-      do i = 2,k
-        psi(i-1) = psi(i) - h
-      end do
-!
+      if (k >= 2) then
+          do i = 2,k
+            psi(i-1) = psi(i) - h
+          end do
+      end if
+
 !   on third failure, set order to one.  thereafter, use optimal step
 !   size
-!
- 320  ifail = ifail + 1
+
+      ifail = ifail + 1
       temp2 = 0.5_wp
       if (ifail - 3 >= 0.0_wp) then
           if (ifail - 3 > 0.0_wp .and. p5eps < 0.25_wp*erk) &
@@ -2389,24 +2387,25 @@
       h = temp2*h
       k = knew
       ns = 0
-      if (abs(h) >= fouru*abs(x)) go to 340
+      if (abs(h) >= fouru*abs(x)) go to 100
       crash = .true.
       h = sign(fouru*abs(x),h)
       eps = eps + eps
       return
- 340  go to 100
-!       ***     end block 3     ***
-!
+
+    end if
+    !       ***     end block 3     ***
+
 !       ***     begin block 4     ***
 !   the step is successful.  correct the predicted solution, evaluate
 !   the derivatives using the corrected solution and update the
 !   differences.  determine best order and step size for next step.
-!                   ***
- 400  kold = k
+
+      kold = k
       hold = h
-!
+
 !   correct and evaluate
-!
+
       temp1 = h*g(kp1)
       if (nornd) then
           do l = 1,neqn
@@ -2424,9 +2423,9 @@
           end do
       end if
      call me%df(x,y,yp)
-!
+
 !   update differences for next step
-!
+
       do l = 1,neqn
         phi(l,kp1) = yp(l) - phi(l,1)
         phi(l,kp2) = phi(l,kp1) - phi(l,kp2)
@@ -2436,12 +2435,12 @@
           phi(l,i) = phi(l,i) + phi(l,kp1)
         end do
       end do
-!
+
 !   estimate error at order k+1 unless:
 !     in first phase when always raise order,
 !     already decided to lower order,
 !     step size not constant so estimate unreliable
-!
+
       erkp1 = 0.0_wp
       if (knew == km1  .or.  k == 12) phase1 = .false.
       if (phase1) go to 450
@@ -2451,32 +2450,32 @@
         erkp1 = erkp1 + (phi(l,kp2)/wt(l))**2
       end do
       erkp1 = absh*gstr(kp1)*sqrt(erkp1)
-!
+
 !   using estimated error at order k+1, determine appropriate order
 !   for next step
-!
+
       if (k > 1) go to 445
       if (erkp1 >= 0.5_wp*erk) go to 460
       go to 450
  445  if (erkm1 <= min(erk,erkp1)) go to 455
       if (erkp1 >= erk  .or.  k == 12) go to 460
-!
+
 !   here erkp1 < erk < max(erkm1,erkm2) else order would have
 !   been lowered in block 2.  thus order is to be raised
-!
+
 !   raise order
-!
+
  450  k = kp1
       erk = erkp1
       go to 460
-!
+
 !   lower order
-!
+
  455  k = km1
       erk = erkm1
-!
+
 !   with new order determine appropriate step size for next step
-!
+
  460  hnew = h + h
       if (phase1) go to 465
       if (p5eps >= erk*two(k+1)) go to 465
