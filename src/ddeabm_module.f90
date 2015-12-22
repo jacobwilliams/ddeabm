@@ -1,5 +1,6 @@
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
 !
 !# See also
@@ -162,24 +163,23 @@
 
         subroutine deriv_func(me,t,x,xdot)
             !! Interface to the [[ddeabm_class]] derivative function.
-            !! `xdot = dx/dt`.
         import :: wp,ddeabm_class
         implicit none
         class(ddeabm_class),intent(inout) :: me
-        real(wp),intent(in)               :: t
-        real(wp),dimension(:),intent(in)  :: x
-        real(wp),dimension(:),intent(out) :: xdot
+        real(wp),intent(in)               :: t    !! time
+        real(wp),dimension(:),intent(in)  :: x    !! state
+        real(wp),dimension(:),intent(out) :: xdot !! derivative of state (\( dx/dt \))
         end subroutine deriv_func
 
         subroutine event_func(me,t,x,g)
             !! Interface to the [[ddeabm_with_event_class]] scalar event function.
-            !! The event is located when `g(t,x)=0`.
         import :: wp,ddeabm_with_event_class
         implicit none
         class(ddeabm_with_event_class),intent(inout) :: me
-        real(wp),intent(in)               :: t
-        real(wp),dimension(:),intent(in)  :: x
-        real(wp),intent(out)              :: g
+        real(wp),intent(in)               :: t  !! time
+        real(wp),dimension(:),intent(in)  :: x  !! state
+        real(wp),intent(out)              :: g  !! event function: \( g(t,x) \).
+                                                !! The event is located when \( g(t,x)=0 \).
         end subroutine event_func
 
     end interface
@@ -190,7 +190,8 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Call this to indicate that a new problem is being solved (see [[ddeabm]] documentation).
 
     subroutine ddeabm_new_problem(me)
@@ -205,7 +206,8 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Initialize the [[ddeabm_class]], and set the variables that
 !  cannot be changed during a problem.
 
@@ -268,7 +270,8 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Initialize [[ddeabm_with_event_class]] class,
 !  and set the variables that cannot be changed during a problem.
 !
@@ -303,7 +306,8 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Destructor for [[ddeabm_class]].
 
     subroutine destroy_ddeabm(me)
@@ -316,7 +320,8 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Wrapper routine for [[ddeabm]].
 !
 !  If starting a new problem, must first call `me%first_call()`.
@@ -392,7 +397,8 @@
 !*****************************************************************************************
 
 !*****************************************************************************************
-!>
+!> author: Jacob Williams
+!
 !  Wrapper routine for [[ddeabm]], with event finding.
 !  It will integrate until `g(t,x)=0` or `t=tmax` (whichever comes first).
 !  Note that a root at the initial time is ignored (user should check for
@@ -957,7 +963,6 @@
 !                     run being terminated.
 !
 !# Authors
-!
 !   * L. F. Shampine
 !   * H. A. Watts
 !   * M. K. Gordon
@@ -967,7 +972,6 @@
 !     package of ode solvers", Report SAND79-2374, Sandia Laboratories, 1979.
 !
 !# History
-!
 !   * 820301  date written
 !   * 890531  changed all specific intrinsics to generic.  (wrb)
 !   * 890831  modified array declarations.  (wrb)
@@ -978,7 +982,7 @@
 !   * 900510  convert xerrwv calls to xermsg calls.  (rwc)
 !   * 920501  reformatted the references section.  (wrb)
 !   * July, 2014 : Major refactoring into modern Fortran (jw)
-!   * December, 2015 : additional refactoring (jw)
+!   * December, 2015 : Additional refactoring (jw)
 
     subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid)
 
@@ -1056,6 +1060,7 @@
 !   * 900328  added type section.  (wrb)
 !   * 900510  convert xerrwv calls to xermsg calls, cvt gotos to if-then-else.  (rwc)
 !   * 910722  updated author section.  (als)
+!   * December, 2015 : Refactored this routine (jw)
 
     subroutine ddes (me, neq, t, y, tout, info, rtol, atol, idid,&
                         ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi,&
@@ -1476,6 +1481,7 @@
 !   * 891214  prologue converted to version 4.0 format.  (bab)
 !   * 900328  added type section.  (wrb)
 !   * 910722  updated author section.  (als)
+!   * December, 2015 : Refactored this routine (jw)
 
     subroutine dhstrt (me,neq,a,b,y,yprime,etol,morder,small,big,spy,pv,yp,sf,h)
 
@@ -1537,183 +1543,162 @@
                 dx, dy, fbnd, relper,&
                 srydpb, tolexp, tolmin, tolp, tolsum, ydpb
 
-!     ..................................................................
-!
-!     begin block permitting ...exits to 160
-!***first executable statement  dhstrt
-         dx = b - a
-         absdx = abs(dx)
-         relper = small**0.375_wp
-!
-!        ...............................................................
-!
-!             compute an approximate bound (dfdxb) on the partial
-!             derivative of the equation with respect to the
-!             independent variable. protect against an overflow.
-!             also compute a bound (fbnd) on the first derivative
-!             locally.
-!
-         da = sign(max(min(relper*abs(a),absdx),100.0_wp*small*abs(a)),dx)
-         if (da == 0.0_wp) da = relper*dx
-         call me%df(a+da,y,sf)
-         yp = sf - yprime
-         delf = dhvnrm(yp,neq)
-         dfdxb = big
-         if (delf < big*abs(da)) dfdxb = delf/abs(da)
-         fbnd = dhvnrm(sf,neq)
-!
-!        ...............................................................
-!
-!             compute an estimate (dfdub) of the local lipschitz
-!             constant for the system of differential equations. this
-!             also represents an estimate of the norm of the jacobian
-!             locally.  three iterations (two when neq=1) are used to
-!             estimate the lipschitz constant by numerical differences.
-!             the first perturbation vector is based on the initial
-!             derivatives and direction of integration. the second
-!             perturbation vector is formed using another evaluation of
-!             the differential equation.  the third perturbation vector
-!             is formed using perturbations based only on the initial
-!             values. components that are zero are always changed to
-!             non-zero values (except on the first iteration). when
-!             information is available, care is taken to ensure that
-!             components of the perturbation vector have signs which are
-!             consistent with the slopes of local solution curves.
-!             also choose the largest bound (fbnd) for the first
-!             derivative.
-!
-!                               perturbation vector size is held
-!                               constant for all iterations. compute
-!                               this change from the
-!                                       size of the vector of initial
-!                                       values.
-         dely = relper*dhvnrm(y,neq)
-         if (dely == 0.0_wp) dely = relper
-         dely = sign(dely,dx)
-         delf = dhvnrm(yprime,neq)
-         fbnd = max(fbnd,delf)
-         if (delf == 0.0_wp) then
-            ! cannot have a null perturbation vector
-            spy  = 0.0_wp
-            yp   = 1.0_wp
-            delf = dhvnrm(yp,neq)
+    ! begin block permitting ...exits to 160
+    dx = b - a
+    absdx = abs(dx)
+    relper = small**0.375_wp
+
+    ! compute an approximate bound (dfdxb) on the partial
+    ! derivative of the equation with respect to the
+    ! independent variable. protect against an overflow.
+    ! also compute a bound (fbnd) on the first derivative
+    ! locally.
+
+    da = sign(max(min(relper*abs(a),absdx),100.0_wp*small*abs(a)),dx)
+    if (da == 0.0_wp) da = relper*dx
+    call me%df(a+da,y,sf)
+    yp = sf - yprime
+    delf = dhvnrm(yp,neq)
+    dfdxb = big
+    if (delf < big*abs(da)) dfdxb = delf/abs(da)
+    fbnd = dhvnrm(sf,neq)
+
+    ! compute an estimate (dfdub) of the local lipschitz
+    ! constant for the system of differential equations. this
+    ! also represents an estimate of the norm of the jacobian
+    ! locally.  three iterations (two when neq=1) are used to
+    ! estimate the lipschitz constant by numerical differences.
+    ! the first perturbation vector is based on the initial
+    ! derivatives and direction of integration. the second
+    ! perturbation vector is formed using another evaluation of
+    ! the differential equation.  the third perturbation vector
+    ! is formed using perturbations based only on the initial
+    ! values. components that are zero are always changed to
+    ! non-zero values (except on the first iteration). when
+    ! information is available, care is taken to ensure that
+    ! components of the perturbation vector have signs which are
+    ! consistent with the slopes of local solution curves.
+    ! also choose the largest bound (fbnd) for the first
+    ! derivative.
+    !
+    ! perturbation vector size is held
+    ! constant for all iterations. compute
+    ! this change from the
+    ! size of the vector of initial
+    ! values.
+
+    dely = relper*dhvnrm(y,neq)
+    if (dely == 0.0_wp) dely = relper
+    dely = sign(dely,dx)
+    delf = dhvnrm(yprime,neq)
+    fbnd = max(fbnd,delf)
+    if (delf == 0.0_wp) then
+        ! cannot have a null perturbation vector
+        spy  = 0.0_wp
+        yp   = 1.0_wp
+        delf = dhvnrm(yp,neq)
+    else
+        ! use initial derivatives for first perturbation
+        spy = yprime
+        yp  = yprime
+    end if
+
+    dfdub = 0.0_wp
+    lk = min(neq+1,3)
+    do k = 1, lk
+        ! define perturbed vector of initial values
+        pv = y + yp * (dely/delf)
+        if (k == 2) then
+            ! use a shifted value of the independent variable
+            ! in computing one estimate
+            call me%df(a+da,pv,yp)
+            pv = yp - sf
         else
-            ! use initial derivatives for first perturbation
-            spy = yprime
-            yp  = yprime
+            ! evaluate derivatives associated with perturbed
+            ! vector and compute corresponding differences
+            call me%df(a,pv,yp)
+            pv = yp - yprime
         end if
+        ! choose largest bounds on the first derivative
+        ! and a local lipschitz constant
+        fbnd = max(fbnd,dhvnrm(yp,neq))
+        delf = dhvnrm(pv,neq)
+        if (delf >= big*abs(dely)) exit
+        dfdub = max(dfdub,delf/abs(dely))
+        if (k == lk) go to 160  !......exit
 
-         dfdub = 0.0_wp
-         lk = min(neq+1,3)
-         do k = 1, lk
-!           define perturbed vector of initial values
-            pv = y + yp * (dely/delf)
+        ! choose next perturbation vector
+        if (delf == 0.0_wp) delf = 1.0_wp
+        do j = 1, neq
             if (k == 2) then
-                ! use a shifted value of the independent variable
-                ! in computing one estimate
-                call me%df(a+da,pv,yp)
-                pv = yp - sf
+                dy = y(j)
+                if (dy == 0.0_wp) dy = dely/relper
             else
-                ! evaluate derivatives associated with perturbed
-                ! vector and compute corresponding differences
-                call me%df(a,pv,yp)
-                pv = yp - yprime
+                dy = abs(pv(j))
+                if (dy == 0.0_wp) dy = delf
             end if
-!           choose largest bounds on the first derivative
-!                          and a local lipschitz constant
-            fbnd = max(fbnd,dhvnrm(yp,neq))
-            delf = dhvnrm(pv,neq)
-!        ...exit
-            if (delf >= big*abs(dely)) go to 150
-            dfdub = max(dfdub,delf/abs(dely))
-!     ......exit
-            if (k == lk) go to 160
-!           choose next perturbation vector
-            if (delf == 0.0_wp) delf = 1.0_wp
-            do j = 1, neq
-               if (k == 2) then
-                   dy = y(j)
-                   if (dy == 0.0_wp) dy = dely/relper
-               else
-                   dy = abs(pv(j))
-                   if (dy == 0.0_wp) dy = delf
-               end if
-               if (spy(j) == 0.0_wp) spy(j) = yp(j)
-               if (spy(j) /= 0.0_wp) dy = sign(dy,spy(j))
-               yp(j) = dy
-            end do
-            delf = dhvnrm(yp,neq)
-         end do
-  150    continue
+            if (spy(j) == 0.0_wp) spy(j) = yp(j)
+            if (spy(j) /= 0.0_wp) dy = sign(dy,spy(j))
+            yp(j) = dy
+        end do
+        delf = dhvnrm(yp,neq)
+    end do
 
-        ! protect against an overflow
-         dfdub = big
-  160 continue
-!
-!     ..................................................................
-!
-!          compute a bound (ydpb) on the norm of the second derivative
-!
-      ydpb = dfdxb + dfdub*fbnd
-!
-!     ..................................................................
-!
-!          define the tolerance parameter upon which the starting step
-!          size is to be based.  a value in the middle of the error
-!          tolerance range is selected.
-!
-      tolmin = big
-      tolsum = 0.0_wp
-      do k = 1, neq
-         tolexp = log10(etol(k))
-         tolmin = min(tolmin,tolexp)
-         tolsum = tolsum + tolexp
-      end do
-      tolp = 10.0_wp**(0.5_wp*(tolsum/neq + tolmin)/(morder+1))
+    ! protect against an overflow
+    dfdub = big
 
-!     ..................................................................
-!
-!          compute a starting step size based on the above first and
-!          second derivative information
-!
-!                            restrict the step length to be not bigger
-!                            than abs(b-a).   (unless  b  is too close
-!                            to  a)
-      h = absdx
+160 continue
+
+    ! compute a bound (ydpb) on the norm of the second derivative
+
+    ydpb = dfdxb + dfdub*fbnd
+
+    ! define the tolerance parameter upon which the starting step
+    ! size is to be based.  a value in the middle of the error
+    ! tolerance range is selected.
+
+    tolmin = big
+    tolsum = 0.0_wp
+    do k = 1, neq
+        tolexp = log10(etol(k))
+        tolmin = min(tolmin,tolexp)
+        tolsum = tolsum + tolexp
+    end do
+    tolp = 10.0_wp**(0.5_wp*(tolsum/neq + tolmin)/(morder+1))
+
+    ! compute a starting step size based on the above first and
+    ! second derivative information
+    !
+    ! restrict the step length to be not bigger
+    ! than abs(b-a). (unless b is too close to a)
+
+    h = absdx
 
     if (ydpb == 0.0_wp .and. fbnd == 0.0_wp) then
-
         ! both first derivative term (fbnd) and second
         ! derivative term (ydpb) are zero
         if (tolp < 1.0_wp) h = absdx*tolp
-
     elseif (ydpb == 0.0_wp) then
-
         ! only second derivative term (ydpb) is zero
         if (tolp < fbnd*absdx) h = tolp/fbnd
-
     else
-
         ! second derivative term (ydpb) is non-zero
         srydpb = sqrt(0.5_wp*ydpb)
         if (tolp < srydpb*absdx) h = tolp/srydpb
-
     end if
 
-!     further restrict the step length to be not
-!                               bigger than  1/dfdub
-      if (h*dfdub > 1.0_wp) h = 1.0_wp/dfdub
+    ! further restrict the step length to be not bigger than  1/dfdub
+    if (h*dfdub > 1.0_wp) h = 1.0_wp/dfdub
 
-!     finally, restrict the step length to be not
-!     smaller than  100*small*abs(a).  however, if
-!     a=0. and the computed h underflowed to zero,
-!     the algorithm returns  small*abs(b)  for the
-!                                     step length.
-      h = max(h,100.0_wp*small*abs(a))
-      if (h == 0.0_wp) h = small*abs(b)
+    ! finally, restrict the step length to be not
+    ! smaller than 100*small*abs(a). however, if
+    ! a=0. and the computed h underflowed to zero,
+    ! the algorithm returns small*abs(b) for the step length.
+    h = max(h,100.0_wp*small*abs(a))
+    if (h == 0.0_wp) h = small*abs(b)
 
-!     now set direction of integration
-      h = sign(h,dx)
+    ! now set direction of integration
+    h = sign(h,dx)
 
     end subroutine dhstrt
 !*****************************************************************************************
@@ -1762,6 +1747,7 @@
 !   * 890831  revision date from version 3.2
 !   * 891214  prologue converted to version 4.0 format.  (bab)
 !   * 920501  reformatted the references section.  (wrb)
+!   * December, 2015 : Refactored this routine (jw)
 
     subroutine dintp (x,y,xout,yout,ypout,neqn,kold,phi,ivc,iv,kgi,gi,alpha,og,ow,ox,oy)
 
@@ -1999,6 +1985,7 @@
 !   * 890831  revision date from version 3.2
 !   * 891214  prologue converted to version 4.0 format.  (bab)
 !   * 920501  reformatted the references section.  (wrb)
+!   * December, 2015 : Refactored this routine (jw)
 
     subroutine dsteps (me, neqn, y, x, h, eps, wt, start, hold, k,&
                        kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g,&

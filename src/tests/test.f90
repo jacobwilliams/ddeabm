@@ -6,8 +6,11 @@
     program test
 
     use ddeabm_module
+    use root_module
 
     implicit none
+
+    call zeroin_test()
 
     call ddeabm_test()
 

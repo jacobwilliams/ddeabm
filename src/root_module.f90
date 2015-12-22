@@ -17,18 +17,19 @@
     real(wp),parameter :: one   = 1.0_wp
     real(wp),parameter :: two   = 2.0_wp
     real(wp),parameter :: three = 3.0_wp
-    real(wp),parameter :: eps   = epsilon(one)    !! original code had d1mach(4)
+    real(wp),parameter :: eps   = epsilon(one)  !! original code had d1mach(4)
 
     abstract interface
-        function func(t) result(f)  !! interface to the [[zeroin]] function
+        function func(t) result(f)  !! interface to the [[zeroin]] input function
         import :: wp
         implicit none
-        real(wp),intent(in)  :: t
-        real(wp)             :: f
+        real(wp),intent(in)  :: t  !! Independant variable for the function.
+        real(wp)             :: f  !! The function evaluated at `t`.
         end function func
     end interface
 
-    public :: zeroin
+    public :: zeroin      ! main routine
+    public :: zeroin_test ! unit test
 
     contains
 !*****************************************************************************************
@@ -58,15 +59,15 @@
 
     implicit none
 
-    procedure(func)              :: f     !! the function
-    real(wp),intent(in)          :: ax    !! left endpoint of initial interval
-    real(wp),intent(in)          :: bx    !! right endpoint of initial interval
-    real(wp),intent(in)          :: tol   !! desired length of the interval of uncertainty of the final result (>=0)
-    real(wp),intent(out)         :: xzero !! abscissa approximating a zero of f in the interval ax,bx
-    real(wp),intent(out)         :: fzero !! f(xzero)
-    integer,intent(out)          :: iflag !! status flag (-1=error, 0=root found)
-    real(wp),intent(in),optional :: fax   !! if f(ax) is already known, it can be input here
-    real(wp),intent(in),optional :: fbx   !! if f(ax) is already known, it can be input here
+    procedure(func)              :: f       !! the function to find the root of
+    real(wp),intent(in)          :: ax      !! left endpoint of initial interval
+    real(wp),intent(in)          :: bx      !! right endpoint of initial interval
+    real(wp),intent(in)          :: tol     !! desired length of the interval of uncertainty of the final result (>=0)
+    real(wp),intent(out)         :: xzero   !! abscissa approximating a zero of `f` in the interval `ax`,`bx`
+    real(wp),intent(out)         :: fzero   !! value of `f` at the root (`f(xzero)`)
+    integer,intent(out)          :: iflag   !! status flag (`-1`=error, `0`=root found)
+    real(wp),intent(in),optional :: fax     !! if `f(ax)` is already known, it can be input here
+    real(wp),intent(in),optional :: fbx     !! if `f(ax)` is already known, it can be input here
 
     real(wp) :: a,b,c,d,e,fa,fb,fc,tol1,xm,p,q,r,s
 
@@ -169,6 +170,89 @@
     end if
 
     end subroutine zeroin
+!*****************************************************************************************
+
+!*****************************************************************************************
+!> author: Jacob Williams
+!  date: 12/22/2015
+!
+!  Unit tests for [[zeroin]] subroutine.
+
+    subroutine zeroin_test()
+
+    implicit none
+
+    real(wp) :: ax,bx,xzero,fzero
+    integer :: iflag,fevals
+
+    real(wp),parameter :: tol     = 1.0e-12_wp  !! tolerance for root location
+    real(wp),parameter :: rad2deg = 180.0_wp / acos(-1.0_wp) !! radians to degrees
+
+    write(*,*) ''
+    write(*,*) '---------------'
+    write(*,*) ' zeroin_test'
+    write(*,*) '---------------'
+    write(*,*) ''
+
+    fevals = 0
+    ax = 0.0_wp
+    bx = 4.0_wp
+    call zeroin(sin_func,ax,bx,tol,xzero,fzero,iflag)
+    write(*,*) 'sin:', iflag, xzero*rad2deg, fzero, fevals
+
+    fevals = 0
+    ax = -1.0_wp
+    bx = 4.0_wp
+    call zeroin(cos_func,ax,bx,tol,xzero,fzero,iflag)
+    write(*,*) 'cos:', iflag, xzero*rad2deg, fzero, fevals
+
+    fevals = 0
+    ax = 2.0_wp
+    bx = 4.5_wp
+    call zeroin(tan_func,ax,bx,tol,xzero,fzero,iflag)
+    write(*,*) 'tan:', iflag, xzero*rad2deg, fzero, fevals
+
+    fevals = 0
+    ax = 0.5_wp
+    bx = 2.0_wp
+    call zeroin(log_func,ax,bx,tol,xzero,fzero,iflag)
+    write(*,*) 'log:', iflag, xzero, fzero, fevals
+
+    contains
+
+        function sin_func(x) result(f)  !! \( \sin(x) \)
+        implicit none
+        real(wp),intent(in)  :: x
+        real(wp)             :: f
+        f = sin(x)
+        fevals = fevals + 1
+        end function sin_func
+
+        function cos_func(x) result(f)  !! \( \cos(x) \)
+        implicit none
+        real(wp),intent(in)  :: x
+        real(wp)             :: f
+        f = cos(x)
+        fevals = fevals + 1
+        end function cos_func
+
+        function tan_func(x) result(f)  !! \( \tan(x) \)
+        implicit none
+        real(wp),intent(in)  :: x
+        real(wp)             :: f
+        f = tan(x)
+        fevals = fevals + 1
+        end function tan_func
+
+        function log_func(x) result(f)  !! \( \log(x) \)
+        implicit none
+        real(wp),intent(in)  :: x
+        real(wp)             :: f
+        f = log(x)
+        fevals = fevals + 1
+        end function log_func
+
+    end subroutine zeroin_test
 !*****************************************************************************************
 
 !*****************************************************************************************
