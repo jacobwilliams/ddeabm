@@ -29,7 +29,7 @@
 
     type,public :: ddeabm_class
 
-        !! The main integration class.
+        !! The main DDEABM integration class.
 
         private
 
@@ -42,7 +42,7 @@
             !!  is reset to zero and the user is informed about possible excessive
             !!  work.
 
-        procedure(func),pointer :: df => null()
+        procedure(deriv_func),pointer :: df => null()
             !!  to define the system of first order differential equations
             !!  which is to be solved.  for the given values of `x` and the
             !!  vector `u(*)=(u(1),u(2),...,u(neq))`, the subroutine must
@@ -121,27 +121,63 @@
         private
 
         procedure,public :: initialize => ddeabm_initialize
-        procedure,public :: integrate  => ddeabm_wrapper
-        procedure,public :: destroy    => destroy_ddeabm
-        procedure,public :: first_call => ddeabm_new_problem
+        procedure,non_overridable,public :: integrate  => ddeabm_wrapper
+        procedure,non_overridable,public :: destroy    => destroy_ddeabm
+        procedure,non_overridable,public :: first_call => ddeabm_new_problem
 
         !support routines:
-        procedure :: ddeabm
-        procedure :: ddes
-        procedure :: dhstrt
-        procedure :: dsteps
+        procedure,non_overridable :: ddeabm
+        procedure,non_overridable :: ddes
+        procedure,non_overridable :: dhstrt
+        procedure,non_overridable :: dsteps
 
     end type ddeabm_class
 
+    type,extends(ddeabm_class),public :: ddeabm_with_event_class
+
+        !! A version of [[ddeabm_class]] with event location (root finding).
+
+        private
+
+        real(wp) :: tol = 0.0_wp  !! tolerance for root finding (see [[zeroin]])
+
+        procedure(event_func),pointer :: gfunc => null()  !! event function: g(t,x)=0 at event
+
+    contains
+
+        private
+
+        procedure,non_overridable,public :: initialize_event   => ddeabm_with_event_initialize
+        procedure,non_overridable,public :: integrate_to_event => ddeabm_with_event_wrapper
+            !! main routine for integration to an event
+            !! (note that *integrate* can also still be used from [[ddeabm_class]])
+
+    end type ddeabm_with_event_class
+
     abstract interface
-        subroutine func(me,t,x,xdot)  !! interface to the derivative function
+
+        subroutine deriv_func(me,t,x,xdot)
+            !! Interface to the [[ddeabm_class]] derivative function.
+            !! `xdot = dx/dt`.
         import :: wp,ddeabm_class
         implicit none
         class(ddeabm_class),intent(inout) :: me
-        real(wp),intent(in) :: t
-        real(wp),dimension(:),intent(in) :: x
+        real(wp),intent(in)               :: t
+        real(wp),dimension(:),intent(in)  :: x
         real(wp),dimension(:),intent(out) :: xdot
-        end subroutine func
+        end subroutine deriv_func
+
+        subroutine event_func(me,t,x,g)
+            !! Interface to the [[ddeabm_with_event_class]] scalar event function.
+            !! The event is located when `g(t,x)=0`.
+        import :: wp,ddeabm_with_event_class
+        implicit none
+        class(ddeabm_with_event_class),intent(inout) :: me
+        real(wp),intent(in)               :: t
+        real(wp),dimension(:),intent(in)  :: x
+        real(wp),intent(out)              :: g
+        end subroutine event_func
+
     end interface
 
     public :: ddeabm_test
@@ -157,7 +193,7 @@
 
     implicit none
 
-    class(ddeabm_class),intent(inout)    :: me
+    class(ddeabm_class),intent(inout) :: me
 
     me%info(1) = 0
 
@@ -166,18 +202,19 @@
 
 !*****************************************************************************************
 !>
-!  Initialize the class, and set the variables that cannot be changed during a problem.
+!  Initialize the [[ddeabm_class]], and set the variables that
+!  cannot be changed during a problem.
 
     subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol)
 
     implicit none
 
     class(ddeabm_class),intent(inout)   :: me
-    integer,intent(in)                  :: neq
-    integer,intent(in)                  :: maxnum
-    procedure(func)                     :: df
-    real(wp),dimension(:),intent(in)    :: rtol
-    real(wp),dimension(:),intent(in)    :: atol
+    integer,intent(in)                  :: neq     !! number of equations to be integrated
+    integer,intent(in)                  :: maxnum  !! maximum number of iteration steps allowed
+    procedure(deriv_func)               :: df      !! derivative function dx/dt
+    real(wp),dimension(:),intent(in)    :: rtol    !! relative tolerance for integration (see [[ddeabm]])
+    real(wp),dimension(:),intent(in)    :: atol    !! absolution tolerance for integration (see [[ddeabm]])
 
     logical :: vector_tols
 
@@ -223,8 +260,38 @@
         me%atol = atol
     end if
 
-!*****************************************************************************************
     end subroutine ddeabm_initialize
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Initialize [[ddeabm_with_event_class]] class,
+!  and set the variables that cannot be changed during a problem.
+!
+!#See also
+!  * [[ddeabm_initialize]]
+
+    subroutine ddeabm_with_event_initialize(me,neq,maxnum,df,rtol,atol,g,root_tol)
+
+    implicit none
+
+    class(ddeabm_with_event_class),intent(inout) :: me
+    integer,intent(in)                           :: neq       !! number of equations to be integrated
+    integer,intent(in)                           :: maxnum    !! maximum number of iteration steps allowed
+    procedure(deriv_func)                        :: df        !! derivative function dx/dt
+    real(wp),dimension(:),intent(in)             :: rtol      !! relative tolerance for integration (see [[ddeabm]])
+    real(wp),dimension(:),intent(in)             :: atol      !! absolution tolerance for integration (see [[ddeabm]])
+    procedure(event_func)                        :: g         !! event function g(t,x)
+    real(wp),intent(in)                          :: root_tol  !! tol for the root finding
+
+    !base class initialization:
+    call me%initialize(neq,maxnum,df,rtol,atol)
+
+    !event finding variables:
+    me%tol = root_tol
+    me%gfunc => g
+
+    end subroutine ddeabm_with_event_initialize
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -314,6 +381,172 @@
                     idid  = idid)
 
     end subroutine ddeabm_wrapper
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Wrapper routine for [[ddeabm]], with event finding.
+!
+!  If starting a new problem, must first call `me%first_call()`.
+!
+!@note Currently not using the recommended tols if `idid=-2`.
+
+    subroutine ddeabm_with_event_wrapper(me,t,y,tmax,tstop,idid,gval)
+
+    use root_module
+
+    implicit none
+
+    class(ddeabm_with_event_class),intent(inout)   :: me
+    real(wp),intent(inout)                         :: t
+    real(wp),dimension(me%neq),intent(inout)       :: y
+    real(wp),intent(in)                            :: tmax    !! max time at which a solution is desired.
+                                                              !! (if root not located, it will integrate to tmax)
+    real(wp),intent(in),optional                   :: tstop   !! for some problems it may not be permissible to integrate
+                                                              !! past a point tstop because a discontinuity occurs there
+                                                              !! or the solution or its derivative is not defined beyond
+                                                              !! tstop.  when you have declared a tstop point (see info(4)),
+                                                              !! you have told the code not to integrate past tstop.
+                                                              !! in this case any tout beyond tstop is invalid input.
+                                                              !! [not used if not present]
+    integer,intent(out)                            :: idid    !! indicator reporting what the code did.
+                                                              !! you must monitor this integer variable to
+                                                              !! decide what action to take next.
+                                                              !! idid=1000 means a root was found.
+                                                              !! See [[ddeabm]] for other values.
+    real(wp),intent(out)                           :: gval    !! value of the event function g(t,x) at the final time t
+
+    !local variables:
+    real(wp) :: g1,g2,t1,t2,tzero,t0
+    integer :: iflag
+    logical :: first
+    real(wp),dimension(me%neq) :: y1,y2
+    real(wp),dimension(me%neq) :: yc  !! interpolated state at tc
+
+    !set info array:
+
+    !info(1) is set when ddeabm_new_problem is called
+
+    !info(2)
+    if (me%scalar_tols) then
+        me%info(2) = 0
+    else
+        me%info(2) = 1
+    end if
+
+    !info(3)
+    me%info(3) = 1  !intermediate output mode: return after each step
+
+    !info(4)
+    if (present(tstop)) then
+        me%info(4) = 1
+        me%tstop = tstop
+    else
+        me%info(4) = 0
+        me%tstop = 0.0_wp !not used
+    end if
+
+    !make a copy of the tols, since the routine might change them:
+    me%rtol_tmp = me%rtol
+    me%atol_tmp = me%atol
+
+    !evaluate the event function at the initial point:
+    first = .true.  !to avoid catching a root at the initial time
+    t1 = t
+    y1 = y
+    call me%gfunc(t1,y1,g1)
+
+    do
+
+        !call the lower-level routine:
+        call me%ddeabm( neq     = me%neq,&
+                          t     = t,&
+                          y     = y,&
+                          tout  = tmax,&
+                          info  = me%info,&
+                          rtol  = me%rtol_tmp,&
+                          atol  = me%atol_tmp,&
+                          idid  = idid)
+
+        !evalute event function at new point:
+        t2 = t
+        y2 = y
+        call me%gfunc(t2,y2,g2)
+
+        !check status (see ddeabm or idid codes):
+        select case (idid)
+        case(1)
+            !intermediate step successful, continue
+        case(2,3)
+            !tout was reached. check it for root (if not a root, then return)
+            gval = g2
+            if (abs(gval)<=me%tol) then
+                idid = 1000 !root found
+            else
+                return !root not found
+            end if
+        case default
+            !some error
+            return
+        end select
+
+        !note: we ignore if a root on the initial time:
+        if (abs(g2)<=me%tol) then  !intermediate t2 is a root
+
+            idid = 1000
+            gval = g2
+            t = t2
+            y = y2
+            return
+
+        elseif ((.not. first) .and. (g1*g2<=0.0_wp)) then  ! different signs - root somewhere on [t1,t2]
+
+            !call the root finder:
+            call zeroin(zeroin_func,t1,t2,me%tol,tzero,gval,iflag,g1,g2)
+            if (iflag==0) then !root found at tzero
+                idid = 1000
+                !evaluate again to get the final state for output:
+                gval = zeroin_func(tzero)
+                t = tzero
+                y = yc
+                return
+            else
+                write(*,*) 'Error locating root in ddeabm_with_event_wrapper.'
+                return
+            end if
+
+        else  !set up for next step:
+            g1 = g2
+            t1 = t2
+            y1 = y2
+        end if
+
+        first = .false.
+
+    end do
+
+    contains
+
+        function zeroin_func(tc) result(g)
+            !! evaluate the g function at t2 using interpolation ([[dintp]]).
+
+            implicit none
+
+            real(wp),intent(in)  :: tc  !! current time
+            real(wp)             :: g   !! value of event function
+
+            ! interpolate to get the state at tc:
+            call dintp(t2,y2,tc,yc,&
+                         me%ypout,me%neq,me%kold,me%phi,&     !! class variables
+                         me%ivc,me%iv,me%kgi,me%gi,me%alpha,&
+                         me%g,me%w,me%xold,me%p)
+
+            ! user defined event function:
+            call me%gfunc(tc,yc,g)
+
+        end function zeroin_func
+
+    end subroutine ddeabm_with_event_wrapper
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -1206,12 +1439,10 @@
 
 !*****************************************************************************************
 !>
-!  dhstrt computes a starting step size to be used in solving initial
+!  Computes a starting step size to be used in solving initial
 !  value problems in ordinary differential equations.
 !
-!  subroutine dhstrt computes a starting step size to be used by an
-!  initial value method in solving ordinary differential equations.
-!  it is based on an estimate of the local lipschitz constant for the
+!  It is based on an estimate of the local lipschitz constant for the
 !  differential equation (lower bound on a norm of the jacobian) ,
 !  a bound on the differential equation (first derivative), and
 !  a bound on the partial derivative of the equation with respect to
@@ -1223,87 +1454,6 @@
 !  that any replacement norm routine would be carefully coded to
 !  prevent unnecessary underflows or overflows from occurring, and
 !  also, would not alter the vector or number of components.
-!
-!# on input you must provide the following
-!
-!      df -- this is a subroutine of the form
-!                               df(x,u,uprime)
-!             which defines the system of first order differential
-!             equations to be solved. for the given values of x and the
-!             vector  u(*)=(u(1),u(2),...,u(neq)) , the subroutine must
-!             evaluate the neq components of the system of differential
-!             equations  du/dx=df(x,u)  and store the derivatives in the
-!             array uprime(*), that is,  uprime(i) = * du(i)/dx *  for
-!             equations i=1,...,neq.
-!
-!             subroutine df must not alter x or u(*). you must declare
-!             the name df in an external statement in your program that
-!             calls dhstrt. you must dimension u and uprime in df.
-!
-!      neq -- this is the number of (first order) differential equations
-!             to be integrated.
-!
-!      a -- this is the initial point of integration.
-!
-!      b -- this is a value of the independent variable used to define
-!             the direction of integration. a reasonable choice is to
-!             set  b  to the first point at which a solution is desired.
-!             you can also use  b, if necessary, to restrict the length
-!             of the first integration step because the algorithm will
-!             not compute a starting step length which is bigger than
-!             abs(b-a), unless  b  has been chosen too close to  a.
-!             (it is presumed that dhstrt has been called with  b
-!             different from  a  on the machine being used. also see the
-!             discussion about the parameter  small.)
-!
-!      y(*) -- this is the vector of initial values of the neq solution
-!             components at the initial point  a.
-!
-!      yprime(*) -- this is the vector of derivatives of the neq
-!             solution components at the initial point  a.
-!             (defined by the differential equations in subroutine df)
-!
-!      etol -- this is the vector of error tolerances corresponding to
-!             the neq solution components. it is assumed that all
-!             elements are positive. following the first integration
-!             step, the tolerances are expected to be used by the
-!             integrator in an error test which roughly requires that
-!                        abs(local error)  <=  etol
-!             for each vector component.
-!
-!      morder -- this is the order of the formula which will be used by
-!             the initial value method for taking the first integration
-!             step.
-!
-!      small -- this is a small positive machine dependent constant
-!             which is used for protecting against computations with
-!             numbers which are too small relative to the precision of
-!             floating point arithmetic.  small  should be set to
-!             (approximately) the smallest positive double precision
-!             number such that  (1.+small) > 1.  on the machine being
-!             used. the quantity  small**(3/8)  is used in computing
-!             increments of variables for approximating derivatives by
-!             differences.  also the algorithm will not compute a
-!             starting step length which is smaller than
-!             100*small*abs(a).
-!
-!      big -- this is a large positive machine dependent constant which
-!             is used for preventing machine overflows. a reasonable
-!             choice is to set big to (approximately) the square root of
-!             the largest double precision number which can be held in
-!             the machine.
-!
-!      spy(*),pv(*),yp(*),sf(*) -- these are double precision work
-!             arrays of length neq which provide the routine with needed
-!             storage space.
-!
-!# on output  (after the return from dhstrt),
-!
-!      h -- is an appropriate starting step size to be attempted by the
-!             differential equation method.
-!
-!           all parameters in the call list remain unchanged except for
-!           the working arrays spy(*),pv(*),yp(*), and sf(*).
 !
 !# History
 !   * 820301  date written -- watts, h. a., (snla)
@@ -1320,20 +1470,54 @@
     implicit none
 
     class(ddeabm_class),intent(inout) :: me
-    integer,intent(in) :: neq
-    real(wp),intent(in) :: a
-    real(wp),intent(in) :: b
-    real(wp),dimension(neq),intent(in) :: y
-    real(wp),dimension(neq),intent(in) :: yprime
-    real(wp),dimension(neq),intent(in) :: etol
-    integer,intent(in) :: morder
-    real(wp),intent(in) :: small
-    real(wp),intent(in) :: big
-    real(wp),intent(out) :: h
-    real(wp),dimension(neq),intent(inout) :: spy
-    real(wp),dimension(neq),intent(inout) :: pv
-    real(wp),dimension(neq),intent(inout) :: yp
-    real(wp),dimension(neq),intent(inout) :: sf
+    integer,intent(in)  :: neq  !! the number of (first order) differential equations to be integrated.
+    real(wp),intent(in) :: a    !! the initial point of integration.
+    real(wp),intent(in) :: b    !! a value of the independent variable used to define
+                                !! the direction of integration. a reasonable choice is to
+                                !! set `b` to the first point at which a solution is desired.
+                                !! you can also use `b`, if necessary, to restrict the length
+                                !! of the first integration step because the algorithm will
+                                !! not compute a starting step length which is bigger than
+                                !! `abs(b-a)`, unless `b` has been chosen too close to `a`.
+                                !! (it is presumed that dhstrt has been called with `b`
+                                !! different from `a` on the machine being used. also see the
+                                !! discussion about the parameter `small`.)
+    real(wp),dimension(neq),intent(in) :: y      !! the vector of initial values of the `neq` solution
+                                                 !! components at the initial point `a`.
+    real(wp),dimension(neq),intent(in) :: yprime    !! the vector of derivatives of the `neq`
+                                                    !! solution components at the initial point `a`.
+                                                    !! (defined by the differential equations in subroutine `me%df`)
+    real(wp),dimension(neq),intent(in) :: etol      !! the vector of error tolerances corresponding to
+                                                    !! the `neq` solution components. it is assumed that all
+                                                    !! elements are positive. following the first integration
+                                                    !! step, the tolerances are expected to be used by the
+                                                    !! integrator in an error test which roughly requires that
+                                                    !! `abs(local error) <= etol` for each vector component.
+    integer,intent(in) :: morder    !! the order of the formula which will be used by
+                                    !! the initial value method for taking the first integration
+                                    !! step.
+    real(wp),intent(in) :: small    !! a small positive machine dependent constant
+                                    !! which is used for protecting against computations with
+                                    !! numbers which are too small relative to the precision of
+                                    !! floating point arithmetic.  `small` should be set to
+                                    !! (approximately) the smallest positive double precision
+                                    !! number such that `(1.0_wp+small) > 1.0_wp`.  on the machine being
+                                    !! used. the quantity `small**(3.0_wp/8.0_wp)` is used in computing
+                                    !! increments of variables for approximating derivatives by
+                                    !! differences.  also the algorithm will not compute a
+                                    !! starting step length which is smaller than
+                                    !! `100.0_wp*small*abs(a)`.
+    real(wp),intent(in) :: big      !! a large positive machine dependent constant which
+                                    !! is used for preventing machine overflows. a reasonable
+                                    !! choice is to set big to (approximately) the square root of
+                                    !! the largest double precision number which can be held in
+                                    !! the machine.
+    real(wp),intent(out) :: h       !! appropriate starting step size to be attempted by the
+                                    !! differential equation method.
+    real(wp),dimension(neq),intent(inout) :: spy  !! work array of length neq which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: pv   !! work array of length neq which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: yp   !! work array of length neq which provide the routine with needed storage space.
+    real(wp),dimension(neq),intent(inout) :: sf   !! work array of length neq which provide the routine with needed storage space.
 
     integer :: j, k, lk
     real(wp) :: absdx, da, delf, dely,&
@@ -2341,7 +2525,7 @@
 
     subroutine ddeabm_test()
 
-    type,extends(ddeabm_class) :: spacecraft
+    type,extends(ddeabm_with_event_class) :: spacecraft
         !! spacecraft propagation type.
         !! extends the [[ddeabm_class]] to include data used in the deriv routine
         real(wp) :: mu = 0.0_wp      !! central body gravitational parameter (km3/s2)
@@ -2349,11 +2533,12 @@
         logical :: first = .true.    !! first point is being exported
     end type spacecraft
 
-    integer,parameter :: n=6    !! number of state variables
+    integer,parameter  :: n = 6            !! number of state variables
     real(wp),parameter :: tol = 1.0e-12_wp !! event location tolerance
 
     type(spacecraft) :: s, s2
-    real(wp) :: t0,tf,x0(n),dt,xf(n),x02(n),gf,tf_actual,t,x(n)
+    real(wp),dimension(n) :: x0,xf,x02,x
+    real(wp) :: t0,tf,dt,gf,tf_actual,t,gval
     integer :: idid
 
     write(*,*) ''
@@ -2374,6 +2559,7 @@
             1.0_wp,2.0_wp,3.0_wp]
     t0 = 0.0_wp       !initial time (sec)
     tf = 1000.0_wp    !final time (sec)
+    s%fevals = 0
 
     write(*,'(A/,*(F15.6/))') 'Initial state:',x0
     s%fevals = 0
@@ -2386,9 +2572,12 @@
     write(*,*) ''
     write(*,*) 'idid: ',idid
     write(*,'(A/,*(F15.6/))') 'Final state:',xf
+    write(*,'(A,I5)') 'Function evaluations:', s%fevals
+    write(*,*) ''
 
     t = tf
     x = xf
+    s%fevals = 0
     call s%first_call()  !restarting the integration
     call s%integrate(t,x,t0,idid=idid)  !backwards
     x02 = x
@@ -2397,6 +2586,36 @@
     write(*,'(A/,*(F15.6/))') 'Initial state:',x02
     write(*,*) ''
     write(*,'(A/,*(E20.12/))') 'Error:',x02-x0
+    write(*,'(A,I5)') 'Function evaluations:', s%fevals
+    write(*,*) ''
+
+    !***************************************************************************
+
+    !integration to event test
+
+    call s%initialize_event(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
+                                g=twobody_event,root_tol=1.0e-12_wp)
+    s%mu = 398600.436233_wp  !earth
+    s%fevals = 0
+
+    !initial conditions:
+    x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
+            1.0_wp,2.0_wp,3.0_wp]
+    t0 = 0.0_wp       !initial time (sec)
+    tf = 1000.0_wp    !final time (sec)
+
+    write(*,'(A/,*(F15.6/))') 'Initial state:',x0
+    s%fevals = 0
+    s%first = .true.
+    t = t0
+    x = x0
+    call s%first_call()
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)    !forward
+    xf = x
+    write(*,*) ''
+    write(*,*) 'idid: ',idid
+    write(*,*) 'gval: ',gval
+    write(*,'(A/,*(F15.6/))') 'Final state:',xf
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
     write(*,*) ''
 
@@ -2460,6 +2679,23 @@
         write(*,'(*(F15.6,1X))') t,x
 
         end subroutine twobody_report
+    !*********************************************************
+
+    !*********************************************************
+        subroutine twobody_event(me,t,x,g)
+
+        !! event function for z = 12,000 km
+
+        implicit none
+
+        class(ddeabm_with_event_class),intent(inout) :: me
+        real(wp),intent(in)                          :: t
+        real(wp),dimension(:),intent(in)             :: x
+        real(wp),intent(out)                         :: g
+
+        g = 12000.0_wp - x(3) !z coordinate
+
+        end subroutine twobody_event
     !*********************************************************
 
     end subroutine ddeabm_test
