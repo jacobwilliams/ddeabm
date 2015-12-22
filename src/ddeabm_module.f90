@@ -527,7 +527,7 @@
     contains
 
         function zeroin_func(tc) result(g)
-            !! evaluate the g function at t2 using interpolation ([[dintp]]).
+            !! evaluate the g function at tc using interpolation ([[dintp]]).
 
             implicit none
 
