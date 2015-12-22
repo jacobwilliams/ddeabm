@@ -35,24 +35,22 @@
 
 !*****************************************************************************************
 !>
-!  Find a zero of the function `f(x)` in the interval `ax`,`bx`.
+!  Find a zero of the function \( f(x) \) in the given interval
+!  \( [a_x,b_x] \) to within a tolerance \( 4 \epsilon |x| + tol \),
+!  where \( \epsilon \) is the relative machine precision defined as
+!  the smallest representable number such that \( 1.0 + \epsilon > 1.0 \).
 !
-!  It is assumed that `f(ax)` and `f(bx) `have opposite signs
-!  this is checked, and an error message is printed if this is not
-!  satisfied. zeroin returns a zero `x` in the given interval
-!  `ax`,`bx` to within a tolerance `4*macheps*abs(x)+tol`, where `macheps` is
-!  the relative machine precision defined as the smallest representable
-!  number such that `1.0_wp+macheps>1.0_wp`.
+!  It is assumed that \( f(a_x) \) and \( f(b_x) \) have opposite signs.
 !
 !#References
-!  * R. P. Brent, "An algorithm with guaranteed convergence for
-!    finding a zero of a function", The Computer Journal,
-!    Vol 14, No. 4. (1971). [[link](http://maths-people.anu.edu.au/~brent/pd/rpb005.pdf)]
-!  * R. P. Brent, "Algorithms for minimization without derivatives",
-!    prentice-hall, inc. (1973).
+!  * R. P. Brent, "[An algorithm with guaranteed convergence for
+!    finding a zero of a function](http://maths-people.anu.edu.au/~brent/pd/rpb005.pdf)",
+!    The Computer Journal, Vol 14, No. 4., 1971.
+!  * R. P. Brent, "[Algorithms for minimization without derivatives](http://maths-people.anu.edu.au/~brent/pub/pub011.html)",
+!    Prentice-Hall, Inc., 1973.
 !
 !# See also
-!  [1] [zeroin.f](http://www.netlib.org/go/zeroin.f)
+!  1. [zeroin.f](http://www.netlib.org/go/zeroin.f) from Netlib
 
     subroutine zeroin(f,ax,bx,tol,xzero,fzero,iflag,fax,fbx)
 

@@ -7,6 +7,7 @@
 !
 !# History
 !   * Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
+!   * Development continues at [GitHub](https://github.com/jacobwilliams/ddeabm).
 !
 !# License
 !  The original SLATEC code is a public domain work of the US Government.
@@ -121,7 +122,7 @@
 
         private
 
-        procedure,public :: initialize => ddeabm_initialize
+        procedure,non_overridable,public :: initialize => ddeabm_initialize
         procedure,non_overridable,public :: integrate  => ddeabm_wrapper
         procedure,non_overridable,public :: destroy    => destroy_ddeabm
         procedure,non_overridable,public :: first_call => ddeabm_new_problem
@@ -137,6 +138,8 @@
     type,extends(ddeabm_class),public :: ddeabm_with_event_class
 
         !! A version of [[ddeabm_class]] with event location (root finding).
+        !!
+        !! Call *initialize_event* to set up the integration.
 
         private
 
@@ -212,7 +215,7 @@
 
     class(ddeabm_class),intent(inout)   :: me
     integer,intent(in)                  :: neq     !! number of equations to be integrated
-    integer,intent(in)                  :: maxnum  !! maximum number of iteration steps allowed
+    integer,intent(in)                  :: maxnum  !! maximum number of integration steps allowed
     procedure(deriv_func)               :: df      !! derivative function dx/dt
     real(wp),dimension(:),intent(in)    :: rtol    !! relative tolerance for integration (see [[ddeabm]])
     real(wp),dimension(:),intent(in)    :: atol    !! absolution tolerance for integration (see [[ddeabm]])
@@ -278,12 +281,16 @@
 
     class(ddeabm_with_event_class),intent(inout) :: me
     integer,intent(in)                           :: neq       !! number of equations to be integrated
-    integer,intent(in)                           :: maxnum    !! maximum number of iteration steps allowed
-    procedure(deriv_func)                        :: df        !! derivative function dx/dt
+    integer,intent(in)                           :: maxnum    !! maximum number of integration steps allowed
+    procedure(deriv_func)                        :: df        !! derivative function \( dx/dt \)
     real(wp),dimension(:),intent(in)             :: rtol      !! relative tolerance for integration (see [[ddeabm]])
     real(wp),dimension(:),intent(in)             :: atol      !! absolution tolerance for integration (see [[ddeabm]])
-    procedure(event_func)                        :: g         !! event function g(t,x)
-    real(wp),intent(in)                          :: root_tol  !! tol for the root finding
+    procedure(event_func)                        :: g         !! Event function \( g(t,x) \). This should be a smooth function
+                                                              !! than can have values \( <0 \) and \( \ge 0 \).
+                                                              !! When \( g=0 \) (within the tolerance),
+                                                              !! then a root has been located and
+                                                              !! the integration will stop.
+    real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding (see [[zeroin]])
 
     !base class initialization:
     call me%initialize(neq,maxnum,df,rtol,atol)
@@ -387,8 +394,15 @@
 !*****************************************************************************************
 !>
 !  Wrapper routine for [[ddeabm]], with event finding.
+!  It will integrate until `g(t,x)=0` or `t=tmax` (whichever comes first).
+!  Note that a root at the initial time is ignored (user should check for
+!  this manually)
 !
 !  If starting a new problem, must first call `me%first_call()`.
+!
+!##See also
+!  * Inspired by [sderoot](http://www.netlib.no/netlib/ode/sderoot.f),
+!    but no code from that routine was used here.
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
@@ -406,7 +420,7 @@
                                                               !! or the solution or its derivative is not defined beyond
                                                               !! tstop.  when you have declared a tstop point (see info(4)),
                                                               !! you have told the code not to integrate past tstop.
-                                                              !! in this case any tout beyond tstop is invalid input.
+                                                              !! in this case any tmax beyond tstop is invalid input.
                                                               !! [not used if not present]
     integer,intent(out)                            :: idid    !! indicator reporting what the code did.
                                                               !! you must monitor this integer variable to
@@ -477,7 +491,7 @@
         case(1)
             !intermediate step successful, continue
         case(2,3)
-            !tout was reached. check it for root (if not a root, then return)
+            !tmax was reached. check it for root (if not a root, then return)
             gval = g2
             if (abs(gval)<=me%tol) then
                 idid = 1000 !root found
@@ -964,8 +978,7 @@
 !   * 900510  convert xerrwv calls to xermsg calls.  (rwc)
 !   * 920501  reformatted the references section.  (wrb)
 !   * July, 2014 : Major refactoring into modern Fortran (jw)
-!
-!*****************************************************************************************
+!   * December, 2015 : additional refactoring (jw)
 
     subroutine ddeabm (me,neq,t,y,tout,info,rtol,atol,idid)
 
@@ -2494,7 +2507,10 @@
 !*****************************************************************************************
 !> author: Jacob Williams
 !
-!  Replacement for original error message printing routine.
+!  Report an error message.
+!
+!  Replacement for original [XERMSG](http://www.netlib.org/slatec/src/xermsg.f)
+!  error message printing routine. This one just prints the message to the console.
 
     subroutine xermsg (subrou, messg, nerr, level)
 
@@ -2505,10 +2521,11 @@
     character(len=*),intent(in) :: subrou  !! subroutine where error occurred
     character(len=*),intent(in) :: messg   !! error message
     integer,intent(in)          :: nerr    !! error code
-    integer,intent(in)          :: level   !! -1: warning message (once),
-                                           !! 0: warning message,
-                                           !! 1: recoverable error,
-                                           !! 2: fatal error
+    integer,intent(in)          :: level   !! [Not used here]
+                                           !!  -1: warning message (once),
+                                           !!  0: warning message,
+                                           !!  1: recoverable error,
+                                           !!  2: fatal error
 
     write(error_unit,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)
 
@@ -2590,7 +2607,7 @@
 
     !***************************************************************************
 
-    !integration to event test
+    !integration to event test (integrate until z-coordinate is 12,000 km)
 
     call s%initialize_event(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
                                 g=twobody_event,root_tol=1.0e-12_wp)
