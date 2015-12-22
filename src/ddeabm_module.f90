@@ -509,7 +509,6 @@
             return
         end select
 
-        !note: we ignore if a root on the initial time:
         if (abs(g2)<=me%tol) then  !intermediate t2 is a root
 
             idid = 1000
@@ -518,7 +517,9 @@
             y = y2
             return
 
-        elseif ((.not. first) .and. (g1*g2<=0.0_wp)) then  ! different signs - root somewhere on [t1,t2]
+        elseif ((.not. first) .and. (g1*g2<=0.0_wp)) then
+            ! different signs - root somewhere on [t1,t2]
+            ! note: we ignore if a root on the initial time
 
             !call the root finder:
             call zeroin(zeroin_func,t1,t2,me%tol,tzero,gval,iflag,g1,g2)

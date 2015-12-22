@@ -87,86 +87,104 @@
         fb=f(b)
     end if
 
-    !check that f(ax) and f(bx) have different signs
-    if (fa == zero .or. fb == zero .or. fa * (fb/abs(fb)) <= zero) then
+    !check trivial cases first:
+    if (fa==zero) then
 
-    iflag = 0
+        iflag = 0
+        xzero = a
+        fzero = fa
 
-20  c=a
-    fc=fa
-    d=b-a
-    e=d
+    elseif (fb==zero) then
 
-30  if (abs(fc)<abs(fb)) then
-        a=b
-        b=c
-        c=a
-        fa=fb
-        fb=fc
-        fc=fa
-    end if
+        iflag = 0
+        xzero = b
+        fzero = fb
 
-40  tol1=two*eps*abs(b)+0.5_wp*tol
-    xm = 0.5_wp*(c-b)
-    if ((abs(xm)<=tol1).or.(fb==zero)) go to 150
+    elseif (fa*(fb/abs(fb))<zero) then  ! check that f(ax) and f(bx) have different signs
 
-    ! see if a bisection is forced
+        main : do
 
-    if ((abs(e)>=tol1).and.(abs(fa)>abs(fb))) go to 50
-    d=xm
-    e=d
-    go to 110
-50  s=fb/fa
-    if (a/=c) go to 60
+            c=a
+            fc=fa
+            d=b-a
+            e=d
 
-    ! linear interpolation
+            do
 
-    p=two*xm*s
-    q=one-s
-    go to 70
+                if (abs(fc)<abs(fb)) then
+                    a=b
+                    b=c
+                    c=a
+                    fa=fb
+                    fb=fc
+                    fc=fa
+                end if
 
-    ! inverse quadratic interpolation
+                tol1=two*eps*abs(b)+0.5_wp*tol
+                xm = 0.5_wp*(c-b)
+                if ((abs(xm)<=tol1).or.(fb==zero)) exit main
 
-60  q=fa/fc
-    r=fb/fc
-    p=s*(two*xm*q*(q-r)-(b-a)*(r-one))
-    q=(q-one)*(r-one)*(s-one)
-70  if (p<=zero) go to 80
-    q=-q
-    go to 90
+                ! see if a bisection is forced
+                if ((abs(e)>=tol1).and.(abs(fa)>abs(fb))) then
+                    s=fb/fa
+                    if (a/=c) then
+                        ! inverse quadratic interpolation
+                        q=fa/fc
+                        r=fb/fc
+                        p=s*(two*xm*q*(q-r)-(b-a)*(r-one))
+                        q=(q-one)*(r-one)*(s-one)
+                    else
+                        ! linear interpolation
+                        p=two*xm*s
+                        q=one-s
+                    end if
+                    if (p<=zero) then
+                        p=-p
+                    else
+                        q=-q
+                    end if
+                    s=e
+                    e=d
+                    if (((two*p)>=(three*xm*q-abs(tol1*q))) .or. &
+                        (p>=abs(0.5_wp*s*q))) then
+                        d=xm
+                        e=d
+                    else
+                        d=p/q
+                    end if
+                else
+                    d=xm
+                    e=d
+                end if
 
-80  p=-p
-90  s=e
-    e=d
-    if (((two*p)>=(three*xm*q-abs(tol1*q))).or.(p>=&
-        abs(0.5_wp*s*q))) go to 100
-    d=p/q
-    go to 110
+                a=b
+                fa=fb
+                if (abs(d)<=tol1) then
+                    if (xm<=zero) then
+                        b=b-tol1
+                    else
+                        b=b+tol1
+                    end if
+                else
+                    b=b+d
+                end if
+                fb=me%f(b)
+                if ((fb*(fc/abs(fc)))>zero) cycle main
 
-100 d=xm
-    e=d
-110 a=b
-    fa=fb
-    if (abs(d)<=tol1) go to 120
-    b=b+d
-    go to 140
+            end do
 
-120 if (xm<=zero) go to 130
-    b=b+tol1
-    go to 140
+        end do main
 
-130 b=b-tol1
-140 fb=f(b)
-    if ((fb*(fc/abs(fc)))>zero) go to 20
-    go to 30
-
-150 xzero = b
-    fzero = fb
+        iflag = 0
+        xzero = b
+        fzero = fb
 
     else
+
         iflag = -1
         write(error_unit,'(A)')&
             'Error in zeroin: f(ax) and f(bx) do not have different signs.'
+
     end if
 
     end subroutine zeroin
