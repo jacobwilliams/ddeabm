@@ -168,7 +168,7 @@
                 else
                     b=b+d
                 end if
-                fb=me%f(b)
+                fb=f(b)
                 if ((fb*(fc/abs(fc)))>zero) cycle main
 
             end do
