@@ -27,8 +27,8 @@
     private
 
     !parameters:
-    real(wp),parameter :: d1mach2 = huge(1.0_wp)                        !! the largest magnitude
-    real(wp),parameter :: d1mach4 = radix(1.0_wp)**(1-digits(1.0_wp))   !! the largest relative spacing
+    real(wp),parameter :: d1mach2 = huge(1.0_wp)        !! the largest magnitude
+    real(wp),parameter :: d1mach4 = epsilon(1.0_wp)        !! the largest relative spacing
 
     type,public :: ddeabm_class
 
@@ -65,8 +65,8 @@
 
         !variables formerly in work arrays:
 
-        integer :: icount = 0      !! replaced `iwork(liw)` in original code
-        real(wp) :: tprev = 0.0_wp !! replaced `rwork(itstar)` in original code
+        integer :: icount = 0         !! replaced `iwork(liw)` in original code
+        real(wp) :: tprev = 0.0_wp    !! replaced `rwork(itstar)` in original code
 
         real(wp),allocatable,dimension(:)    :: ypout    !! `(neq)` contains the approximate derivative
                                                          !! of the solution component `y(i)`.  in [[ddeabm]], it
@@ -442,6 +442,13 @@
     real(wp),dimension(me%neq) :: y1,y2
     real(wp),dimension(me%neq) :: yc  !! interpolated state at tc
 
+    !make sure the deriv function was set:
+    if (.not. associated(me%gfunc)) then
+        call xermsg ('ddeabm', 'the event function GFUNC has not been associated.', 0, 0)
+        idid=-33
+        return
+    end if
+
     !set info array:
 
     !info(1) is set when ddeabm_new_problem is called
@@ -509,7 +516,11 @@
             return
         end select
 
-        if (abs(g2)<=me%tol) then  !intermediate t2 is a root
+        if (first .and. abs(g1)<=me%tol) then  !root at initial time
+
+            !ignore this root
+
+        elseif (abs(g2)<=me%tol) then  !intermediate t2 is a root
 
             idid = 1000
             gval = g2
@@ -517,7 +528,7 @@
             y = y2
             return
 
-        elseif ((.not. first) .and. (g1*g2<=0.0_wp)) then
+        elseif (g1*g2<=0.0_wp) then
             ! different signs - root somewhere on [t1,t2]
             ! note: we ignore if a root on the initial time
 
@@ -535,13 +546,13 @@
                 return
             end if
 
-        else  !set up for next step:
-            g1 = g2
-            t1 = t2
-            y1 = y2
         end if
 
+        !set up for next step:
         first = .false.
+        g1 = g2
+        t1 = t2
+        y1 = y2
 
     end do
 
@@ -1015,6 +1026,7 @@
                             ' and the integration has not advanced.  check the ' //&
                             'way you have set parameters for the call to the ' //&
                             'code, particularly info(1).', 13, 2)
+            idid = -33
             return
         end if
     end if
@@ -2540,9 +2552,9 @@
     integer,parameter  :: n = 6            !! number of state variables
     real(wp),parameter :: tol = 1.0e-12_wp !! event location tolerance
 
-    type(spacecraft) :: s, s2
+    type(spacecraft) :: s
     real(wp),dimension(n) :: x0,xf,x02,x
-    real(wp) :: t0,tf,dt,gf,tf_actual,t,gval
+    real(wp) :: t0,tf,dt,gf,tf_actual,t,gval,z_target
     integer :: idid
 
     write(*,*) ''
@@ -2552,6 +2564,12 @@
     write(*,*) ''
 
     !***************************************************************************
+
+    write(*,*) ''
+    write(*,*) '-----------------------'
+    write(*,*) 'forward/backward test:'
+    write(*,*) '-----------------------'
+    write(*,*) ''
 
     !constructor (main body is Earth):
 
@@ -2565,6 +2583,7 @@
     tf = 1000.0_wp    !final time (sec)
     s%fevals = 0
 
+    write(*,'(A/,*(F15.6/))') 'Initial time:',t0
     write(*,'(A/,*(F15.6/))') 'Initial state:',x0
     s%fevals = 0
     s%first = .true.
@@ -2574,7 +2593,8 @@
     call s%integrate(t,x,tf,idid=idid)    !forward
     xf = x
     write(*,*) ''
-    write(*,*) 'idid: ',idid
+    write(*,'(A/,*(I5/))')    'idid: ',idid
+    write(*,'(A/,*(F15.6/))') 'Final time:',t
     write(*,'(A/,*(F15.6/))') 'Final state:',xf
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
     write(*,*) ''
@@ -2586,16 +2606,41 @@
     call s%integrate(t,x,t0,idid=idid)  !backwards
     x02 = x
 
-    write(*,*) 'idid: ',idid
+    write(*,'(A/,*(I5/))')    'idid: ',idid
     write(*,'(A/,*(F15.6/))') 'Initial state:',x02
     write(*,*) ''
     write(*,'(A/,*(E20.12/))') 'Error:',x02-x0
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
     write(*,*) ''
 
+    write(*,*) ''
+    write(*,*) '-----------------------'
+    write(*,*) 'continue integration:'
+    write(*,*) '-----------------------'
+    write(*,*) ''
+
+    t = t0
+    x = x02
+    tf = t0 - 100.0_wp
+    s%fevals = 0
+    call s%first_call()  !restarting the integration (go from t -> tf)
+    call s%integrate(t,x,tf,idid=idid)  !backwards
+    xf = x
+    write(*,'(A/,*(I5/))')    'idid: ',idid
+    write(*,'(A/,*(F15.6/))') 'Final time:',t
+    write(*,'(A/,*(F15.6/))') 'Final state:',xf
+    write(*,'(A,I5)') 'Function evaluations:', s%fevals
+    write(*,*) ''
+
     !***************************************************************************
 
     !integration to event test (integrate until z-coordinate is 12,000 km)
+
+    write(*,*) ''
+    write(*,*) '-----------------------'
+    write(*,*) 'integration to event:'
+    write(*,*) '-----------------------'
+    write(*,*) ''
 
     call s%initialize_event(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
                                 g=twobody_event,root_tol=1.0e-12_wp)
@@ -2606,19 +2651,48 @@
     x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
             1.0_wp,2.0_wp,3.0_wp]
     t0 = 0.0_wp       !initial time (sec)
-    tf = 1000.0_wp    !final time (sec)
 
+    write(*,'(A/,*(F15.6/))') 'Initial time:',t0
     write(*,'(A/,*(F15.6/))') 'Initial state:',x0
     s%fevals = 0
     s%first = .true.
     t = t0
     x = x0
+    tf = 1000.0_wp    !max final time (sec)
+    z_target = 12000.0_wp
     call s%first_call()
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)    !forward
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)
     xf = x
     write(*,*) ''
-    write(*,*) 'idid: ',idid
-    write(*,*) 'gval: ',gval
+    write(*,'(A/,*(I5/))')    'idid: ',idid
+    write(*,'(A/,*(F15.6/))') 'gval: ',gval
+    write(*,'(A/,*(F15.6/))') 'Final time:',t
+    write(*,'(A/,*(F15.6/))') 'Final state:',xf
+    write(*,'(A,I5)') 'Function evaluations:', s%fevals
+    write(*,*) ''
+
+    ! Now, continue integration (until z-coordinate is 13,000 km)
+
+    write(*,*) '======================='
+    write(*,*) 'continue integration...'
+    write(*,*) '======================='
+
+    s%mu = 398600.436233_wp  !earth
+    s%fevals = 0
+    s%first = .true.
+    x = xf
+    tf = 2000.0_wp    !max final time (sec)
+    z_target = 13000.0_wp !change the target value
+    write(*,'(A/,*(F15.6/))') 'Initial time     :',t
+    write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
+    write(*,'(A/,*(F15.6/))') 'Initial state    :',x
+    call s%first_call()  !have to restart the integration after a root finding
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)
+    xf = x
+    write(*,*) ''
+    write(*,'(A/,*(I5/))')    'idid: ',idid
+    write(*,'(A/,*(F15.6/))') 'gval: ',gval
+    write(*,'(A/,*(F15.6/))') 'Final time:',t
     write(*,'(A/,*(F15.6/))') 'Final state:',xf
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
     write(*,*) ''
@@ -2697,7 +2771,7 @@
         real(wp),dimension(:),intent(in)             :: x
         real(wp),intent(out)                         :: g
 
-        g = 12000.0_wp - x(3) !z coordinate
+        g = z_target - x(3)  !z coordinate
 
         end subroutine twobody_event
     !*********************************************************
