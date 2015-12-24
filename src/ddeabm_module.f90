@@ -68,6 +68,10 @@
         integer :: icount = 0         !! replaced `iwork(liw)` in original code
         real(wp) :: tprev = 0.0_wp    !! replaced `rwork(itstar)` in original code
 
+        !these were fixed in the original code:
+        real(wp),dimension(:),allocatable :: two    !! \( 2^i \) array
+        real(wp),dimension(:),allocatable :: gstr    !! \( | \gamma^{*}_i | \) array
+
         real(wp),allocatable,dimension(:)    :: ypout    !! `(neq)` contains the approximate derivative
                                                          !! of the solution component `y(i)`.  in [[ddeabm]], it
                                                          !! is obtained by calling subroutine `df` to
@@ -202,7 +206,7 @@
 
     me%info(1) = 0
 
-   end subroutine ddeabm_new_problem
+    end subroutine ddeabm_new_problem
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -223,6 +227,12 @@
     real(wp),dimension(:),intent(in)    :: atol    !! absolution tolerance for integration (see [[ddeabm]])
 
     logical :: vector_tols
+    integer :: i,j,k
+
+    integer,parameter :: max_order = 12 !! NOTE: the max order of this code is 12.
+                                        !! This value is hard-coded in several places (array dimensions, etc.)
+                                        !! Eventually, may want to make this a user-selectable value.
+                                        !! For now, it is fixed.
 
     !initialize the class:
 
@@ -265,6 +275,29 @@
         me%rtol = rtol
         me%atol = atol
     end if
+
+    !Compute the two and gstr arrays:
+    !  Note: this is a modification of the original dsteps code.
+    !  The full-precision coefficients are used here, instead
+    !  of the less precise ones in the original.
+    !  These were computed recursivly using the equation on p. 159 of
+    !  Shampine/Gordon, "Computer Solution of Ordinary Differential Equations", 1975.
+    allocate(me%two(max_order + 1))
+    allocate(me%gstr(0:max_order + 1))
+    do i=1,max_order+1
+        me%two(i) = 2.0_wp**i
+    end do
+    me%gstr = 0.0_wp
+    me%gstr(0) = 1.0_wp
+    do i=1,max_order+1
+        k = 1
+        do j=i-1,0,-1
+            k = k + 1
+            me%gstr(i) = me%gstr(i) + 1.0_wp/real(k,wp) * me%gstr(j)
+        end do
+        me%gstr(i) = -me%gstr(i)
+    end do
+    me%gstr = abs(me%gstr)
 
     end subroutine ddeabm_initialize
 !*****************************************************************************************
@@ -2051,41 +2084,6 @@
                 reali, realns, rho, round, tau, temp1,&
                 temp2, temp3, temp4, temp5, temp6, u
 
-    !parameters:
-    real(wp),dimension(13),parameter :: two = [ 2.0_wp, &
-                                                4.0_wp, &
-                                                8.0_wp, &
-                                                16.0_wp, &
-                                                32.0_wp, &
-                                                64.0_wp, &
-                                                128.0_wp, &
-                                                256.0_wp, &
-                                                512.0_wp, &
-                                                1024.0_wp, &
-                                                2048.0_wp, &
-                                                4096.0_wp, &
-                                                8192.0_wp]
-
-     !>
-     !  note: this is a modification of the original code.
-     !  The full-precision coefficients are used here, instead
-     !  of the less precise ones in the original.
-     !  These were computed from the equation on p. 159 of Shampine/Gordon,
-     !  "Computer Solution of Ordinary Differential Equations", 1975.
-      real(wp),dimension(13),parameter :: gstr = [0.5000000000000000E+00_wp, &
-                                                  0.8333333333333331E-01_wp, &
-                                                  0.4166666666666669E-01_wp, &
-                                                  0.2638888888888891E-01_wp, &
-                                                  0.1874999999999996E-01_wp, &
-                                                  0.1426917989417992E-01_wp, &
-                                                  0.1136739417989419E-01_wp, &
-                                                  0.9356536596119916E-02_wp, &
-                                                  0.7892554012345690E-02_wp, &
-                                                  0.6785849984634704E-02_wp, &
-                                                  0.5924056412337661E-02_wp, &
-                                                  0.5236693257950287E-02_wp, &
-                                                  0.4677498407042263E-02_wp]
-
 !       ***     begin block 0     ***
 !   check if step size or error tolerance is too small for machine
 !   precision.  if first step, initialize phi array and estimate a
@@ -2344,12 +2342,12 @@
         erk = erk + (temp4*temp3)**2
       end do
       if (km2>=0.0_wp) then
-          if (km2>0.0_wp) erkm2 = absh*sig(km1)*gstr(km2)*sqrt(erkm2)
-          erkm1 = absh*sig(k)*gstr(km1)*sqrt(erkm1)
+          if (km2>0.0_wp) erkm2 = absh*sig(km1)*me%gstr(km2)*sqrt(erkm2)
+          erkm1 = absh*sig(k)*me%gstr(km1)*sqrt(erkm1)
       end if
       temp5 = absh*sqrt(erk)
       err = temp5*(g(k)-g(kp1))
-      erk = temp5*sig(kp1)*gstr(k)
+      erk = temp5*sig(kp1)*me%gstr(k)
       knew = k
 
       !   test if order should be lowered
@@ -2462,7 +2460,7 @@
       do l = 1,neqn
         erkp1 = erkp1 + (phi(l,kp2)/wt(l))**2
       end do
-      erkp1 = absh*gstr(kp1)*sqrt(erkp1)
+      erkp1 = absh*me%gstr(kp1)*sqrt(erkp1)
 
 !   using estimated error at order k+1, determine appropriate order
 !   for next step
@@ -2491,7 +2489,7 @@
 
  460  hnew = h + h
       if (phase1) go to 465
-      if (p5eps >= erk*two(k+1)) go to 465
+      if (p5eps >= erk*me%two(k+1)) go to 465
       hnew = h
       if (p5eps >= erk) go to 465
       temp2 = k+1
