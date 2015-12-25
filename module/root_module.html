@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm">
+    
+    <meta name="author" content="Chris MacMackin" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>root_module &ndash; ddeabm</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+                
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+				
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../program/test.html">Program</a></li>
+				
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>root_module 
+    <small>Module</small>
+    
+    </h1>
+	 
+<div class="row">
+<div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+    <li><i class="fa fa-pencil"></i> Jacob Williams</li>
+     
+     
+    <li><i class="fa fa-calendar-o"></i> 12/22/2015</li>
+     
+     
+     
+    
+    
+    <li><i class="fa fa-code"></i><a href="../src/root_module.f90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li><a href='../sourcefile/root_module.f90.html'>root_module.f90</a></li>
+  
+     <li class="active">root_module</li>
+  </ol>
+</div>
+</div>
+</div>
+    
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-3">
+    
+<div id="sidebar">
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
+    <div id="vars" class="panel-collapse collapse">
+      <div class="list-group">
+        
+        <a class="list-group-item" href="../module/root_module.html#variable-zero">zero</a>
+        
+        <a class="list-group-item" href="../module/root_module.html#variable-one">one</a>
+        
+        <a class="list-group-item" href="../module/root_module.html#variable-two%7E2">two</a>
+        
+        <a class="list-group-item" href="../module/root_module.html#variable-three">three</a>
+        
+        <a class="list-group-item" href="../module/root_module.html#variable-eps%7E4">eps</a>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints">Abstract Interfaces</a></h3></div>
+    <div id="absints" class="panel-collapse collapse">
+        <div class="list-group">
+          
+          <a class="list-group-item" href="../module/root_module.html#interface-func">func</a>
+          
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs">Subroutines</a></h3></div>
+    <div class="list-group">
+        <div id="subs" class="panel-collapse collapse">
+          
+          <a class="list-group-item" href="../module/root_module.html#proc-zeroin">zeroin</a>
+          
+          <a class="list-group-item" href="../module/root_module.html#proc-zeroin_test">zeroin_test</a>
+          
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  <hr>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allmods">All Modules</a></h3></div>
+    <div id="allmods" class="panel-collapse collapse">
+        <div class="list-group">
+          
+          <a class="list-group-item" href="../module/ddeabm_module.html">ddeabm_module</a>
+          
+          <a class="list-group-item" href="../module/kind_module.html">kind_module</a>
+          
+          <a class="list-group-item" href="../module/root_module.html">root_module</a>
+          
+        </div>
+    </div>
+  </div>
+  
+</div>
+
+    </div>
+    
+    <div class="col-lg-9" id='text'>
+    
+    
+  
+    <ul class="list-inline">
+      <li><h4>Uses:</h4></li>
+      
+      <li><a href='../module/kind_module.html'>kind_module</a></li>
+      
+    </ul>
+  
+
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: module~~root_module~~UsesGraph Pages: 1 -->
+<svg id="moduleroot_moduleUsesGraph" width="316pt" height="34pt"
+ viewBox="0.00 0.00 316.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~root_module~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<title>module~~root_module~~UsesGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 313,-30 313,5 -4,5"/>
+<!-- module~root_module -->
+<g id="node1" class="node"><title>module~root_module</title>
+<polygon fill="none" stroke="black" points="307,-26 235,-26 235,-1.24345e-14 307,-3.55271e-15 307,-26"/>
+<text text-anchor="middle" x="271" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">root_module</text>
+</g>
+<!-- module~kind_module -->
+<g id="node2" class="node"><title>module~kind_module</title>
+<a xlink:href="../module/kind_module.html" xlink:title="kind_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="197,-26 125,-26 125,-1.24345e-14 197,-3.55271e-15 197,-26"/>
+<text text-anchor="middle" x="161" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">kind_module</text>
+</a>
+</g>
+<!-- module~kind_module&#45;&gt;module~root_module -->
+<g id="edge4" class="edge"><title>module~kind_module&#45;&gt;module~root_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M197.628,-13C206.073,-13 215.171,-13 223.989,-13"/>
+<polygon fill="black" stroke="black" points="224.157,-16.5001 234.156,-13 224.156,-9.5001 224.157,-16.5001"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="node3" class="node"><title>iso_fortran_env</title>
+<a xlink:href="https://software.intel.com/en-us/node/511041" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="87,-26 1,-26 1,-1.24345e-14 87,-3.55271e-15 87,-26"/>
+<text text-anchor="middle" x="44" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+<!-- iso_fortran_env&#45;&gt;module~kind_module -->
+<g id="edge2" class="edge"><title>iso_fortran_env&#45;&gt;module~kind_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M87.5665,-13C96.2522,-13 105.409,-13 114.198,-13"/>
+<polygon fill="black" stroke="black" points="114.297,-16.5001 124.296,-13 114.296,-9.5001 114.297,-16.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+Nodes of different colours represent the following:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
+<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
+<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Type -->
+<g id="node3" class="node"><title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
+<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- Subroutine -->
+<g id="node4" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node5" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node6" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
+<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node7" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
+<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node8" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
+<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node9" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
+<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<h5>Module Graph</h5>
+<p>Solid arrows point from a parent (sub)module to the submodule which is
+descended from it. Dashed arrows point from a module being used to the
+module using it.</p>
+<h5>Type Graph</h5>
+<p>Solid arrows point from one derived type to another which extends
+(inherits from) it. Dashed arrows point from a derived type to another
+type containing it as a components, with a label listing the name(s) of
+said component(s).</p>
+<h5>Call Graph</h5>
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+    <p>Root-finding routines. Used by <a href="../module/ddeabm_module.html">ddeabm_module</a>.</p>
+    
+    
+    <h3>Used By</h3>
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: module~~root_module~~UsedByGraph Pages: 1 -->
+<svg id="moduleroot_moduleUsedByGraph" width="302pt" height="55pt"
+ viewBox="0.00 0.00 302.00 55.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~root_module~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 51)">
+<title>module~~root_module~~UsedByGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-51 299,-51 299,5 -4,5"/>
+<!-- module~root_module -->
+<g id="node1" class="node"><title>module~root_module</title>
+<polygon fill="none" stroke="black" points="73,-26 1,-26 1,-1.24345e-14 73,-3.55271e-15 73,-26"/>
+<text text-anchor="middle" x="37" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">root_module</text>
+</g>
+<!-- module~ddeabm_module -->
+<g id="node2" class="node"><title>module~ddeabm_module</title>
+<a xlink:href="../module/ddeabm_module.html" xlink:title="ddeabm_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="203,-47 111,-47 111,-21 203,-21 203,-47"/>
+<text text-anchor="middle" x="157" y="-31.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module</text>
+</a>
+</g>
+<!-- module~root_module&#45;&gt;module~ddeabm_module -->
+<g id="edge4" class="edge"><title>module~root_module&#45;&gt;module~ddeabm_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M73.656,-19.4148C82.0692,-20.8871 91.2079,-22.4864 100.248,-24.0684"/>
+<polygon fill="black" stroke="black" points="99.915,-27.5632 110.369,-25.8395 101.122,-20.668 99.915,-27.5632"/>
+</g>
+<!-- program~test -->
+<g id="node3" class="node"><title>program~test</title>
+<a xlink:href="../program/test.html" xlink:title="test">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="294,-26 240,-26 240,-1.24345e-14 294,-3.55271e-15 294,-26"/>
+<text text-anchor="middle" x="267" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test</text>
+</a>
+</g>
+<!-- module~root_module&#45;&gt;program~test -->
+<g id="edge6" class="edge"><title>module~root_module&#45;&gt;program~test</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M73.7615,-12.3982C85.3556,-12.2348 98.2127,-12.0807 110,-12 151.777,-11.7139 162.224,-11.6685 204,-12 212.23,-12.0653 221.063,-12.1786 229.435,-12.306"/>
+<polygon fill="black" stroke="black" points="229.657,-15.81 239.712,-12.4725 229.77,-8.8109 229.657,-15.81"/>
+</g>
+<!-- module~ddeabm_module&#45;&gt;program~test -->
+<g id="edge2" class="edge"><title>module~ddeabm_module&#45;&gt;program~test</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M203.65,-25.0941C212.392,-23.4251 221.422,-21.7012 229.83,-20.0962"/>
+<polygon fill="black" stroke="black" points="230.548,-23.5224 239.714,-18.2091 229.235,-16.6465 230.548,-23.5224"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+Nodes of different colours represent the following:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
+<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
+<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Type -->
+<g id="node3" class="node"><title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
+<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- Subroutine -->
+<g id="node4" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node5" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node6" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
+<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node7" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
+<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node8" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
+<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node9" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
+<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<h5>Module Graph</h5>
+<p>Solid arrows point from a parent (sub)module to the submodule which is
+descended from it. Dashed arrows point from a module being used to the
+module using it.</p>
+<h5>Type Graph</h5>
+<p>Solid arrows point from one derived type to another which extends
+(inherits from) it. Dashed arrows point from a derived type to another
+type containing it as a components, with a label listing the name(s) of
+said component(s).</p>
+<h5>Call Graph</h5>
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    <br>
+    
+
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-zero"></span>real(kind=wp),</td>
+  
+  <td>private,</td>
+  <td>parameter</td><td>::</td>
+  <td><strong>zero</strong></td><td> =</td><td>0.0_wp</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-one"></span>real(kind=wp),</td>
+  
+  <td>private,</td>
+  <td>parameter</td><td>::</td>
+  <td><strong>one</strong></td><td> =</td><td>1.0_wp</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-two%7E2"></span>real(kind=wp),</td>
+  
+  <td>private,</td>
+  <td>parameter</td><td>::</td>
+  <td><strong>two</strong></td><td> =</td><td>2.0_wp</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-three"></span>real(kind=wp),</td>
+  
+  <td>private,</td>
+  <td>parameter</td><td>::</td>
+  <td><strong>three</strong></td><td> =</td><td>3.0_wp</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-eps%7E4"></span>real(kind=wp),</td>
+  
+  <td>private,</td>
+  <td>parameter</td><td>::</td>
+  <td><strong>eps</strong></td><td> =</td><td>epsilon(one)</td><td><p>original code had d1mach(4)</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    <section>
+     <h2>Abstract Interfaces</h2>
+	 
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="interface-func"></span><h3>abstract interface
+    
+  </h3></div>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+    
+    
+    <h3>
+private function <a href='../interface/func.html'>func</a>(t) result(f)
+    
+    
+    
+</h3>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>t</strong></td><td><p>Independant variable for the function.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>real(kind=wp)
+  </small></h4>
+  <p>The function evaluated at <code>t</code>.</p>
+    
+    
+    <h4>Description</h4>
+       
+       
+
+
+       
+       <p>interface to the <a href="../proc/zeroin.html">zeroin</a> input function</p>
+        
+
+    </li>
+  </ul>
+</div>
+
+    
+    </section>
+	<br>
+    
+    
+    
+    
+    
+
+    
+    <section>
+    <h2>Subroutines</h2>
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-zeroin"></span><h3>
+public subroutine <a href='../proc/zeroin.html'>zeroin</a>(f, ax, bx, tol, xzero, fzero, iflag, fax, fbx)
+    
+    
+    
+</h3></div>
+  <div class="panel-body">
+       
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>procedure(<a href='../interface/func.html'>func</a>)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>f</strong></td><td><p>the function to find the root of</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>ax</strong></td><td><p>left endpoint of initial interval</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>bx</strong></td><td><p>right endpoint of initial interval</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>tol</strong></td><td><p>desired length of the interval of uncertainty of the final result (&gt;=0)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>xzero</strong></td><td><p>abscissa approximating a zero of <code>f</code> in the interval <code>ax</code>,<code>bx</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>fzero</strong></td><td><p>value of <code>f</code> at the root (<code>f(xzero)</code>)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>iflag</strong></td><td><p>status flag (<code>-1</code>=error, <code>0</code>=root found)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>fax</strong></td><td><p>if <code>f(ax)</code> is already known, it can be input here</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>fbx</strong></td><td><p>if <code>f(ax)</code> is already known, it can be input here</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+    
+    <h4>Description</h4>
+       
+       
+
+
+       
+       <p>Find a zero of the function \( f(x) \) in the given interval
+  \( [a_x,b_x] \) to within a tolerance \( 4 \epsilon |x| + tol \),
+  where \( \epsilon \) is the relative machine precision defined as
+  the smallest representable number such that \( 1.0 + \epsilon &gt; 1.0 \).</p>
+        
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-zeroin_test"></span><h3>
+public subroutine <a href='../proc/zeroin_test.html'>zeroin_test</a>()
+    
+    
+    
+</h3></div>
+  <div class="panel-body">
+       
+    
+    <h4>Arguments</h4>
+    
+      <em>None</em>
+    
+    
+    
+    <h4>Description</h4>
+       
+       
+
+<dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    <dt>Date</dt><dd>12/22/2015</dd>
+    
+    
+    
+    
+  </dl>
+
+
+       
+       <p>Unit tests for <a href="../proc/zeroin.html">zeroin</a> subroutine.</p>
+        
+
+  </div>
+  </div>
+
+    
+    </section>    
+    <br>
+    
+    
+    
+    </div>
+  </div>
+
+    <hr>
+    <footer>
+        <div class="row">
+        <div class="col-md-4">&copy; 2015 </div>
+	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+        </div>
+        <br>
+    </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>
