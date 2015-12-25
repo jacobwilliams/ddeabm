@@ -1,11 +1,9 @@
 ddeabm
 ======
 
-The goal of this project is to produce a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth ODE solver.
+This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth ODE solver. The original Fortran 77 code is public domain, and was obtained from the [SLATEC library](http://www.netlib.org/slatec/src/). It has been extensively refactored.
 
-The original Fortran 77 code is public domain, and was obtained from the [SLATEC library](http://www.netlib.org/slatec/src/). It has been extensively refactored.
-
-*This is a work in progress.*
+This project is hosted on GitHub at: https://github.com/jacobwilliams/ddeabm
 
 ## References
 
