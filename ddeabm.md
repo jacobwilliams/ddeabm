@@ -13,6 +13,7 @@ display: public
 display: private
 display: protected
 source: true
+exclude: pyplot_module.f90
 graph: true
 
 Brief description
