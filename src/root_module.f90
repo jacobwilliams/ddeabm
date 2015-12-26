@@ -102,78 +102,79 @@
 
     elseif (fa*(fb/abs(fb))<zero) then  ! check that f(ax) and f(bx) have different signs
 
-        main : do
+        c=a
+        fc=fa
+        d=b-a
+        e=d
 
-            c=a
-            fc=fa
-            d=b-a
-            e=d
+        do
 
-            do
+            if (abs(fc)<abs(fb)) then
+                a=b
+                b=c
+                c=a
+                fa=fb
+                fb=fc
+                fc=fa
+            end if
 
-                if (abs(fc)<abs(fb)) then
-                    a=b
-                    b=c
-                    c=a
-                    fa=fb
-                    fb=fc
-                    fc=fa
-                end if
+            tol1=two*eps*abs(b)+0.5_wp*tol
+            xm = 0.5_wp*(c-b)
+            if ((abs(xm)<=tol1).or.(fb==zero)) exit
 
-                tol1=two*eps*abs(b)+0.5_wp*tol
-                xm = 0.5_wp*(c-b)
-                if ((abs(xm)<=tol1).or.(fb==zero)) exit main
-
-                ! see if a bisection is forced
-                if ((abs(e)>=tol1).and.(abs(fa)>abs(fb))) then
-                    s=fb/fa
-                    if (a/=c) then
-                        ! inverse quadratic interpolation
-                        q=fa/fc
-                        r=fb/fc
-                        p=s*(two*xm*q*(q-r)-(b-a)*(r-one))
-                        q=(q-one)*(r-one)*(s-one)
-                    else
-                        ! linear interpolation
-                        p=two*xm*s
-                        q=one-s
-                    end if
-                    if (p<=zero) then
-                        p=-p
-                    else
-                        q=-q
-                    end if
-                    s=e
-                    e=d
-                    if (((two*p)>=(three*xm*q-abs(tol1*q))) .or. &
-                        (p>=abs(0.5_wp*s*q))) then
-                        d=xm
-                        e=d
-                    else
-                        d=p/q
-                    end if
+            ! see if a bisection is forced
+            if ((abs(e)>=tol1).and.(abs(fa)>abs(fb))) then
+                s=fb/fa
+                if (a/=c) then
+                    ! inverse quadratic interpolation
+                    q=fa/fc
+                    r=fb/fc
+                    p=s*(two*xm*q*(q-r)-(b-a)*(r-one))
+                    q=(q-one)*(r-one)*(s-one)
                 else
+                    ! linear interpolation
+                    p=two*xm*s
+                    q=one-s
+                end if
+                if (p<=zero) then
+                    p=-p
+                else
+                    q=-q
+                end if
+                s=e
+                e=d
+                if (((two*p)>=(three*xm*q-abs(tol1*q))) .or. &
+                    (p>=abs(0.5_wp*s*q))) then
                     d=xm
                     e=d
-                end if
-
-                a=b
-                fa=fb
-                if (abs(d)<=tol1) then
-                    if (xm<=zero) then
-                        b=b-tol1
-                    else
-                        b=b+tol1
-                    end if
                 else
-                    b=b+d
+                    d=p/q
                 end if
-                fb=f(b)
-                if ((fb*(fc/abs(fc)))>zero) cycle main
+            else
+                d=xm
+                e=d
+            end if
 
-            end do
+            a=b
+            fa=fb
+            if (abs(d)<=tol1) then
+                if (xm<=zero) then
+                    b=b-tol1
+                else
+                    b=b+tol1
+                end if
+            else
+                b=b+d
+            end if
+            fb=f(b)
+            if ((fb*(fc/abs(fc)))>zero) then
+                c=a
+                fc=fa
+                d=b-a
+                e=d
+            end if
 
-        end do main
+        end do
 
         iflag = 0
         xzero = b

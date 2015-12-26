@@ -2,7 +2,7 @@ project: ddeabm
 project_dir: ./src
 output_dir: ./doc
 project_github: https://github.com/jacobwilliams/ddeabm
-summary: Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm
+summary: Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver
 author: Jacob Williams
 github: https://github.com/jacobwilliams
 predocmark_alt: >
@@ -13,15 +13,19 @@ display: public
 display: private
 display: protected
 source: true
-exclude: pyplot_module.f90
 graph: true
+exclude: pyplot_module.f90
+extra_mods: pyplot_module:https://github.com/jacobwilliams/pyplot-fortran
+            iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
 
 Brief description
 ---------------
 
-This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth ODE solver. The original Fortran 77 code is public domain, and was obtained from the [SLATEC library](http://www.netlib.org/slatec/src/). It has been extensively refactored.
+This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the [SLATEC library](http://www.netlib.org/slatec/src/). It has been extensively refactored.
 
-This project is hosted on GitHub at: https://github.com/jacobwilliams/ddeabm
+DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form `du/dx = f(x,u)`.
+
+This project is hosted on [GitHub](https://github.com/jacobwilliams/ddeabm).
 
 ## References
 
