@@ -10,7 +10,7 @@
     <meta name="author" content="Chris MacMackin" >
     <link rel="icon" href="../favicon.png">
 
-    <title>dhvnrm &ndash; ddeabm</title>
+    <title>spacecraft &ndash; ddeabm </title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -89,8 +89,8 @@
     
   
   <div class="row">
-    <h1>dhvnrm
-    <small>Function</small>
+    <h1>spacecraft
+    <small>Derived Type</small>
     
     </h1>
 	 
@@ -99,25 +99,21 @@
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
-    <li><i class="fa fa-pencil"></i> Jacob Williams</li>
-     
-     
-    <li><i class="fa fa-calendar-o"></i> 7/1/2014</li>
      
      
      
     
     
-    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/performance_test.f90"> Source File</a></li>
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
-     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
+     <li><a href='../sourcefile/performance_test.f90.html'>performance_test.f90</a></li>
   
-     <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+     <li><a href='../program/ddeabm_performance_test.html'>ddeabm_performance_test</a></li>
   
-     <li class="active">dhvnrm</li>
+     <li class="active">spacecraft</li>
   </ol>
 </div>
 </div>
@@ -130,6 +126,22 @@
     
 <div id="sidebar">
   
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
+    <div id="vars" class="panel-collapse collapse">
+      <div class="list-group">
+        
+        <a class="list-group-item" href="../type/spacecraft.html#variable-mu">mu</a>
+        
+        <a class="list-group-item" href="../type/spacecraft.html#variable-fevals">fevals</a>
+        
+        <a class="list-group-item" href="../type/spacecraft.html#variable-first">first</a>
+        
+      </div>
+    </div>
+  </div>
   
   
   
@@ -152,52 +164,22 @@
   <div class="panel panel-primary">
     <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
     <div class="list-group">
-      <a class="list-group-item" href="../proc/dhvnrm.html#src">dhvnrm</a>
+      <a class="list-group-item" href="../type/spacecraft.html#src">spacecraft</a>
     </div>
   </div>
   
   <hr>
   
   <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs">All Procedures</a></h3></div>
-    <div id="allprocs" class="panel-collapse collapse">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#alltypes">All Derived Types</a></h3></div>
+    <div id="alltypes" class="panel-collapse collapse">
         <div class="list-group">
           
-          <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+          <a class="list-group-item" href="../type/ddeabm_class.html">ddeabm_class</a>
           
-          <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+          <a class="list-group-item" href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a>
           
-          <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-          
-          <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-          
-          <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-          
-          <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-          
-          <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-          
-          <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-          
-          <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-          
-          <a class="list-group-item" href="../proc/go.html">go</a>
-          
-          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-          
-          <a class="list-group-item" href="../proc/xermsg.html">xermsg</a>
-          
-          <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-          
-          <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
+          <a class="list-group-item" href="../type/spacecraft.html">spacecraft</a>
           
         </div>
     </div>
@@ -208,109 +190,34 @@
     </div>
     
     <div class="col-lg-9" id='text'>
-    <h2>
-private function dhvnrm(v, n) result(m)
+    <h2>type, extends(ddeabm_class) :: spacecraft</h2>
     
     
-    
-</h2>
-    
-  
-
-
-
-    <h3>Arguments</h3>
-    
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-v%7E2"></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
-  <td><strong>v</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-n"></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>n</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
-    
-    
-    
-    
-    
-    
-    
-	 <h3>Return Value <small><span class="anchor" id="variable-m"></span>real(kind=wp)
-  </small></h3>
-    
-    
-    
-    <h3>Description</h3>
-    <p>Compute the maximum norm of the first <code>n</code> elements of vector <code>v</code>.
-  Replacement for the original <a href="http://www.netlib.org/slatec/src/dhvnrm.f">SLATEC</a> routine.</p>
-    
-    
-     
-     <h3>Called By</h3>
-     
                 <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.26.3 (20100126.1600)
  -->
-<!-- Title: proc~~dhvnrm~~CalledByGraph Pages: 1 -->
-<svg id="procdhvnrmCalledByGraph" width="152pt" height="34pt"
- viewBox="0.00 0.00 152.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~dhvnrm~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
-<title>proc~~dhvnrm~~CalledByGraph</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 149,-30 149,5 -4,5"/>
-<!-- proc~dhvnrm -->
-<g id="node1" class="node"><title>proc~dhvnrm</title>
-<polygon fill="none" stroke="black" points="144,-26 90,-26 90,-1.24345e-14 144,-3.55271e-15 144,-26"/>
-<text text-anchor="middle" x="117" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">dhvnrm</text>
+<!-- Title: type~~spacecraft~~InheritsGraph Pages: 1 -->
+<svg id="typespacecraftInheritsGraph" width="188pt" height="34pt"
+ viewBox="0.00 0.00 188.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="type~~spacecraft~~InheritsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<title>type~~spacecraft~~InheritsGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 185,-30 185,5 -4,5"/>
+<!-- type~spacecraft -->
+<g id="node1" class="node"><title>type~spacecraft</title>
+<polygon fill="none" stroke="black" points="180,-26 118,-26 118,-1.24345e-14 180,-3.55271e-15 180,-26"/>
+<text text-anchor="middle" x="149" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">spacecraft</text>
 </g>
-<!-- proc~dhstrt -->
-<g id="node2" class="node"><title>proc~dhstrt</title>
-<a xlink:href="../proc/dhstrt.html" xlink:title="dhstrt">
-<polygon fill="#d9534f" stroke="#d9534f" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
-<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhstrt</text>
-</a>
+<!-- ddeabm_class -->
+<g id="node2" class="node"><title>ddeabm_class</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="82,-26 4.26326e-14,-26 0,-1.24345e-14 82,-3.55271e-15 82,-26"/>
+<text text-anchor="middle" x="41" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class</text>
 </g>
-<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
-<g id="edge2" class="edge"><title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
-<path fill="none" stroke="black" d="M54.003,-13C62.0277,-13 70.9665,-13 79.5309,-13"/>
-<polygon fill="black" stroke="black" points="79.7051,-16.5001 89.705,-13 79.705,-9.5001 79.7051,-16.5001"/>
+<!-- ddeabm_class&#45;&gt;type~spacecraft -->
+<g id="edge2" class="edge"><title>ddeabm_class&#45;&gt;type~spacecraft</title>
+<path fill="none" stroke="black" d="M82.1383,-13C90.4372,-13 99.1665,-13 107.478,-13"/>
+<polygon fill="black" stroke="black" points="107.72,-16.5001 117.72,-13 107.72,-9.5001 107.72,-16.5001"/>
 </g>
 </g>
 </svg>
@@ -405,41 +312,93 @@ implementation in a submodule of an interface in a parent module.</p>
                   </div>
                 </div>
                 
-     
+    <br><br>
+    
+    <p>spacecraft propagation type.
+ extends the <a href="../type/ddeabm_class.html">ddeabm_class</a> to include data used in the deriv routine</p>
+    <br>
+    
+    
+    <section>
+    <h2>Components</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-mu"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>mu</strong></td><td> =</td><td>0.0_wp</td><td><p>central body gravitational parameter (km3/s2)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-fevals"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>fevals</strong></td><td> =</td><td>0</td><td><p>number of function evaluations</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-first"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>first</strong></td><td> =</td><td>.true.</td><td><p>first point is being exported</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
     <br>
     
     
     
     
     
-
     
-    
-    
-    
-    
-
-
     
     
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">function </span><span class="n">dhvnrm</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-
-    <span class="k">implicit none</span>
-
-<span class="k">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">m</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">n</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">v</span>
-
-    <span class="n">m</span> <span class="o">=</span> <span class="nb">maxval</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)))</span>
-
-    <span class="k">end function </span><span class="n">dhvnrm</span>
+    <div class="highlight"><pre>    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
+        <span class="c">!! spacecraft propagation type.</span>
+        <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span>     <span class="o">=</span> <span class="mf">0.0_wp</span>  <span class="c">!! central body gravitational parameter (km3/s2)</span>
+        <span class="kt">integer</span>  <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c">!! number of function evaluations</span>
+        <span class="kt">logical</span>  <span class="kd">::</span> <span class="n">first</span>  <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>  <span class="c">!! first point is being exported</span>
+    <span class="k">end type </span><span class="n">spacecraft</span>
 </pre></div>
 
     </section>
-    <br>
     
     
     </div>

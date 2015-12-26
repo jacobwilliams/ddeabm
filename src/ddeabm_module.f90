@@ -2160,122 +2160,133 @@
 !   compute coefficients of formulas for this step.  avoid computing
 !   those quantities not changed when step size is not changed.
 !                   ***
-!
+
  100  kp1 = k+1
       kp2 = k+2
       km1 = k-1
       km2 = k-2
-!
-!   ns is the number of dsteps taken with size h, including the current
-!   one.  when k<ns, no coefficients change
-!
+
+      ! ns is the number of dsteps taken with size h, including the current
+      ! one.  when k<ns, no coefficients change
+
       if (h /= hold) ns = 0
       if (ns<=kold) ns = ns+1
       nsp1 = ns+1
-      if (k < ns) go to 199
-!
-!   compute those components of alpha(*),beta(*),psi(*),sig(*) which
-!   are changed
-!
-      beta(ns) = 1.0_wp
-      realns = ns
-      alpha(ns) = 1.0_wp/realns
-      temp1 = h*realns
-      sig(nsp1) = 1.0_wp
-      if (k >= nsp1) then
-          do i = nsp1,k
-            im1 = i-1
-            temp2 = psi(im1)
-            psi(im1) = temp1
-            beta(i) = beta(im1)*psi(im1)/temp2
-            temp1 = temp2 + h
-            alpha(i) = h/temp1
-            reali = i
-            sig(i+1) = reali*alpha(i)*sig(i)
-          end do
-      end if
-      psi(k) = temp1
-!
-!   compute coefficients g(*)
-!
-!   initialize v(*) and set w(*).
-!
-      if (ns > 1) go to 120
-      do iq = 1,k
-        temp3 = iq*(iq+1)
-        v(iq) = 1.0_wp/temp3
-        w(iq) = v(iq)
-      end do
-      ivc = 0
-      kgi = 0
-      if (k == 1) go to 140
-      kgi = 1
-      gi(1) = w(2)
-      go to 140
-!
-!   if order was raised, update diagonal part of v(*)
-!
-120   if (k > kprev) then
-           if (ivc /= 0) then
-              jv = kp1 - iv(ivc)
-              ivc = ivc - 1
-           else
-              jv = 1
-              temp4 = k*kp1
-              v(k) = 1.0_wp/temp4
-              w(k) = v(k)
-              if (k == 2) then
+
+      if (k >= ns) then
+
+          ! compute those components of alpha(*),beta(*),psi(*),sig(*) which
+          ! are changed
+
+          beta(ns) = 1.0_wp
+          realns = ns
+          alpha(ns) = 1.0_wp/realns
+          temp1 = h*realns
+          sig(nsp1) = 1.0_wp
+          if (k >= nsp1) then
+              do i = nsp1,k
+                im1 = i-1
+                temp2 = psi(im1)
+                psi(im1) = temp1
+                beta(i) = beta(im1)*psi(im1)/temp2
+                temp1 = temp2 + h
+                alpha(i) = h/temp1
+                reali = i
+                sig(i+1) = reali*alpha(i)*sig(i)
+              end do
+          end if
+          psi(k) = temp1
+
+          ! compute coefficients g(*)
+          !
+          ! initialize v(*) and set w(*).
+
+          if (ns > 1) then
+
+              ! if order was raised, update diagonal part of v(*)
+
+              if (k > kprev) then
+                   if (ivc /= 0) then
+                      jv = kp1 - iv(ivc)
+                      ivc = ivc - 1
+                   else
+                      jv = 1
+                      temp4 = k*kp1
+                      v(k) = 1.0_wp/temp4
+                      w(k) = v(k)
+                      if (k == 2) then
+                          kgi = 1
+                          gi(1) = w(2)
+                      end if
+                   end if
+                   nsm2 = ns-2
+                   if (nsm2 >= jv) then
+                       do j = jv,nsm2
+                         i = k-j
+                         v(i) = v(i) - alpha(j+1)*v(i+1)
+                         w(i) = v(i)
+                       end do
+                       if (i == 2) then
+                           kgi = ns - 1
+                           gi(kgi) = w(2)
+                       end if
+                  end if
+              end if
+
+              !update v(*) and set w(*)
+
+              limit1 = kp1 - ns
+              temp5 = alpha(ns)
+              do iq = 1,limit1
+                v(iq) = v(iq) - temp5*v(iq+1)
+                w(iq) = v(iq)
+              end do
+              g(nsp1) = w(1)
+              if (limit1 /= 1) then
+                  kgi = ns
+                  gi(kgi) = w(2)
+              end if
+              w(limit1+1) = v(limit1+1)
+              if (k < kold) then
+                  ivc = ivc + 1
+                  iv(ivc) = limit1 + 2
+              end if
+
+          else
+
+              do iq = 1,k
+                temp3 = iq*(iq+1)
+                v(iq) = 1.0_wp/temp3
+                w(iq) = v(iq)
+              end do
+              ivc = 0
+              kgi = 0
+              if (k /= 1) then
                   kgi = 1
                   gi(1) = w(2)
               end if
-           end if
-           nsm2 = ns-2
-           if (nsm2 >= jv) then
-               do j = jv,nsm2
-                 i = k-j
-                 v(i) = v(i) - alpha(j+1)*v(i+1)
-                 w(i) = v(i)
-               end do
-               if (i == 2) then
-                   kgi = ns - 1
-                   gi(kgi) = w(2)
-               end if
-          end if
-      end if
-      !update v(*) and set w(*)
-      limit1 = kp1 - ns
-      temp5 = alpha(ns)
-      do iq = 1,limit1
-        v(iq) = v(iq) - temp5*v(iq+1)
-        w(iq) = v(iq)
-      end do
-      g(nsp1) = w(1)
-      if (limit1 /= 1) then
-          kgi = ns
-          gi(kgi) = w(2)
-      end if
-      w(limit1+1) = v(limit1+1)
-      if (k >= kold) go to 140
-      ivc = ivc + 1
-      iv(ivc) = limit1 + 2
-!
-!   compute the g(*) in the work vector w(*)
-!
- 140  nsp2 = ns + 2
-      kprev = k
-      if (kp1 < nsp2) go to 199
-      do i = nsp2,kp1
-        limit2 = kp2 - i
-        temp6 = alpha(i-1)
-        do iq = 1,limit2
-          w(iq) = w(iq) - temp6*w(iq+1)
-        end do
-        g(i) = w(1)
-      end do
 
- 199    continue
+          end if
+
+          ! compute the g(*) in the work vector w(*)
+
+          nsp2 = ns + 2
+          kprev = k
+          if (kp1 >= nsp2) then
+              do i = nsp2,kp1
+                limit2 = kp2 - i
+                temp6 = alpha(i-1)
+                do iq = 1,limit2
+                  w(iq) = w(iq) - temp6*w(iq+1)
+                end do
+                g(i) = w(1)
+              end do
+          end if
+
+      end if
+
 !       ***     end block 1     ***
-!
+
 !       ***     begin block 2     ***
 !   predict a solution p(*), evaluate derivatives using predicted
 !   solution, estimate local error at order k and errors at orders k,
@@ -2468,6 +2479,7 @@
       if (k > 1) go to 445
       if (erkp1 >= 0.5_wp*erk) go to 460
       go to 450
+      
  445  if (erkm1 <= min(erk,erkp1)) go to 455
       if (erkp1 >= erk  .or.  k == 12) go to 460
 

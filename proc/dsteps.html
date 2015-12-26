@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	 
-	 <meta name="description" content="Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm">
+	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Chris MacMackin" >
     <link rel="icon" href="../favicon.png">
@@ -68,7 +68,7 @@
             <li><a href="../lists/types.html">Derived Types</a></li>
 				
 				
-            <li><a href="../program/test.html">Program</a></li>
+            <li><a href="../lists/programs.html">Programs</a></li>
 				
           </ul>
         
@@ -274,6 +274,10 @@
           <a class="list-group-item" href="../proc/dintp.html">dintp</a>
           
           <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+          
+          <a class="list-group-item" href="../proc/go.html">go</a>
+          
+          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
           
           <a class="list-group-item" href="../proc/xermsg.html">xermsg</a>
           
@@ -1672,122 +1676,133 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
 <span class="c">!   compute coefficients of formulas for this step.  avoid computing</span>
 <span class="c">!   those quantities not changed when step size is not changed.</span>
 <span class="c">!                   ***</span>
-<span class="c">!</span>
+
  <span class="mi">100</span>  <span class="n">kp1</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span>
       <span class="n">kp2</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">2</span>
       <span class="n">km1</span> <span class="o">=</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span>
       <span class="n">km2</span> <span class="o">=</span> <span class="n">k</span><span class="o">-</span><span class="mi">2</span>
-<span class="c">!</span>
-<span class="c">!   ns is the number of dsteps taken with size h, including the current</span>
-<span class="c">!   one.  when k&lt;ns, no coefficients change</span>
-<span class="c">!</span>
+
+      <span class="c">! ns is the number of dsteps taken with size h, including the current</span>
+      <span class="c">! one.  when k&lt;ns, no coefficients change</span>
+
       <span class="k">if</span> <span class="p">(</span><span class="n">h</span> <span class="o">/=</span> <span class="n">hold</span><span class="p">)</span> <span class="n">ns</span> <span class="o">=</span> <span class="mi">0</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">ns</span><span class="o">&lt;=</span><span class="n">kold</span><span class="p">)</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">ns</span><span class="o">+</span><span class="mi">1</span>
       <span class="n">nsp1</span> <span class="o">=</span> <span class="n">ns</span><span class="o">+</span><span class="mi">1</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">ns</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">199</span>
-<span class="c">!</span>
-<span class="c">!   compute those components of alpha(*),beta(*),psi(*),sig(*) which</span>
-<span class="c">!   are changed</span>
-<span class="c">!</span>
-      <span class="n">beta</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span>
-      <span class="n">realns</span> <span class="o">=</span> <span class="n">ns</span>
-      <span class="n">alpha</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">realns</span>
-      <span class="n">temp1</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">realns</span>
-      <span class="n">sig</span><span class="p">(</span><span class="n">nsp1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;=</span> <span class="n">nsp1</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">          do </span><span class="n">i</span> <span class="o">=</span> <span class="n">nsp1</span><span class="p">,</span><span class="n">k</span>
-            <span class="n">im1</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
-            <span class="n">temp2</span> <span class="o">=</span> <span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span>
-            <span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span> <span class="o">=</span> <span class="n">temp1</span>
-            <span class="n">beta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">beta</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="o">*</span><span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="o">/</span><span class="n">temp2</span>
-            <span class="n">temp1</span> <span class="o">=</span> <span class="n">temp2</span> <span class="o">+</span> <span class="n">h</span>
-            <span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">h</span><span class="o">/</span><span class="n">temp1</span>
-            <span class="n">reali</span> <span class="o">=</span> <span class="n">i</span>
-            <span class="n">sig</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">reali</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">sig</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-          <span class="k">end do</span>
-<span class="k">      end if</span>
-<span class="k">      </span><span class="n">psi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">temp1</span>
-<span class="c">!</span>
-<span class="c">!   compute coefficients g(*)</span>
-<span class="c">!</span>
-<span class="c">!   initialize v(*) and set w(*).</span>
-<span class="c">!</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">ns</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">120</span>
-      <span class="k">do </span><span class="n">iq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">k</span>
-        <span class="n">temp3</span> <span class="o">=</span> <span class="n">iq</span><span class="o">*</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp3</span>
-        <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span>
-      <span class="k">end do</span>
-<span class="k">      </span><span class="n">ivc</span> <span class="o">=</span> <span class="mi">0</span>
-      <span class="n">kgi</span> <span class="o">=</span> <span class="mi">0</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">140</span>
-      <span class="n">kgi</span> <span class="o">=</span> <span class="mi">1</span>
-      <span class="n">gi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-      <span class="n">go</span> <span class="n">to</span> <span class="mi">140</span>
-<span class="c">!</span>
-<span class="c">!   if order was raised, update diagonal part of v(*)</span>
-<span class="c">!</span>
-<span class="mi">120</span>   <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">kprev</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">           if</span> <span class="p">(</span><span class="n">ivc</span> <span class="o">/=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">              </span><span class="n">jv</span> <span class="o">=</span> <span class="n">kp1</span> <span class="o">-</span> <span class="n">iv</span><span class="p">(</span><span class="n">ivc</span><span class="p">)</span>
-              <span class="n">ivc</span> <span class="o">=</span> <span class="n">ivc</span> <span class="o">-</span> <span class="mi">1</span>
-           <span class="k">else</span>
-<span class="k">              </span><span class="n">jv</span> <span class="o">=</span> <span class="mi">1</span>
-              <span class="n">temp4</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="n">kp1</span>
-              <span class="n">v</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp4</span>
-              <span class="n">w</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-              <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;=</span> <span class="n">ns</span><span class="p">)</span> <span class="k">then</span>
+
+          <span class="c">! compute those components of alpha(*),beta(*),psi(*),sig(*) which</span>
+          <span class="c">! are changed</span>
+
+          <span class="n">beta</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span>
+          <span class="n">realns</span> <span class="o">=</span> <span class="n">ns</span>
+          <span class="n">alpha</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">realns</span>
+          <span class="n">temp1</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">realns</span>
+          <span class="n">sig</span><span class="p">(</span><span class="n">nsp1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;=</span> <span class="n">nsp1</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">              do </span><span class="n">i</span> <span class="o">=</span> <span class="n">nsp1</span><span class="p">,</span><span class="n">k</span>
+                <span class="n">im1</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">temp2</span> <span class="o">=</span> <span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span>
+                <span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span> <span class="o">=</span> <span class="n">temp1</span>
+                <span class="n">beta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">beta</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="o">*</span><span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="o">/</span><span class="n">temp2</span>
+                <span class="n">temp1</span> <span class="o">=</span> <span class="n">temp2</span> <span class="o">+</span> <span class="n">h</span>
+                <span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">h</span><span class="o">/</span><span class="n">temp1</span>
+                <span class="n">reali</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">sig</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">reali</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">sig</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+              <span class="k">end do</span>
+<span class="k">          end if</span>
+<span class="k">          </span><span class="n">psi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">temp1</span>
+
+          <span class="c">! compute coefficients g(*)</span>
+          <span class="c">!</span>
+          <span class="c">! initialize v(*) and set w(*).</span>
+
+          <span class="k">if</span> <span class="p">(</span><span class="n">ns</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
+
+              <span class="c">! if order was raised, update diagonal part of v(*)</span>
+
+              <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">kprev</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                   if</span> <span class="p">(</span><span class="n">ivc</span> <span class="o">/=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                      </span><span class="n">jv</span> <span class="o">=</span> <span class="n">kp1</span> <span class="o">-</span> <span class="n">iv</span><span class="p">(</span><span class="n">ivc</span><span class="p">)</span>
+                      <span class="n">ivc</span> <span class="o">=</span> <span class="n">ivc</span> <span class="o">-</span> <span class="mi">1</span>
+                   <span class="k">else</span>
+<span class="k">                      </span><span class="n">jv</span> <span class="o">=</span> <span class="mi">1</span>
+                      <span class="n">temp4</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="n">kp1</span>
+                      <span class="n">v</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp4</span>
+                      <span class="n">w</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                          </span><span class="n">kgi</span> <span class="o">=</span> <span class="mi">1</span>
+                          <span class="n">gi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                      <span class="k">end if</span>
+<span class="k">                   end if</span>
+<span class="k">                   </span><span class="n">nsm2</span> <span class="o">=</span> <span class="n">ns</span><span class="o">-</span><span class="mi">2</span>
+                   <span class="k">if</span> <span class="p">(</span><span class="n">nsm2</span> <span class="o">&gt;=</span> <span class="n">jv</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                       do </span><span class="n">j</span> <span class="o">=</span> <span class="n">jv</span><span class="p">,</span><span class="n">nsm2</span>
+                         <span class="n">i</span> <span class="o">=</span> <span class="n">k</span><span class="o">-</span><span class="n">j</span>
+                         <span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                         <span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                       <span class="k">end do</span>
+<span class="k">                       if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                           </span><span class="n">kgi</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">-</span> <span class="mi">1</span>
+                           <span class="n">gi</span><span class="p">(</span><span class="n">kgi</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                       <span class="k">end if</span>
+<span class="k">                  end if</span>
+<span class="k">              end if</span>
+
+              <span class="c">!update v(*) and set w(*)</span>
+
+              <span class="n">limit1</span> <span class="o">=</span> <span class="n">kp1</span> <span class="o">-</span> <span class="n">ns</span>
+              <span class="n">temp5</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+              <span class="k">do </span><span class="n">iq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">limit1</span>
+                <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">-</span> <span class="n">temp5</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span>
+              <span class="k">end do</span>
+<span class="k">              </span><span class="n">g</span><span class="p">(</span><span class="n">nsp1</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+              <span class="k">if</span> <span class="p">(</span><span class="n">limit1</span> <span class="o">/=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                  </span><span class="n">kgi</span> <span class="o">=</span> <span class="n">ns</span>
+                  <span class="n">gi</span><span class="p">(</span><span class="n">kgi</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+              <span class="k">end if</span>
+<span class="k">              </span><span class="n">w</span><span class="p">(</span><span class="n">limit1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">limit1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+              <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">kold</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                  </span><span class="n">ivc</span> <span class="o">=</span> <span class="n">ivc</span> <span class="o">+</span> <span class="mi">1</span>
+                  <span class="n">iv</span><span class="p">(</span><span class="n">ivc</span><span class="p">)</span> <span class="o">=</span> <span class="n">limit1</span> <span class="o">+</span> <span class="mi">2</span>
+              <span class="k">end if</span>
+
+<span class="k">          else</span>
+
+<span class="k">              do </span><span class="n">iq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">k</span>
+                <span class="n">temp3</span> <span class="o">=</span> <span class="n">iq</span><span class="o">*</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp3</span>
+                <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span>
+              <span class="k">end do</span>
+<span class="k">              </span><span class="n">ivc</span> <span class="o">=</span> <span class="mi">0</span>
+              <span class="n">kgi</span> <span class="o">=</span> <span class="mi">0</span>
+              <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">/=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
 <span class="k">                  </span><span class="n">kgi</span> <span class="o">=</span> <span class="mi">1</span>
                   <span class="n">gi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
               <span class="k">end if</span>
-<span class="k">           end if</span>
-<span class="k">           </span><span class="n">nsm2</span> <span class="o">=</span> <span class="n">ns</span><span class="o">-</span><span class="mi">2</span>
-           <span class="k">if</span> <span class="p">(</span><span class="n">nsm2</span> <span class="o">&gt;=</span> <span class="n">jv</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">               do </span><span class="n">j</span> <span class="o">=</span> <span class="n">jv</span><span class="p">,</span><span class="n">nsm2</span>
-                 <span class="n">i</span> <span class="o">=</span> <span class="n">k</span><span class="o">-</span><span class="n">j</span>
-                 <span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-                 <span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-               <span class="k">end do</span>
-<span class="k">               if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">                   </span><span class="n">kgi</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">-</span> <span class="mi">1</span>
-                   <span class="n">gi</span><span class="p">(</span><span class="n">kgi</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-               <span class="k">end if</span>
-<span class="k">          end if</span>
-<span class="k">      end if</span>
-      <span class="c">!update v(*) and set w(*)</span>
-      <span class="n">limit1</span> <span class="o">=</span> <span class="n">kp1</span> <span class="o">-</span> <span class="n">ns</span>
-      <span class="n">temp5</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
-      <span class="k">do </span><span class="n">iq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">limit1</span>
-        <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">-</span> <span class="n">temp5</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span>
-      <span class="k">end do</span>
-<span class="k">      </span><span class="n">g</span><span class="p">(</span><span class="n">nsp1</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">limit1</span> <span class="o">/=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">          </span><span class="n">kgi</span> <span class="o">=</span> <span class="n">ns</span>
-          <span class="n">gi</span><span class="p">(</span><span class="n">kgi</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-      <span class="k">end if</span>
-<span class="k">      </span><span class="n">w</span><span class="p">(</span><span class="n">limit1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">limit1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;=</span> <span class="n">kold</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">140</span>
-      <span class="n">ivc</span> <span class="o">=</span> <span class="n">ivc</span> <span class="o">+</span> <span class="mi">1</span>
-      <span class="n">iv</span><span class="p">(</span><span class="n">ivc</span><span class="p">)</span> <span class="o">=</span> <span class="n">limit1</span> <span class="o">+</span> <span class="mi">2</span>
-<span class="c">!</span>
-<span class="c">!   compute the g(*) in the work vector w(*)</span>
-<span class="c">!</span>
- <span class="mi">140</span>  <span class="n">nsp2</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">+</span> <span class="mi">2</span>
-      <span class="n">kprev</span> <span class="o">=</span> <span class="n">k</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">kp1</span> <span class="o">&lt;</span> <span class="n">nsp2</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">199</span>
-      <span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="n">nsp2</span><span class="p">,</span><span class="n">kp1</span>
-        <span class="n">limit2</span> <span class="o">=</span> <span class="n">kp2</span> <span class="o">-</span> <span class="n">i</span>
-        <span class="n">temp6</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">do </span><span class="n">iq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">limit2</span>
-          <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">-</span> <span class="n">temp6</span><span class="o">*</span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">end do</span>
-<span class="k">        </span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-      <span class="k">end do</span>
 
-<span class="k"> </span><span class="mi">199</span>    <span class="k">continue</span>
+<span class="k">          end if</span>
+
+          <span class="c">! compute the g(*) in the work vector w(*)</span>
+
+          <span class="n">nsp2</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">+</span> <span class="mi">2</span>
+          <span class="n">kprev</span> <span class="o">=</span> <span class="n">k</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">kp1</span> <span class="o">&gt;=</span> <span class="n">nsp2</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">              do </span><span class="n">i</span> <span class="o">=</span> <span class="n">nsp2</span><span class="p">,</span><span class="n">kp1</span>
+                <span class="n">limit2</span> <span class="o">=</span> <span class="n">kp2</span> <span class="o">-</span> <span class="n">i</span>
+                <span class="n">temp6</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">do </span><span class="n">iq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">limit2</span>
+                  <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span> <span class="o">-</span> <span class="n">temp6</span><span class="o">*</span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">end do</span>
+<span class="k">                </span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+              <span class="k">end do</span>
+<span class="k">          end if</span>
+
+<span class="k">      end if</span>
+
 <span class="c">!       ***     end block 1     ***</span>
-<span class="c">!</span>
+
 <span class="c">!       ***     begin block 2     ***</span>
 <span class="c">!   predict a solution p(*), evaluate derivatives using predicted</span>
 <span class="c">!   solution, estimate local error at order k and errors at orders k,</span>
@@ -1980,6 +1995,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
       <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">445</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
       <span class="n">go</span> <span class="n">to</span> <span class="mi">450</span>
+      
  <span class="mi">445</span>  <span class="k">if</span> <span class="p">(</span><span class="n">erkm1</span> <span class="o">&lt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">erk</span><span class="p">,</span><span class="n">erkp1</span><span class="p">))</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">455</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="n">erk</span>  <span class="p">.</span><span class="nb">or</span><span class="p">.</span>  <span class="n">k</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
 

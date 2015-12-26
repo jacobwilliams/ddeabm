@@ -10,7 +10,7 @@
     <meta name="author" content="Chris MacMackin" >
     <link rel="icon" href="../favicon.png">
 
-    <title>destroy_ddeabm &ndash; ddeabm</title>
+    <title>twobody &ndash; ddeabm</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -89,7 +89,7 @@
     
   
   <div class="row">
-    <h1>destroy_ddeabm
+    <h1>twobody
     <small>Subroutine</small>
     
     </h1>
@@ -99,23 +99,21 @@
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
-    <li><i class="fa fa-pencil"></i> Jacob Williams</li>
-     
      
      
      
     
     
-    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/performance_test.f90"> Source File</a></li>
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
-     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
+     <li><a href='../sourcefile/performance_test.f90.html'>performance_test.f90</a></li>
   
-     <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+     <li><a href='../program/ddeabm_performance_test.html'>ddeabm_performance_test</a></li>
   
-     <li class="active">destroy_ddeabm</li>
+     <li class="active">twobody</li>
   </ol>
 </div>
 </div>
@@ -128,6 +126,24 @@
     
 <div id="sidebar">
   
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
+    <div id="vars" class="panel-collapse collapse">
+      <div class="list-group">
+        
+        <a class="list-group-item" href="../proc/twobody.html#variable-r%7E3">r</a>
+        
+        <a class="list-group-item" href="../proc/twobody.html#variable-v%7E5">v</a>
+        
+        <a class="list-group-item" href="../proc/twobody.html#variable-a_grav">a_grav</a>
+        
+        <a class="list-group-item" href="../proc/twobody.html#variable-rmag">rmag</a>
+        
+      </div>
+    </div>
+  </div>
   
   
   
@@ -150,7 +166,7 @@
   <div class="panel panel-primary">
     <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
     <div class="list-group">
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html#src">destroy_ddeabm</a>
+      <a class="list-group-item" href="../proc/twobody.html#src">twobody</a>
     </div>
   </div>
   
@@ -207,7 +223,7 @@
     
     <div class="col-lg-9" id='text'>
     <h2>
-private subroutine destroy_ddeabm(me)
+subroutine twobody(me, t, x, xdot)
     
     
     
@@ -235,12 +251,57 @@ private subroutine destroy_ddeabm(me)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E6"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(out)</td>
+  <td><span class="anchor" id="variable-me%7E13"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td>intent(inout)</td>
   <td></td>
   
   <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-t%7E10"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>t</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x%7E9"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(:)</td><td>::</td>
+  <td><strong>x</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-xdot%7E2"></span>real(kind=wp),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>dimension(:)</td><td>::</td>
+  <td><strong>xdot</strong></td><td></td>
   
 </tr>
 
@@ -251,10 +312,84 @@ private subroutine destroy_ddeabm(me)
     
     
     <h3>Description</h3>
-    <p>Destructor for <a href="../type/ddeabm_class.html">ddeabm_class</a>.</p>
+    <p>derivative routine for two-body orbit propagation</p>
     
     
      
+    <br>
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-r%7E3"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(3)</td><td>::</td>
+  <td><strong>r</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-v%7E5"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(3)</td><td>::</td>
+  <td><strong>v</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-a_grav"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(3)</td><td>::</td>
+  <td><strong>a_grav</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-rmag"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>rmag</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
     <br>
     
     
@@ -274,13 +409,36 @@ private subroutine destroy_ddeabm(me)
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">destroy_ddeabm</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
 
-    <span class="k">implicit none</span>
+        <span class="c">!! derivative routine for two-body orbit propagation</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+        <span class="k">implicit none</span>
 
-    <span class="k">end subroutine </span><span class="n">destroy_ddeabm</span>
+<span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
+
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
+
+        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
+        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
+
+            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
+            <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">!acceleration due to gravity</span>
+
+            <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
+
+            <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">end select</span>
+
+<span class="k">    end subroutine </span><span class="n">twobody</span>
 </pre></div>
 
     </section>

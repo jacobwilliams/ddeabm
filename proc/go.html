@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+    
+    <meta name="author" content="Chris MacMackin" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>go &ndash; ddeabm</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+                
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+				
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../lists/programs.html">Programs</a></li>
+				
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>go
+    <small>Subroutine</small>
+    
+    </h1>
+	 
+<div class="row">
+<div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+    <li><i class="fa fa-code"></i><a href="../src/performance_test.f90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li><a href='../sourcefile/performance_test.f90.html'>performance_test.f90</a></li>
+  
+     <li><a href='../program/ddeabm_performance_test.html'>ddeabm_performance_test</a></li>
+  
+     <li class="active">go</li>
+  </ol>
+</div>
+</div>
+</div>
+    
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-3">
+    
+<div id="sidebar">
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
+    <div id="vars" class="panel-collapse collapse">
+      <div class="list-group">
+        
+        <a class="list-group-item" href="../proc/go.html#variable-s%7E3">s</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-xf%7E2">xf</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-x02%7E2">x02</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-x%7E8">x</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-num_digits">num_digits</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-errvec">errvec</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-t0%7E3">t0</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-tf%7E2">tf</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-dt%7E3">dt</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-gf%7E2">gf</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-tf_actual%7E2">tf_actual</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-t%7E9">t</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-rerr">rerr</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-verr">verr</a>
+        
+        <a class="list-group-item" href="../proc/go.html#variable-idid%7E6">idid</a>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+    <div class="list-group">
+      <a class="list-group-item" href="../proc/go.html#src">go</a>
+    </div>
+  </div>
+  
+  <hr>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs">All Procedures</a></h3></div>
+    <div id="allprocs" class="panel-collapse collapse">
+        <div class="list-group">
+          
+          <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+          
+          <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+          
+          <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+          
+          <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+          
+          <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+          
+          <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+          
+          <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+          
+          <a class="list-group-item" href="../proc/go.html">go</a>
+          
+          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+          
+          <a class="list-group-item" href="../proc/xermsg.html">xermsg</a>
+          
+          <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+          
+          <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
+          
+        </div>
+    </div>
+  </div>
+  
+</div>
+
+    </div>
+    
+    <div class="col-lg-9" id='text'>
+    <h2>
+subroutine go(x0, rtol, atol, fevals, err)
+    
+    
+    
+</h2>
+    
+  
+
+
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x0%7E2"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>x0</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-rtol%7E6"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>rtol</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-atol%7E6"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>atol</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-fevals%7E4"></span>integer,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>fevals</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err%7E2"></span>real(kind=wp),</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>err</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+     
+     <h3>Called By</h3>
+     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: proc~~go~~CalledByGraph Pages: 1 -->
+<svg id="procgoCalledByGraph" width="240pt" height="34pt"
+ viewBox="0.00 0.00 240.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~go~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<title>proc~~go~~CalledByGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 237,-30 237,5 -4,5"/>
+<!-- proc~go -->
+<g id="node1" class="node"><title>proc~go</title>
+<polygon fill="none" stroke="black" points="232,-26 178,-26 178,-1.24345e-14 232,-3.55271e-15 232,-26"/>
+<text text-anchor="middle" x="205" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">go</text>
+</g>
+<!-- program~ddeabm_performance_test -->
+<g id="node2" class="node"><title>program~ddeabm_performance_test</title>
+<a xlink:href="../program/ddeabm_performance_test.html" xlink:title="ddeabm_performance_test">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="142,-26 5.68434e-14,-26 0,-1.24345e-14 142,-3.55271e-15 142,-26"/>
+<text text-anchor="middle" x="71" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_performance_test</text>
+</a>
+</g>
+<!-- program~ddeabm_performance_test&#45;&gt;proc~go -->
+<g id="edge2" class="edge"><title>program~ddeabm_performance_test&#45;&gt;proc~go</title>
+<path fill="none" stroke="black" d="M142.316,-13C151.094,-13 159.774,-13 167.748,-13"/>
+<polygon fill="black" stroke="black" points="167.773,-16.5001 177.773,-13 167.773,-9.5001 167.773,-16.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+Nodes of different colours represent the following:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
+<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
+<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Type -->
+<g id="node3" class="node"><title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
+<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- Subroutine -->
+<g id="node4" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node5" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node6" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
+<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node7" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
+<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node8" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
+<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node9" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
+<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<h5>Module Graph</h5>
+<p>Solid arrows point from a parent (sub)module to the submodule which is
+descended from it. Dashed arrows point from a module being used to the
+module using it.</p>
+<h5>Type Graph</h5>
+<p>Solid arrows point from one derived type to another which extends
+(inherits from) it. Dashed arrows point from a derived type to another
+type containing it as a components, with a label listing the name(s) of
+said component(s).</p>
+<h5>Call Graph</h5>
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+     
+    <br>
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-s%7E3"></span>type(<a href='../type/spacecraft.html'>spacecraft</a>),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>s</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-xf%7E2"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>xf</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x02%7E2"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>x02</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x%7E8"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>x</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-num_digits"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>num_digits</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-errvec"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>errvec</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-t0%7E3"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>t0</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tf%7E2"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>tf</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dt%7E3"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>dt</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-gf%7E2"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>gf</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tf_actual%7E2"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>tf_actual</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-t%7E9"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>t</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-rerr"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>rerr</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-verr"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>verr</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-idid%7E6"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>idid</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
+
+        <span class="k">implicit none</span>
+
+<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>
+        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">err</span>
+
+        <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">num_digits</span><span class="p">,</span><span class="n">errvec</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">rerr</span><span class="p">,</span><span class="n">verr</span>
+        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
+
+        <span class="c">!constructor (main body is Earth):</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="n">rtol</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="n">atol</span><span class="p">])</span>
+        <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
+        <span class="n">t0</span>   <span class="o">=</span> <span class="mf">0.0_wp</span>            <span class="c">!initial time (sec)</span>
+        <span class="n">tf</span>   <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>         <span class="c">!final time (sec)</span>
+
+        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>    <span class="c">!forward</span>
+        <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">fevals</span> <span class="o">=</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>  <span class="c">!number of function evaluations</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">tf</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
+        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
+        <span class="n">x02</span> <span class="o">=</span> <span class="n">x</span>
+
+        <span class="c">!number of digits of accuracy</span>
+        <span class="n">errvec</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x02</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="c">!relative error</span>
+        <span class="k">where</span> <span class="p">(</span><span class="n">errvec</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span>
+            <span class="n">errvec</span> <span class="o">=</span> <span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="c">!small number</span>
+        <span class="k">end where</span>
+
+<span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">num_digits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">end subroutine </span><span class="n">go</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+    <hr>
+    <footer>
+        <div class="row">
+        <div class="col-md-4">&copy; 2015 </div>
+	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+        </div>
+        <br>
+    </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>

@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+    
+    <meta name="author" content="Chris MacMackin" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ddeabm_performance_test &ndash; ddeabm</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+                
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+				
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            <li><a href="../lists/programs.html">Programs</a></li>
+				
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>ddeabm_performance_test 
+    <small>Program</small>
+    
+    </h1>
+	 
+<div class="row">
+<div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+    <li><i class="fa fa-code"></i><a href="../src/performance_test.f90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li><a href='../sourcefile/performance_test.f90.html'>performance_test.f90</a></li>
+  
+     <li class="active">ddeabm_performance_test</li>
+  </ol>
+</div>
+</div>
+</div>
+    
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-3">
+    
+<div id="sidebar">
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
+    <div id="vars" class="panel-collapse collapse">
+      <div class="list-group">
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-n%7E3">n</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-exp_min">exp_min</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-exp_max">exp_max</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-x0%7E3">x0</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-tol%7E5">tol</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err%7E3">err</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-i%7E4">i</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-j%7E5">j</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-num_func_evals">num_func_evals</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-plt">plt</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec">err_vec</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-fevals_vec">fevals_vec</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-istr">istr</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-kind_str">kind_str</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-colors">colors</a>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types">Derived Types</a></h3></div>
+    <div id="types" class="panel-collapse collapse">
+      <div class="list-group">
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#type-spacecraft">spacecraft</a>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs">Subroutines</a></h3></div>
+    <div class="list-group">
+        <div id="subs" class="panel-collapse collapse">
+          
+          <a class="list-group-item" href="../program/ddeabm_performance_test.html#proc-go">go</a>
+          
+          <a class="list-group-item" href="../program/ddeabm_performance_test.html#proc-twobody">twobody</a>
+          
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+    <div class="list-group">
+      <a class="list-group-item" href="../program/ddeabm_performance_test.html#src">ddeabm_performance_test</a>
+    </div>
+  </div>
+  
+  <hr>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprogs">All Programs</a></h3></div>
+    <div id="allprogs" class="panel-collapse collapse">
+        <div class="list-group">
+          
+          <a class="list-group-item" href="../program/ddeabm_performance_test.html">ddeabm_performance_test</a>
+          
+          <a class="list-group-item" href="../program/test.html">test</a>
+          
+        </div>
+    </div>
+  </div>
+  
+</div>
+
+    </div>
+    
+    <div class="col-lg-9" id='text'>
+    
+  
+    <ul class="list-inline">
+      <li><h4>Uses:</h4></li>
+      
+      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+      
+      <li><a href='../module/kind_module.html'>kind_module</a></li>
+      
+      <li><a href="https://github.com/jacobwilliams/pyplot-fortran">pyplot_module</a></li>
+      
+      <li><a href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html">iso_fortran_env</a></li>
+      
+    </ul>
+  
+
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: program~~ddeabm_performance_test~~UsesGraph Pages: 1 -->
+<svg id="programddeabm_performance_testUsesGraph" width="624pt" height="117pt"
+ viewBox="0.00 0.00 624.00 117.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="program~~ddeabm_performance_test~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 113)">
+<title>program~~ddeabm_performance_test~~UsesGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-113 621,-113 621,5 -4,5"/>
+<!-- program~ddeabm_performance_test -->
+<g id="node1" class="node"><title>program~ddeabm_performance_test</title>
+<polygon fill="none" stroke="black" points="616,-70 474,-70 474,-44 616,-44 616,-70"/>
+<text text-anchor="middle" x="545" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_performance_test</text>
+</g>
+<!-- module~ddeabm_module -->
+<g id="node2" class="node"><title>module~ddeabm_module</title>
+<a xlink:href="../module/ddeabm_module.html" xlink:title="ddeabm_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="437,-70 345,-70 345,-44 437,-44 437,-70"/>
+<text text-anchor="middle" x="391" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module</text>
+</a>
+</g>
+<!-- module~ddeabm_module&#45;&gt;program~ddeabm_performance_test -->
+<g id="edge10" class="edge"><title>module~ddeabm_module&#45;&gt;program~ddeabm_performance_test</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M437.623,-57C445.92,-57 454.778,-57 463.713,-57"/>
+<polygon fill="black" stroke="black" points="463.808,-60.5001 473.808,-57 463.808,-53.5001 463.808,-60.5001"/>
+</g>
+<!-- pyplot_module -->
+<g id="node3" class="node"><title>pyplot_module</title>
+<a xlink:href="https://github.com/jacobwilliams/pyplot-fortran" xlink:title="pyplot_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="432,-26 350,-26 350,-1.24345e-14 432,-3.55271e-15 432,-26"/>
+<text text-anchor="middle" x="391" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pyplot_module</text>
+</a>
+</g>
+<!-- pyplot_module&#45;&gt;program~ddeabm_performance_test -->
+<g id="edge12" class="edge"><title>pyplot_module&#45;&gt;program~ddeabm_performance_test</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M432.269,-24.7912C449.871,-29.8203 470.674,-35.7639 489.586,-41.1675"/>
+<polygon fill="black" stroke="black" points="488.7,-44.5543 499.277,-43.9363 490.623,-37.8236 488.7,-44.5543"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="node4" class="node"><title>iso_fortran_env</title>
+<a xlink:href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="87,-109 1,-109 1,-83 87,-83 87,-109"/>
+<text text-anchor="middle" x="44" y="-93.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+<!-- iso_fortran_env&#45;&gt;program~ddeabm_performance_test -->
+<g id="edge14" class="edge"><title>iso_fortran_env&#45;&gt;program~ddeabm_performance_test</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M87.5119,-100.014C153.474,-105.251 282.581,-112.185 391,-98"/>
+</g>
+<!-- module~kind_module -->
+<g id="node5" class="node"><title>module~kind_module</title>
+<a xlink:href="../module/kind_module.html" xlink:title="kind_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="197,-89 125,-89 125,-63 197,-63 197,-89"/>
+<text text-anchor="middle" x="161" y="-73.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">kind_module</text>
+</a>
+</g>
+<!-- iso_fortran_env&#45;&gt;module~kind_module -->
+<g id="edge8" class="edge"><title>iso_fortran_env&#45;&gt;module~kind_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M87.5665,-88.5527C96.2522,-87.068 105.409,-85.5028 114.198,-84.0004"/>
+<polygon fill="black" stroke="black" points="115.029,-87.4091 124.296,-82.2741 113.85,-80.5092 115.029,-87.4091"/>
+</g>
+<!-- module~kind_module&#45;&gt;program~ddeabm_performance_test -->
+<g id="edge16" class="edge"><title>module~kind_module&#45;&gt;program~ddeabm_performance_test</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M271,-79C324.996,-79.3987 337.459,-105.005 391,-98"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M391,-98C427.232,-93.2595 467.067,-82.498 497.145,-73.1897"/>
+<polygon fill="black" stroke="black" points="498.466,-76.4431 506.951,-70.0994 496.362,-69.7667 498.466,-76.4431"/>
+</g>
+<!-- module~kind_module&#45;&gt;module~ddeabm_module -->
+<g id="edge4" class="edge"><title>module~kind_module&#45;&gt;module~ddeabm_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M197.66,-77.3646C219.047,-78.0695 246.547,-78.8195 271,-79"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M271,-79C291.927,-79.1545 314.576,-75.9125 334.501,-71.8727"/>
+<polygon fill="black" stroke="black" points="335.297,-75.2818 344.344,-69.7694 333.834,-68.4363 335.297,-75.2818"/>
+</g>
+<!-- module~root_module -->
+<g id="node6" class="node"><title>module~root_module</title>
+<a xlink:href="../module/root_module.html" xlink:title="root_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="307,-51 235,-51 235,-25 307,-25 307,-51"/>
+<text text-anchor="middle" x="271" y="-35.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">root_module</text>
+</a>
+</g>
+<!-- module~kind_module&#45;&gt;module~root_module -->
+<g id="edge2" class="edge"><title>module~kind_module&#45;&gt;module~root_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M197.628,-63.3466C206.257,-60.3657 215.567,-57.1495 224.564,-54.0415"/>
+<polygon fill="black" stroke="black" points="225.847,-57.3012 234.156,-50.7278 223.562,-50.6849 225.847,-57.3012"/>
+</g>
+<!-- module~root_module&#45;&gt;module~ddeabm_module -->
+<g id="edge6" class="edge"><title>module~root_module&#45;&gt;module~ddeabm_module</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M307.656,-43.8039C316.069,-45.136 325.208,-46.5829 334.248,-48.0143"/>
+<polygon fill="black" stroke="black" points="333.944,-51.5097 344.369,-49.6167 335.039,-44.5958 333.944,-51.5097"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+Nodes of different colours represent the following:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
+<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
+<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Type -->
+<g id="node3" class="node"><title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
+<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- Subroutine -->
+<g id="node4" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node5" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node6" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
+<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node7" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
+<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node8" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
+<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node9" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
+<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<h5>Module Graph</h5>
+<p>Solid arrows point from a parent (sub)module to the submodule which is
+descended from it. Dashed arrows point from a module being used to the
+module using it.</p>
+<h5>Type Graph</h5>
+<p>Solid arrows point from one derived type to another which extends
+(inherits from) it. Dashed arrows point from a derived type to another
+type containing it as a components, with a label listing the name(s) of
+said component(s).</p>
+<h5>Call Graph</h5>
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    <br><br>
+    <p>Test program for <a href="../type/ddeabm_class.html">ddeabm_class</a>.
+  Generates a speed/accuracy plot.</p>
+<p>Note: requires <a href="https://github.com/jacobwilliams/pyplot-fortran">pyplot-fortran</a>.</p>
+    
+     <h3>Calls</h3>
+     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: program~~ddeabm_performance_test~~CallsGraph Pages: 1 -->
+<svg id="programddeabm_performance_testCallsGraph" width="240pt" height="34pt"
+ viewBox="0.00 0.00 240.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="program~~ddeabm_performance_test~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<title>program~~ddeabm_performance_test~~CallsGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 237,-30 237,5 -4,5"/>
+<!-- program~ddeabm_performance_test -->
+<g id="node1" class="node"><title>program~ddeabm_performance_test</title>
+<polygon fill="none" stroke="black" points="142,-26 5.68434e-14,-26 0,-1.24345e-14 142,-3.55271e-15 142,-26"/>
+<text text-anchor="middle" x="71" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_performance_test</text>
+</g>
+<!-- proc~go -->
+<g id="node2" class="node"><title>proc~go</title>
+<a xlink:href="../proc/go.html" xlink:title="go">
+<polygon fill="#d9534f" stroke="#d9534f" points="232,-26 178,-26 178,-1.24345e-14 232,-3.55271e-15 232,-26"/>
+<text text-anchor="middle" x="205" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">go</text>
+</a>
+</g>
+<!-- program~ddeabm_performance_test&#45;&gt;proc~go -->
+<g id="edge2" class="edge"><title>program~ddeabm_performance_test&#45;&gt;proc~go</title>
+<path fill="none" stroke="black" d="M142.316,-13C151.094,-13 159.774,-13 167.748,-13"/>
+<polygon fill="black" stroke="black" points="167.773,-16.5001 177.773,-13 167.773,-9.5001 167.773,-16.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+Nodes of different colours represent the following:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
+<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
+<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Type -->
+<g id="node3" class="node"><title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
+<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- Subroutine -->
+<g id="node4" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node5" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node6" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
+<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node7" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
+<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node8" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
+<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node9" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
+<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<h5>Module Graph</h5>
+<p>Solid arrows point from a parent (sub)module to the submodule which is
+descended from it. Dashed arrows point from a module being used to the
+module using it.</p>
+<h5>Type Graph</h5>
+<p>Solid arrows point from one derived type to another which extends
+(inherits from) it. Dashed arrows point from a derived type to another
+type containing it as a components, with a label listing the name(s) of
+said component(s).</p>
+<h5>Call Graph</h5>
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+     
+    <br>
+
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n%7E3"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>n</strong></td><td> =</td><td>6</td><td><p>number of state variables</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-exp_min"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>exp_min</strong></td><td> =</td><td>8</td><td><p>min exponent for tolerance</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-exp_max"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>exp_max</strong></td><td> =</td><td>13</td><td><p>max exponent for tolerance</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x0%7E3"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>x0</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tol%7E5"></span>real(kind=wp)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>tol</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err%7E3"></span>real(kind=wp)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>err</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i%7E4"></span>integer</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>i</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-j%7E5"></span>integer</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>j</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-num_func_evals"></span>integer</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>num_func_evals</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-plt"></span>type(pyplot)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>plt</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err_vec"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>err_vec</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-fevals_vec"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>fevals_vec</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-istr"></span>character(len=10)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>istr</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-kind_str"></span>character(len=:),</td>
+  
+  
+  <td>allocatable</td><td>::</td>
+  <td><strong>kind_str</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-colors"></span>character(len=1),</td>
+  
+  
+  <td>dimension(7)</td><td>::</td>
+  <td><strong>colors</strong></td><td> =</td><td>['b', 'g', 'r', 'c', 'm', 'k', 'y']</td><td><p>plot colors</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <section>
+	 <h2>Derived Types</h2>
+	 
+	   
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="type-spacecraft"></span><h3>type, extends(ddeabm_class) :: <a href='../type/spacecraft.html'>spacecraft</a>
+    
+  </h3></div>
+  <div class="panel-body">
+     
+     <h4>Components</h4>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-mu"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>mu</strong></td><td> =</td><td>0.0_wp</td><td><p>central body gravitational parameter (km3/s2)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-fevals"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>fevals</strong></td><td> =</td><td>0</td><td><p>number of function evaluations</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-first"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>first</strong></td><td> =</td><td>.true.</td><td><p>first point is being exported</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+     
+     
+          
+     
+     
+     <h4>Description</h4>
+       
+       <p>spacecraft propagation type.
+ extends the <a href="../type/ddeabm_class.html">ddeabm_class</a> to include data used in the deriv routine</p>
+     
+  </div>
+</div>
+
+    
+    </section>
+	 <br>
+    
+    
+    
+
+
+    
+    <section>
+    <h2>Subroutines</h2>
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-go"></span><h3>
+subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
+    
+    
+    
+</h3></div>
+  <div class="panel-body">
+       
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>x0</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>rtol</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>atol</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>fevals</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>err</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+        
+
+  </div>
+  </div>
+
+    
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-twobody"></span><h3>
+subroutine <a href='../proc/twobody.html'>twobody</a>(me, t, x, xdot)
+    
+    
+    
+</h3></div>
+  <div class="panel-body">
+       
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td>intent(inout)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>me</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>t</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(:)</td><td>::</td>
+  <td><strong>x</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>dimension(:)</td><td>::</td>
+  <td><strong>xdot</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+    
+    <h4>Description</h4>
+       
+       
+
+
+       
+       <p>derivative routine for two-body orbit propagation</p>
+        
+
+  </div>
+  </div>
+
+    
+    </section>    
+    
+    
+    
+    <section>
+    <h2 id="src">Source Code</h2>
+    <div class="highlight"><pre>    <span class="k">program </span><span class="n">ddeabm_performance_test</span>
+
+    <span class="k">use </span><span class="n">ddeabm_module</span>
+    <span class="k">use </span><span class="n">kind_module</span>
+    <span class="k">use </span><span class="n">pyplot_module</span>
+    <span class="k">use </span><span class="n">iso_fortran_env</span>
+
+    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c">!! number of state variables</span>
+
+    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
+        <span class="c">!! spacecraft propagation type.</span>
+        <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span>     <span class="o">=</span> <span class="mf">0.0_wp</span>  <span class="c">!! central body gravitational parameter (km3/s2)</span>
+        <span class="kt">integer</span>  <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c">!! number of function evaluations</span>
+        <span class="kt">logical</span>  <span class="kd">::</span> <span class="n">first</span>  <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>  <span class="c">!! first point is being exported</span>
+    <span class="k">end type </span><span class="n">spacecraft</span>
+
+    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_min</span> <span class="o">=</span> <span class="mi">8</span>   <span class="c">!! min exponent for tolerance</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_max</span> <span class="o">=</span> <span class="mi">13</span>  <span class="c">!! max exponent for tolerance</span>
+
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tol</span><span class="p">,</span><span class="n">err</span>
+    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">num_func_evals</span>
+    <span class="k">type</span><span class="p">(</span><span class="n">pyplot</span><span class="p">)</span> <span class="kd">::</span> <span class="n">plt</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec</span><span class="p">,</span><span class="n">fevals_vec</span>
+    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="kd">::</span> <span class="n">istr</span>
+    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">kind_str</span>
+
+    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="kd">::</span> <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c">!! plot colors</span>
+
+    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
+    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39; ddeabm_performance_test&#39;</span>
+    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
+    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">select case</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">case</span><span class="p">(</span><span class="n">real32</span><span class="p">)</span>
+        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real32)&#39;</span>
+    <span class="k">case</span><span class="p">(</span><span class="n">real64</span><span class="p">)</span>
+        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real64)&#39;</span>
+    <span class="k">case</span><span class="p">(</span><span class="n">real128</span><span class="p">)</span>
+        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real128)&#39;</span>
+    <span class="k">case </span><span class="n">default</span>
+        <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: unknown real kind&#39;</span>
+    <span class="k">end select</span>
+<span class="k">    call </span><span class="n">plt</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Number of Digits of Accuracy&#39;</span><span class="p">,&amp;</span>
+                        <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of Function Evaluations&#39;</span><span class="p">,&amp;</span>
+                        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;DDEABM Performance &#39;</span><span class="o">//</span><span class="n">kind_str</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+
+    <span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span>
+
+        <span class="k">write</span><span class="p">(</span><span class="n">istr</span><span class="p">,</span><span class="s1">&#39;(I5)&#39;</span><span class="p">)</span> <span class="n">j</span>  <span class="c">!orbit case string</span>
+
+        <span class="c">!initial state [r,v] (km,km/s)</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,&amp;</span>
+                <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
+
+        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="n">exp_min</span><span class="p">,</span><span class="n">exp_max</span>
+            <span class="n">tol</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_wp</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">call </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">num_func_evals</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
+            <span class="n">err_vec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">err</span>
+            <span class="n">fevals_vec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">num_func_evals</span>
+        <span class="k">end do</span>
+
+        <span class="c">!generate the plot:</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">)),&amp;</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+    <span class="k">end do</span>
+
+<span class="k">    call </span><span class="n">plt</span><span class="p">%</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;ddeabm_performance_test&#39;</span><span class="o">//</span><span class="n">kind_str</span><span class="o">//</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+
+    <span class="k">contains</span>
+<span class="c">!*****************************************************************************************</span>
+
+<span class="c">!***************************************************************************</span>
+    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
+
+        <span class="k">implicit none</span>
+
+<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>
+        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">err</span>
+
+        <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">num_digits</span><span class="p">,</span><span class="n">errvec</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">rerr</span><span class="p">,</span><span class="n">verr</span>
+        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
+
+        <span class="c">!constructor (main body is Earth):</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="n">rtol</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="n">atol</span><span class="p">])</span>
+        <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
+        <span class="n">t0</span>   <span class="o">=</span> <span class="mf">0.0_wp</span>            <span class="c">!initial time (sec)</span>
+        <span class="n">tf</span>   <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>         <span class="c">!final time (sec)</span>
+
+        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>    <span class="c">!forward</span>
+        <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">fevals</span> <span class="o">=</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>  <span class="c">!number of function evaluations</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">tf</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
+        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration</span>
+        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
+        <span class="n">x02</span> <span class="o">=</span> <span class="n">x</span>
+
+        <span class="c">!number of digits of accuracy</span>
+        <span class="n">errvec</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x02</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="c">!relative error</span>
+        <span class="k">where</span> <span class="p">(</span><span class="n">errvec</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span>
+            <span class="n">errvec</span> <span class="o">=</span> <span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="c">!small number</span>
+        <span class="k">end where</span>
+
+<span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">num_digits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">end subroutine </span><span class="n">go</span>
+    <span class="c">!*********************************************************</span>
+
+    <span class="c">!*********************************************************</span>
+    <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
+
+        <span class="c">!! derivative routine for two-body orbit propagation</span>
+
+        <span class="k">implicit none</span>
+
+<span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
+
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
+
+        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
+        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
+
+            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
+            <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">!acceleration due to gravity</span>
+
+            <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
+
+            <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">end select</span>
+
+<span class="k">    end subroutine </span><span class="n">twobody</span>
+    <span class="c">!*********************************************************</span>
+
+    <span class="k">end program </span><span class="n">ddeabm_performance_test</span>
+</pre></div>
+
+    </section>
+    
+    
+    </div>
+  </div>
+
+    <hr>
+    <footer>
+        <div class="row">
+        <div class="col-md-4">&copy; 2015 </div>
+	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+        </div>
+        <br>
+    </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>

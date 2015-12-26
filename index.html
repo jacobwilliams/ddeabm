@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	 
-	 <meta name="description" content="Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm">
+	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Chris MacMackin" >
     <link rel="icon" href="./favicon.png">
@@ -68,7 +68,7 @@
             <li><a href="./lists/types.html">Derived Types</a></li>
 				
 				
-            <li><a href="./program/test.html">Program</a></li>
+            <li><a href="./lists/programs.html">Programs</a></li>
 				
           </ul>
         
@@ -89,7 +89,7 @@
     
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <p>Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm</p>
+        <p>Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver</p>
         	 
 	<p> Find us on&hellip;</p>
         <p>
@@ -110,8 +110,9 @@
 		  
           <h1>ddeabm</h1>
           <h2>Brief description</h2>
-<p>This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth ODE solver. The original Fortran 77 code is public domain, and was obtained from the <a href="http://www.netlib.org/slatec/src/">SLATEC library</a>. It has been extensively refactored.</p>
-<p>This project is hosted on GitHub at: https://github.com/jacobwilliams/ddeabm</p>
+<p>This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the <a href="http://www.netlib.org/slatec/src/">SLATEC library</a>. It has been extensively refactored.</p>
+<p>DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form <code>du/dx = f(x,u)</code>.</p>
+<p>This project is hosted on <a href="https://github.com/jacobwilliams/ddeabm">GitHub</a>.</p>
 <h2>References</h2>
 <ol>
 <li>L. F. Shampine, M. K. Gordon, "Solving ordinary differential equations with ODE, STEP, and INTERP",  Report SLA-73-1060, Sandia Laboratories, 1973.</li>
@@ -165,6 +166,10 @@
                 
                   
                     <li><a href='./sourcefile/kind_module.f90.html'>kind_module.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/performance_test.f90.html'>performance_test.f90</a></li>
                   
                 
                   
@@ -256,6 +261,10 @@
                 
                   
                 
+                  
+                
+                  
+                
               </ul>
           </div>
           
@@ -270,6 +279,10 @@
                 
                   
                     <li><a href='./type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a></li>
+                  
+                
+                  
+                    <li><a href='./type/spacecraft.html'>spacecraft</a></li>
                   
                 
               </ul>
