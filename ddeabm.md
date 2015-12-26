@@ -27,6 +27,11 @@ DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1
 
 This project is hosted on [GitHub](https://github.com/jacobwilliams/ddeabm).
 
+## Keywords
+
+Adams-Bashforth-Moulton Method, DEPAC, Initial Value Problems,
+ODE, Ordinary Differential Equations, Predictor-Corrector
+
 ## References
 
 1. L. F. Shampine, M. K. Gordon, "Solving ordinary differential equations with ODE, STEP, and INTRP",  Report SLA-73-1060, Sandia Laboratories, 1973.
