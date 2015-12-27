@@ -194,193 +194,196 @@
 <a name="ln-4"></a><span class="c">!  Generates a speed/accuracy plot.</span>
 <a name="ln-5"></a><span class="c">!</span>
 <a name="ln-6"></a><span class="c">!  Note: requires [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran).</span>
-<a name="ln-7"></a>
-<a name="ln-8"></a>    <span class="k">program </span><span class="n">ddeabm_performance_test</span>
-<a name="ln-9"></a>
-<a name="ln-10"></a>    <span class="k">use </span><span class="n">ddeabm_module</span>
-<a name="ln-11"></a>    <span class="k">use </span><span class="n">kind_module</span>
-<a name="ln-12"></a>    <span class="k">use </span><span class="n">pyplot_module</span>
-<a name="ln-13"></a>    <span class="k">use </span><span class="n">iso_fortran_env</span>
-<a name="ln-14"></a>
-<a name="ln-15"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c">!! number of state variables</span>
-<a name="ln-16"></a>
-<a name="ln-17"></a>    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
-<a name="ln-18"></a>        <span class="c">!! spacecraft propagation type.</span>
-<a name="ln-19"></a>        <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
-<a name="ln-20"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span>     <span class="o">=</span> <span class="mf">0.0_wp</span>  <span class="c">!! central body gravitational parameter (km3/s2)</span>
-<a name="ln-21"></a>        <span class="kt">integer</span>  <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c">!! number of function evaluations</span>
-<a name="ln-22"></a>        <span class="kt">logical</span>  <span class="kd">::</span> <span class="n">first</span>  <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>  <span class="c">!! first point is being exported</span>
-<a name="ln-23"></a>    <span class="k">end type </span><span class="n">spacecraft</span>
-<a name="ln-24"></a>
-<a name="ln-25"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_min</span> <span class="o">=</span> <span class="mi">8</span>   <span class="c">!! min exponent for tolerance</span>
-<a name="ln-26"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_max</span> <span class="o">=</span> <span class="mi">13</span>  <span class="c">!! max exponent for tolerance</span>
+<a name="ln-7"></a><span class="c">!</span>
+<a name="ln-8"></a><span class="c">!### Results</span>
+<a name="ln-9"></a><span class="c">!  ![Plot of results](|media|/ddeabm_performance_test.png)</span>
+<a name="ln-10"></a>
+<a name="ln-11"></a>    <span class="k">program </span><span class="n">ddeabm_performance_test</span>
+<a name="ln-12"></a>
+<a name="ln-13"></a>    <span class="k">use </span><span class="n">ddeabm_module</span>
+<a name="ln-14"></a>    <span class="k">use </span><span class="n">kind_module</span>
+<a name="ln-15"></a>    <span class="k">use </span><span class="n">pyplot_module</span>
+<a name="ln-16"></a>    <span class="k">use </span><span class="n">iso_fortran_env</span>
+<a name="ln-17"></a>
+<a name="ln-18"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c">!! number of state variables</span>
+<a name="ln-19"></a>
+<a name="ln-20"></a>    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
+<a name="ln-21"></a>        <span class="c">!! spacecraft propagation type.</span>
+<a name="ln-22"></a>        <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
+<a name="ln-23"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span>     <span class="o">=</span> <span class="mf">0.0_wp</span>  <span class="c">!! central body gravitational parameter (km3/s2)</span>
+<a name="ln-24"></a>        <span class="kt">integer</span>  <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c">!! number of function evaluations</span>
+<a name="ln-25"></a>        <span class="kt">logical</span>  <span class="kd">::</span> <span class="n">first</span>  <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>  <span class="c">!! first point is being exported</span>
+<a name="ln-26"></a>    <span class="k">end type </span><span class="n">spacecraft</span>
 <a name="ln-27"></a>
-<a name="ln-28"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">,</span> <span class="n">acc</span>
-<a name="ln-29"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tol</span><span class="p">,</span><span class="n">err</span>
-<a name="ln-30"></a>    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">num_func_evals</span>
-<a name="ln-31"></a>    <span class="k">type</span><span class="p">(</span><span class="n">pyplot</span><span class="p">)</span> <span class="kd">::</span> <span class="n">plt</span>
-<a name="ln-32"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec_x</span><span class="p">,</span><span class="n">err_vec_y</span><span class="p">,</span><span class="n">err_vec_z</span>
-<a name="ln-33"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec_vx</span><span class="p">,</span><span class="n">err_vec_vy</span><span class="p">,</span><span class="n">err_vec_vz</span>
-<a name="ln-34"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">fevals_vec</span>
-<a name="ln-35"></a>    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="kd">::</span> <span class="n">istr</span>
-<a name="ln-36"></a>    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">kind_str</span>
-<a name="ln-37"></a>
-<a name="ln-38"></a>    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="kd">::</span> <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c">!! plot colors</span>
-<a name="ln-39"></a>
-<a name="ln-40"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-41"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
-<a name="ln-42"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39; ddeabm_performance_test&#39;</span>
-<a name="ln-43"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
-<a name="ln-44"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-45"></a>
-<a name="ln-46"></a>    <span class="k">select case</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
-<a name="ln-47"></a>    <span class="k">case</span><span class="p">(</span><span class="n">real32</span><span class="p">)</span>
-<a name="ln-48"></a>        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real32)&#39;</span>
-<a name="ln-49"></a>    <span class="k">case</span><span class="p">(</span><span class="n">real64</span><span class="p">)</span>
-<a name="ln-50"></a>        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real64)&#39;</span>
-<a name="ln-51"></a>    <span class="k">case</span><span class="p">(</span><span class="n">real128</span><span class="p">)</span>
-<a name="ln-52"></a>        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real128)&#39;</span>
-<a name="ln-53"></a>    <span class="k">case </span><span class="n">default</span>
-<a name="ln-54"></a>        <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: unknown real kind&#39;</span>
-<a name="ln-55"></a>    <span class="k">end select</span>
-<a name="ln-56"></a><span class="k">    call </span><span class="n">plt</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Number of Digits of Accuracy&#39;</span><span class="p">,&amp;</span>
-<a name="ln-57"></a>                        <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of Function Evaluations&#39;</span><span class="p">,&amp;</span>
-<a name="ln-58"></a>                        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;DDEABM Performance &#39;</span><span class="o">//</span><span class="n">kind_str</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<a name="ln-59"></a>
-<a name="ln-60"></a>    <span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span>
-<a name="ln-61"></a>
-<a name="ln-62"></a>        <span class="k">write</span><span class="p">(</span><span class="n">istr</span><span class="p">,</span><span class="s1">&#39;(I5)&#39;</span><span class="p">)</span> <span class="n">j</span>  <span class="c">!orbit case string</span>
-<a name="ln-63"></a>
-<a name="ln-64"></a>        <span class="c">!initial state [r,v] (km,km/s)</span>
-<a name="ln-65"></a>        <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,&amp;</span>
-<a name="ln-66"></a>                <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
-<a name="ln-67"></a>
-<a name="ln-68"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="n">exp_min</span><span class="p">,</span><span class="n">exp_max</span>
-<a name="ln-69"></a>            <span class="n">tol</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_wp</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
-<a name="ln-70"></a>            <span class="k">call </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">num_func_evals</span><span class="p">,</span><span class="n">acc</span><span class="p">)</span>
-<a name="ln-71"></a>            <span class="n">err_vec_x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-72"></a>            <span class="n">err_vec_y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-73"></a>            <span class="n">err_vec_z</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-74"></a>            <span class="n">err_vec_vx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<a name="ln-75"></a>            <span class="n">err_vec_vy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<a name="ln-76"></a>            <span class="n">err_vec_vz</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<a name="ln-77"></a>            <span class="n">fevals_vec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">num_func_evals</span>
-<a name="ln-78"></a>        <span class="k">end do</span>
-<a name="ln-79"></a>
-<a name="ln-80"></a>        <span class="c">!generate the plot:</span>
-<a name="ln-81"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_x</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; r&#39;</span><span class="p">,&amp;</span>
-<a name="ln-82"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
-<a name="ln-83"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-84"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_y</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+<a name="ln-28"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_min</span> <span class="o">=</span> <span class="mi">8</span>   <span class="c">!! min exponent for tolerance</span>
+<a name="ln-29"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_max</span> <span class="o">=</span> <span class="mi">13</span>  <span class="c">!! max exponent for tolerance</span>
+<a name="ln-30"></a>
+<a name="ln-31"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">,</span> <span class="n">acc</span>
+<a name="ln-32"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tol</span><span class="p">,</span><span class="n">err</span>
+<a name="ln-33"></a>    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">num_func_evals</span>
+<a name="ln-34"></a>    <span class="k">type</span><span class="p">(</span><span class="n">pyplot</span><span class="p">)</span> <span class="kd">::</span> <span class="n">plt</span>
+<a name="ln-35"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec_x</span><span class="p">,</span><span class="n">err_vec_y</span><span class="p">,</span><span class="n">err_vec_z</span>
+<a name="ln-36"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec_vx</span><span class="p">,</span><span class="n">err_vec_vy</span><span class="p">,</span><span class="n">err_vec_vz</span>
+<a name="ln-37"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">fevals_vec</span>
+<a name="ln-38"></a>    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="kd">::</span> <span class="n">istr</span>
+<a name="ln-39"></a>    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">kind_str</span>
+<a name="ln-40"></a>
+<a name="ln-41"></a>    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="kd">::</span> <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c">!! plot colors</span>
+<a name="ln-42"></a>
+<a name="ln-43"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-44"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
+<a name="ln-45"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39; ddeabm_performance_test&#39;</span>
+<a name="ln-46"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
+<a name="ln-47"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-48"></a>
+<a name="ln-49"></a>    <span class="k">select case</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
+<a name="ln-50"></a>    <span class="k">case</span><span class="p">(</span><span class="n">real32</span><span class="p">)</span>
+<a name="ln-51"></a>        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real32)&#39;</span>
+<a name="ln-52"></a>    <span class="k">case</span><span class="p">(</span><span class="n">real64</span><span class="p">)</span>
+<a name="ln-53"></a>        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real64)&#39;</span>
+<a name="ln-54"></a>    <span class="k">case</span><span class="p">(</span><span class="n">real128</span><span class="p">)</span>
+<a name="ln-55"></a>        <span class="n">kind_str</span> <span class="o">=</span> <span class="s1">&#39;(real128)&#39;</span>
+<a name="ln-56"></a>    <span class="k">case </span><span class="n">default</span>
+<a name="ln-57"></a>        <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;error: unknown real kind&#39;</span>
+<a name="ln-58"></a>    <span class="k">end select</span>
+<a name="ln-59"></a><span class="k">    call </span><span class="n">plt</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Number of Digits of Accuracy&#39;</span><span class="p">,&amp;</span>
+<a name="ln-60"></a>                        <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Number of Function Evaluations&#39;</span><span class="p">,&amp;</span>
+<a name="ln-61"></a>                        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;DDEABM Performance &#39;</span><span class="o">//</span><span class="n">kind_str</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+<a name="ln-62"></a>
+<a name="ln-63"></a>    <span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span>
+<a name="ln-64"></a>
+<a name="ln-65"></a>        <span class="k">write</span><span class="p">(</span><span class="n">istr</span><span class="p">,</span><span class="s1">&#39;(I5)&#39;</span><span class="p">)</span> <span class="n">j</span>  <span class="c">!orbit case string</span>
+<a name="ln-66"></a>
+<a name="ln-67"></a>        <span class="c">!initial state [r,v] (km,km/s)</span>
+<a name="ln-68"></a>        <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">j</span><span class="p">,&amp;</span>
+<a name="ln-69"></a>                <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
+<a name="ln-70"></a>
+<a name="ln-71"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="n">exp_min</span><span class="p">,</span><span class="n">exp_max</span>
+<a name="ln-72"></a>            <span class="n">tol</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_wp</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+<a name="ln-73"></a>            <span class="k">call </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">num_func_evals</span><span class="p">,</span><span class="n">acc</span><span class="p">)</span>
+<a name="ln-74"></a>            <span class="n">err_vec_x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-75"></a>            <span class="n">err_vec_y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a name="ln-76"></a>            <span class="n">err_vec_z</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-77"></a>            <span class="n">err_vec_vx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<a name="ln-78"></a>            <span class="n">err_vec_vy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a name="ln-79"></a>            <span class="n">err_vec_vz</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<a name="ln-80"></a>            <span class="n">fevals_vec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">num_func_evals</span>
+<a name="ln-81"></a>        <span class="k">end do</span>
+<a name="ln-82"></a>
+<a name="ln-83"></a>        <span class="c">!generate the plot:</span>
+<a name="ln-84"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_x</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; r&#39;</span><span class="p">,&amp;</span>
 <a name="ln-85"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
 <a name="ln-86"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-87"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_z</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+<a name="ln-87"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_y</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
 <a name="ln-88"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
 <a name="ln-89"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-90"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vx</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; v&#39;</span><span class="p">,&amp;</span>
-<a name="ln-91"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
+<a name="ln-90"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_z</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+<a name="ln-91"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
 <a name="ln-92"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-93"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vy</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+<a name="ln-93"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vx</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; v&#39;</span><span class="p">,&amp;</span>
 <a name="ln-94"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
 <a name="ln-95"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-96"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vz</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+<a name="ln-96"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vy</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
 <a name="ln-97"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
 <a name="ln-98"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-99"></a>
-<a name="ln-100"></a>    <span class="k">end do</span>
-<a name="ln-101"></a>
-<a name="ln-102"></a><span class="k">    call </span><span class="n">plt</span><span class="p">%</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;ddeabm_performance_test&#39;</span><span class="o">//</span><span class="n">kind_str</span><span class="o">//</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
-<a name="ln-103"></a>
-<a name="ln-104"></a>    <span class="k">contains</span>
-<a name="ln-105"></a><span class="c">!*****************************************************************************************</span>
+<a name="ln-99"></a>        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vz</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+<a name="ln-100"></a>                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
+<a name="ln-101"></a>                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a name="ln-102"></a>
+<a name="ln-103"></a>    <span class="k">end do</span>
+<a name="ln-104"></a>
+<a name="ln-105"></a><span class="k">    call </span><span class="n">plt</span><span class="p">%</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;ddeabm_performance_test.png&#39;</span><span class="p">)</span>
 <a name="ln-106"></a>
-<a name="ln-107"></a><span class="c">!***************************************************************************</span>
-<a name="ln-108"></a>    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">num_digits</span><span class="p">)</span>
+<a name="ln-107"></a>    <span class="k">contains</span>
+<a name="ln-108"></a><span class="c">!*****************************************************************************************</span>
 <a name="ln-109"></a>
-<a name="ln-110"></a>        <span class="k">implicit none</span>
-<a name="ln-111"></a>
-<a name="ln-112"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>          <span class="c">!! initial state [r,v]</span>
-<a name="ln-113"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>        <span class="c">!! absolute tolerance</span>
-<a name="ln-114"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>        <span class="c">!! relative tolerance</span>
-<a name="ln-115"></a>        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>      <span class="c">!! number of function evaluations for forward propagation</span>
-<a name="ln-116"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">num_digits</span>  <span class="c">!! number of digits of accuracy (r,v)</span>
-<a name="ln-117"></a>
-<a name="ln-118"></a>        <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
-<a name="ln-119"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">errvec</span>
-<a name="ln-120"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">rerr</span><span class="p">,</span><span class="n">verr</span>
-<a name="ln-121"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
-<a name="ln-122"></a>
-<a name="ln-123"></a>        <span class="c">!constructor (main body is Earth):</span>
-<a name="ln-124"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="n">rtol</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="n">atol</span><span class="p">])</span>
-<a name="ln-125"></a>        <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
-<a name="ln-126"></a>        <span class="n">t0</span>   <span class="o">=</span> <span class="mf">0.0_wp</span>            <span class="c">!initial time (sec)</span>
-<a name="ln-127"></a>        <span class="n">tf</span>   <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>         <span class="c">!final time (sec)</span>
-<a name="ln-128"></a>
-<a name="ln-129"></a>        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-130"></a>        <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-<a name="ln-131"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
-<a name="ln-132"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
-<a name="ln-133"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
-<a name="ln-134"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>    <span class="c">!forward</span>
-<a name="ln-135"></a>        <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-136"></a>        <span class="n">fevals</span> <span class="o">=</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>  <span class="c">!number of function evaluations</span>
-<a name="ln-137"></a>
-<a name="ln-138"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">tf</span>
-<a name="ln-139"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
-<a name="ln-140"></a>        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-141"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration</span>
-<a name="ln-142"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
-<a name="ln-143"></a>        <span class="n">x02</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-144"></a>
-<a name="ln-145"></a>        <span class="c">!number of digits of accuracy</span>
-<a name="ln-146"></a>        <span class="n">errvec</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x02</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="c">!relative error</span>
-<a name="ln-147"></a>        <span class="k">where</span> <span class="p">(</span><span class="n">errvec</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span>
-<a name="ln-148"></a>            <span class="n">errvec</span> <span class="o">=</span> <span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="c">!small number</span>
-<a name="ln-149"></a>        <span class="k">end where</span>
-<a name="ln-150"></a>
-<a name="ln-151"></a><span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
-<a name="ln-152"></a>        <span class="c">!err = num_digits(1)</span>
+<a name="ln-110"></a><span class="c">!***************************************************************************</span>
+<a name="ln-111"></a>    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">num_digits</span><span class="p">)</span>
+<a name="ln-112"></a>
+<a name="ln-113"></a>        <span class="k">implicit none</span>
+<a name="ln-114"></a>
+<a name="ln-115"></a><span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>          <span class="c">!! initial state [r,v]</span>
+<a name="ln-116"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>        <span class="c">!! absolute tolerance</span>
+<a name="ln-117"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>        <span class="c">!! relative tolerance</span>
+<a name="ln-118"></a>        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>      <span class="c">!! number of function evaluations for forward propagation</span>
+<a name="ln-119"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">num_digits</span>  <span class="c">!! number of digits of accuracy (r,v)</span>
+<a name="ln-120"></a>
+<a name="ln-121"></a>        <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
+<a name="ln-122"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">errvec</span>
+<a name="ln-123"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">rerr</span><span class="p">,</span><span class="n">verr</span>
+<a name="ln-124"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
+<a name="ln-125"></a>
+<a name="ln-126"></a>        <span class="c">!constructor (main body is Earth):</span>
+<a name="ln-127"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="n">rtol</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="n">atol</span><span class="p">])</span>
+<a name="ln-128"></a>        <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
+<a name="ln-129"></a>        <span class="n">t0</span>   <span class="o">=</span> <span class="mf">0.0_wp</span>            <span class="c">!initial time (sec)</span>
+<a name="ln-130"></a>        <span class="n">tf</span>   <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>         <span class="c">!final time (sec)</span>
+<a name="ln-131"></a>
+<a name="ln-132"></a>        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-133"></a>        <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<a name="ln-134"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+<a name="ln-135"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+<a name="ln-136"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
+<a name="ln-137"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>    <span class="c">!forward</span>
+<a name="ln-138"></a>        <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-139"></a>        <span class="n">fevals</span> <span class="o">=</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>  <span class="c">!number of function evaluations</span>
+<a name="ln-140"></a>
+<a name="ln-141"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">tf</span>
+<a name="ln-142"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
+<a name="ln-143"></a>        <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-144"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration</span>
+<a name="ln-145"></a>        <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
+<a name="ln-146"></a>        <span class="n">x02</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-147"></a>
+<a name="ln-148"></a>        <span class="c">!number of digits of accuracy</span>
+<a name="ln-149"></a>        <span class="n">errvec</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x02</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="c">!relative error</span>
+<a name="ln-150"></a>        <span class="k">where</span> <span class="p">(</span><span class="n">errvec</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span>
+<a name="ln-151"></a>            <span class="n">errvec</span> <span class="o">=</span> <span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="c">!small number</span>
+<a name="ln-152"></a>        <span class="k">end where</span>
 <a name="ln-153"></a>
-<a name="ln-154"></a>        <span class="c">!write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)</span>
-<a name="ln-155"></a>
-<a name="ln-156"></a>    <span class="k">end subroutine </span><span class="n">go</span>
-<a name="ln-157"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-154"></a><span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
+<a name="ln-155"></a>        <span class="c">!err = num_digits(1)</span>
+<a name="ln-156"></a>
+<a name="ln-157"></a>        <span class="c">!write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)</span>
 <a name="ln-158"></a>
-<a name="ln-159"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-160"></a>    <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
+<a name="ln-159"></a>    <span class="k">end subroutine </span><span class="n">go</span>
+<a name="ln-160"></a>    <span class="c">!*********************************************************</span>
 <a name="ln-161"></a>
-<a name="ln-162"></a>        <span class="c">!! derivative routine for two-body orbit propagation</span>
-<a name="ln-163"></a>
-<a name="ln-164"></a>        <span class="k">implicit none</span>
-<a name="ln-165"></a>
-<a name="ln-166"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-<a name="ln-167"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
-<a name="ln-168"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
-<a name="ln-169"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
-<a name="ln-170"></a>
-<a name="ln-171"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
-<a name="ln-172"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
+<a name="ln-162"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-163"></a>    <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
+<a name="ln-164"></a>
+<a name="ln-165"></a>        <span class="c">!! derivative routine for two-body orbit propagation</span>
+<a name="ln-166"></a>
+<a name="ln-167"></a>        <span class="k">implicit none</span>
+<a name="ln-168"></a>
+<a name="ln-169"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+<a name="ln-170"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
+<a name="ln-171"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
+<a name="ln-172"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
 <a name="ln-173"></a>
-<a name="ln-174"></a>        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
-<a name="ln-175"></a>        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
+<a name="ln-174"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
+<a name="ln-175"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
 <a name="ln-176"></a>
-<a name="ln-177"></a>            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-178"></a>            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
-<a name="ln-179"></a>            <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<a name="ln-180"></a>            <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">!acceleration due to gravity</span>
-<a name="ln-181"></a>
-<a name="ln-182"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
-<a name="ln-183"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
+<a name="ln-177"></a>        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
+<a name="ln-178"></a>        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
+<a name="ln-179"></a>
+<a name="ln-180"></a>            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-181"></a>            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
+<a name="ln-182"></a>            <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<a name="ln-183"></a>            <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">!acceleration due to gravity</span>
 <a name="ln-184"></a>
-<a name="ln-185"></a>            <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-186"></a>
-<a name="ln-187"></a>        <span class="k">end select</span>
-<a name="ln-188"></a>
-<a name="ln-189"></a><span class="k">    end subroutine </span><span class="n">twobody</span>
-<a name="ln-190"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-185"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+<a name="ln-186"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
+<a name="ln-187"></a>
+<a name="ln-188"></a>            <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-189"></a>
+<a name="ln-190"></a>        <span class="k">end select</span>
 <a name="ln-191"></a>
-<a name="ln-192"></a>    <span class="k">end program </span><span class="n">ddeabm_performance_test</span>
-<a name="ln-193"></a><span class="c">!*****************************************************************************************</span>
+<a name="ln-192"></a><span class="k">    end subroutine </span><span class="n">twobody</span>
+<a name="ln-193"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-194"></a>
+<a name="ln-195"></a>    <span class="k">end program </span><span class="n">ddeabm_performance_test</span>
+<a name="ln-196"></a><span class="c">!*****************************************************************************************</span>
 </pre></div>
 
     </section>
