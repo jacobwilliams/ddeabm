@@ -341,7 +341,7 @@ implementation in a submodule of an interface in a parent module.</p>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>mu</strong></td><td> =</td><td>0.0_wp</td><td><p>central body gravitational parameter (km3/s2)</p></td>
+  <td><strong>mu</strong></td><td> =</td><td>0.0_wp</td><td><p>central body gravitational parameter ( \( km^3/s^2 \) )</p></td>
   
 </tr>
 
@@ -392,7 +392,7 @@ implementation in a submodule of an interface in a parent module.</p>
     <div class="highlight"><pre>    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
         <span class="c">!! spacecraft propagation type.</span>
         <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span>     <span class="o">=</span> <span class="mf">0.0_wp</span>  <span class="c">!! central body gravitational parameter (km3/s2)</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span>     <span class="o">=</span> <span class="mf">0.0_wp</span>  <span class="c">!! central body gravitational parameter ( \( km^3/s^2 \) )</span>
         <span class="kt">integer</span>  <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c">!! number of function evaluations</span>
         <span class="kt">logical</span>  <span class="kd">::</span> <span class="n">first</span>  <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>  <span class="c">!! first point is being exported</span>
     <span class="k">end type </span><span class="n">spacecraft</span>

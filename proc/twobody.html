@@ -271,7 +271,7 @@ subroutine twobody(me, t, x, xdot)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>t</strong></td><td></td>
+  <td><strong>t</strong></td><td><p>time [\(s\)]</p></td>
   
 </tr>
 
@@ -286,7 +286,7 @@ subroutine twobody(me, t, x, xdot)
   <td></td>
   
   <td>dimension(:)</td><td>::</td>
-  <td><strong>x</strong></td><td></td>
+  <td><strong>x</strong></td><td><p>state vector [\(km\), \(km/s\)]</p></td>
   
 </tr>
 
@@ -301,7 +301,7 @@ subroutine twobody(me, t, x, xdot)
   <td></td>
   
   <td>dimension(:)</td><td>::</td>
-  <td><strong>xdot</strong></td><td></td>
+  <td><strong>xdot</strong></td><td><p>state vector derivative [\(km/s\), \(km/s^2\)]</p></td>
   
 </tr>
 
@@ -312,7 +312,7 @@ subroutine twobody(me, t, x, xdot)
     
     
     <h3>Description</h3>
-    <p>derivative routine for two-body orbit propagation</p>
+    <p>derivative routine for two-body orbit propagation.</p>
     
     
      
@@ -411,14 +411,14 @@ subroutine twobody(me, t, x, xdot)
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
 
-        <span class="c">!! derivative routine for two-body orbit propagation</span>
+        <span class="c">!! derivative routine for two-body orbit propagation.</span>
 
         <span class="k">implicit none</span>
 
 <span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>    <span class="c">!! time [\(s\)]</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>    <span class="c">!! state vector [\(km\), \(km/s\)]</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span> <span class="c">!! state vector derivative [\(km/s\), \(km/s^2\)]</span>
 
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>

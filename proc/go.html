@@ -336,7 +336,7 @@ subroutine go(x0, rtol, atol, fevals, num_digits)
   <td></td>
   
   <td>dimension(n)</td><td>::</td>
-  <td><strong>num_digits</strong></td><td><p>number of digits of accuracy (r,v)</p></td>
+  <td><strong>num_digits</strong></td><td><p>number of digits of accuracy [r,v]</p></td>
   
 </tr>
 
@@ -345,6 +345,9 @@ subroutine go(x0, rtol, atol, fevals, num_digits)
 
     
     
+    
+    <h3>Description</h3>
+    <p>run the test.</p>
     
     
      
@@ -707,13 +710,15 @@ implementation in a submodule of an interface in a parent module.</p>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">num_digits</span><span class="p">)</span>
 
+        <span class="c">!! run the test.</span>
+
         <span class="k">implicit none</span>
 
-<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>          <span class="c">!! initial state [r,v]</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>        <span class="c">!! absolute tolerance</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>        <span class="c">!! relative tolerance</span>
-        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>      <span class="c">!! number of function evaluations for forward propagation</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">num_digits</span>  <span class="c">!! number of digits of accuracy (r,v)</span>
+<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x0</span>          <span class="c">!! initial state [r,v]</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">rtol</span>        <span class="c">!! absolute tolerance</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">atol</span>        <span class="c">!! relative tolerance</span>
+        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">fevals</span>      <span class="c">!! number of function evaluations for forward propagation</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">num_digits</span>  <span class="c">!! number of digits of accuracy [r,v]</span>
 
         <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">errvec</span>
@@ -747,9 +752,7 @@ implementation in a submodule of an interface in a parent module.</p>
         <span class="k">where</span> <span class="p">(</span><span class="n">errvec</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span>
             <span class="n">errvec</span> <span class="o">=</span> <span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="c">!small number</span>
         <span class="k">end where</span>
-
 <span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
-        <span class="c">!err = num_digits(1)</span>
 
         <span class="c">!write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)</span>
 

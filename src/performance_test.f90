@@ -20,7 +20,7 @@
     type,extends(ddeabm_class) :: spacecraft
         !! spacecraft propagation type.
         !! extends the [[ddeabm_class]] to include data used in the deriv routine
-        real(wp) :: mu     = 0.0_wp  !! central body gravitational parameter (km3/s2)
+        real(wp) :: mu     = 0.0_wp  !! central body gravitational parameter ( \( km^3/s^2 \) )
         integer  :: fevals = 0       !! number of function evaluations
         logical  :: first  = .true.  !! first point is being exported
     end type spacecraft
@@ -29,7 +29,7 @@
     integer,parameter :: exp_max = 13  !! max exponent for tolerance
 
     real(wp),dimension(n) :: x0, acc
-    real(wp) :: tol,err
+    real(wp) :: tol
     integer :: i,j,num_func_evals
     type(pyplot) :: plt
     real(wp),dimension(exp_min:exp_max) :: err_vec_x,err_vec_y,err_vec_z
@@ -56,10 +56,13 @@
     case default
         error stop 'error: unknown real kind'
     end select
+
+    !initialize the plot:
     call plt%initialize(grid=.true.,xlabel='Number of Digits of Accuracy',&
                         ylabel='Number of Function Evaluations',&
                         title='DDEABM Performance '//kind_str,legend=.true.)
 
+    !5 cases with different initial states
     do j=1,5
 
         write(istr,'(I5)') j  !orbit case string
@@ -110,13 +113,15 @@
 !***************************************************************************
     subroutine go(x0,rtol,atol,fevals,num_digits)
 
+        !! run the test.
+
         implicit none
 
-        real(wp),dimension(n),intent(in) :: x0          !! initial state [r,v]
-        real(wp),intent(in)              :: rtol        !! absolute tolerance
-        real(wp),intent(in)              :: atol        !! relative tolerance
-        integer,intent(out)              :: fevals      !! number of function evaluations for forward propagation
-        real(wp),dimension(n),intent(out) :: num_digits  !! number of digits of accuracy (r,v)
+        real(wp),dimension(n),intent(in)  :: x0          !! initial state [r,v]
+        real(wp),intent(in)               :: rtol        !! absolute tolerance
+        real(wp),intent(in)               :: atol        !! relative tolerance
+        integer,intent(out)               :: fevals      !! number of function evaluations for forward propagation
+        real(wp),dimension(n),intent(out) :: num_digits  !! number of digits of accuracy [r,v]
 
         type(spacecraft) :: s
         real(wp),dimension(n) :: xf,x02,x,errvec
@@ -150,9 +155,7 @@
         where (errvec==0.0_wp)
             errvec = epsilon(1.0_wp) !small number
         end where
-
         num_digits = abs(log10(errvec))
-        !err = num_digits(1)
 
         !write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)
 
@@ -162,14 +165,14 @@
     !*********************************************************
     subroutine twobody(me,t,x,xdot)
 
-        !! derivative routine for two-body orbit propagation
+        !! derivative routine for two-body orbit propagation.
 
         implicit none
 
         class(ddeabm_class),intent(inout) :: me
-        real(wp),intent(in)               :: t
-        real(wp),dimension(:),intent(in)  :: x
-        real(wp),dimension(:),intent(out) :: xdot
+        real(wp),intent(in)               :: t    !! time [\(s\)]
+        real(wp),dimension(:),intent(in)  :: x    !! state vector [\(km\), \(km/s\)]
+        real(wp),dimension(:),intent(out) :: xdot !! state vector derivative [\(km/s\), \(km/s^2\)]
 
         real(wp),dimension(3) :: r,v,a_grav
         real(wp) :: rmag

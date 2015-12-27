@@ -111,7 +111,7 @@
           <h1>ddeabm</h1>
           <h2>Brief description</h2>
 <p>This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the <a href="http://www.netlib.org/slatec/src/">SLATEC library</a>. It has been extensively refactored.</p>
-<p>DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form <code>du/dx = f(x,u)</code>.</p>
+<p>DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form <code>dx/dt = f(t,x)</code>. Also included is an event-location capability, where the equations can be integrated until a specified function <code>g(t,x) = 0</code>.</p>
 <p>This project is hosted on <a href="https://github.com/jacobwilliams/ddeabm">GitHub</a>.</p>
 <h2>Keywords</h2>
 <p>Adams-Bashforth-Moulton Method, DEPAC, Initial Value Problems,
