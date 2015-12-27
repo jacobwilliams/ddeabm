@@ -2479,7 +2479,7 @@
       if (k > 1) go to 445
       if (erkp1 >= 0.5_wp*erk) go to 460
       go to 450
-      
+
  445  if (erkm1 <= min(erk,erkp1)) go to 455
       if (erkp1 >= erk  .or.  k == 12) go to 460
 
@@ -2548,6 +2548,7 @@
 !
 !  Unit test for [[ddeabm_class]].
 !  Integrate a two-body orbit around the Earth.
+!  Also tests integration to an event.
 
     subroutine ddeabm_test()
 

@@ -105,7 +105,8 @@ All Procedures &ndash; ddeabm
 			   <tr><td><a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Call this to indicate that a new problem is being solved (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_test.html'>ddeabm_test</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Unit test for <a href="../type/ddeabm_class.html">ddeabm_class</a>.
-  Integrate a two-body orbit around the Earth.</p></td></tr>
+  Integrate a two-body orbit around the Earth.
+  Also tests integration to an event.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Initialize <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> class,
   and set the variables that cannot be changed during a problem.</p></td></tr>
@@ -161,157 +162,157 @@ All Procedures &ndash; ddeabm
 <g id="call~~graph~~CallGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 558)">
 <title>call~~graph~~CallGraph</title>
 <polygon fill="white" stroke="white" points="-4,5 -4,-558 451,-558 451,5 -4,5"/>
-<!-- proc~ddeabm_with_event_wrapper -->
-<g id="node1" class="node"><title>proc~ddeabm_with_event_wrapper</title>
-<a xlink:href="../proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_wrapper">
-<polygon fill="#d9534f" stroke="#d9534f" points="342,-158 188,-158 188,-132 342,-132 342,-158"/>
-<text text-anchor="middle" x="265" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper</text>
-</a>
-</g>
-<!-- proc~zeroin -->
-<g id="node5" class="node"><title>proc~zeroin</title>
-<a xlink:href="../proc/zeroin.html" xlink:title="zeroin">
-<polygon fill="#d9534f" stroke="#d9534f" points="439,-202 385,-202 385,-176 439,-176 439,-202"/>
-<text text-anchor="middle" x="412" y="-186.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
-</a>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
-<g id="edge4" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="black" d="M311.476,-158.066C321.554,-160.959 332.146,-164.044 342,-167 352.726,-170.217 364.34,-173.819 374.967,-177.162"/>
-<polygon fill="black" stroke="black" points="374.202,-180.591 384.792,-180.267 376.311,-173.916 374.202,-180.591"/>
-</g>
-<!-- proc~xermsg -->
-<g id="node10" class="node"><title>proc~xermsg</title>
-<a xlink:href="../proc/xermsg.html" xlink:title="xermsg">
-<polygon fill="#d9534f" stroke="#d9534f" points="439,-70 385,-70 385,-44 439,-44 439,-70"/>
-<text text-anchor="middle" x="412" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">xermsg</text>
-</a>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~xermsg -->
-<g id="edge2" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~xermsg</title>
-<path fill="none" stroke="black" d="M322.598,-131.866C329.338,-129.37 335.958,-126.437 342,-123 362.58,-111.294 381.831,-92.3165 394.915,-77.7087"/>
-<polygon fill="black" stroke="black" points="397.597,-79.9589 401.519,-70.1168 392.315,-75.3649 397.597,-79.9589"/>
-</g>
-<!-- none~zeroin_func -->
-<g id="node23" class="node"><title>none~zeroin_func</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="446,-158 378,-158 378,-132 446,-132 446,-158"/>
-<text text-anchor="middle" x="412" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin_func</text>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;none~zeroin_func -->
-<g id="edge6" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;none~zeroin_func</title>
-<path fill="none" stroke="black" d="M342.374,-145C351.031,-145 359.616,-145 367.647,-145"/>
-<polygon fill="black" stroke="black" points="367.845,-148.5 377.845,-145 367.845,-141.5 367.845,-148.5"/>
-</g>
 <!-- proc~ddes -->
-<g id="node2" class="node"><title>proc~ddes</title>
+<g id="node1" class="node"><title>proc~ddes</title>
 <a xlink:href="../proc/ddes.html" xlink:title="ddes">
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 238,-26 238,-1.24345e-14 292,-3.55271e-15 292,-26"/>
-<text text-anchor="middle" x="265" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-202 238,-202 238,-176 292,-176 292,-202"/>
+<text text-anchor="middle" x="265" y="-186.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
 </a>
 </g>
 <!-- proc~dintp -->
-<g id="node8" class="node"><title>proc~dintp</title>
+<g id="node7" class="node"><title>proc~dintp</title>
 <a xlink:href="../proc/dintp.html" xlink:title="dintp">
-<polygon fill="#d9534f" stroke="#d9534f" points="439,-26 385,-26 385,-1.24345e-14 439,-3.55271e-15 439,-26"/>
-<text text-anchor="middle" x="412" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dintp</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="439,-202 385,-202 385,-176 439,-176 439,-202"/>
+<text text-anchor="middle" x="412" y="-186.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dintp</text>
 </a>
 </g>
 <!-- proc~ddes&#45;&gt;proc~dintp -->
-<g id="edge10" class="edge"><title>proc~ddes&#45;&gt;proc~dintp</title>
-<path fill="none" stroke="black" d="M292.305,-13C315.511,-13 349.049,-13 374.724,-13"/>
-<polygon fill="black" stroke="black" points="374.841,-16.5001 384.841,-13 374.841,-9.5001 374.841,-16.5001"/>
+<g id="edge2" class="edge"><title>proc~ddes&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="black" d="M292.305,-189C315.511,-189 349.049,-189 374.724,-189"/>
+<polygon fill="black" stroke="black" points="374.841,-192.5 384.841,-189 374.841,-185.5 374.841,-192.5"/>
+</g>
+<!-- proc~xermsg -->
+<g id="node8" class="node"><title>proc~xermsg</title>
+<a xlink:href="../proc/xermsg.html" xlink:title="xermsg">
+<polygon fill="#d9534f" stroke="#d9534f" points="439,-158 385,-158 385,-132 439,-132 439,-158"/>
+<text text-anchor="middle" x="412" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">xermsg</text>
+</a>
 </g>
 <!-- proc~ddes&#45;&gt;proc~xermsg -->
-<g id="edge8" class="edge"><title>proc~ddes&#45;&gt;proc~xermsg</title>
-<path fill="none" stroke="black" d="M292.133,-20.565C306.905,-24.7307 325.487,-30.0471 342,-35 352.726,-38.2172 364.34,-41.8191 374.967,-45.162"/>
-<polygon fill="black" stroke="black" points="374.202,-48.5909 384.792,-48.2667 376.311,-41.9162 374.202,-48.5909"/>
+<g id="edge4" class="edge"><title>proc~ddes&#45;&gt;proc~xermsg</title>
+<path fill="none" stroke="black" d="M292.133,-181.435C306.905,-177.269 325.487,-171.953 342,-167 352.726,-163.783 364.34,-160.181 374.967,-156.838"/>
+<polygon fill="black" stroke="black" points="376.311,-160.084 384.792,-153.733 374.202,-153.409 376.311,-160.084"/>
 </g>
-<!-- proc~ddeabm -->
-<g id="node3" class="node"><title>proc~ddeabm</title>
-<a xlink:href="../proc/ddeabm.html" xlink:title="ddeabm">
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-70 238,-70 238,-44 292,-44 292,-70"/>
-<text text-anchor="middle" x="265" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm</text>
+<!-- proc~zeroin_test -->
+<g id="node2" class="node"><title>proc~zeroin_test</title>
+<a xlink:href="../proc/zeroin_test.html" xlink:title="zeroin_test">
+<polygon fill="#d9534f" stroke="#d9534f" points="297,-26 233,-26 233,-1.24345e-14 297,-3.55271e-15 297,-26"/>
+<text text-anchor="middle" x="265" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin_test</text>
 </a>
 </g>
-<!-- proc~ddeabm&#45;&gt;proc~xermsg -->
-<g id="edge12" class="edge"><title>proc~ddeabm&#45;&gt;proc~xermsg</title>
-<path fill="none" stroke="black" d="M292.305,-57C315.511,-57 349.049,-57 374.724,-57"/>
-<polygon fill="black" stroke="black" points="374.841,-60.5001 384.841,-57 374.841,-53.5001 374.841,-60.5001"/>
-</g>
-<!-- proc~dsteps -->
-<g id="node4" class="node"><title>proc~dsteps</title>
-<a xlink:href="../proc/dsteps.html" xlink:title="dsteps">
-<polygon fill="#d9534f" stroke="#d9534f" points="103,-202 49,-202 49,-176 103,-176 103,-202"/>
-<text text-anchor="middle" x="76" y="-186.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dsteps</text>
+<!-- proc~zeroin -->
+<g id="node10" class="node"><title>proc~zeroin</title>
+<a xlink:href="../proc/zeroin.html" xlink:title="zeroin">
+<polygon fill="#d9534f" stroke="#d9534f" points="439,-26 385,-26 385,-1.24345e-14 439,-3.55271e-15 439,-26"/>
+<text text-anchor="middle" x="412" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
 </a>
 </g>
-<!-- proc~destroy_ddeabm -->
-<g id="node6" class="node"><title>proc~destroy_ddeabm</title>
-<a xlink:href="../proc/destroy_ddeabm.html" xlink:title="destroy_ddeabm">
-<polygon fill="#d9534f" stroke="#d9534f" points="122,-246 30,-246 30,-220 122,-220 122,-246"/>
-<text text-anchor="middle" x="76" y="-230.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy_ddeabm</text>
-</a>
+<!-- proc~zeroin_test&#45;&gt;proc~zeroin -->
+<g id="edge6" class="edge"><title>proc~zeroin_test&#45;&gt;proc~zeroin</title>
+<path fill="none" stroke="black" d="M297.624,-13C320.465,-13 351.029,-13 374.815,-13"/>
+<polygon fill="black" stroke="black" points="374.883,-16.5001 384.883,-13 374.883,-9.5001 374.883,-16.5001"/>
 </g>
 <!-- proc~ddeabm_test -->
-<g id="node7" class="node"><title>proc~ddeabm_test</title>
+<g id="node3" class="node"><title>proc~ddeabm_test</title>
 <a xlink:href="../proc/ddeabm_test.html" xlink:title="ddeabm_test">
 <polygon fill="#d9534f" stroke="#d9534f" points="302,-114 228,-114 228,-88 302,-88 302,-114"/>
 <text text-anchor="middle" x="265" y="-98.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_test</text>
 </a>
 </g>
-<!-- proc~ddeabm_new_problem -->
-<g id="node9" class="node"><title>proc~ddeabm_new_problem</title>
-<a xlink:href="../proc/ddeabm_new_problem.html" xlink:title="ddeabm_new_problem">
-<polygon fill="#d9534f" stroke="#d9534f" points="137,-290 15,-290 15,-264 137,-264 137,-290"/>
-<text text-anchor="middle" x="76" y="-274.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_new_problem</text>
-</a>
-</g>
-<!-- proc~twobody -->
-<g id="node11" class="node"><title>proc~twobody</title>
-<a xlink:href="../proc/twobody.html" xlink:title="twobody">
-<polygon fill="#d9534f" stroke="#d9534f" points="103,-334 49,-334 49,-308 103,-308 103,-334"/>
-<text text-anchor="middle" x="76" y="-318.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">twobody</text>
+<!-- proc~dsteps -->
+<g id="node4" class="node"><title>proc~dsteps</title>
+<a xlink:href="../proc/dsteps.html" xlink:title="dsteps">
+<polygon fill="#d9534f" stroke="#d9534f" points="103,-158 49,-158 49,-132 103,-132 103,-158"/>
+<text text-anchor="middle" x="76" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dsteps</text>
 </a>
 </g>
 <!-- proc~go -->
-<g id="node12" class="node"><title>proc~go</title>
+<g id="node5" class="node"><title>proc~go</title>
 <a xlink:href="../proc/go.html" xlink:title="go">
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-378 238,-378 238,-352 292,-352 292,-378"/>
-<text text-anchor="middle" x="265" y="-362.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">go</text>
-</a>
-</g>
-<!-- proc~ddeabm_with_event_initialize -->
-<g id="node13" class="node"><title>proc~ddeabm_with_event_initialize</title>
-<a xlink:href="../proc/ddeabm_with_event_initialize.html" xlink:title="ddeabm_with_event_initialize">
-<polygon fill="#d9534f" stroke="#d9534f" points="152,-422 7.10543e-14,-422 0,-396 152,-396 152,-422"/>
-<text text-anchor="middle" x="76" y="-406.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_initialize</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-246 238,-246 238,-220 292,-220 292,-246"/>
+<text text-anchor="middle" x="265" y="-230.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">go</text>
 </a>
 </g>
 <!-- proc~ddeabm_initialize -->
-<g id="node14" class="node"><title>proc~ddeabm_initialize</title>
+<g id="node6" class="node"><title>proc~ddeabm_initialize</title>
 <a xlink:href="../proc/ddeabm_initialize.html" xlink:title="ddeabm_initialize">
-<polygon fill="#d9534f" stroke="#d9534f" points="123,-466 29,-466 29,-440 123,-440 123,-466"/>
-<text text-anchor="middle" x="76" y="-450.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_initialize</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="123,-290 29,-290 29,-264 123,-264 123,-290"/>
+<text text-anchor="middle" x="76" y="-274.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_initialize</text>
 </a>
+</g>
+<!-- proc~ddeabm_new_problem -->
+<g id="node9" class="node"><title>proc~ddeabm_new_problem</title>
+<a xlink:href="../proc/ddeabm_new_problem.html" xlink:title="ddeabm_new_problem">
+<polygon fill="#d9534f" stroke="#d9534f" points="137,-334 15,-334 15,-308 137,-308 137,-334"/>
+<text text-anchor="middle" x="76" y="-318.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_new_problem</text>
+</a>
+</g>
+<!-- proc~ddeabm_with_event_initialize -->
+<g id="node11" class="node"><title>proc~ddeabm_with_event_initialize</title>
+<a xlink:href="../proc/ddeabm_with_event_initialize.html" xlink:title="ddeabm_with_event_initialize">
+<polygon fill="#d9534f" stroke="#d9534f" points="152,-378 7.10543e-14,-378 0,-352 152,-352 152,-378"/>
+<text text-anchor="middle" x="76" y="-362.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_initialize</text>
+</a>
+</g>
+<!-- proc~destroy_ddeabm -->
+<g id="node12" class="node"><title>proc~destroy_ddeabm</title>
+<a xlink:href="../proc/destroy_ddeabm.html" xlink:title="destroy_ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="122,-422 30,-422 30,-396 122,-396 122,-422"/>
+<text text-anchor="middle" x="76" y="-406.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy_ddeabm</text>
+</a>
+</g>
+<!-- proc~ddeabm_with_event_wrapper -->
+<g id="node13" class="node"><title>proc~ddeabm_with_event_wrapper</title>
+<a xlink:href="../proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="342,-70 188,-70 188,-44 342,-44 342,-70"/>
+<text text-anchor="middle" x="265" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper</text>
+</a>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~xermsg -->
+<g id="edge10" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~xermsg</title>
+<path fill="none" stroke="black" d="M322.598,-70.1338C329.338,-72.6296 335.958,-75.5632 342,-79 362.58,-90.7056 381.831,-109.683 394.915,-124.291"/>
+<polygon fill="black" stroke="black" points="392.315,-126.635 401.519,-131.883 397.597,-122.041 392.315,-126.635"/>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
+<g id="edge8" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
+<path fill="none" stroke="black" d="M311.476,-43.9339C321.554,-41.041 332.146,-37.9558 342,-35 352.726,-31.7828 364.34,-28.1809 374.967,-24.838"/>
+<polygon fill="black" stroke="black" points="376.311,-28.0838 384.792,-21.7333 374.202,-21.4091 376.311,-28.0838"/>
+</g>
+<!-- none~zeroin_func -->
+<g id="node26" class="node"><title>none~zeroin_func</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="446,-70 378,-70 378,-44 446,-44 446,-70"/>
+<text text-anchor="middle" x="412" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin_func</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;none~zeroin_func -->
+<g id="edge12" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;none~zeroin_func</title>
+<path fill="none" stroke="black" d="M342.374,-57C351.031,-57 359.616,-57 367.647,-57"/>
+<polygon fill="black" stroke="black" points="367.845,-60.5001 377.845,-57 367.845,-53.5001 367.845,-60.5001"/>
 </g>
 <!-- proc~ddeabm_wrapper -->
-<g id="node15" class="node"><title>proc~ddeabm_wrapper</title>
+<g id="node14" class="node"><title>proc~ddeabm_wrapper</title>
 <a xlink:href="../proc/ddeabm_wrapper.html" xlink:title="ddeabm_wrapper">
-<polygon fill="#d9534f" stroke="#d9534f" points="124,-510 28,-510 28,-484 124,-484 124,-510"/>
-<text text-anchor="middle" x="76" y="-494.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_wrapper</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="124,-466 28,-466 28,-440 124,-440 124,-466"/>
+<text text-anchor="middle" x="76" y="-450.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_wrapper</text>
 </a>
 </g>
-<!-- proc~zeroin_test -->
-<g id="node16" class="node"><title>proc~zeroin_test</title>
-<a xlink:href="../proc/zeroin_test.html" xlink:title="zeroin_test">
-<polygon fill="#d9534f" stroke="#d9534f" points="297,-202 233,-202 233,-176 297,-176 297,-202"/>
-<text text-anchor="middle" x="265" y="-186.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin_test</text>
+<!-- proc~ddeabm -->
+<g id="node15" class="node"><title>proc~ddeabm</title>
+<a xlink:href="../proc/ddeabm.html" xlink:title="ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="292,-158 238,-158 238,-132 292,-132 292,-158"/>
+<text text-anchor="middle" x="265" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm</text>
 </a>
 </g>
-<!-- proc~zeroin_test&#45;&gt;proc~zeroin -->
-<g id="edge14" class="edge"><title>proc~zeroin_test&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="black" d="M297.624,-189C320.465,-189 351.029,-189 374.815,-189"/>
-<polygon fill="black" stroke="black" points="374.883,-192.5 384.883,-189 374.883,-185.5 374.883,-192.5"/>
+<!-- proc~ddeabm&#45;&gt;proc~xermsg -->
+<g id="edge14" class="edge"><title>proc~ddeabm&#45;&gt;proc~xermsg</title>
+<path fill="none" stroke="black" d="M292.305,-145C315.511,-145 349.049,-145 374.724,-145"/>
+<polygon fill="black" stroke="black" points="374.841,-148.5 384.841,-145 374.841,-141.5 374.841,-148.5"/>
+</g>
+<!-- proc~twobody -->
+<g id="node16" class="node"><title>proc~twobody</title>
+<a xlink:href="../proc/twobody.html" xlink:title="twobody">
+<polygon fill="#d9534f" stroke="#d9534f" points="103,-510 49,-510 49,-484 103,-484 103,-510"/>
+<text text-anchor="middle" x="76" y="-494.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">twobody</text>
+</a>
 </g>
 <!-- proc~dhvnrm -->
 <g id="node17" class="node"><title>proc~dhvnrm</title>
@@ -335,31 +336,31 @@ All Procedures &ndash; ddeabm
 <!-- program~test -->
 <g id="node19" class="node"><title>program~test</title>
 <a xlink:href="../program/test.html" xlink:title="test">
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="103,-158 49,-158 49,-132 103,-132 103,-158"/>
-<text text-anchor="middle" x="76" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="103,-70 49,-70 49,-44 103,-44 103,-70"/>
+<text text-anchor="middle" x="76" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">test</text>
 </a>
-</g>
-<!-- program~test&#45;&gt;proc~ddeabm_test -->
-<g id="edge20" class="edge"><title>program~test&#45;&gt;proc~ddeabm_test</title>
-<path fill="none" stroke="black" d="M103.079,-138.696C132.841,-131.767 181.221,-120.504 217.359,-112.091"/>
-<polygon fill="black" stroke="black" points="218.256,-115.476 227.202,-109.8 216.669,-108.658 218.256,-115.476"/>
 </g>
 <!-- program~test&#45;&gt;proc~zeroin_test -->
 <g id="edge18" class="edge"><title>program~test&#45;&gt;proc~zeroin_test</title>
-<path fill="none" stroke="black" d="M103.079,-151.304C134.241,-158.559 185.812,-170.565 222.373,-179.076"/>
-<polygon fill="black" stroke="black" points="221.724,-182.519 232.257,-181.377 223.311,-175.701 221.724,-182.519"/>
+<path fill="none" stroke="black" d="M103.079,-50.6959C134.241,-43.4413 185.812,-31.4354 222.373,-22.9238"/>
+<polygon fill="black" stroke="black" points="223.311,-26.2989 232.257,-20.6226 221.724,-19.4812 223.311,-26.2989"/>
+</g>
+<!-- program~test&#45;&gt;proc~ddeabm_test -->
+<g id="edge20" class="edge"><title>program~test&#45;&gt;proc~ddeabm_test</title>
+<path fill="none" stroke="black" d="M103.079,-63.3041C132.841,-70.2329 181.221,-81.4959 217.359,-89.909"/>
+<polygon fill="black" stroke="black" points="216.669,-93.3418 227.202,-92.2005 218.256,-86.5241 216.669,-93.3418"/>
 </g>
 <!-- program~ddeabm_performance_test -->
 <g id="node20" class="node"><title>program~ddeabm_performance_test</title>
 <a xlink:href="../program/ddeabm_performance_test.html" xlink:title="ddeabm_performance_test">
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="147,-378 5,-378 5,-352 147,-352 147,-378"/>
-<text text-anchor="middle" x="76" y="-362.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_performance_test</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="147,-246 5,-246 5,-220 147,-220 147,-246"/>
+<text text-anchor="middle" x="76" y="-230.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_performance_test</text>
 </a>
 </g>
 <!-- program~ddeabm_performance_test&#45;&gt;proc~go -->
 <g id="edge22" class="edge"><title>program~ddeabm_performance_test&#45;&gt;proc~go</title>
-<path fill="none" stroke="black" d="M147.183,-365C174.588,-365 204.782,-365 227.743,-365"/>
-<polygon fill="black" stroke="black" points="227.747,-368.5 237.747,-365 227.747,-361.5 227.747,-368.5"/>
+<path fill="none" stroke="black" d="M147.183,-233C174.588,-233 204.782,-233 227.743,-233"/>
+<polygon fill="black" stroke="black" points="227.747,-236.5 237.747,-233 227.747,-229.5 227.747,-236.5"/>
 </g>
 </g>
 </svg>

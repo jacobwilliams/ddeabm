@@ -190,22 +190,20 @@
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl"><pre><a name="ln-1"></a><span class="c">!*****************************************************************************************</span>
 <a name="ln-2"></a><span class="c">!&gt;</span>
-<a name="ln-3"></a><span class="c">!  Test program for [[ddeabm_class]].</span>
-<a name="ln-4"></a><span class="c">!  Integrate a two-body orbit around the Earth.</span>
-<a name="ln-5"></a>
-<a name="ln-6"></a>    <span class="k">program </span><span class="n">test</span>
-<a name="ln-7"></a>
-<a name="ln-8"></a>    <span class="k">use </span><span class="n">ddeabm_module</span>
-<a name="ln-9"></a>    <span class="k">use </span><span class="n">root_module</span>
-<a name="ln-10"></a>
-<a name="ln-11"></a>    <span class="k">implicit none</span>
-<a name="ln-12"></a>
-<a name="ln-13"></a><span class="k">    call </span><span class="n">zeroin_test</span><span class="p">()</span>
+<a name="ln-3"></a><span class="c">!  Test program for ddeabm.</span>
+<a name="ln-4"></a>
+<a name="ln-5"></a>    <span class="k">program </span><span class="n">test</span>
+<a name="ln-6"></a>
+<a name="ln-7"></a>    <span class="k">use </span><span class="n">ddeabm_module</span><span class="p">,</span> <span class="n">only</span><span class="p">:</span> <span class="n">ddeabm_test</span>
+<a name="ln-8"></a>    <span class="k">use </span><span class="n">root_module</span><span class="p">,</span>   <span class="n">only</span><span class="p">:</span> <span class="n">zeroin_test</span>
+<a name="ln-9"></a>
+<a name="ln-10"></a>    <span class="k">implicit none</span>
+<a name="ln-11"></a>
+<a name="ln-12"></a><span class="k">    call </span><span class="n">zeroin_test</span><span class="p">()</span>
+<a name="ln-13"></a>    <span class="k">call </span><span class="n">ddeabm_test</span><span class="p">()</span>
 <a name="ln-14"></a>
-<a name="ln-15"></a>    <span class="k">call </span><span class="n">ddeabm_test</span><span class="p">()</span>
-<a name="ln-16"></a>
-<a name="ln-17"></a>    <span class="k">end program </span><span class="n">test</span>
-<a name="ln-18"></a><span class="c">!*****************************************************************************************</span>
+<a name="ln-15"></a>    <span class="k">end program </span><span class="n">test</span>
+<a name="ln-16"></a><span class="c">!*****************************************************************************************</span>
 </pre></div>
 
     </section>

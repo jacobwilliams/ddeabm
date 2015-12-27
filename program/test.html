@@ -351,8 +351,7 @@ implementation in a submodule of an interface in a parent module.</p>
                 </div>
                 
     <br><br>
-    <p>Test program for <a href="../type/ddeabm_class.html">ddeabm_class</a>.
-  Integrate a two-body orbit around the Earth.</p>
+    <p>Test program for ddeabm.</p>
     
      <h3>Calls</h3>
      
@@ -524,13 +523,12 @@ implementation in a submodule of an interface in a parent module.</p>
     <h2 id="src">Source Code</h2>
     <div class="highlight"><pre>    <span class="k">program </span><span class="n">test</span>
 
-    <span class="k">use </span><span class="n">ddeabm_module</span>
-    <span class="k">use </span><span class="n">root_module</span>
+    <span class="k">use </span><span class="n">ddeabm_module</span><span class="p">,</span> <span class="n">only</span><span class="p">:</span> <span class="n">ddeabm_test</span>
+    <span class="k">use </span><span class="n">root_module</span><span class="p">,</span>   <span class="n">only</span><span class="p">:</span> <span class="n">zeroin_test</span>
 
     <span class="k">implicit none</span>
 
 <span class="k">    call </span><span class="n">zeroin_test</span><span class="p">()</span>
-
     <span class="k">call </span><span class="n">ddeabm_test</span><span class="p">()</span>
 
     <span class="k">end program </span><span class="n">test</span>

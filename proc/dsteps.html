@@ -1995,7 +1995,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
       <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">445</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
       <span class="n">go</span> <span class="n">to</span> <span class="mi">450</span>
-      
+
  <span class="mi">445</span>  <span class="k">if</span> <span class="p">(</span><span class="n">erkm1</span> <span class="o">&lt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">erk</span><span class="p">,</span><span class="n">erkp1</span><span class="p">))</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">455</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="n">erk</span>  <span class="p">.</span><span class="nb">or</span><span class="p">.</span>  <span class="n">k</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
 
