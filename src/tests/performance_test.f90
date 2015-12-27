@@ -25,11 +25,13 @@
     integer,parameter :: exp_min = 8   !! min exponent for tolerance
     integer,parameter :: exp_max = 13  !! max exponent for tolerance
 
-    real(wp),dimension(n) :: x0
+    real(wp),dimension(n) :: x0, acc
     real(wp) :: tol,err
     integer :: i,j,num_func_evals
     type(pyplot) :: plt
-    real(wp),dimension(exp_min:exp_max) :: err_vec,fevals_vec
+    real(wp),dimension(exp_min:exp_max) :: err_vec_x,err_vec_y,err_vec_z
+    real(wp),dimension(exp_min:exp_max) :: err_vec_vx,err_vec_vy,err_vec_vz
+    real(wp),dimension(exp_min:exp_max) :: fevals_vec
     character(len=10) :: istr
     character(len=:),allocatable :: kind_str
 
@@ -65,15 +67,35 @@
 
         do i=exp_min,exp_max
             tol = 10.0_wp**(-i)
-            call go(x0,tol,tol,num_func_evals,err)
-            err_vec(i) = err
+            call go(x0,tol,tol,num_func_evals,acc)
+            err_vec_x(i)  = acc(1)
+            err_vec_y(i)  = acc(2)
+            err_vec_z(i)  = acc(3)
+            err_vec_vx(i) = acc(4)
+            err_vec_vy(i) = acc(5)
+            err_vec_vz(i) = acc(6)
             fevals_vec(i) = num_func_evals
         end do
 
         !generate the plot:
-        call plt%add_plot(dble(err_vec),dble(fevals_vec),label='Test '//trim(adjustl(istr)),&
+        call plt%add_plot(dble(err_vec_x),dble(fevals_vec),label='Test '//trim(adjustl(istr))//' r',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
-                            markersize=5,linewidth=2,yscale='log')
+                            markersize=5,linewidth=2)
+        call plt%add_plot(dble(err_vec_y),dble(fevals_vec),label='',&
+                            linestyle=colors(1+mod(j,size(colors)))//'o-',&
+                            markersize=5,linewidth=2)
+        call plt%add_plot(dble(err_vec_z),dble(fevals_vec),label='',&
+                            linestyle=colors(1+mod(j,size(colors)))//'o-',&
+                            markersize=5,linewidth=2)
+        call plt%add_plot(dble(err_vec_vx),dble(fevals_vec),label='Test '//trim(adjustl(istr))//' v',&
+                            linestyle=colors(1+mod(j,size(colors)))//'o--',&
+                            markersize=5,linewidth=2)
+        call plt%add_plot(dble(err_vec_vy),dble(fevals_vec),label='',&
+                            linestyle=colors(1+mod(j,size(colors)))//'o--',&
+                            markersize=5,linewidth=2)
+        call plt%add_plot(dble(err_vec_vz),dble(fevals_vec),label='',&
+                            linestyle=colors(1+mod(j,size(colors)))//'o--',&
+                            markersize=5,linewidth=2)
 
     end do
 
@@ -83,18 +105,18 @@
 !*****************************************************************************************
 
 !***************************************************************************
-    subroutine go(x0,rtol,atol,fevals,err)
+    subroutine go(x0,rtol,atol,fevals,num_digits)
 
         implicit none
 
-        real(wp),dimension(n),intent(in) :: x0
-        real(wp),intent(in)              :: rtol
-        real(wp),intent(in)              :: atol
-        integer,intent(out)              :: fevals
-        real(wp),intent(out)             :: err
+        real(wp),dimension(n),intent(in) :: x0          !! initial state [r,v]
+        real(wp),intent(in)              :: rtol        !! absolute tolerance
+        real(wp),intent(in)              :: atol        !! relative tolerance
+        integer,intent(out)              :: fevals      !! number of function evaluations for forward propagation
+        real(wp),dimension(n),intent(out) :: num_digits  !! number of digits of accuracy (r,v)
 
         type(spacecraft) :: s
-        real(wp),dimension(n) :: xf,x02,x,num_digits,errvec
+        real(wp),dimension(n) :: xf,x02,x,errvec
         real(wp) :: t0,tf,dt,gf,tf_actual,t,rerr,verr
         integer :: idid
 
@@ -127,7 +149,9 @@
         end where
 
         num_digits = abs(log10(errvec))
-        err = num_digits(1)
+        !err = num_digits(1)
+
+        !write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)
 
     end subroutine go
     !*********************************************************
