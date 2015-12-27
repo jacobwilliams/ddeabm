@@ -4,6 +4,9 @@
 !  Generates a speed/accuracy plot.
 !
 !  Note: requires [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran).
+!
+!### Results
+!  ![Plot of results](|media|/ddeabm_performance_test.png)
 
     program ddeabm_performance_test
 
@@ -99,7 +102,7 @@
 
     end do
 
-    call plt%savefig('ddeabm_performance_test'//kind_str//'.png')
+    call plt%savefig('ddeabm_performance_test.png')
 
     contains
 !*****************************************************************************************
