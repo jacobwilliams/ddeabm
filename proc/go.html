@@ -141,8 +141,6 @@
         
         <a class="list-group-item" href="../proc/go.html#variable-x%7E8">x</a>
         
-        <a class="list-group-item" href="../proc/go.html#variable-num_digits">num_digits</a>
-        
         <a class="list-group-item" href="../proc/go.html#variable-errvec">errvec</a>
         
         <a class="list-group-item" href="../proc/go.html#variable-t0%7E3">t0</a>
@@ -245,7 +243,7 @@
     
     <div class="col-lg-9" id='text'>
     <h2>
-subroutine go(x0, rtol, atol, fevals, err)
+subroutine go(x0, rtol, atol, fevals, num_digits)
     
     
     
@@ -278,7 +276,7 @@ subroutine go(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td>dimension(n)</td><td>::</td>
-  <td><strong>x0</strong></td><td></td>
+  <td><strong>x0</strong></td><td><p>initial state [r,v]</p></td>
   
 </tr>
 
@@ -293,7 +291,7 @@ subroutine go(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>rtol</strong></td><td></td>
+  <td><strong>rtol</strong></td><td><p>absolute tolerance</p></td>
   
 </tr>
 
@@ -308,7 +306,7 @@ subroutine go(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>atol</strong></td><td></td>
+  <td><strong>atol</strong></td><td><p>relative tolerance</p></td>
   
 </tr>
 
@@ -323,7 +321,7 @@ subroutine go(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>fevals</strong></td><td></td>
+  <td><strong>fevals</strong></td><td><p>number of function evaluations for forward propagation</p></td>
   
 </tr>
 
@@ -333,12 +331,12 @@ subroutine go(x0, rtol, atol, fevals, err)
   
 <tr>
   
-  <td><span class="anchor" id="variable-err%7E2"></span>real(kind=wp),</td>
-  <td>intent(out)</td>
+  <td><span class="anchor" id="variable-num_digits"></span>real(kind=wp),</td>
+  <td>intent(out),</td>
   <td></td>
   
-  <td></td><td>::</td>
-  <td><strong>err</strong></td><td></td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>num_digits</strong></td><td><p>number of digits of accuracy (r,v)</p></td>
   
 </tr>
 
@@ -550,20 +548,6 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-num_digits"></span>real(kind=wp),</td>
-  
-  <td>public,</td>
-  <td>dimension(n)</td><td>::</td>
-  <td><strong>num_digits</strong></td><td></td><td></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
   <td><span class="anchor" id="variable-errvec"></span>real(kind=wp),</td>
   
   <td>public,</td>
@@ -721,18 +705,18 @@ implementation in a submodule of an interface in a parent module.</p>
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
+    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">num_digits</span><span class="p">)</span>
 
         <span class="k">implicit none</span>
 
-<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>
-        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">err</span>
+<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>          <span class="c">!! initial state [r,v]</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>        <span class="c">!! absolute tolerance</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>        <span class="c">!! relative tolerance</span>
+        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>      <span class="c">!! number of function evaluations for forward propagation</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">num_digits</span>  <span class="c">!! number of digits of accuracy (r,v)</span>
 
         <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">num_digits</span><span class="p">,</span><span class="n">errvec</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">errvec</span>
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">rerr</span><span class="p">,</span><span class="n">verr</span>
         <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
 
@@ -765,7 +749,9 @@ implementation in a submodule of an interface in a parent module.</p>
         <span class="k">end where</span>
 
 <span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="n">num_digits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c">!err = num_digits(1)</span>
+
+        <span class="c">!write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)</span>
 
     <span class="k">end subroutine </span><span class="n">go</span>
 </pre></div>

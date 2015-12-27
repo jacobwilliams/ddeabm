@@ -139,9 +139,11 @@
         
         <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-x0%7E3">x0</a>
         
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-acc">acc</a>
+        
         <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-tol%7E5">tol</a>
         
-        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err%7E3">err</a>
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err%7E2">err</a>
         
         <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-i%7E4">i</a>
         
@@ -151,7 +153,17 @@
         
         <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-plt">plt</a>
         
-        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec">err_vec</a>
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec_x">err_vec_x</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec_y">err_vec_y</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec_z">err_vec_z</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec_vx">err_vec_vx</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec_vy">err_vec_vy</a>
+        
+        <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-err_vec_vz">err_vec_vz</a>
         
         <a class="list-group-item" href="../program/ddeabm_performance_test.html#variable-fevals_vec">fevals_vec</a>
         
@@ -323,7 +335,7 @@
 <polygon fill="black" stroke="black" points="498.466,-76.4431 506.951,-70.0994 496.362,-69.7667 498.466,-76.4431"/>
 </g>
 <!-- module~kind_module&#45;&gt;module~ddeabm_module -->
-<g id="edge6" class="edge"><title>module~kind_module&#45;&gt;module~ddeabm_module</title>
+<g id="edge4" class="edge"><title>module~kind_module&#45;&gt;module~ddeabm_module</title>
 <path fill="none" stroke="black" stroke-dasharray="5,2" d="M197.66,-77.3646C219.047,-78.0695 246.547,-78.8195 271,-79"/>
 <path fill="none" stroke="black" stroke-dasharray="5,2" d="M271,-79C291.927,-79.1545 314.576,-75.9125 334.501,-71.8727"/>
 <polygon fill="black" stroke="black" points="335.297,-75.2818 344.344,-69.7694 333.834,-68.4363 335.297,-75.2818"/>
@@ -341,7 +353,7 @@
 <polygon fill="black" stroke="black" points="225.847,-57.3012 234.156,-50.7278 223.562,-50.6849 225.847,-57.3012"/>
 </g>
 <!-- module~root_module&#45;&gt;module~ddeabm_module -->
-<g id="edge4" class="edge"><title>module~root_module&#45;&gt;module~ddeabm_module</title>
+<g id="edge6" class="edge"><title>module~root_module&#45;&gt;module~ddeabm_module</title>
 <path fill="none" stroke="black" stroke-dasharray="5,2" d="M307.656,-43.8039C316.069,-45.136 325.208,-46.5829 334.248,-48.0143"/>
 <polygon fill="black" stroke="black" points="333.944,-51.5097 344.369,-49.6167 335.039,-44.5958 333.944,-51.5097"/>
 </g>
@@ -644,6 +656,20 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
+  <td><span class="anchor" id="variable-acc"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>acc</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
   <td><span class="anchor" id="variable-tol%7E5"></span>real(kind=wp)</td>
   
   
@@ -658,7 +684,7 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-err%7E3"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-err%7E2"></span>real(kind=wp)</td>
   
   
   <td></td><td>::</td>
@@ -728,11 +754,81 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-err_vec"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-err_vec_x"></span>real(kind=wp),</td>
   
   
   <td>dimension(exp_min:exp_max)</td><td>::</td>
-  <td><strong>err_vec</strong></td><td></td><td></td><td></td>
+  <td><strong>err_vec_x</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err_vec_y"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>err_vec_y</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err_vec_z"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>err_vec_z</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err_vec_vx"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>err_vec_vx</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err_vec_vy"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>err_vec_vy</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-err_vec_vz"></span>real(kind=wp),</td>
+  
+  
+  <td>dimension(exp_min:exp_max)</td><td>::</td>
+  <td><strong>err_vec_vz</strong></td><td></td><td></td><td></td>
   
 </tr>
 
@@ -900,7 +996,7 @@ implementation in a submodule of an interface in a parent module.</p>
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-go"></span><h3>
-subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
+subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, num_digits)
     
     
     
@@ -932,7 +1028,7 @@ subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td>dimension(n)</td><td>::</td>
-  <td><strong>x0</strong></td><td></td>
+  <td><strong>x0</strong></td><td><p>initial state [r,v]</p></td>
   
 </tr>
 
@@ -947,7 +1043,7 @@ subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>rtol</strong></td><td></td>
+  <td><strong>rtol</strong></td><td><p>absolute tolerance</p></td>
   
 </tr>
 
@@ -962,7 +1058,7 @@ subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>atol</strong></td><td></td>
+  <td><strong>atol</strong></td><td><p>relative tolerance</p></td>
   
 </tr>
 
@@ -977,7 +1073,7 @@ subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>fevals</strong></td><td></td>
+  <td><strong>fevals</strong></td><td><p>number of function evaluations for forward propagation</p></td>
   
 </tr>
 
@@ -988,11 +1084,11 @@ subroutine <a href='../proc/go.html'>go</a>(x0, rtol, atol, fevals, err)
 <tr>
   
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out)</td>
+  <td>intent(out),</td>
   <td></td>
   
-  <td></td><td>::</td>
-  <td><strong>err</strong></td><td></td>
+  <td>dimension(n)</td><td>::</td>
+  <td><strong>num_digits</strong></td><td><p>number of digits of accuracy (r,v)</p></td>
   
 </tr>
 
@@ -1138,11 +1234,13 @@ subroutine <a href='../proc/twobody.html'>twobody</a>(me, t, x, xdot)
     <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_min</span> <span class="o">=</span> <span class="mi">8</span>   <span class="c">!! min exponent for tolerance</span>
     <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">exp_max</span> <span class="o">=</span> <span class="mi">13</span>  <span class="c">!! max exponent for tolerance</span>
 
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">,</span> <span class="n">acc</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tol</span><span class="p">,</span><span class="n">err</span>
     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">num_func_evals</span>
     <span class="k">type</span><span class="p">(</span><span class="n">pyplot</span><span class="p">)</span> <span class="kd">::</span> <span class="n">plt</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec</span><span class="p">,</span><span class="n">fevals_vec</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec_x</span><span class="p">,</span><span class="n">err_vec_y</span><span class="p">,</span><span class="n">err_vec_z</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">err_vec_vx</span><span class="p">,</span><span class="n">err_vec_vy</span><span class="p">,</span><span class="n">err_vec_vz</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">exp_min</span><span class="p">:</span><span class="n">exp_max</span><span class="p">)</span> <span class="kd">::</span> <span class="n">fevals_vec</span>
     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="kd">::</span> <span class="n">istr</span>
     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">kind_str</span>
 
@@ -1178,15 +1276,35 @@ subroutine <a href='../proc/twobody.html'>twobody</a>(me, t, x, xdot)
 
         <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="n">exp_min</span><span class="p">,</span><span class="n">exp_max</span>
             <span class="n">tol</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_wp</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
-            <span class="k">call </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">num_func_evals</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
-            <span class="n">err_vec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">err</span>
+            <span class="k">call </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">num_func_evals</span><span class="p">,</span><span class="n">acc</span><span class="p">)</span>
+            <span class="n">err_vec_x</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">err_vec_y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">err_vec_z</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">err_vec_vx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">err_vec_vy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="n">err_vec_vz</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
             <span class="n">fevals_vec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">num_func_evals</span>
         <span class="k">end do</span>
 
         <span class="c">!generate the plot:</span>
-        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">)),&amp;</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_x</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; r&#39;</span><span class="p">,&amp;</span>
                             <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
-                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_y</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_z</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o-&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vx</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test &#39;</span><span class="o">//</span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">))</span><span class="o">//</span><span class="s1">&#39; v&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vy</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">call </span><span class="n">plt</span><span class="p">%</span><span class="n">add_plot</span><span class="p">(</span><span class="nb">dble</span><span class="p">(</span><span class="n">err_vec_vz</span><span class="p">),</span><span class="nb">dble</span><span class="p">(</span><span class="n">fevals_vec</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">colors</span><span class="p">)))</span><span class="o">//</span><span class="s1">&#39;o--&#39;</span><span class="p">,&amp;</span>
+                            <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">end do</span>
 
@@ -1196,18 +1314,18 @@ subroutine <a href='../proc/twobody.html'>twobody</a>(me, t, x, xdot)
 <span class="c">!*****************************************************************************************</span>
 
 <span class="c">!***************************************************************************</span>
-    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">subroutine </span><span class="n">go</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">fevals</span><span class="p">,</span><span class="n">num_digits</span><span class="p">)</span>
 
         <span class="k">implicit none</span>
 
-<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>
-        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">err</span>
+<span class="k">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span>          <span class="c">!! initial state [r,v]</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">rtol</span>        <span class="c">!! absolute tolerance</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">atol</span>        <span class="c">!! relative tolerance</span>
+        <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">fevals</span>      <span class="c">!! number of function evaluations for forward propagation</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">num_digits</span>  <span class="c">!! number of digits of accuracy (r,v)</span>
 
         <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">num_digits</span><span class="p">,</span><span class="n">errvec</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">errvec</span>
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">rerr</span><span class="p">,</span><span class="n">verr</span>
         <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
 
@@ -1240,7 +1358,9 @@ subroutine <a href='../proc/twobody.html'>twobody</a>(me, t, x, xdot)
         <span class="k">end where</span>
 
 <span class="k">        </span><span class="n">num_digits</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">errvec</span><span class="p">))</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="n">num_digits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c">!err = num_digits(1)</span>
+
+        <span class="c">!write(*,*) x02(1), x0(1), x02(1)-x0(1), errvec(1), num_digits(1)</span>
 
     <span class="k">end subroutine </span><span class="n">go</span>
     <span class="c">!*********************************************************</span>
