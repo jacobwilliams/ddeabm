@@ -2648,6 +2648,8 @@
 
     subroutine ddeabm_test()
 
+    implicit none
+
     type,extends(ddeabm_with_event_class) :: spacecraft
         !! spacecraft propagation type.
         !! extends the [[ddeabm_class]] to include data used in the deriv routine

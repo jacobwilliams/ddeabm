@@ -1074,7 +1074,9 @@ subroutine twobody_event(me, t, x, g)
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">ddeabm_test</span><span class="p">()</span>
 
-    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
+    <span class="k">implicit none</span>
+
+<span class="k">    type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
         <span class="c">!! spacecraft propagation type.</span>
         <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0_wp</span>      <span class="c">!! central body gravitational parameter (km3/s2)</span>

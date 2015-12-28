@@ -2838,248 +2838,250 @@
 <a name="ln-2648"></a>
 <a name="ln-2649"></a>    <span class="k">subroutine </span><span class="n">ddeabm_test</span><span class="p">()</span>
 <a name="ln-2650"></a>
-<a name="ln-2651"></a>    <span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
-<a name="ln-2652"></a>        <span class="c">!! spacecraft propagation type.</span>
-<a name="ln-2653"></a>        <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
-<a name="ln-2654"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0_wp</span>      <span class="c">!! central body gravitational parameter (km3/s2)</span>
-<a name="ln-2655"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>        <span class="c">!! number of function evaluations</span>
-<a name="ln-2656"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>    <span class="c">!! first point is being exported</span>
-<a name="ln-2657"></a>    <span class="k">end type </span><span class="n">spacecraft</span>
-<a name="ln-2658"></a>
-<a name="ln-2659"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span>  <span class="kd">::</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>            <span class="c">!! number of state variables</span>
-<a name="ln-2660"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">1.0e-12_wp</span> <span class="c">!! event location tolerance</span>
-<a name="ln-2661"></a>
-<a name="ln-2662"></a>    <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
-<a name="ln-2663"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span>
-<a name="ln-2664"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">gval</span><span class="p">,</span><span class="n">z_target</span>
-<a name="ln-2665"></a>    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
-<a name="ln-2666"></a>
-<a name="ln-2667"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2668"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
-<a name="ln-2669"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39; ddeabm_test&#39;</span>
+<a name="ln-2651"></a>    <span class="k">implicit none</span>
+<a name="ln-2652"></a>
+<a name="ln-2653"></a><span class="k">    type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spacecraft</span>
+<a name="ln-2654"></a>        <span class="c">!! spacecraft propagation type.</span>
+<a name="ln-2655"></a>        <span class="c">!! extends the [[ddeabm_class]] to include data used in the deriv routine</span>
+<a name="ln-2656"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0_wp</span>      <span class="c">!! central body gravitational parameter (km3/s2)</span>
+<a name="ln-2657"></a>        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>        <span class="c">!! number of function evaluations</span>
+<a name="ln-2658"></a>        <span class="kt">logical</span> <span class="kd">::</span> <span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>    <span class="c">!! first point is being exported</span>
+<a name="ln-2659"></a>    <span class="k">end type </span><span class="n">spacecraft</span>
+<a name="ln-2660"></a>
+<a name="ln-2661"></a>    <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span>  <span class="kd">::</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>            <span class="c">!! number of state variables</span>
+<a name="ln-2662"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">1.0e-12_wp</span> <span class="c">!! event location tolerance</span>
+<a name="ln-2663"></a>
+<a name="ln-2664"></a>    <span class="k">type</span><span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
+<a name="ln-2665"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">,</span><span class="n">xf</span><span class="p">,</span><span class="n">x02</span><span class="p">,</span><span class="n">x</span>
+<a name="ln-2666"></a>    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="n">gf</span><span class="p">,</span><span class="n">tf_actual</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">gval</span><span class="p">,</span><span class="n">z_target</span>
+<a name="ln-2667"></a>    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
+<a name="ln-2668"></a>
+<a name="ln-2669"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2670"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
-<a name="ln-2671"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2672"></a>
-<a name="ln-2673"></a>    <span class="c">!***************************************************************************</span>
+<a name="ln-2671"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39; ddeabm_test&#39;</span>
+<a name="ln-2672"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;---------------&#39;</span>
+<a name="ln-2673"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2674"></a>
-<a name="ln-2675"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2676"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
-<a name="ln-2677"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;forward/backward test:&#39;</span>
+<a name="ln-2675"></a>    <span class="c">!***************************************************************************</span>
+<a name="ln-2676"></a>
+<a name="ln-2677"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2678"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
-<a name="ln-2679"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2680"></a>
-<a name="ln-2681"></a>    <span class="c">!constructor (main body is Earth):</span>
+<a name="ln-2679"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;forward/backward test:&#39;</span>
+<a name="ln-2680"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
+<a name="ln-2681"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2682"></a>
-<a name="ln-2683"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
-<a name="ln-2684"></a>                        <span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
-<a name="ln-2685"></a>    <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
-<a name="ln-2686"></a>
-<a name="ln-2687"></a>    <span class="c">!initial conditions:</span>
-<a name="ln-2688"></a>    <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,&amp;</span>   <span class="c">!initial state [r,v] (km,km/s)</span>
-<a name="ln-2689"></a>            <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
-<a name="ln-2690"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="mf">0.0_wp</span>       <span class="c">!initial time (sec)</span>
-<a name="ln-2691"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>    <span class="c">!final time (sec)</span>
-<a name="ln-2692"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2693"></a>
-<a name="ln-2694"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time:&#39;</span><span class="p">,</span><span class="n">t0</span>
-<a name="ln-2695"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x0</span>
-<a name="ln-2696"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2697"></a>    <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-<a name="ln-2698"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
-<a name="ln-2699"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
-<a name="ln-2700"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
-<a name="ln-2701"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>    <span class="c">!forward (report points)</span>
-<a name="ln-2702"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-2703"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2704"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
-<a name="ln-2705"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
-<a name="ln-2706"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
-<a name="ln-2707"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
-<a name="ln-2708"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2709"></a>
-<a name="ln-2710"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">tf</span>
-<a name="ln-2711"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
-<a name="ln-2712"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2713"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration</span>
-<a name="ln-2714"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
-<a name="ln-2715"></a>    <span class="n">x02</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-2716"></a>
-<a name="ln-2717"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
-<a name="ln-2718"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x02</span>
-<a name="ln-2719"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2720"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(E20.12/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Error:&#39;</span><span class="p">,</span><span class="n">x02</span><span class="o">-</span><span class="n">x0</span>
-<a name="ln-2721"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
-<a name="ln-2722"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2723"></a>
+<a name="ln-2683"></a>    <span class="c">!constructor (main body is Earth):</span>
+<a name="ln-2684"></a>
+<a name="ln-2685"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
+<a name="ln-2686"></a>                        <span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
+<a name="ln-2687"></a>    <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
+<a name="ln-2688"></a>
+<a name="ln-2689"></a>    <span class="c">!initial conditions:</span>
+<a name="ln-2690"></a>    <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,&amp;</span>   <span class="c">!initial state [r,v] (km,km/s)</span>
+<a name="ln-2691"></a>            <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
+<a name="ln-2692"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="mf">0.0_wp</span>       <span class="c">!initial time (sec)</span>
+<a name="ln-2693"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>    <span class="c">!final time (sec)</span>
+<a name="ln-2694"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2695"></a>
+<a name="ln-2696"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time:&#39;</span><span class="p">,</span><span class="n">t0</span>
+<a name="ln-2697"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x0</span>
+<a name="ln-2698"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2699"></a>    <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<a name="ln-2700"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+<a name="ln-2701"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+<a name="ln-2702"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
+<a name="ln-2703"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>    <span class="c">!forward (report points)</span>
+<a name="ln-2704"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-2705"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2706"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
+<a name="ln-2707"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
+<a name="ln-2708"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
+<a name="ln-2709"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
+<a name="ln-2710"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2711"></a>
+<a name="ln-2712"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">tf</span>
+<a name="ln-2713"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
+<a name="ln-2714"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2715"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration</span>
+<a name="ln-2716"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
+<a name="ln-2717"></a>    <span class="n">x02</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-2718"></a>
+<a name="ln-2719"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
+<a name="ln-2720"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x02</span>
+<a name="ln-2721"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2722"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(E20.12/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Error:&#39;</span><span class="p">,</span><span class="n">x02</span><span class="o">-</span><span class="n">x0</span>
+<a name="ln-2723"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
 <a name="ln-2724"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2725"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
-<a name="ln-2726"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;continue integration:&#39;</span>
+<a name="ln-2725"></a>
+<a name="ln-2726"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2727"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
-<a name="ln-2728"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2729"></a>
-<a name="ln-2730"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
-<a name="ln-2731"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x02</span>
-<a name="ln-2732"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">-</span> <span class="mi">10</span><span class="mf">0.0_wp</span>
-<a name="ln-2733"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2734"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration (go from t -&gt; tf)</span>
-<a name="ln-2735"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
-<a name="ln-2736"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-2737"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
-<a name="ln-2738"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
-<a name="ln-2739"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
-<a name="ln-2740"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
-<a name="ln-2741"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2742"></a>
-<a name="ln-2743"></a>    <span class="c">!***************************************************************************</span>
+<a name="ln-2728"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;continue integration:&#39;</span>
+<a name="ln-2729"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
+<a name="ln-2730"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2731"></a>
+<a name="ln-2732"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+<a name="ln-2733"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x02</span>
+<a name="ln-2734"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">-</span> <span class="mi">10</span><span class="mf">0.0_wp</span>
+<a name="ln-2735"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2736"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!restarting the integration (go from t -&gt; tf)</span>
+<a name="ln-2737"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>  <span class="c">!backwards</span>
+<a name="ln-2738"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-2739"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
+<a name="ln-2740"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
+<a name="ln-2741"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
+<a name="ln-2742"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
+<a name="ln-2743"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2744"></a>
-<a name="ln-2745"></a>    <span class="c">!integration to event test (integrate until z-coordinate is 12,000 km)</span>
+<a name="ln-2745"></a>    <span class="c">!***************************************************************************</span>
 <a name="ln-2746"></a>
-<a name="ln-2747"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2748"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
-<a name="ln-2749"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;integration to event:&#39;</span>
+<a name="ln-2747"></a>    <span class="c">!integration to event test (integrate until z-coordinate is 12,000 km)</span>
+<a name="ln-2748"></a>
+<a name="ln-2749"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2750"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
-<a name="ln-2751"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2752"></a>
-<a name="ln-2753"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize_event</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
-<a name="ln-2754"></a>                                <span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">,</span><span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
-<a name="ln-2755"></a>    <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
-<a name="ln-2756"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2757"></a>
-<a name="ln-2758"></a>    <span class="c">!initial conditions:</span>
-<a name="ln-2759"></a>    <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,&amp;</span>   <span class="c">!initial state [r,v] (km,km/s)</span>
-<a name="ln-2760"></a>            <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
-<a name="ln-2761"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="mf">0.0_wp</span>       <span class="c">!initial time (sec)</span>
-<a name="ln-2762"></a>
-<a name="ln-2763"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time:&#39;</span><span class="p">,</span><span class="n">t0</span>
-<a name="ln-2764"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x0</span>
-<a name="ln-2765"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2766"></a>    <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-<a name="ln-2767"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
-<a name="ln-2768"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
-<a name="ln-2769"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>    <span class="c">!max final time (sec)</span>
-<a name="ln-2770"></a>    <span class="n">z_target</span> <span class="o">=</span> <span class="mi">1200</span><span class="mf">0.0_wp</span>
-<a name="ln-2771"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
-<a name="ln-2772"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-2773"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-2774"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2775"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
-<a name="ln-2776"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;gval: &#39;</span><span class="p">,</span><span class="n">gval</span>
-<a name="ln-2777"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
-<a name="ln-2778"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
-<a name="ln-2779"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
-<a name="ln-2780"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2781"></a>
-<a name="ln-2782"></a>    <span class="c">! Now, continue integration (until z-coordinate is 13,000 km)</span>
+<a name="ln-2751"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;integration to event:&#39;</span>
+<a name="ln-2752"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;-----------------------&#39;</span>
+<a name="ln-2753"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2754"></a>
+<a name="ln-2755"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize_event</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
+<a name="ln-2756"></a>                                <span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">,</span><span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
+<a name="ln-2757"></a>    <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
+<a name="ln-2758"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2759"></a>
+<a name="ln-2760"></a>    <span class="c">!initial conditions:</span>
+<a name="ln-2761"></a>    <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,&amp;</span>   <span class="c">!initial state [r,v] (km,km/s)</span>
+<a name="ln-2762"></a>            <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
+<a name="ln-2763"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="mf">0.0_wp</span>       <span class="c">!initial time (sec)</span>
+<a name="ln-2764"></a>
+<a name="ln-2765"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time:&#39;</span><span class="p">,</span><span class="n">t0</span>
+<a name="ln-2766"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x0</span>
+<a name="ln-2767"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2768"></a>    <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<a name="ln-2769"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+<a name="ln-2770"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+<a name="ln-2771"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>    <span class="c">!max final time (sec)</span>
+<a name="ln-2772"></a>    <span class="n">z_target</span> <span class="o">=</span> <span class="mi">1200</span><span class="mf">0.0_wp</span>
+<a name="ln-2773"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
+<a name="ln-2774"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a name="ln-2775"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-2776"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2777"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
+<a name="ln-2778"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;gval: &#39;</span><span class="p">,</span><span class="n">gval</span>
+<a name="ln-2779"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
+<a name="ln-2780"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
+<a name="ln-2781"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
+<a name="ln-2782"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 <a name="ln-2783"></a>
-<a name="ln-2784"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;=======================&#39;</span>
-<a name="ln-2785"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;continue integration...&#39;</span>
+<a name="ln-2784"></a>    <span class="c">! Now, continue integration (until z-coordinate is 13,000 km)</span>
+<a name="ln-2785"></a>
 <a name="ln-2786"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;=======================&#39;</span>
-<a name="ln-2787"></a>
-<a name="ln-2788"></a>    <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
-<a name="ln-2789"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-2790"></a>    <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-<a name="ln-2791"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
-<a name="ln-2792"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="mi">200</span><span class="mf">0.0_wp</span>    <span class="c">!max final time (sec)</span>
-<a name="ln-2793"></a>    <span class="n">z_target</span> <span class="o">=</span> <span class="mi">1300</span><span class="mf">0.0_wp</span> <span class="c">!change the target value</span>
-<a name="ln-2794"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time     :&#39;</span><span class="p">,</span><span class="n">t</span>
-<a name="ln-2795"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Max final time   :&#39;</span><span class="p">,</span><span class="n">tf</span>
-<a name="ln-2796"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state    :&#39;</span><span class="p">,</span><span class="n">x</span>
-<a name="ln-2797"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!have to restart the integration after a root finding</span>
-<a name="ln-2798"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a name="ln-2799"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
-<a name="ln-2800"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2801"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
-<a name="ln-2802"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;gval: &#39;</span><span class="p">,</span><span class="n">gval</span>
-<a name="ln-2803"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
-<a name="ln-2804"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
-<a name="ln-2805"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
-<a name="ln-2806"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2807"></a>
-<a name="ln-2808"></a>    <span class="k">contains</span>
-<a name="ln-2809"></a><span class="c">!*****************************************************************************************</span>
-<a name="ln-2810"></a>
-<a name="ln-2811"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-2812"></a>        <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
-<a name="ln-2813"></a>
-<a name="ln-2814"></a>        <span class="c">!! derivative routine for two-body orbit propagation</span>
+<a name="ln-2787"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;continue integration...&#39;</span>
+<a name="ln-2788"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;=======================&#39;</span>
+<a name="ln-2789"></a>
+<a name="ln-2790"></a>    <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
+<a name="ln-2791"></a>    <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-2792"></a>    <span class="n">s</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<a name="ln-2793"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">xf</span>
+<a name="ln-2794"></a>    <span class="n">tf</span> <span class="o">=</span> <span class="mi">200</span><span class="mf">0.0_wp</span>    <span class="c">!max final time (sec)</span>
+<a name="ln-2795"></a>    <span class="n">z_target</span> <span class="o">=</span> <span class="mi">1300</span><span class="mf">0.0_wp</span> <span class="c">!change the target value</span>
+<a name="ln-2796"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time     :&#39;</span><span class="p">,</span><span class="n">t</span>
+<a name="ln-2797"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Max final time   :&#39;</span><span class="p">,</span><span class="n">tf</span>
+<a name="ln-2798"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state    :&#39;</span><span class="p">,</span><span class="n">x</span>
+<a name="ln-2799"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!have to restart the integration after a root finding</span>
+<a name="ln-2800"></a>    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a name="ln-2801"></a>    <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
+<a name="ln-2802"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2803"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
+<a name="ln-2804"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;gval: &#39;</span><span class="p">,</span><span class="n">gval</span>
+<a name="ln-2805"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time:&#39;</span><span class="p">,</span><span class="n">t</span>
+<a name="ln-2806"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">xf</span>
+<a name="ln-2807"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A,I5)&#39;</span><span class="p">)</span> <span class="s1">&#39;Function evaluations:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">%</span><span class="n">fevals</span>
+<a name="ln-2808"></a>    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2809"></a>
+<a name="ln-2810"></a>    <span class="k">contains</span>
+<a name="ln-2811"></a><span class="c">!*****************************************************************************************</span>
+<a name="ln-2812"></a>
+<a name="ln-2813"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-2814"></a>        <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
 <a name="ln-2815"></a>
-<a name="ln-2816"></a>        <span class="k">implicit none</span>
+<a name="ln-2816"></a>        <span class="c">!! derivative routine for two-body orbit propagation</span>
 <a name="ln-2817"></a>
-<a name="ln-2818"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-<a name="ln-2819"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
-<a name="ln-2820"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
-<a name="ln-2821"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
-<a name="ln-2822"></a>
-<a name="ln-2823"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
-<a name="ln-2824"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
-<a name="ln-2825"></a>
-<a name="ln-2826"></a>        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
-<a name="ln-2827"></a>        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
-<a name="ln-2828"></a>
-<a name="ln-2829"></a>            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-2830"></a>            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
-<a name="ln-2831"></a>            <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<a name="ln-2832"></a>            <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">!acceleration due to gravity</span>
-<a name="ln-2833"></a>
-<a name="ln-2834"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
-<a name="ln-2835"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
-<a name="ln-2836"></a>
-<a name="ln-2837"></a>            <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-2818"></a>        <span class="k">implicit none</span>
+<a name="ln-2819"></a>
+<a name="ln-2820"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+<a name="ln-2821"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
+<a name="ln-2822"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
+<a name="ln-2823"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
+<a name="ln-2824"></a>
+<a name="ln-2825"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
+<a name="ln-2826"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
+<a name="ln-2827"></a>
+<a name="ln-2828"></a>        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
+<a name="ln-2829"></a>        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
+<a name="ln-2830"></a>
+<a name="ln-2831"></a>            <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-2832"></a>            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
+<a name="ln-2833"></a>            <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<a name="ln-2834"></a>            <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">!acceleration due to gravity</span>
+<a name="ln-2835"></a>
+<a name="ln-2836"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+<a name="ln-2837"></a>            <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
 <a name="ln-2838"></a>
-<a name="ln-2839"></a>        <span class="k">end select</span>
+<a name="ln-2839"></a>            <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">fevals</span> <span class="o">+</span> <span class="mi">1</span>
 <a name="ln-2840"></a>
-<a name="ln-2841"></a><span class="k">        end subroutine </span><span class="n">twobody</span>
-<a name="ln-2842"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-2843"></a>
+<a name="ln-2841"></a>        <span class="k">end select</span>
+<a name="ln-2842"></a>
+<a name="ln-2843"></a><span class="k">        end subroutine </span><span class="n">twobody</span>
 <a name="ln-2844"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-2845"></a>        <span class="k">subroutine </span><span class="n">twobody_report</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<a name="ln-2846"></a>
-<a name="ln-2847"></a>        <span class="c">!! report function - write time,state to console</span>
+<a name="ln-2845"></a>
+<a name="ln-2846"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-2847"></a>        <span class="k">subroutine </span><span class="n">twobody_report</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
 <a name="ln-2848"></a>
-<a name="ln-2849"></a>        <span class="k">implicit none</span>
+<a name="ln-2849"></a>        <span class="c">!! report function - write time,state to console</span>
 <a name="ln-2850"></a>
-<a name="ln-2851"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">me</span>
-<a name="ln-2852"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                  <span class="kd">::</span> <span class="n">t</span>
-<a name="ln-2853"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">x</span>
-<a name="ln-2854"></a>
-<a name="ln-2855"></a>        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
-<a name="ln-2856"></a>        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
-<a name="ln-2857"></a>            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">first</span><span class="p">)</span> <span class="k">then</span>  <span class="c">!print header</span>
-<a name="ln-2858"></a>                <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
-<a name="ln-2859"></a>                <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(A15,1X))&#39;</span><span class="p">)</span>  <span class="s1">&#39;time (sec)&#39;</span><span class="p">,</span><span class="s1">&#39;x (km)&#39;</span><span class="p">,</span><span class="s1">&#39;y (km)&#39;</span><span class="p">,</span><span class="s1">&#39;z (km)&#39;</span><span class="p">,&amp;</span>
-<a name="ln-2860"></a>                                        <span class="s1">&#39;vx (km/s)&#39;</span><span class="p">,</span><span class="s1">&#39;vy (km/s)&#39;</span><span class="p">,</span><span class="s1">&#39;vz (km/s)&#39;</span>
-<a name="ln-2861"></a>                <span class="n">me</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
-<a name="ln-2862"></a>            <span class="k">end if</span>
-<a name="ln-2863"></a><span class="k">        end select</span>
-<a name="ln-2864"></a>
-<a name="ln-2865"></a><span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(F15.6,1X))&#39;</span><span class="p">)</span> <span class="n">t</span><span class="p">,</span><span class="n">x</span>
+<a name="ln-2851"></a>        <span class="k">implicit none</span>
+<a name="ln-2852"></a>
+<a name="ln-2853"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">me</span>
+<a name="ln-2854"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                  <span class="kd">::</span> <span class="n">t</span>
+<a name="ln-2855"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">x</span>
+<a name="ln-2856"></a>
+<a name="ln-2857"></a>        <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
+<a name="ln-2858"></a>        <span class="k">class is</span> <span class="p">(</span><span class="n">spacecraft</span><span class="p">)</span>
+<a name="ln-2859"></a>            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">first</span><span class="p">)</span> <span class="k">then</span>  <span class="c">!print header</span>
+<a name="ln-2860"></a>                <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
+<a name="ln-2861"></a>                <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(A15,1X))&#39;</span><span class="p">)</span>  <span class="s1">&#39;time (sec)&#39;</span><span class="p">,</span><span class="s1">&#39;x (km)&#39;</span><span class="p">,</span><span class="s1">&#39;y (km)&#39;</span><span class="p">,</span><span class="s1">&#39;z (km)&#39;</span><span class="p">,&amp;</span>
+<a name="ln-2862"></a>                                        <span class="s1">&#39;vx (km/s)&#39;</span><span class="p">,</span><span class="s1">&#39;vy (km/s)&#39;</span><span class="p">,</span><span class="s1">&#39;vz (km/s)&#39;</span>
+<a name="ln-2863"></a>                <span class="n">me</span><span class="p">%</span><span class="n">first</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a name="ln-2864"></a>            <span class="k">end if</span>
+<a name="ln-2865"></a><span class="k">        end select</span>
 <a name="ln-2866"></a>
-<a name="ln-2867"></a>        <span class="k">end subroutine </span><span class="n">twobody_report</span>
-<a name="ln-2868"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-2869"></a>
+<a name="ln-2867"></a><span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(F15.6,1X))&#39;</span><span class="p">)</span> <span class="n">t</span><span class="p">,</span><span class="n">x</span>
+<a name="ln-2868"></a>
+<a name="ln-2869"></a>        <span class="k">end subroutine </span><span class="n">twobody_report</span>
 <a name="ln-2870"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-2871"></a>        <span class="k">subroutine </span><span class="n">twobody_event</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
-<a name="ln-2872"></a>
-<a name="ln-2873"></a>        <span class="c">!! event function for z = 12,000 km</span>
+<a name="ln-2871"></a>
+<a name="ln-2872"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-2873"></a>        <span class="k">subroutine </span><span class="n">twobody_event</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
 <a name="ln-2874"></a>
-<a name="ln-2875"></a>        <span class="k">implicit none</span>
+<a name="ln-2875"></a>        <span class="c">!! event function for z = 12,000 km</span>
 <a name="ln-2876"></a>
-<a name="ln-2877"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-<a name="ln-2878"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">t</span>
-<a name="ln-2879"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">x</span>
-<a name="ln-2880"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">g</span>
-<a name="ln-2881"></a>
-<a name="ln-2882"></a>        <span class="n">g</span> <span class="o">=</span> <span class="n">z_target</span> <span class="o">-</span> <span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c">!z coordinate</span>
+<a name="ln-2877"></a>        <span class="k">implicit none</span>
+<a name="ln-2878"></a>
+<a name="ln-2879"></a><span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+<a name="ln-2880"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">t</span>
+<a name="ln-2881"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">x</span>
+<a name="ln-2882"></a>        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">g</span>
 <a name="ln-2883"></a>
-<a name="ln-2884"></a>        <span class="k">end subroutine </span><span class="n">twobody_event</span>
-<a name="ln-2885"></a>    <span class="c">!*********************************************************</span>
-<a name="ln-2886"></a>
-<a name="ln-2887"></a>    <span class="k">end subroutine </span><span class="n">ddeabm_test</span>
-<a name="ln-2888"></a><span class="c">!*****************************************************************************************</span>
-<a name="ln-2889"></a>
+<a name="ln-2884"></a>        <span class="n">g</span> <span class="o">=</span> <span class="n">z_target</span> <span class="o">-</span> <span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c">!z coordinate</span>
+<a name="ln-2885"></a>
+<a name="ln-2886"></a>        <span class="k">end subroutine </span><span class="n">twobody_event</span>
+<a name="ln-2887"></a>    <span class="c">!*********************************************************</span>
+<a name="ln-2888"></a>
+<a name="ln-2889"></a>    <span class="k">end subroutine </span><span class="n">ddeabm_test</span>
 <a name="ln-2890"></a><span class="c">!*****************************************************************************************</span>
-<a name="ln-2891"></a>    <span class="k">end module </span><span class="n">ddeabm_module</span>
+<a name="ln-2891"></a>
 <a name="ln-2892"></a><span class="c">!*****************************************************************************************</span>
+<a name="ln-2893"></a>    <span class="k">end module </span><span class="n">ddeabm_module</span>
+<a name="ln-2894"></a><span class="c">!*****************************************************************************************</span>
 </pre></div>
 
     </section>
