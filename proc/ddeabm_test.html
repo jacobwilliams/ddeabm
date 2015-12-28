@@ -149,7 +149,7 @@
         
         <a class="list-group-item" href="../proc/ddeabm_test.html#variable-x02">x02</a>
         
-        <a class="list-group-item" href="../proc/ddeabm_test.html#variable-x%7E7">x</a>
+        <a class="list-group-item" href="../proc/ddeabm_test.html#variable-x%7E8">x</a>
         
         <a class="list-group-item" href="../proc/ddeabm_test.html#variable-t0%7E2">t0</a>
         
@@ -161,7 +161,7 @@
         
         <a class="list-group-item" href="../proc/ddeabm_test.html#variable-tf_actual">tf_actual</a>
         
-        <a class="list-group-item" href="../proc/ddeabm_test.html#variable-t%7E8">t</a>
+        <a class="list-group-item" href="../proc/ddeabm_test.html#variable-t%7E9">t</a>
         
         <a class="list-group-item" href="../proc/ddeabm_test.html#variable-gval%7E2">gval</a>
         
@@ -261,9 +261,9 @@
           
           <a class="list-group-item" href="../proc/go.html">go</a>
           
-          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+          <a class="list-group-item" href="../proc/report_error.html">report_error</a>
           
-          <a class="list-group-item" href="../proc/xermsg.html">xermsg</a>
+          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
           
           <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
           
@@ -530,7 +530,7 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-x%7E7"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x%7E8"></span>real(kind=wp),</td>
   
   <td>public,</td>
   <td>dimension(n)</td><td>::</td>
@@ -614,7 +614,7 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-t%7E8"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-t%7E9"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1106,7 +1106,8 @@ subroutine twobody_event(me, t, x, g)
 
     <span class="c">!constructor (main body is Earth):</span>
 
-    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">])</span>
+    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
+                        <span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
     <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
 
     <span class="c">!initial conditions:</span>
@@ -1123,7 +1124,7 @@ subroutine twobody_event(me, t, x, g)
     <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
     <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
-    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>    <span class="c">!forward</span>
+    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>    <span class="c">!forward (report points)</span>
     <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
@@ -1176,7 +1177,7 @@ subroutine twobody_event(me, t, x, g)
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
 
     <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize_event</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
-                                <span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">)</span>
+                                <span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">,</span><span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
     <span class="n">s</span><span class="p">%</span><span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span>  <span class="c">!earth</span>
     <span class="n">s</span><span class="p">%</span><span class="n">fevals</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -1194,7 +1195,7 @@ subroutine twobody_event(me, t, x, g)
     <span class="n">tf</span> <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>    <span class="c">!max final time (sec)</span>
     <span class="n">z_target</span> <span class="o">=</span> <span class="mi">1200</span><span class="mf">0.0_wp</span>
     <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>
-    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">)</span>
+    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>
@@ -1220,7 +1221,7 @@ subroutine twobody_event(me, t, x, g)
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Max final time   :&#39;</span><span class="p">,</span><span class="n">tf</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state    :&#39;</span><span class="p">,</span><span class="n">x</span>
     <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">first_call</span><span class="p">()</span>  <span class="c">!have to restart the integration after a root finding</span>
-    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">)</span>
+    <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">xf</span> <span class="o">=</span> <span class="n">x</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;&#39;</span>
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(I5/))&#39;</span><span class="p">)</span>    <span class="s1">&#39;idid: &#39;</span><span class="p">,</span><span class="n">idid</span>

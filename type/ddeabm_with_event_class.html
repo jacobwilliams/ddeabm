@@ -401,7 +401,7 @@ implementation in a submodule of an interface in a parent module.</p>
          
     
     <h3>
-private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol)
+private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report)
     
     
     
@@ -544,6 +544,21 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>)</td>
+  <td>,</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>report</strong></td><td><p>reporting function</p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -599,7 +614,7 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
          
     
     <h3>
-private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval)
+private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval, integration_mode)
     
     
     
@@ -675,7 +690,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   
   <td></td><td>::</td>
   <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
- (if root not located, it will integrate to tmax)</p></td>
+ (if root not located, it will integrate to <code>tmax</code>)</p></td>
   
 </tr>
 
@@ -691,11 +706,11 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   
   <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
- past a point tstop because a discontinuity occurs there
+ past a point <code>tstop</code> because a discontinuity occurs there
  or the solution or its derivative is not defined beyond
- tstop.  when you have declared a tstop point (see info(4)),
- you have told the code not to integrate past tstop.
- in this case any tmax beyond tstop is invalid input.
+ <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+ you have told the code not to integrate past <code>tstop</code>.
+ in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
  [not used if not present]</p></td>
   
 </tr>
@@ -714,7 +729,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
  you must monitor this integer variable to
  decide what action to take next.
- idid=1000 means a root was found.
+ <code>idid=1000</code> means a root was found.
  See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
   
 </tr>
@@ -730,7 +745,24 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>gval</strong></td><td><p>value of the event function g(t,x) at the final time t</p></td>
+  <td><strong>gval</strong></td><td><p>value of the event function <code>g(t,x)</code> at the final time <code>t</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>integration_mode</strong></td><td><p>Step mode:
+ <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
+ <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
   
 </tr>
 

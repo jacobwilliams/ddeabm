@@ -277,9 +277,9 @@
           
           <a class="list-group-item" href="../proc/go.html">go</a>
           
-          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+          <a class="list-group-item" href="../proc/report_error.html">report_error</a>
           
-          <a class="list-group-item" href="../proc/xermsg.html">xermsg</a>
+          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
           
           <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
           
@@ -323,7 +323,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E12"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E13"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -368,7 +368,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
   
 <tr>
   
-  <td><span class="anchor" id="variable-x%7E6"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x%7E7"></span>real(kind=wp),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -1992,12 +1992,12 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
 <span class="c">!   using estimated error at order k+1, determine appropriate order</span>
 <span class="c">!   for next step</span>
 
-      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">445</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
-      <span class="n">go</span> <span class="n">to</span> <span class="mi">450</span>
-
- <span class="mi">445</span>  <span class="k">if</span> <span class="p">(</span><span class="n">erkm1</span> <span class="o">&lt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">erk</span><span class="p">,</span><span class="n">erkp1</span><span class="p">))</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">455</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="n">erk</span>  <span class="p">.</span><span class="nb">or</span><span class="p">.</span>  <span class="n">k</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          if</span> <span class="p">(</span><span class="n">erkm1</span> <span class="o">&lt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">erk</span><span class="p">,</span><span class="n">erkp1</span><span class="p">))</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">455</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="n">erk</span>  <span class="p">.</span><span class="nb">or</span><span class="p">.</span>  <span class="n">k</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
+      <span class="k">else</span>
+<span class="k">          if</span> <span class="p">(</span><span class="n">erkp1</span> <span class="o">&gt;=</span> <span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">460</span>
+      <span class="k">end if</span>
 
 <span class="c">!   here erkp1 &lt; erk &lt; max(erkm1,erkm2) else order would have</span>
 <span class="c">!   been lowered in block 2.  thus order is to be raised</span>
@@ -2013,18 +2013,20 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
  <span class="mi">455</span>  <span class="n">k</span> <span class="o">=</span> <span class="n">km1</span>
       <span class="n">erk</span> <span class="o">=</span> <span class="n">erkm1</span>
 
-<span class="c">!   with new order determine appropriate step size for next step</span>
-
+      <span class="c">! with new order determine appropriate step size for next step</span>
  <span class="mi">460</span>  <span class="n">hnew</span> <span class="o">=</span> <span class="n">h</span> <span class="o">+</span> <span class="n">h</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">phase1</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">465</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">p5eps</span> <span class="o">&gt;=</span> <span class="n">erk</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">two</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">465</span>
-      <span class="n">hnew</span> <span class="o">=</span> <span class="n">h</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">p5eps</span> <span class="o">&gt;=</span> <span class="n">erk</span><span class="p">)</span> <span class="n">go</span> <span class="n">to</span> <span class="mi">465</span>
-      <span class="n">temp2</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span>
-      <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">p5eps</span><span class="o">/</span><span class="n">erk</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp2</span><span class="p">)</span>
-      <span class="n">hnew</span> <span class="o">=</span> <span class="n">absh</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="p">,</span><span class="nb">min</span><span class="p">(</span><span class="mf">0.9_wp</span><span class="p">,</span><span class="n">r</span><span class="p">))</span>
-      <span class="n">hnew</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">hnew</span><span class="p">,</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="n">h</span><span class="p">)</span>
- <span class="mi">465</span>  <span class="n">h</span> <span class="o">=</span> <span class="n">hnew</span>
+      <span class="k">if</span> <span class="p">(.</span><span class="nb">not</span><span class="p">.</span> <span class="n">phase1</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          if</span> <span class="p">(</span><span class="n">p5eps</span> <span class="o">&lt;</span> <span class="n">erk</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">two</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="k">then</span>
+<span class="k">              </span><span class="n">hnew</span> <span class="o">=</span> <span class="n">h</span>
+              <span class="k">if</span> <span class="p">(</span><span class="n">p5eps</span> <span class="o">&lt;</span> <span class="n">erk</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                  </span><span class="n">temp2</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+                  <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">p5eps</span><span class="o">/</span><span class="n">erk</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp2</span><span class="p">)</span>
+                  <span class="n">hnew</span> <span class="o">=</span> <span class="n">absh</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="p">,</span><span class="nb">min</span><span class="p">(</span><span class="mf">0.9_wp</span><span class="p">,</span><span class="n">r</span><span class="p">))</span>
+                  <span class="n">hnew</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">hnew</span><span class="p">,</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="n">h</span><span class="p">)</span>
+              <span class="k">end if</span>
+<span class="k">          end if</span>
+<span class="k">      end if</span>
+<span class="k">      </span><span class="n">h</span> <span class="o">=</span> <span class="n">hnew</span>
 <span class="c">!       ***     end block 4     ***</span>
 
     <span class="k">end subroutine </span><span class="n">dsteps</span>

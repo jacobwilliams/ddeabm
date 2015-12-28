@@ -189,9 +189,9 @@
           
           <a class="list-group-item" href="../proc/go.html">go</a>
           
-          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+          <a class="list-group-item" href="../proc/report_error.html">report_error</a>
           
-          <a class="list-group-item" href="../proc/xermsg.html">xermsg</a>
+          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
           
           <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
           
@@ -207,7 +207,7 @@
     
     <div class="col-lg-9" id='text'>
     <h2>
-private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, g, root_tol)
+private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, g, root_tol, report)
     
     
     
@@ -235,7 +235,7 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E5"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E6"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -353,6 +353,21 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-report%7E3"></span>procedure(<a href='../interface/report_func.html'>report_func</a>)</td>
+  <td>,</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>report</strong></td><td><p>reporting function</p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -388,7 +403,7 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">)</span>
+    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">,</span><span class="n">report</span><span class="p">)</span>
 
     <span class="k">implicit none</span>
 
@@ -404,9 +419,10 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
                                                               <span class="c">!! then a root has been located and</span>
                                                               <span class="c">!! the integration will stop.</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">root_tol</span>  <span class="c">!! tolerance for the root finding (see [[zeroin]])</span>
+    <span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="k">optional</span>              <span class="kd">::</span> <span class="n">report</span>    <span class="c">!! reporting function</span>
 
     <span class="c">!base class initialization:</span>
-    <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">)</span>
+    <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">report</span><span class="p">)</span>
 
     <span class="c">!event finding variables:</span>
     <span class="n">me</span><span class="p">%</span><span class="n">tol</span> <span class="o">=</span> <span class="n">root_tol</span>

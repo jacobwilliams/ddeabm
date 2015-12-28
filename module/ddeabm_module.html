@@ -156,6 +156,8 @@
           
           <a class="list-group-item" href="../module/ddeabm_module.html#interface-deriv_func">deriv_func</a>
           
+          <a class="list-group-item" href="../module/ddeabm_module.html#interface-report_func">report_func</a>
+          
           <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func">event_func</a>
           
         </div>
@@ -219,7 +221,7 @@
           
           <a class="list-group-item" href="../module/ddeabm_module.html#proc-dsteps">dsteps</a>
           
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-xermsg">xermsg</a>
+          <a class="list-group-item" href="../module/ddeabm_module.html#proc-report_error">report_error</a>
           
           <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_test">ddeabm_test</a>
           
@@ -745,6 +747,102 @@ private subroutine <a href='../interface/deriv_func.html'>deriv_func</a>(me, t, 
     
 	   
 <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="interface-report_func"></span><h3>abstract interface
+    
+  </h3></div>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+    
+    
+    <h3>
+private subroutine <a href='../interface/report_func.html'>report_func</a>(me, t, x)
+    
+    
+    
+</h3>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td>intent(inout)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>me</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>t</strong></td><td><p>time</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(:)</td><td>::</td>
+  <td><strong>x</strong></td><td><p>state</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+    
+    <h4>Description</h4>
+       
+       
+
+
+       
+       <p>Interface to the step reporting function.</p>
+        
+
+    </li>
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-event_func"></span><h3>abstract interface
     
   </h3></div>
@@ -929,6 +1027,24 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
   equations <code>du/dx=df(x,u)</code> and store the derivatives in the
   array <code>uprime(*)</code>, that is, <code>uprime(i) = du(i)/dx</code> for
   equations <code>i=1,...,neq</code>.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-report"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
+  
+  <td>private,</td>
+  <td>pointer</td><td>::</td>
+  <td><strong>report</strong></td><td>=> </td><td>null()</td><td><p>a function for reporting the integration steps (optional).
+ this can be associated in <a href="../proc/ddeabm_initialize.html">ddeabm_initialize</a> or
+ <a href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>, and is enabled
+ using the <code>mode</code> argument in <a href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+ or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a></p></td>
   
 </tr>
 
@@ -1949,7 +2065,7 @@ private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem<
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_initialize"></span><h3>
-private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a>(me, neq, maxnum, df, rtol, atol)
+private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a>(me, neq, maxnum, df, rtol, atol, report)
     
     
     
@@ -2060,6 +2176,21 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>)</td>
+  <td>,</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>report</strong></td><td><p>reporting function</p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -2094,7 +2225,7 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_initialize"></span><h3>
-private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol)
+private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report)
     
     
     
@@ -2239,6 +2370,21 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>)</td>
+  <td>,</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>report</strong></td><td><p>reporting function</p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -2342,7 +2488,7 @@ private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_wrapper"></span><h3>
-private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, t, y, tout, tstop, intermediate_steps, idid)
+private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, t, y, tout, tstop, idid, integration_mode)
     
     
     
@@ -2435,27 +2581,12 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   
   <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
- past a point tstop because a discontinuity occurs there
+ past a point <code>tstop</code> because a discontinuity occurs there
  or the solution or its derivative is not defined beyond
- tstop.  when you have declared a tstop point (see info(4)),
- you have told the code not to integrate past tstop.
- in this case any tout beyond tstop is invalid input.
+ <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+ you have told the code not to integrate past <code>tstop</code>.
+ in this case any <code>tout</code> beyond <code>tstop</code> is invalid input.
  [not used if not present]</p></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>logical,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
-  <td><strong>intermediate_steps</strong></td><td><p>If true, returns after one step only.</p></td>
   
 </tr>
 
@@ -2473,6 +2604,23 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
  you must monitor this integer variable to
  decide what action to take next.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>integration_mode</strong></td><td><p>Step mode:
+ <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
+ <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
   
 </tr>
 
@@ -2509,7 +2657,7 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
     
   <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_wrapper"></span><h3>
-private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval)
+private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval, integration_mode)
     
     
     
@@ -2587,7 +2735,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   
   <td></td><td>::</td>
   <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
- (if root not located, it will integrate to tmax)</p></td>
+ (if root not located, it will integrate to <code>tmax</code>)</p></td>
   
 </tr>
 
@@ -2603,11 +2751,11 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   
   <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
- past a point tstop because a discontinuity occurs there
+ past a point <code>tstop</code> because a discontinuity occurs there
  or the solution or its derivative is not defined beyond
- tstop.  when you have declared a tstop point (see info(4)),
- you have told the code not to integrate past tstop.
- in this case any tmax beyond tstop is invalid input.
+ <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+ you have told the code not to integrate past <code>tstop</code>.
+ in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
  [not used if not present]</p></td>
   
 </tr>
@@ -2626,7 +2774,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
  you must monitor this integer variable to
  decide what action to take next.
- idid=1000 means a root was found.
+ <code>idid=1000</code> means a root was found.
  See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
   
 </tr>
@@ -2642,7 +2790,24 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>gval</strong></td><td><p>value of the event function g(t,x) at the final time t</p></td>
+  <td><strong>gval</strong></td><td><p>value of the event function <code>g(t,x)</code> at the final time <code>t</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>integration_mode</strong></td><td><p>Step mode:
+ <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
+ <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
   
 </tr>
 
@@ -4801,8 +4966,8 @@ private subroutine <a href='../proc/dsteps.html'>dsteps</a>(me, neqn, y, x, h, e
     
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-xermsg"></span><h3>
-private subroutine <a href='../proc/xermsg.html'>xermsg</a>(subrou, messg, nerr, level)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-report_error"></span><h3>
+private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, messg, nerr, level)
     
     
     
