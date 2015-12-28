@@ -54,6 +54,13 @@
             !!  array `uprime(*)`, that is, `uprime(i) = du(i)/dx` for
             !!  equations `i=1,...,neq`.
 
+        procedure(report_func),pointer :: report => null()
+            !! a function for reporting the integration steps (optional).
+            !! this can be associated in [[ddeabm_initialize]] or
+            !! [[ddeabm_with_event_initialize]], and is enabled
+            !! using the `mode` argument in [[ddeabm_wrapper]]
+            !! or [[ddeabm_with_event_wrapper]]
+
         !tolerances
         logical :: scalar_tols = .true.
         real(wp),allocatable,dimension(:) :: rtol        !! the user input rel tol
@@ -69,7 +76,7 @@
         real(wp) :: tprev = 0.0_wp    !! replaced `rwork(itstar)` in original code
 
         !these were fixed in the original code:
-        real(wp),dimension(:),allocatable :: two    !! \( 2^i \) array
+        real(wp),dimension(:),allocatable :: two     !! \( 2^i \) array
         real(wp),dimension(:),allocatable :: gstr    !! \( | \gamma^{*}_i | \) array
 
         real(wp),allocatable,dimension(:)    :: ypout    !! `(neq)` contains the approximate derivative
@@ -167,23 +174,32 @@
 
         subroutine deriv_func(me,t,x,xdot)
             !! Interface to the [[ddeabm_class]] derivative function.
-        import :: wp,ddeabm_class
-        implicit none
-        class(ddeabm_class),intent(inout) :: me
-        real(wp),intent(in)               :: t    !! time
-        real(wp),dimension(:),intent(in)  :: x    !! state
-        real(wp),dimension(:),intent(out) :: xdot !! derivative of state (\( dx/dt \))
+            import :: wp,ddeabm_class
+            implicit none
+            class(ddeabm_class),intent(inout) :: me
+            real(wp),intent(in)               :: t    !! time
+            real(wp),dimension(:),intent(in)  :: x    !! state
+            real(wp),dimension(:),intent(out) :: xdot !! derivative of state (\( dx/dt \))
         end subroutine deriv_func
+
+        subroutine report_func(me,t,x)
+            !! Interface to the step reporting function.
+            import :: wp,ddeabm_class
+            implicit none
+            class(ddeabm_class),intent(inout) :: me
+            real(wp),intent(in)               :: t    !! time
+            real(wp),dimension(:),intent(in)  :: x    !! state
+        end subroutine report_func
 
         subroutine event_func(me,t,x,g)
             !! Interface to the [[ddeabm_with_event_class]] scalar event function.
-        import :: wp,ddeabm_with_event_class
-        implicit none
-        class(ddeabm_with_event_class),intent(inout) :: me
-        real(wp),intent(in)               :: t  !! time
-        real(wp),dimension(:),intent(in)  :: x  !! state
-        real(wp),intent(out)              :: g  !! event function: \( g(t,x) \).
-                                                !! The event is located when \( g(t,x)=0 \).
+            import :: wp,ddeabm_with_event_class
+            implicit none
+            class(ddeabm_with_event_class),intent(inout) :: me
+            real(wp),intent(in)               :: t  !! time
+            real(wp),dimension(:),intent(in)  :: x  !! state
+            real(wp),intent(out)              :: g  !! event function: \( g(t,x) \).
+                                                    !! The event is located when \( g(t,x)=0 \).
         end subroutine event_func
 
     end interface
@@ -215,7 +231,7 @@
 !  Initialize the [[ddeabm_class]], and set the variables that
 !  cannot be changed during a problem.
 
-    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol)
+    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol,report)
 
     implicit none
 
@@ -225,6 +241,7 @@
     procedure(deriv_func)               :: df      !! derivative function dx/dt
     real(wp),dimension(:),intent(in)    :: rtol    !! relative tolerance for integration (see [[ddeabm]])
     real(wp),dimension(:),intent(in)    :: atol    !! absolution tolerance for integration (see [[ddeabm]])
+    procedure(report_func),optional     :: report  !! reporting function
 
     logical :: vector_tols
     integer :: i,j,k
@@ -235,20 +252,23 @@
                                         !! For now, it is fixed.
 
     !initialize the class:
-
     call me%destroy()
 
     !number of equations:
-
     me%neq = neq
 
     !maximum number of steps:
-
     me%maxnum = maxnum
 
     !set the derivative routine pointer:
-
     me%df => df
+
+    !set the report function (optional):
+    if (present(report)) then
+        me%report => report
+    else
+        nullify(me%report)
+    end if
 
     !allocate the work arrays:
     allocate(me%ypout(neq))
@@ -311,7 +331,7 @@
 !#See also
 !  * [[ddeabm_initialize]]
 
-    subroutine ddeabm_with_event_initialize(me,neq,maxnum,df,rtol,atol,g,root_tol)
+    subroutine ddeabm_with_event_initialize(me,neq,maxnum,df,rtol,atol,g,root_tol,report)
 
     implicit none
 
@@ -327,9 +347,10 @@
                                                               !! then a root has been located and
                                                               !! the integration will stop.
     real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding (see [[zeroin]])
+    procedure(report_func),optional              :: report    !! reporting function
 
     !base class initialization:
-    call me%initialize(neq,maxnum,df,rtol,atol)
+    call me%initialize(neq,maxnum,df,rtol,atol,report)
 
     !event finding variables:
     me%tol = root_tol
@@ -361,7 +382,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_wrapper(me,t,y,tout,tstop,intermediate_steps,idid)
+    subroutine ddeabm_wrapper(me,t,y,tout,tstop,idid,integration_mode)
 
     implicit none
 
@@ -370,16 +391,39 @@
     real(wp),dimension(me%neq),intent(inout) :: y
     real(wp),intent(in)                      :: tout    !! time at which a solution is desired.
     real(wp),intent(in),optional             :: tstop   !! for some problems it may not be permissible to integrate
-                                                        !! past a point tstop because a discontinuity occurs there
+                                                        !! past a point `tstop` because a discontinuity occurs there
                                                         !! or the solution or its derivative is not defined beyond
-                                                        !! tstop.  when you have declared a tstop point (see info(4)),
-                                                        !! you have told the code not to integrate past tstop.
-                                                        !! in this case any tout beyond tstop is invalid input.
+                                                        !! `tstop`.  when you have declared a `tstop` point (see `info(4)`),
+                                                        !! you have told the code not to integrate past `tstop`.
+                                                        !! in this case any `tout` beyond `tstop` is invalid input.
                                                         !! [not used if not present]
-    logical,intent(in),optional              :: intermediate_steps  !! If true, returns after one step only.
     integer,intent(out)                      :: idid    !! indicator reporting what the code did.
                                                         !! you must monitor this integer variable to
                                                         !! decide what action to take next.
+    integer,intent(in),optional :: integration_mode     !! Step mode:
+                                                        !! *1* - normal integration from `t` to `tout`, no reporting [default].
+                                                        !! *2* - normal integration from `t` to `tout`, report each step.
+
+    integer :: mode  !! local copy of integration_mode
+
+    !optional input:
+    if (present(integration_mode)) then
+        mode = integration_mode
+    else
+        mode = 1  !default
+    end if
+
+    !check for invalid inputs:
+    if (mode/=1 .and. mode/=2) then
+        call report_error('ddeabm_wrapper', 'integration_mode must be 1 or 2.', 0, 0)
+        idid = -33
+        return
+    end if
+    if ((mode==2) .and. (.not. associated(me%report))) then
+        call report_error('ddeabm_wrapper', 'REPORT procedure must be associated for integration_mode=2.', 0, 0)
+        idid = -33
+        return
+    end if
 
     !set info array:
 
@@ -393,12 +437,8 @@
     end if
 
     !info(3)
-    if (present(intermediate_steps)) then
-        if (intermediate_steps) then
-            me%info(3) = 1
-        else
-            me%info(3) = 0
-        end if
+    if (mode==2) then  !requires the intermediate steps
+        me%info(3) = 1
     else
         me%info(3) = 0
     end if
@@ -416,15 +456,42 @@
     me%rtol_tmp = me%rtol
     me%atol_tmp = me%atol
 
-    !call the lower-level routine:
-    call me%ddeabm( neq   = me%neq,&
-                    t     = t,&
-                    y     = y,&
-                    tout  = tout,&
-                    info  = me%info,&
-                    rtol  = me%rtol_tmp,&
-                    atol  = me%atol_tmp,&
-                    idid  = idid)
+    select case (mode)
+    case(1)  !normal integration with no reporting
+
+        !call the lower-level routine:
+        call me%ddeabm( neq   = me%neq,&
+                        t     = t,&
+                        y     = y,&
+                        tout  = tout,&
+                        info  = me%info,&
+                        rtol  = me%rtol_tmp,&
+                        atol  = me%atol_tmp,&
+                        idid  = idid)
+
+    case(2) !normal integration, reporting the default intermediate points
+
+        call me%report(t,y)  !initial point
+
+        do
+
+            !take one step (note: info(3)=1 for this case):
+            call me%ddeabm( neq   = me%neq,&
+                            t     = t,&
+                            y     = y,&
+                            tout  = tout,&
+                            info  = me%info,&
+                            rtol  = me%rtol_tmp,&
+                            atol  = me%atol_tmp,&
+                            idid  = idid)
+
+            !check status (see ddeabm or idid codes):
+            if (idid>0) call me%report(t,y)  !report a successful intermediate or final step
+            if (idid/=1) exit                !exit if finished, or if there was an error
+
+        end do
+
+    end select
 
     end subroutine ddeabm_wrapper
 !*****************************************************************************************
@@ -445,7 +512,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_with_event_wrapper(me,t,y,tmax,tstop,idid,gval)
+    subroutine ddeabm_with_event_wrapper(me,t,y,tmax,tstop,idid,gval,integration_mode)
 
     implicit none
 
@@ -453,20 +520,23 @@
     real(wp),intent(inout)                         :: t
     real(wp),dimension(me%neq),intent(inout)       :: y
     real(wp),intent(in)                            :: tmax    !! max time at which a solution is desired.
-                                                              !! (if root not located, it will integrate to tmax)
+                                                              !! (if root not located, it will integrate to `tmax`)
     real(wp),intent(in),optional                   :: tstop   !! for some problems it may not be permissible to integrate
-                                                              !! past a point tstop because a discontinuity occurs there
+                                                              !! past a point `tstop` because a discontinuity occurs there
                                                               !! or the solution or its derivative is not defined beyond
-                                                              !! tstop.  when you have declared a tstop point (see info(4)),
-                                                              !! you have told the code not to integrate past tstop.
-                                                              !! in this case any tmax beyond tstop is invalid input.
+                                                              !! `tstop`.  when you have declared a `tstop` point (see `info(4)`),
+                                                              !! you have told the code not to integrate past `tstop`.
+                                                              !! in this case any `tmax` beyond `tstop` is invalid input.
                                                               !! [not used if not present]
     integer,intent(out)                            :: idid    !! indicator reporting what the code did.
                                                               !! you must monitor this integer variable to
                                                               !! decide what action to take next.
-                                                              !! idid=1000 means a root was found.
+                                                              !! `idid=1000` means a root was found.
                                                               !! See [[ddeabm]] for other values.
-    real(wp),intent(out)                           :: gval    !! value of the event function g(t,x) at the final time t
+    real(wp),intent(out)                           :: gval    !! value of the event function `g(t,x)` at the final time `t`
+    integer,intent(in),optional :: integration_mode           !! Step mode:
+                                                              !! *1* - normal integration from `t` to `tout`, no reporting [default].
+                                                              !! *2* - normal integration from `t` to `tout`, report each step.
 
     !local variables:
     real(wp) :: g1,g2,t1,t2,tzero,t0
@@ -474,10 +544,30 @@
     logical :: first
     real(wp),dimension(me%neq) :: y1,y2
     real(wp),dimension(me%neq) :: yc  !! interpolated state at tc
+    integer :: mode  !! local copy of integration_mode
 
-    !make sure the deriv function was set:
+    !optional input:
+    if (present(integration_mode)) then
+        mode = integration_mode
+    else
+        mode = 1  !default
+    end if
+
+    !check for invalid inputs:
+    if (mode/=1 .and. mode/=2) then
+        call report_error('ddeabm_with_event_wrapper', 'integration_mode must be 1 or 2.', 0, 0)
+        idid = -33
+        return
+    end if
+    if ((mode==2) .and. (.not. associated(me%report))) then
+        call report_error('ddeabm_with_event_wrapper', 'REPORT procedure must be associated for integration_mode=2.', 0, 0)
+        idid = -33
+        return
+    end if
+
+    !make sure the event function was set:
     if (.not. associated(me%gfunc)) then
-        call xermsg ('ddeabm', 'the event function GFUNC has not been associated.', 0, 0)
+        call report_error('ddeabm_with_event_wrapper', 'the event function GFUNC has not been associated.', 0, 0)
         idid=-33
         return
     end if
@@ -514,6 +604,7 @@
     t1 = t
     y1 = y
     call me%gfunc(t1,y1,g1)
+    if (mode==2) call me%report(t,y)  !initial point
 
     do
 
@@ -537,29 +628,29 @@
         case(1)
             !intermediate step successful, continue
         case(2,3)
-            !tmax was reached. check it for root (if not a root, then return)
+            !tmax was reached. check it for root
             gval = g2
-            if (abs(gval)<=me%tol) then
-                idid = 1000 !root found
-            else
-                return !root not found
-            end if
+            if (abs(gval)<=me%tol) idid = 1000 !root found
+            if (mode==2) call me%report(t,y)  !final point
+            return
         case default
             !some error
             return
         end select
 
-        if (first .and. abs(g1)<=me%tol) then  !root at initial time
-
-            !ignore this root
-
-        elseif (abs(g2)<=me%tol) then  !intermediate t2 is a root
+        if (abs(g2)<=me%tol) then  !intermediate t2 is a root
 
             idid = 1000
             gval = g2
             t = t2
             y = y2
+            if (mode==2) call me%report(t,y)
             return
+
+        elseif (first .and. abs(g1)<=me%tol) then  !root at initial time
+
+            !ignore this root
+            if (mode==2) call me%report(t,y)
 
         elseif (g1*g2<=0.0_wp) then
             ! different signs - root somewhere on [t1,t2]
@@ -573,12 +664,15 @@
                 gval = zeroin_func(tzero)
                 t = tzero
                 y = yc
+                if (mode==2) call me%report(t,y)
                 return
             else
                 write(*,*) 'Error locating root in ddeabm_with_event_wrapper.'
                 return
             end if
 
+        else
+            if (mode==2) call me%report(t,y)
         end if
 
         !set up for next step:
@@ -1053,7 +1147,7 @@
     if (me%icount >= 5) then
         if (t == me%tprev) then
             write (xern3, '(1pe15.6)') t
-            call xermsg ('ddeabm',&
+            call report_error('ddeabm',&
                             'an apparent infinite loop has been detected.  ' //&
                             'you have made repeated calls at t = ' // xern3 //&
                             ' and the integration has not advanced.  check the ' //&
@@ -1066,7 +1160,7 @@
 
     !make sure the deriv function was set:
     if (.not. associated(me%df)) then
-        call xermsg ('ddeabm', 'the derivative function DF '//&
+        call report_error('ddeabm', 'the derivative function DF '//&
                         ' has not been associated.' // xern1, 0, 0)
         idid=-33
         return
@@ -1194,7 +1288,7 @@
 
     if (info(1) /= 0  .and.  info(1) /= 1) then
         write (xern1, '(i8)') info(1)
-        call xermsg ('ddes', 'in ddeabm, info(1) must be ' //&
+        call report_error('ddes', 'in ddeabm, info(1) must be ' //&
                         'set to 0 for the start of a new problem, and must be ' //&
                         'set to 1 following an interrupted task.  you are ' //&
                         'attempting to continue the integration illegally by ' //&
@@ -1204,7 +1298,7 @@
 
     if (info(2) /= 0  .and.  info(2) /= 1) then
         write (xern1, '(i8)') info(2)
-        call xermsg ('ddes', 'in ddeabm, info(2) must be ' //&
+        call report_error('ddes', 'in ddeabm, info(2) must be ' //&
                         '0 or 1 indicating scalar and vector error tolerances, ' //&
                         'respectively.  you have called the code with info(2) = ' //&
                     xern1, 4, 1)
@@ -1213,7 +1307,7 @@
 
     if (info(3) /= 0  .and.  info(3) /= 1) then
         write (xern1, '(i8)') info(3)
-        call xermsg ('ddes', 'in ddeabm, info(3) must be ' //&
+        call report_error('ddes', 'in ddeabm, info(3) must be ' //&
                         '0 or 1 indicating the interval or intermediate-output ' //&
                         'mode of integration, respectively.  you have called ' //&
                         'the code with  info(3) = ' // xern1, 5, 1)
@@ -1222,7 +1316,7 @@
 
     if (info(4) /= 0  .and.  info(4) /= 1) then
         write (xern1, '(i8)') info(4)
-        call xermsg ('ddes', 'in ddeabm, info(4) must be ' //&
+        call report_error('ddes', 'in ddeabm, info(4) must be ' //&
                         '0 or 1 indicating whether or not the integration ' //&
                         'interval is to be restricted by a point tstop.  you ' //&
                         'have called the code with info(4) = ' // xern1, 14, 1)
@@ -1231,7 +1325,7 @@
 
     if (neq < 1) then
         write (xern1, '(i8)') neq
-        call xermsg ('ddes', 'in ddeabm,  the number of ' //&
+        call report_error('ddes', 'in ddeabm,  the number of ' //&
                         'equations neq must be a positive integer.  you have ' //&
                         'called the code with  neq = ' // xern1, 6, 1)
         idid=-33
@@ -1243,7 +1337,7 @@
         if (nrtolp == 0 .and. rtol(k) < 0.0_wp) then
             write (xern1, '(i8)') k
             write (xern3, '(1pe15.6)') rtol(k)
-            call xermsg ('ddes', 'in ddeabm, the relative ' //&
+            call report_error('ddes', 'in ddeabm, the relative ' //&
                             'error tolerances rtol must be non-negative.  you ' //&
                             'have called the code with  rtol(' // xern1 // ') = ' //&
                             xern3 // '.  in the case of vector error tolerances, ' //&
@@ -1255,7 +1349,7 @@
         if (natolp == 0 .and. atol(k) < 0.0_wp) then
             write (xern1, '(i8)') k
             write (xern3, '(1pe15.6)') atol(k)
-            call xermsg ('ddes', 'in ddeabm, the absolute ' //&
+            call report_error('ddes', 'in ddeabm, the absolute ' //&
                             'error tolerances atol must be non-negative.  you ' //&
                             'have called the code with  atol(' // xern1 // ') = ' //&
                             xern3 // '.  in the case of vector error tolerances, ' //&
@@ -1273,7 +1367,7 @@
             .or. abs(tout-t) > abs(tstop-t)) then
             write (xern3, '(1pe15.6)') tout
             write (xern4, '(1pe15.6)') tstop
-            call xermsg ('ddes', 'in ddeabm, you have ' //&
+            call report_error('ddes', 'in ddeabm, you have ' //&
                             'called the code with tout = ' // xern3 // ' but ' //&
                             'you have also told the code (info(4) = 1) not to ' //&
                             'integrate past the point tstop = ' // xern4 //&
@@ -1287,7 +1381,7 @@
     if (init /= 0) then
         if (t == tout) then
             write (xern3, '(1pe15.6)') t
-            call xermsg ('ddes', 'in ddeabm, you have ' //&
+            call report_error('ddes', 'in ddeabm, you have ' //&
                             'called the code with  t = tout = ' // xern3 //&
                             '  this is not allowed on continuation calls.', 9, 1)
             idid=-33
@@ -1296,7 +1390,7 @@
         if (t /= told) then
             write (xern3, '(1pe15.6)') told
             write (xern4, '(1pe15.6)') t
-            call xermsg ('ddes', 'in ddeabm, you have ' //&
+            call report_error('ddes', 'in ddeabm, you have ' //&
                             'changed the value of t from ' // xern3 // ' to ' //&
                             xern4 //'  this is not allowed on continuation calls.',&
                             10, 1)
@@ -1306,7 +1400,7 @@
         if (init /= 1) then
             if (delsgn*(tout-t) < 0.0_wp) then
                 write (xern3, '(1pe15.6)') tout
-                call xermsg ('ddes', 'in ddeabm, by ' //&
+                call report_error('ddes', 'in ddeabm, by ' //&
                                 'calling the code with tout = ' // xern3 //&
                                 ' you are attempting to change the direction of ' //&
                                 'integration.  this is not allowed without ' //&
@@ -1323,7 +1417,7 @@
             iquit = -33
             info(1) = -1
         else
-            call xermsg ('ddes', 'in ddeabm, invalid ' //&
+            call report_error('ddes', 'in ddeabm, invalid ' //&
                             'input was detected on successive entries.  it is ' //&
                             'impossible to proceed because you have not ' //&
                             'corrected the problem, so execution is being ' //&
@@ -2476,12 +2570,12 @@
 !   using estimated error at order k+1, determine appropriate order
 !   for next step
 
-      if (k > 1) go to 445
-      if (erkp1 >= 0.5_wp*erk) go to 460
-      go to 450
-
- 445  if (erkm1 <= min(erk,erkp1)) go to 455
-      if (erkp1 >= erk  .or.  k == 12) go to 460
+      if (k > 1) then
+          if (erkm1 <= min(erk,erkp1)) go to 455
+          if (erkp1 >= erk  .or.  k == 12) go to 460
+      else
+          if (erkp1 >= 0.5_wp*erk) go to 460
+      end if
 
 !   here erkp1 < erk < max(erkm1,erkm2) else order would have
 !   been lowered in block 2.  thus order is to be raised
@@ -2497,18 +2591,20 @@
  455  k = km1
       erk = erkm1
 
-!   with new order determine appropriate step size for next step
-
+      ! with new order determine appropriate step size for next step
  460  hnew = h + h
-      if (phase1) go to 465
-      if (p5eps >= erk*me%two(k+1)) go to 465
-      hnew = h
-      if (p5eps >= erk) go to 465
-      temp2 = k+1
-      r = (p5eps/erk)**(1.0_wp/temp2)
-      hnew = absh*max(0.5_wp,min(0.9_wp,r))
-      hnew = sign(max(hnew,fouru*abs(x)),h)
- 465  h = hnew
+      if (.not. phase1) then
+          if (p5eps < erk*me%two(k+1)) then
+              hnew = h
+              if (p5eps < erk) then
+                  temp2 = k+1
+                  r = (p5eps/erk)**(1.0_wp/temp2)
+                  hnew = absh*max(0.5_wp,min(0.9_wp,r))
+                  hnew = sign(max(hnew,fouru*abs(x)),h)
+              end if
+          end if
+      end if
+      h = hnew
 !       ***     end block 4     ***
 
     end subroutine dsteps
@@ -2522,7 +2618,7 @@
 !  Replacement for original [XERMSG](http://www.netlib.org/slatec/src/xermsg.f)
 !  error message printing routine. This one just prints the message to the console.
 
-    subroutine xermsg (subrou, messg, nerr, level)
+    subroutine report_error(subrou, messg, nerr, level)
 
     use iso_fortran_env, only: error_unit
 
@@ -2539,7 +2635,7 @@
 
     write(error_unit,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)
 
-    end subroutine xermsg
+    end subroutine report_error
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -2584,7 +2680,8 @@
 
     !constructor (main body is Earth):
 
-    call s%initialize(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp])
+    call s%initialize(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
+                        report=twobody_report)
     s%mu = 398600.436233_wp  !earth
 
     !initial conditions:
@@ -2601,7 +2698,7 @@
     t = t0
     x = x0
     call s%first_call()
-    call s%integrate(t,x,tf,idid=idid)    !forward
+    call s%integrate(t,x,tf,idid=idid,integration_mode=2)    !forward (report points)
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
@@ -2654,7 +2751,7 @@
     write(*,*) ''
 
     call s%initialize_event(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
-                                g=twobody_event,root_tol=1.0e-12_wp)
+                                g=twobody_event,root_tol=1.0e-12_wp,report=twobody_report)
     s%mu = 398600.436233_wp  !earth
     s%fevals = 0
 
@@ -2672,7 +2769,7 @@
     tf = 1000.0_wp    !max final time (sec)
     z_target = 12000.0_wp
     call s%first_call()
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2)
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
@@ -2698,7 +2795,7 @@
     write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
     write(*,'(A/,*(F15.6/))') 'Initial state    :',x
     call s%first_call()  !have to restart the integration after a root finding
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2)
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
