@@ -3,7 +3,7 @@
 !  Test program for [[ddeabm_class]].
 !  Generates a speed/accuracy plot.
 !
-!  Note: requires [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran).
+!@note Requires [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran).
 !
 !### Results
 !  ![Plot of results](|media|/ddeabm_performance_test.png)
