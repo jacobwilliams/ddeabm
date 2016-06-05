@@ -10,7 +10,7 @@
     <meta name="author" content="Chris MacMackin" >
     <link rel="icon" href="../favicon.png">
 
-    <title>event_func &ndash; ddeabm</title>
+    <title>ddeabm_stop_integration &ndash; ddeabm</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -89,8 +89,8 @@
     
   
   <div class="row">
-    <h1>event_func
-	 <small>Abstract Interface</small>
+    <h1>ddeabm_stop_integration
+    <small>Subroutine</small>
     
     </h1>
 	 
@@ -98,6 +98,8 @@
 <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+    <li><i class="fa fa-pencil"></i> Jacob Williams</li>
      
      
      
@@ -113,7 +115,7 @@
   
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
   
-     <li class="active">event_func</li>
+     <li class="active">ddeabm_stop_integration</li>
   </ol>
 </div>
 </div>
@@ -145,42 +147,76 @@
   
   
   
+  <div class="panel panel-primary">
+    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+    <div class="list-group">
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html#src">ddeabm_stop_integration</a>
+    </div>
+  </div>
+  
+  <hr>
   
   <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allabsints">All Abstract Interfaces</a></h3></div>
-    <div id="allabsints" class="panel-collapse collapse">
+    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs">All Procedures</a></h3></div>
+    <div id="allprocs" class="panel-collapse collapse">
         <div class="list-group">
           
-          <a class="list-group-item" href="../interface/deriv_func.html">deriv_func</a>
+          <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
           
-          <a class="list-group-item" href="../interface/event_func.html">event_func</a>
+          <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
           
-          <a class="list-group-item" href="../interface/func.html">func</a>
+          <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
           
-          <a class="list-group-item" href="../interface/report_func.html">report_func</a>
+          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+          
+          <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+          
+          <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+          
+          <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+          
+          <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+          
+          <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+          
+          <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+          
+          <a class="list-group-item" href="../proc/go.html">go</a>
+          
+          <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+          
+          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+          
+          <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+          
+          <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
           
         </div>
     </div>
-  </div> 
+  </div>
   
 </div>
 
     </div>
     
     <div class="col-lg-9" id='text'>
-	
-    
-    <h2>abstract interface <br>
-    
-private subroutine event_func(me, t, x, g)
+    <h2>
+private subroutine ddeabm_stop_integration(me)
     
     
     
-</h2>    
-    
-
+</h2>
     
   
+
 
 
     <h3>Arguments</h3>
@@ -201,58 +237,12 @@ private subroutine event_func(me, t, x, g)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E3"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E4"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
   <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-t%7E3"></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>t</strong></td><td><p>time</p></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-x%7E4"></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
-  <td><strong>x</strong></td><td><p>state</p></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-g%7E2"></span>real(kind=wp),</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>g</strong></td><td><p>event function: \( g(t,x) \).
- The event is located when \( g(t,x)=0 \).</p></td>
   
 </tr>
 
@@ -263,12 +253,49 @@ private subroutine event_func(me, t, x, g)
     
     
     <h3>Description</h3>
-    <p>Interface to the <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> scalar event function.</p>
+    <p>Call this to abort the integration if there is an error.
+  (Can be called in <code>df</code> by the user.) The step
+  will be considered invalid and not returned.</p>
+<p></p><div class="alert alert-info" role="alert"><h4>Note</h4>This will produce an <code>idid = -1000</code> exit code from the integrator.</div>
     
+    
+     
     <br>
+    
+    
+    
+    
+    
 
- </div>
-</div>
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_stop_integration</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+
+    <span class="k">implicit none</span>
+
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
+
+    <span class="n">me</span><span class="p">%</span><span class="n">error</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+
+    <span class="k">end subroutine </span><span class="n">ddeabm_stop_integration</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
 
     <hr>
     <footer>

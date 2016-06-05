@@ -179,6 +179,8 @@
           
           <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
           
+          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+          
           <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
           
           <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
@@ -247,7 +249,7 @@ private subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E8"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E9"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -395,8 +397,8 @@ private subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode)
 </g>
 <!-- proc~ddeabm_wrapper&#45;&gt;proc~report_error -->
 <g id="edge2" class="edge"><title>proc~ddeabm_wrapper&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="black" d="M97.8086,-13C106.389,-13 115.286,-13 123.764,-13"/>
-<polygon fill="black" stroke="black" points="123.847,-16.5001 133.847,-13 123.847,-9.5001 123.847,-16.5001"/>
+<path fill="none" stroke="#000000" d="M97.8086,-13C106.389,-13 115.286,-13 123.764,-13"/>
+<polygon fill="#000000" stroke="#000000" points="123.847,-16.5001 133.847,-13 123.847,-9.5001 123.847,-16.5001"/>
 </g>
 </g>
 </svg>
@@ -471,6 +473,8 @@ Nodes of different colours represent the following:
 </g>
 </svg>
 
+Where possible, edges connecting nodes are given different colours to make them
+easier to distinguish in large graphs.
 <h5>Module Graph</h5>
 <p>Solid arrows point from a parent (sub)module to the submodule which is
 descended from it. Dashed arrows point from a module being used to the
@@ -544,7 +548,7 @@ implementation in a submodule of an interface in a parent module.</p>
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">ddeabm_wrapper</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tout</span><span class="p">,</span><span class="n">tstop</span><span class="p">,</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_wrapper</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tout</span><span class="p">,</span><span class="n">tstop</span><span class="p">,</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="p">)</span>
 
     <span class="k">implicit none</span>
 
@@ -631,6 +635,9 @@ implementation in a submodule of an interface in a parent module.</p>
                         <span class="n">atol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,&amp;</span>
                         <span class="n">idid</span>  <span class="o">=</span> <span class="n">idid</span><span class="p">)</span>
 
+        <span class="c">!if there was a user-triggered error:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="n">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+
     <span class="k">case</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c">!normal integration, reporting the default intermediate points</span>
 
         <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>  <span class="c">!initial point</span>
@@ -646,6 +653,12 @@ implementation in a submodule of an interface in a parent module.</p>
                             <span class="n">rtol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">,&amp;</span>
                             <span class="n">atol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,&amp;</span>
                             <span class="n">idid</span>  <span class="o">=</span> <span class="n">idid</span><span class="p">)</span>
+
+            <span class="c">!if there was a user-triggered error:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                </span><span class="n">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+                <span class="k">exit</span>
+<span class="k">            end if</span>
 
             <span class="c">!check status (see ddeabm or idid codes):</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">idid</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>  <span class="c">!report a successful intermediate or final step</span>
@@ -667,12 +680,18 @@ implementation in a submodule of an interface in a parent module.</p>
 
     <hr>
     <footer>
-        <div class="row">
-        <div class="col-md-4">&copy; 2015 </div>
-	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+      <div class="row">
+        <div class="col-md-4">&copy; 2016 </div>
+        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4">
+          <span class="pull-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </span>
         </div>
-        <br>
+      </div>
+      <br>
     </footer>
     </div> <!-- /container -->
 
@@ -700,6 +719,6 @@ implementation in a submodule of an interface in a parent module.</p>
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

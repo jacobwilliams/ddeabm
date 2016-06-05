@@ -133,8 +133,6 @@
     <div id="vars" class="panel-collapse collapse">
       <div class="list-group">
         
-        <a class="list-group-item" href="../proc/ddeabm.html#variable-xern1">xern1</a>
-        
         <a class="list-group-item" href="../proc/ddeabm.html#variable-xern3">xern3</a>
         
       </div>
@@ -178,6 +176,8 @@
           <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
           
           <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
           
           <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
           
@@ -247,7 +247,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E10"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E11"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -406,7 +406,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <code>t, y(*), info(1), rtol, atol, idid</code></p>
 <h1>description of the arguments to ddeabm (an overview)</h1>
 <p>the parameters are</p>
-<div class="codehilite"><pre>  df -- this is the name of a subroutine which you provide to
+<div class="codehilite"><pre><span></span>  df -- this is the name of a subroutine which you provide to
          define the differential equations.
 
   neq -- this is the number of (first order) differential
@@ -445,7 +445,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
    provide sufficient storage space for designated arrays, set
    appropriate variables for the initialization of the problem, and
    give information about how you want the problem to be solved.</p>
-<div class="codehilite"><pre>  df -- provide a subroutine of the form
+<div class="codehilite"><pre><span></span>  df -- provide a subroutine of the form
                            df(x,u,uprime)
          to define the system of first order differential equations
          which is to be solved.  for the given values of x and the
@@ -620,7 +620,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
    along the way.  to find out whether the code achieved its goal
    or if the integration process was interrupted before the task was
    completed, you must check the idid parameter.</p>
-<div class="codehilite"><pre>  t -- the solution was successfully advanced to the
+<div class="codehilite"><pre><span></span>  t -- the solution was successfully advanced to the
          output value of t.
 
   y(*) -- contains the computed solution approximation at t.
@@ -715,7 +715,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   <code>info(1)=1</code> if you wish to continue after an interrupted task.
   do not set <code>info(1)=0</code> on a continuation call unless you
   want the code to restart at the current <code>t</code>.</p>
-<div class="codehilite"><pre>                     *** following a completed task ***
+<div class="codehilite"><pre><span></span>                     *** following a completed task ***
      if
          idid = 1, call the code again to continue the integration
                  another step in the direction of tout.
@@ -818,8 +818,8 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
 </g>
 <!-- proc~ddeabm&#45;&gt;proc~report_error -->
 <g id="edge2" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="black" d="M54.0384,-13C62.0196,-13 70.9811,-13 79.7791,-13"/>
-<polygon fill="black" stroke="black" points="79.9636,-16.5001 89.9635,-13 79.9635,-9.5001 79.9636,-16.5001"/>
+<path fill="none" stroke="#000000" d="M54.0384,-13C62.0196,-13 70.9811,-13 79.7791,-13"/>
+<polygon fill="#000000" stroke="#000000" points="79.9636,-16.5001 89.9635,-13 79.9635,-9.5001 79.9636,-16.5001"/>
 </g>
 </g>
 </svg>
@@ -894,6 +894,8 @@ Nodes of different colours represent the following:
 </g>
 </svg>
 
+Where possible, edges connecting nodes are given different colours to make them
+easier to distinguish in large graphs.
 <h5>Module Graph</h5>
 <p>Solid arrows point from a parent (sub)module to the submodule which is
 descended from it. Dashed arrows point from a module being used to the
@@ -936,20 +938,6 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-xern1"></span>character(len=8),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>xern1</strong></td><td></td><td></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
   <td><span class="anchor" id="variable-xern3"></span>character(len=16),</td>
   
   <td>public</td>
@@ -981,22 +969,23 @@ implementation in a submodule of an interface in a parent module.</p>
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">ddeabm</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tout</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">idid</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tout</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">idid</span><span class="p">)</span>
 
     <span class="k">implicit none</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">neq</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">t</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">y</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                       <span class="kd">::</span> <span class="n">tout</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>        <span class="kd">::</span> <span class="n">info</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">rtol</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">atol</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>                       <span class="kd">::</span> <span class="n">idid</span>
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">me</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">neq</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">t</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">y</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">tout</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">info</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">rtol</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">atol</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">idid</span>
 
-    <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xern1</span>
     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xern3</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span>  <span class="c">! if user-triggered error</span>
 
     <span class="c">! check for an apparent infinite loop</span>
 
@@ -1019,7 +1008,7 @@ implementation in a submodule of an interface in a parent module.</p>
     <span class="c">!make sure the deriv function was set:</span>
     <span class="k">if</span> <span class="p">(.</span><span class="nb">not</span><span class="p">.</span> <span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">))</span> <span class="k">then</span>
 <span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm&#39;</span><span class="p">,</span> <span class="s1">&#39;the derivative function DF &#39;</span><span class="o">//</span><span class="p">&amp;</span>
-                        <span class="s1">&#39; has not been associated.&#39;</span> <span class="o">//</span> <span class="n">xern1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="s1">&#39; has not been associated.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">idid</span><span class="o">=-</span><span class="mi">33</span>
         <span class="k">return</span>
 <span class="k">    end if</span>
@@ -1034,6 +1023,8 @@ implementation in a submodule of an interface in a parent module.</p>
                     <span class="n">me</span><span class="p">%</span><span class="n">phase1</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">nornd</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">stiff</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">intout</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">ns</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">kord</span><span class="p">,</span> <span class="p">&amp;</span>
                     <span class="n">me</span><span class="p">%</span><span class="n">kold</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">init</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">ksteps</span><span class="p">,&amp;</span>
                     <span class="n">me</span><span class="p">%</span><span class="n">kle4</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">iquit</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">kprev</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">ivc</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">iv</span><span class="p">,</span> <span class="n">me</span><span class="p">%</span><span class="n">kgi</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">idid</span> <span class="o">/=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="n">me</span><span class="p">%</span><span class="n">icount</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">icount</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">/=</span> <span class="n">me</span><span class="p">%</span><span class="n">tprev</span><span class="p">)</span> <span class="n">me</span><span class="p">%</span><span class="n">icount</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1050,12 +1041,18 @@ implementation in a submodule of an interface in a parent module.</p>
 
     <hr>
     <footer>
-        <div class="row">
-        <div class="col-md-4">&copy; 2015 </div>
-	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+      <div class="row">
+        <div class="col-md-4">&copy; 2016 </div>
+        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4">
+          <span class="pull-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </span>
         </div>
-        <br>
+      </div>
+      <br>
     </footer>
     </div> <!-- /container -->
 
@@ -1083,6 +1080,6 @@ implementation in a submodule of an interface in a parent module.</p>
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

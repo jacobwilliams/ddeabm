@@ -255,6 +255,8 @@
           
           <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
           
+          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+          
           <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
           
           <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
@@ -323,7 +325,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E13"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E14"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -851,7 +853,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
 <p><strong>first call</strong></p>
 <p>the user must provide storage in his calling program for all arrays
    in the call list, namely</p>
-<div class="codehilite"><pre> dimension y(neqn),wt(neqn),phi(neqn,16),p(neqn),yp(neqn),psi(12),&amp;
+<div class="codehilite"><pre><span></span> dimension y(neqn),wt(neqn),phi(neqn,16),p(neqn),yp(neqn),psi(12),&amp;
            alpha(12),beta(12),sig(13),v(12),w(12),g(13),gi(11),iv(10)
 </pre></div>
 
@@ -862,7 +864,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
    subroutine <code>df(x,y,yp)</code> to evaluate
         <code>dy(i)/dx = yp(i) = df(x,y(1),y(2),...,y(neqn))</code>
    and initialize only the following parameters:</p>
-<div class="codehilite"><pre>    neqn   : number of equations to be integrated
+<div class="codehilite"><pre><span></span>    neqn   : number of equations to be integrated
     y(*)   : vector of initial values of dependent variables
     x      : initial value of the independent variable
     h      : nominal step size indicating direction of integration
@@ -1549,7 +1551,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">dsteps</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">neqn</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">wt</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">k</span><span class="p">,&amp;</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">dsteps</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">neqn</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">wt</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">k</span><span class="p">,&amp;</span>
                        <span class="n">kold</span><span class="p">,</span> <span class="n">crash</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">g</span><span class="p">,&amp;</span>
                        <span class="n">phase1</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">nornd</span><span class="p">,</span> <span class="n">ksteps</span><span class="p">,</span> <span class="n">twou</span><span class="p">,</span> <span class="n">fouru</span><span class="p">,</span> <span class="n">xold</span><span class="p">,</span> <span class="n">kprev</span><span class="p">,</span> <span class="n">ivc</span><span class="p">,</span> <span class="n">iv</span><span class="p">,&amp;</span>
                        <span class="n">kgi</span><span class="p">,</span> <span class="n">gi</span><span class="p">)</span>
@@ -1600,6 +1602,8 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
                 <span class="n">reali</span><span class="p">,</span> <span class="n">realns</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">round</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">temp1</span><span class="p">,&amp;</span>
                 <span class="n">temp2</span><span class="p">,</span> <span class="n">temp3</span><span class="p">,</span> <span class="n">temp4</span><span class="p">,</span> <span class="n">temp5</span><span class="p">,</span> <span class="n">temp6</span><span class="p">,</span> <span class="n">u</span>
 
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
+
 <span class="c">!       ***     begin block 0     ***</span>
 <span class="c">!   check if step size or error tolerance is too small for machine</span>
 <span class="c">!   precision.  if first step, initialize phi array and estimate a</span>
@@ -1635,6 +1639,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
 
     <span class="c">!   initialize.  compute appropriate step size for first step</span>
     <span class="c">!     call me%df(x,y,yp)</span>
+    <span class="c">!     if (me%error) return ! user-triggered error</span>
     <span class="c">!     sum = 0.0_wp</span>
           <span class="k">do </span><span class="n">l</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">neqn</span>
             <span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
@@ -1651,7 +1656,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
           <span class="n">big</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">d1mach2</span><span class="p">)</span>
           <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">dhstrt</span><span class="p">(</span><span class="n">neqn</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">wt</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">big</span><span class="p">,&amp;</span>
                        <span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">h</span><span class="p">)</span>
-
+          <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
           <span class="n">hold</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
           <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
           <span class="n">kold</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1853,6 +1858,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
       <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span>
       <span class="n">absh</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
       <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
 <span class="c">!</span>
 <span class="c">!   estimate errors at orders k,k-1,k-2</span>
 <span class="c">!</span>
@@ -1880,7 +1886,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
       <span class="c">!   test if order should be lowered</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">km2</span><span class="o">&gt;</span><span class="mf">0.0_wp</span><span class="p">)</span> <span class="k">then</span>
 <span class="k">          if</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">erkm1</span><span class="p">,</span><span class="n">erkm2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">erk</span><span class="p">)</span> <span class="n">knew</span> <span class="o">=</span> <span class="n">km1</span>
-      <span class="n">elseif</span> <span class="p">(</span><span class="n">km2</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span> <span class="k">then</span>
+      <span class="k">else if</span> <span class="p">(</span><span class="n">km2</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span> <span class="k">then</span>
 <span class="k">          if</span> <span class="p">(</span><span class="n">erkm1</span> <span class="o">&lt;=</span> <span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span> <span class="n">knew</span> <span class="o">=</span> <span class="n">km1</span>
       <span class="k">end if</span>
       <span class="c">!       ***     end block 2     ***</span>
@@ -1961,6 +1967,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
           <span class="k">end do</span>
 <span class="k">      end if</span>
 <span class="k">     call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
 
 <span class="c">!   update differences for next step</span>
 
@@ -2041,12 +2048,18 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
 
     <hr>
     <footer>
-        <div class="row">
-        <div class="col-md-4">&copy; 2015 </div>
-	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+      <div class="row">
+        <div class="col-md-4">&copy; 2016 </div>
+        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4">
+          <span class="pull-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </span>
         </div>
-        <br>
+      </div>
+      <br>
     </footer>
     </div> <!-- /container -->
 
@@ -2074,6 +2087,6 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

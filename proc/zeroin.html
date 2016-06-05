@@ -203,6 +203,8 @@
           
           <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
           
+          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+          
           <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
           
           <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
@@ -461,8 +463,8 @@ public subroutine zeroin(f, ax, bx, tol, xzero, fzero, iflag, fax, fbx)
 </g>
 <!-- proc~zeroin_test&#45;&gt;proc~zeroin -->
 <g id="edge4" class="edge"><title>proc~zeroin_test&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="black" d="M199.824,-51.842C220.755,-48.5528 247.933,-44.2819 269.683,-40.864"/>
-<polygon fill="black" stroke="black" points="270.227,-44.3217 279.562,-39.3116 269.14,-37.4065 270.227,-44.3217"/>
+<path fill="none" stroke="#000000" d="M199.824,-51.842C220.755,-48.5528 247.933,-44.2819 269.683,-40.864"/>
+<polygon fill="#000000" stroke="#000000" points="270.227,-44.3217 279.562,-39.3116 269.14,-37.4065 270.227,-44.3217"/>
 </g>
 <!-- proc~ddeabm_with_event_wrapper -->
 <g id="node3" class="node"><title>proc~ddeabm_with_event_wrapper</title>
@@ -473,8 +475,8 @@ public subroutine zeroin(f, ax, bx, tol, xzero, fzero, iflag, fax, fbx)
 </g>
 <!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
 <g id="edge6" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="black" d="M244.371,-25.1582C253.253,-26.554 261.975,-27.9246 269.956,-29.1788"/>
-<polygon fill="black" stroke="black" points="269.551,-32.658 279.973,-30.7529 270.637,-25.7429 269.551,-32.658"/>
+<path fill="none" stroke="#000000" d="M244.371,-25.1582C253.253,-26.554 261.975,-27.9246 269.956,-29.1788"/>
+<polygon fill="#000000" stroke="#000000" points="269.551,-32.658 279.973,-30.7529 270.637,-25.7429 269.551,-32.658"/>
 </g>
 <!-- program~test -->
 <g id="node4" class="node"><title>program~test</title>
@@ -485,8 +487,8 @@ public subroutine zeroin(f, ax, bx, tol, xzero, fzero, iflag, fax, fbx)
 </g>
 <!-- program~test&#45;&gt;proc~zeroin_test -->
 <g id="edge2" class="edge"><title>program~test&#45;&gt;proc~zeroin_test</title>
-<path fill="none" stroke="black" d="M54.3258,-57C74.1997,-57 101.495,-57 124.242,-57"/>
-<polygon fill="black" stroke="black" points="124.331,-60.5001 134.331,-57 124.331,-53.5001 124.331,-60.5001"/>
+<path fill="none" stroke="#000000" d="M54.3258,-57C74.1997,-57 101.495,-57 124.242,-57"/>
+<polygon fill="#000000" stroke="#000000" points="124.331,-60.5001 134.331,-57 124.331,-53.5001 124.331,-60.5001"/>
 </g>
 </g>
 </svg>
@@ -561,6 +563,8 @@ Nodes of different colours represent the following:
 </g>
 </svg>
 
+Where possible, edges connecting nodes are given different colours to make them
+easier to distinguish in large graphs.
 <h5>Module Graph</h5>
 <p>Solid arrows point from a parent (sub)module to the submodule which is
 descended from it. Dashed arrows point from a module being used to the
@@ -815,7 +819,7 @@ implementation in a submodule of an interface in a parent module.</p>
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">zeroin</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="n">bx</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">xzero</span><span class="p">,</span><span class="n">fzero</span><span class="p">,</span><span class="n">iflag</span><span class="p">,</span><span class="n">fax</span><span class="p">,</span><span class="n">fbx</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">zeroin</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="n">bx</span><span class="p">,</span><span class="n">tol</span><span class="p">,</span><span class="n">xzero</span><span class="p">,</span><span class="n">fzero</span><span class="p">,</span><span class="n">iflag</span><span class="p">,</span><span class="n">fax</span><span class="p">,</span><span class="n">fbx</span><span class="p">)</span>
 
     <span class="k">use </span><span class="n">iso_fortran_env</span><span class="p">,</span> <span class="n">only</span><span class="p">:</span> <span class="n">error_unit</span>
 
@@ -856,13 +860,13 @@ implementation in a submodule of an interface in a parent module.</p>
         <span class="n">xzero</span> <span class="o">=</span> <span class="n">a</span>
         <span class="n">fzero</span> <span class="o">=</span> <span class="n">fa</span>
 
-    <span class="n">elseif</span> <span class="p">(</span><span class="n">fb</span><span class="o">==</span><span class="n">zero</span><span class="p">)</span> <span class="k">then</span>
+    <span class="k">else if</span> <span class="p">(</span><span class="n">fb</span><span class="o">==</span><span class="n">zero</span><span class="p">)</span> <span class="k">then</span>
 
 <span class="k">        </span><span class="n">iflag</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">xzero</span> <span class="o">=</span> <span class="n">b</span>
         <span class="n">fzero</span> <span class="o">=</span> <span class="n">fb</span>
 
-    <span class="n">elseif</span> <span class="p">(</span><span class="n">fa</span><span class="o">*</span><span class="p">(</span><span class="n">fb</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">fb</span><span class="p">))</span><span class="o">&lt;</span><span class="n">zero</span><span class="p">)</span> <span class="k">then</span>  <span class="c">! check that f(ax) and f(bx) have different signs</span>
+    <span class="k">else if</span> <span class="p">(</span><span class="n">fa</span><span class="o">*</span><span class="p">(</span><span class="n">fb</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">fb</span><span class="p">))</span><span class="o">&lt;</span><span class="n">zero</span><span class="p">)</span> <span class="k">then</span>  <span class="c">! check that f(ax) and f(bx) have different signs</span>
 
         <span class="n">c</span><span class="o">=</span><span class="n">a</span>
         <span class="n">fc</span><span class="o">=</span><span class="n">fa</span>
@@ -880,8 +884,8 @@ implementation in a submodule of an interface in a parent module.</p>
                 <span class="n">fc</span><span class="o">=</span><span class="n">fa</span>
             <span class="k">end if</span>
 
-<span class="k">            </span><span class="n">tol1</span><span class="o">=</span><span class="n">two</span><span class="o">*</span><span class="n">eps</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">+</span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">tol</span>
-            <span class="n">xm</span> <span class="o">=</span> <span class="mf">0.5_wp</span><span class="o">*</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
+<span class="k">            </span><span class="n">tol1</span> <span class="o">=</span> <span class="n">two</span><span class="o">*</span><span class="n">eps</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">+</span><span class="n">half</span><span class="o">*</span><span class="n">tol</span>
+            <span class="n">xm</span> <span class="o">=</span> <span class="n">half</span><span class="o">*</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
             <span class="k">if</span> <span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">xm</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">tol1</span><span class="p">).</span><span class="nb">or</span><span class="p">.(</span><span class="n">fb</span><span class="o">==</span><span class="n">zero</span><span class="p">))</span> <span class="k">exit</span>
 
             <span class="c">! see if a bisection is forced</span>
@@ -906,7 +910,7 @@ implementation in a submodule of an interface in a parent module.</p>
 <span class="k">                </span><span class="n">s</span><span class="o">=</span><span class="n">e</span>
                 <span class="n">e</span><span class="o">=</span><span class="n">d</span>
                 <span class="k">if</span> <span class="p">(((</span><span class="n">two</span><span class="o">*</span><span class="n">p</span><span class="p">)</span><span class="o">&gt;=</span><span class="p">(</span><span class="n">three</span><span class="o">*</span><span class="n">xm</span><span class="o">*</span><span class="n">q</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">tol1</span><span class="o">*</span><span class="n">q</span><span class="p">)))</span> <span class="p">.</span><span class="nb">or</span><span class="p">.</span> <span class="p">&amp;</span>
-                    <span class="p">(</span><span class="n">p</span><span class="o">&gt;=</span><span class="nb">abs</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">s</span><span class="o">*</span><span class="n">q</span><span class="p">)))</span> <span class="k">then</span>
+                    <span class="p">(</span><span class="n">p</span><span class="o">&gt;=</span><span class="nb">abs</span><span class="p">(</span><span class="n">half</span><span class="o">*</span><span class="n">s</span><span class="o">*</span><span class="n">q</span><span class="p">)))</span> <span class="k">then</span>
 <span class="k">                    </span><span class="n">d</span><span class="o">=</span><span class="n">xm</span>
                     <span class="n">e</span><span class="o">=</span><span class="n">d</span>
                 <span class="k">else</span>
@@ -962,12 +966,18 @@ implementation in a submodule of an interface in a parent module.</p>
 
     <hr>
     <footer>
-        <div class="row">
-        <div class="col-md-4">&copy; 2015 </div>
-	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+      <div class="row">
+        <div class="col-md-4">&copy; 2016 </div>
+        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4">
+          <span class="pull-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </span>
         </div>
-        <br>
+      </div>
+      <br>
     </footer>
     </div> <!-- /container -->
 
@@ -995,6 +1005,6 @@ implementation in a submodule of an interface in a parent module.</p>
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

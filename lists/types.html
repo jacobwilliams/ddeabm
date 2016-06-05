@@ -101,7 +101,7 @@ All Types &ndash; ddeabm
 			 
 			   <tr><td><a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><a href='../type/ddeabm_class.html'>ddeabm_class</a></td><td><p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p></td></tr>
 			 
-			   <tr><td><a href='../type/spacecraft.html'>spacecraft</a></td><td><a href='../program/ddeabm_performance_test.html'>ddeabm_performance_test</a></td><td>ddeabm_class</td><td><p>spacecraft propagation type.
+			   <tr><td><a href='../type/spacecraft.html'>spacecraft</a></td><td><a href='../program/ddeabm_performance_test.html'>ddeabm_performance_test</a></td><td><a href='../type/ddeabm_class.html'>ddeabm_class</a></td><td><p>spacecraft propagation type.
  extends the <a href="../type/ddeabm_class.html">ddeabm_class</a> to include data used in the deriv routine</p></td></tr>
 			 
 			 </tbody></table>
@@ -120,9 +120,21 @@ All Types &ndash; ddeabm
 <!-- type~ddeabm_class -->
 <g id="node1" class="node"><title>type~ddeabm_class</title>
 <a xlink:href="../type/ddeabm_class.html" xlink:title="ddeabm_class">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="82,-26 4.26326e-14,-26 0,-1.24345e-14 82,-3.55271e-15 82,-26"/>
-<text text-anchor="middle" x="41" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class</text>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="82,-48 4.26326e-14,-48 0,-22 82,-22 82,-48"/>
+<text text-anchor="middle" x="41" y="-32.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class</text>
 </a>
+</g>
+<!-- type~spacecraft -->
+<g id="node2" class="node"><title>type~spacecraft</title>
+<a xlink:href="../type/spacecraft.html" xlink:title="spacecraft">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="219,-70 157,-70 157,-44 219,-44 219,-70"/>
+<text text-anchor="middle" x="188" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">spacecraft</text>
+</a>
+</g>
+<!-- type~ddeabm_class&#45;&gt;type~spacecraft -->
+<g id="edge2" class="edge"><title>type~ddeabm_class&#45;&gt;type~spacecraft</title>
+<path fill="none" stroke="#000000" d="M82.3389,-41.1868C102.442,-44.1955 126.544,-47.8025 146.649,-50.8115"/>
+<polygon fill="#000000" stroke="#000000" points="146.348,-54.3053 156.756,-52.3241 147.384,-47.3824 146.348,-54.3053"/>
 </g>
 <!-- type~ddeabm_with_event_class -->
 <g id="node3" class="node"><title>type~ddeabm_with_event_class</title>
@@ -133,25 +145,8 @@ All Types &ndash; ddeabm
 </g>
 <!-- type~ddeabm_class&#45;&gt;type~ddeabm_with_event_class -->
 <g id="edge4" class="edge"><title>type~ddeabm_class&#45;&gt;type~ddeabm_with_event_class</title>
-<path fill="none" stroke="black" d="M82.3389,-13C90.4832,-13 99.2838,-13 108.209,-13"/>
-<polygon fill="black" stroke="black" points="108.311,-16.5001 118.311,-13 108.31,-9.5001 108.311,-16.5001"/>
-</g>
-<!-- type~spacecraft -->
-<g id="node2" class="node"><title>type~spacecraft</title>
-<a xlink:href="../type/spacecraft.html" xlink:title="spacecraft">
-<polygon fill="#5cb85c" stroke="#5cb85c" points="219,-70 157,-70 157,-44 219,-44 219,-70"/>
-<text text-anchor="middle" x="188" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">spacecraft</text>
-</a>
-</g>
-<!-- ddeabm_class -->
-<g id="node4" class="node"><title>ddeabm_class</title>
-<polygon fill="#5cb85c" stroke="#5cb85c" points="82,-70 4.26326e-14,-70 0,-44 82,-44 82,-70"/>
-<text text-anchor="middle" x="41" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class</text>
-</g>
-<!-- ddeabm_class&#45;&gt;type~spacecraft -->
-<g id="edge2" class="edge"><title>ddeabm_class&#45;&gt;type~spacecraft</title>
-<path fill="none" stroke="black" d="M82.3389,-57C102.442,-57 126.544,-57 146.649,-57"/>
-<polygon fill="black" stroke="black" points="146.756,-60.5001 156.756,-57 146.756,-53.5001 146.756,-60.5001"/>
+<path fill="none" stroke="#000000" d="M82.3389,-28.8132C90.4832,-27.5943 99.2838,-26.2773 108.209,-24.9415"/>
+<polygon fill="#000000" stroke="#000000" points="108.939,-28.3714 118.311,-23.4297 107.903,-21.4485 108.939,-28.3714"/>
 </g>
 </g>
 </svg>
@@ -226,6 +221,8 @@ Nodes of different colours represent the following:
 </g>
 </svg>
 
+Where possible, edges connecting nodes are given different colours to make them
+easier to distinguish in large graphs.
 <h5>Module Graph</h5>
 <p>Solid arrows point from a parent (sub)module to the submodule which is
 descended from it. Dashed arrows point from a module being used to the
@@ -251,12 +248,18 @@ implementation in a submodule of an interface in a parent module.</p>
 
     <hr>
     <footer>
-        <div class="row">
-        <div class="col-md-4">&copy; 2015 </div>
-	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+      <div class="row">
+        <div class="col-md-4">&copy; 2016 </div>
+        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4">
+          <span class="pull-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </span>
         </div>
-        <br>
+      </div>
+      <br>
     </footer>
     </div> <!-- /container -->
 
@@ -284,6 +287,6 @@ implementation in a submodule of an interface in a parent module.</p>
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>

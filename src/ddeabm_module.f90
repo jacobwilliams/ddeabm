@@ -130,6 +130,10 @@
         integer,dimension(10)                :: iv       = 0
         integer                              :: kgi      = 0
 
+        logical :: error = .false.  !! will be set in `stop_integration`.
+                                    !! indicates an error and to
+                                    !! abort the integration
+
     contains
 
         private
@@ -138,6 +142,9 @@
         procedure,non_overridable,public :: integrate  => ddeabm_wrapper
         procedure,non_overridable,public :: destroy    => destroy_ddeabm
         procedure,non_overridable,public :: first_call => ddeabm_new_problem
+
+        procedure,non_overridable,public :: stop_integration => ddeabm_stop_integration
+                !! user can call this in `df` routine to stop the integration
 
         !support routines:
         procedure,non_overridable :: ddeabm
@@ -212,7 +219,28 @@
 !*****************************************************************************************
 !> author: Jacob Williams
 !
-!  Call this to indicate that a new problem is being solved (see [[ddeabm]] documentation).
+!  Call this to abort the integration if there is an error.
+!  (Can be called in `df` by the user.) The step
+!  will be considered invalid and not returned.
+!
+!@note This will produce an `idid = -1000` exit code from the integrator.
+
+    subroutine ddeabm_stop_integration(me)
+
+    implicit none
+
+    class(ddeabm_class),intent(inout) :: me
+
+    me%error = .true.
+
+    end subroutine ddeabm_stop_integration
+!*****************************************************************************************
+
+!*****************************************************************************************
+!> author: Jacob Williams
+!
+!  Call this to indicate that a new problem is being solved.
+!  It sets `info(1) = 0` (see [[ddeabm]] documentation).
 
     subroutine ddeabm_new_problem(me)
 
@@ -221,6 +249,7 @@
     class(ddeabm_class),intent(inout) :: me
 
     me%info(1) = 0
+    me%error = .false.
 
     end subroutine ddeabm_new_problem
 !*****************************************************************************************
@@ -469,6 +498,9 @@
                         atol  = me%atol_tmp,&
                         idid  = idid)
 
+        !if there was a user-triggered error:
+        if (me%error) idid = -1000
+
     case(2) !normal integration, reporting the default intermediate points
 
         call me%report(t,y)  !initial point
@@ -484,6 +516,12 @@
                             rtol  = me%rtol_tmp,&
                             atol  = me%atol_tmp,&
                             idid  = idid)
+
+            !if there was a user-triggered error:
+            if (me%error) then
+                idid = -1000
+                exit
+            end if
 
             !check status (see ddeabm or idid codes):
             if (idid>0) call me%report(t,y)  !report a successful intermediate or final step
@@ -555,19 +593,22 @@
 
     !check for invalid inputs:
     if (mode/=1 .and. mode/=2) then
-        call report_error('ddeabm_with_event_wrapper', 'integration_mode must be 1 or 2.', 0, 0)
+        call report_error('ddeabm_with_event_wrapper', &
+                            'integration_mode must be 1 or 2.', 0, 0)
         idid = -33
         return
     end if
     if ((mode==2) .and. (.not. associated(me%report))) then
-        call report_error('ddeabm_with_event_wrapper', 'REPORT procedure must be associated for integration_mode=2.', 0, 0)
+        call report_error('ddeabm_with_event_wrapper', &
+                            'REPORT procedure must be associated for integration_mode=2.', 0, 0)
         idid = -33
         return
     end if
 
     !make sure the event function was set:
     if (.not. associated(me%gfunc)) then
-        call report_error('ddeabm_with_event_wrapper', 'the event function GFUNC has not been associated.', 0, 0)
+        call report_error('ddeabm_with_event_wrapper', &
+                            'the event function GFUNC has not been associated.', 0, 0)
         idid=-33
         return
     end if
@@ -618,6 +659,12 @@
                           atol  = me%atol_tmp,&
                           idid  = idid)
 
+        !if there was a user-triggered error:
+        if (me%error) then
+            idid = -1000
+            exit
+        end if
+
         !evalute event function at new point:
         t2 = t
         y2 = y
@@ -647,12 +694,12 @@
             if (mode==2) call me%report(t,y)
             return
 
-        elseif (first .and. abs(g1)<=me%tol) then  !root at initial time
+        else if (first .and. abs(g1)<=me%tol) then  !root at initial time
 
             !ignore this root
             if (mode==2) call me%report(t,y)
 
-        elseif (g1*g2<=0.0_wp) then
+        else if (g1*g2<=0.0_wp) then
             ! different signs - root somewhere on [t1,t2]
             ! note: we ignore if a root on the initial time
 
@@ -1127,18 +1174,19 @@
 
     implicit none
 
-    class(ddeabm_class),intent(inout)         :: me
-    integer,intent(in)                        :: neq
-    real(wp),intent(inout)                    :: t
-    real(wp),dimension(neq),intent(inout)     :: y
-    real(wp),intent(in)                       :: tout
-    integer,dimension(4),intent(inout)        :: info
-    real(wp),dimension(:),intent(inout)       :: rtol
-    real(wp),dimension(:),intent(inout)       :: atol
-    integer,intent(out)                       :: idid
+    class(ddeabm_class),intent(inout)     :: me
+    integer,intent(in)                    :: neq
+    real(wp),intent(inout)                :: t
+    real(wp),dimension(neq),intent(inout) :: y
+    real(wp),intent(in)                   :: tout
+    integer,dimension(4),intent(inout)    :: info
+    real(wp),dimension(:),intent(inout)   :: rtol
+    real(wp),dimension(:),intent(inout)   :: atol
+    integer,intent(out)                   :: idid
 
-    character(len=8) :: xern1
     character(len=16) :: xern3
+
+    if (me%error) return  ! if user-triggered error
 
     ! check for an apparent infinite loop
 
@@ -1161,7 +1209,7 @@
     !make sure the deriv function was set:
     if (.not. associated(me%df)) then
         call report_error('ddeabm', 'the derivative function DF '//&
-                        ' has not been associated.' // xern1, 0, 0)
+                        ' has not been associated.', 0, 0)
         idid=-33
         return
     end if
@@ -1176,6 +1224,8 @@
                     me%phase1, me%nornd, me%stiff, me%intout, me%ns, me%kord, &
                     me%kold, me%init, me%ksteps,&
                     me%kle4, me%iquit, me%kprev, me%ivc, me%iv, me%kgi)
+
+    if (me%error) return ! user-triggered error
 
     if (idid /= (-2)) me%icount = me%icount + 1
     if (t /= me%tprev) me%icount = 0
@@ -1210,61 +1260,63 @@
 
     implicit none
 
-    class(ddeabm_class),intent(inout)             :: me
-    integer,intent(in)                            :: neq
-    real(wp),intent(inout)                        :: t
-    real(wp),dimension(neq),intent(inout)         :: y
-    real(wp),intent(in)                           :: tout
-    integer,dimension(4),intent(inout)            :: info
-    real(wp),dimension(:),intent(inout)           :: rtol
-    real(wp),dimension(:),intent(inout)           :: atol
-    integer,intent(inout)                         :: idid
-    real(wp),dimension(neq),intent(inout)         :: ypout
-    real(wp),dimension(neq),intent(inout)         :: yp
-    real(wp),dimension(neq),intent(inout)         :: yy
-    real(wp),dimension(neq),intent(inout)         :: wt
-    real(wp),dimension(neq),intent(inout)         :: p
-    real(wp),dimension(neq,16),intent(inout)      :: phi
-    real(wp),dimension(12),intent(inout)          :: alpha
-    real(wp),dimension(12),intent(inout)          :: beta
-    real(wp),dimension(12),intent(inout)          :: psi
-    real(wp),dimension(12),intent(inout)          :: v
-    real(wp),dimension(12),intent(inout)          :: w
-    real(wp),dimension(13),intent(inout)          :: sig
-    real(wp),dimension(13),intent(inout)          :: g
-    real(wp),dimension(11),intent(inout)          :: gi
-    real(wp),intent(inout)                        :: h
-    real(wp),intent(inout)                        :: eps
-    real(wp),intent(inout)                        :: x
-    real(wp),intent(inout)                        :: xold
-    real(wp),intent(inout)                        :: hold
-    real(wp),intent(inout)                        :: told
-    real(wp),intent(inout)                        :: delsgn
-    real(wp),intent(inout)                        :: tstop
-    real(wp),intent(inout)                        :: twou
-    real(wp),intent(inout)                        :: fouru
-    logical,intent(inout)                         :: start
-    logical,intent(inout)                         :: phase1
-    logical,intent(inout)                         :: nornd
-    logical,intent(inout)                         :: stiff
-    logical,intent(inout)                         :: intout
-    integer,intent(inout)                         :: ns
-    integer,intent(inout)                         :: kord
-    integer,intent(inout)                         :: kold
-    integer,intent(inout)                         :: init
-    integer,intent(inout)                         :: ksteps
-    integer,intent(inout)                         :: kle4
-    integer,intent(inout)                         :: iquit
-    integer,intent(inout)                         :: kprev
-    integer,intent(inout)                         :: ivc
-    integer,dimension(10),intent(inout)           :: iv
-    integer,intent(inout)                         :: kgi
+    class(ddeabm_class),intent(inout)        :: me
+    integer,intent(in)                       :: neq
+    real(wp),intent(inout)                   :: t
+    real(wp),dimension(neq),intent(inout)    :: y
+    real(wp),intent(in)                      :: tout
+    integer,dimension(4),intent(inout)       :: info
+    real(wp),dimension(:),intent(inout)      :: rtol
+    real(wp),dimension(:),intent(inout)      :: atol
+    integer,intent(inout)                    :: idid
+    real(wp),dimension(neq),intent(inout)    :: ypout
+    real(wp),dimension(neq),intent(inout)    :: yp
+    real(wp),dimension(neq),intent(inout)    :: yy
+    real(wp),dimension(neq),intent(inout)    :: wt
+    real(wp),dimension(neq),intent(inout)    :: p
+    real(wp),dimension(neq,16),intent(inout) :: phi
+    real(wp),dimension(12),intent(inout)     :: alpha
+    real(wp),dimension(12),intent(inout)     :: beta
+    real(wp),dimension(12),intent(inout)     :: psi
+    real(wp),dimension(12),intent(inout)     :: v
+    real(wp),dimension(12),intent(inout)     :: w
+    real(wp),dimension(13),intent(inout)     :: sig
+    real(wp),dimension(13),intent(inout)     :: g
+    real(wp),dimension(11),intent(inout)     :: gi
+    real(wp),intent(inout)                   :: h
+    real(wp),intent(inout)                   :: eps
+    real(wp),intent(inout)                   :: x
+    real(wp),intent(inout)                   :: xold
+    real(wp),intent(inout)                   :: hold
+    real(wp),intent(inout)                   :: told
+    real(wp),intent(inout)                   :: delsgn
+    real(wp),intent(inout)                   :: tstop
+    real(wp),intent(inout)                   :: twou
+    real(wp),intent(inout)                   :: fouru
+    logical,intent(inout)                    :: start
+    logical,intent(inout)                    :: phase1
+    logical,intent(inout)                    :: nornd
+    logical,intent(inout)                    :: stiff
+    logical,intent(inout)                    :: intout
+    integer,intent(inout)                    :: ns
+    integer,intent(inout)                    :: kord
+    integer,intent(inout)                    :: kold
+    integer,intent(inout)                    :: init
+    integer,intent(inout)                    :: ksteps
+    integer,intent(inout)                    :: kle4
+    integer,intent(inout)                    :: iquit
+    integer,intent(inout)                    :: kprev
+    integer,intent(inout)                    :: ivc
+    integer,dimension(10),intent(inout)      :: iv
+    integer,intent(inout)                    :: kgi
 
     integer :: k, l, m, ltol, natolp, nrtolp
     real(wp) :: a, absdel, del, dt, ha, u
     logical :: crash
     character(len=8) :: xern1
     character(len=16) :: xern3, xern4
+
+    if (me%error) return  ! if user-triggered error
 
     ! on the first call, perform initialization
 
@@ -1456,6 +1508,7 @@
         init=1
         a=t
         call me%df(a,y,yp)
+        if (me%error) return ! user-triggered error
         if (t == tout) then
             idid=2
             ypout = yp
@@ -1502,6 +1555,7 @@
             dt = tout - x
             y = yy + dt*yp
             call me%df(tout,y,ypout)
+            if (me%error) return ! user-triggered error
             idid = 3
             t = tout
             told = t
@@ -1566,6 +1620,7 @@
         call me%dsteps(neq,yy,x,h,eps,wt,start,hold,kord,kold,crash,phi,p,&
                         yp,psi,alpha,beta,sig,v,w,g,phase1,ns,nornd,ksteps,&
                         twou,fouru,xold,kprev,ivc,iv,kgi,gi)
+        if (me%error) return !user-triggered error
 
         if (crash) then
             ! tolerances too small
@@ -1683,7 +1738,9 @@
                 dx, dy, fbnd, relper,&
                 srydpb, tolexp, tolmin, tolp, tolsum, ydpb
 
-    ! begin block permitting ...exits to 160
+    if (me%error) return !user-triggered error
+
+    ! begin block permitting
     dx = b - a
     absdx = abs(dx)
     relper = small**0.375_wp
@@ -1697,6 +1754,7 @@
     da = sign(max(min(relper*abs(a),absdx),100.0_wp*small*abs(a)),dx)
     if (da == 0.0_wp) da = relper*dx
     call me%df(a+da,y,sf)
+    if (me%error) return ! user-triggered error
     yp = sf - yprime
     delf = dhvnrm(yp,neq)
     dfdxb = big
@@ -1752,20 +1810,26 @@
             ! use a shifted value of the independent variable
             ! in computing one estimate
             call me%df(a+da,pv,yp)
+            if (me%error) return ! user-triggered error
             pv = yp - sf
         else
             ! evaluate derivatives associated with perturbed
             ! vector and compute corresponding differences
             call me%df(a,pv,yp)
+            if (me%error) return ! user-triggered error
             pv = yp - yprime
         end if
         ! choose largest bounds on the first derivative
         ! and a local lipschitz constant
         fbnd = max(fbnd,dhvnrm(yp,neq))
         delf = dhvnrm(pv,neq)
-        if (delf >= big*abs(dely)) exit
+        if (delf >= big*abs(dely)) then
+            ! protect against an overflow
+            dfdub = big
+            exit
+        end if
         dfdub = max(dfdub,delf/abs(dely))
-        if (k == lk) go to 160  !......exit
+        if (k == lk) exit
 
         ! choose next perturbation vector
         if (delf == 0.0_wp) delf = 1.0_wp
@@ -1783,11 +1847,6 @@
         end do
         delf = dhvnrm(yp,neq)
     end do
-
-    ! protect against an overflow
-    dfdub = big
-
-160 continue
 
     ! compute a bound (ydpb) on the norm of the second derivative
 
@@ -1818,7 +1877,7 @@
         ! both first derivative term (fbnd) and second
         ! derivative term (ydpb) are zero
         if (tolp < 1.0_wp) h = absdx*tolp
-    elseif (ydpb == 0.0_wp) then
+    else if (ydpb == 0.0_wp) then
         ! only second derivative term (ydpb) is zero
         if (tolp < fbnd*absdx) h = tolp/fbnd
     else
@@ -2178,6 +2237,8 @@
                 reali, realns, rho, round, tau, temp1,&
                 temp2, temp3, temp4, temp5, temp6, u
 
+    if (me%error) return !user-triggered error
+
 !       ***     begin block 0     ***
 !   check if step size or error tolerance is too small for machine
 !   precision.  if first step, initialize phi array and estimate a
@@ -2213,6 +2274,7 @@
 
     !   initialize.  compute appropriate step size for first step
     !     call me%df(x,y,yp)
+    !     if (me%error) return ! user-triggered error
     !     sum = 0.0_wp
           do l = 1,neqn
             phi(l,1) = yp(l)
@@ -2229,7 +2291,7 @@
           big = sqrt(d1mach2)
           call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
                        phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
-
+          if (me%error) return !user-triggered error
           hold = 0.0_wp
           k = 1
           kold = 0
@@ -2431,6 +2493,7 @@
       x = x + h
       absh = abs(h)
       call me%df(x,p,yp)
+      if (me%error) return ! user-triggered error
 !
 !   estimate errors at orders k,k-1,k-2
 !
@@ -2458,7 +2521,7 @@
       !   test if order should be lowered
       if (km2>0.0_wp) then
           if (max(erkm1,erkm2) <= erk) knew = km1
-      elseif (km2==0.0_wp) then
+      else if (km2==0.0_wp) then
           if (erkm1 <= 0.5_wp*erk) knew = km1
       end if
       !       ***     end block 2     ***
@@ -2539,6 +2602,7 @@
           end do
       end if
      call me%df(x,y,yp)
+     if (me%error) return ! user-triggered error
 
 !   update differences for next step
 

@@ -159,7 +159,7 @@
         
         <a class="list-group-item" href="../proc/ddes.html#variable-crash">crash</a>
         
-        <a class="list-group-item" href="../proc/ddes.html#variable-xern1%7E2">xern1</a>
+        <a class="list-group-item" href="../proc/ddes.html#variable-xern1">xern1</a>
         
         <a class="list-group-item" href="../proc/ddes.html#variable-xern3%7E2">xern3</a>
         
@@ -206,6 +206,8 @@
           <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
           
           <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+          
+          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
           
           <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
           
@@ -275,7 +277,7 @@ private subroutine ddes(me, neq, t, y, tout, info, rtol, atol, idid, ypout, yp, 
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E11"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E12"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -1058,8 +1060,8 @@ private subroutine ddes(me, neq, t, y, tout, info, rtol, atol, idid, ypout, yp, 
 </g>
 <!-- proc~ddes&#45;&gt;proc~report_error -->
 <g id="edge2" class="edge"><title>proc~ddes&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="black" d="M54.0384,-41.0698C62.1064,-42.881 71.176,-44.9171 80.0659,-46.9128"/>
-<polygon fill="black" stroke="black" points="79.4397,-50.3592 89.9635,-49.1347 80.973,-43.5292 79.4397,-50.3592"/>
+<path fill="none" stroke="#000000" d="M54.0384,-41.0698C62.1064,-42.881 71.176,-44.9171 80.0659,-46.9128"/>
+<polygon fill="#000000" stroke="#000000" points="79.4397,-50.3592 89.9635,-49.1347 80.973,-43.5292 79.4397,-50.3592"/>
 </g>
 <!-- proc~dintp -->
 <g id="node3" class="node"><title>proc~dintp</title>
@@ -1070,8 +1072,8 @@ private subroutine ddes(me, neq, t, y, tout, info, rtol, atol, idid, ypout, yp, 
 </g>
 <!-- proc~ddes&#45;&gt;proc~dintp -->
 <g id="edge4" class="edge"><title>proc~ddes&#45;&gt;proc~dintp</title>
-<path fill="none" stroke="black" d="M54.0384,-28.9302C64.4487,-26.5931 76.5267,-23.8818 87.7343,-21.3658"/>
-<polygon fill="black" stroke="black" points="88.7192,-24.7319 97.7097,-19.1264 87.1858,-17.9019 88.7192,-24.7319"/>
+<path fill="none" stroke="#000000" d="M54.0384,-28.9302C64.4487,-26.5931 76.5267,-23.8818 87.7343,-21.3658"/>
+<polygon fill="#000000" stroke="#000000" points="88.7192,-24.7319 97.7097,-19.1264 87.1858,-17.9019 88.7192,-24.7319"/>
 </g>
 </g>
 </svg>
@@ -1146,6 +1148,8 @@ Nodes of different colours represent the following:
 </g>
 </svg>
 
+Where possible, edges connecting nodes are given different colours to make them
+easier to distinguish in large graphs.
 <h5>Module Graph</h5>
 <p>Solid arrows point from a parent (sub)module to the submodule which is
 descended from it. Dashed arrows point from a module being used to the
@@ -1370,7 +1374,7 @@ implementation in a submodule of an interface in a parent module.</p>
   
 <tr>
   
-  <td><span class="anchor" id="variable-xern1%7E2"></span>character(len=8),</td>
+  <td><span class="anchor" id="variable-xern1"></span>character(len=8),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1429,7 +1433,7 @@ implementation in a submodule of an interface in a parent module.</p>
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre>    <span class="k">subroutine </span><span class="n">ddes</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">neq</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tout</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">idid</span><span class="p">,&amp;</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddes</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">neq</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tout</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">idid</span><span class="p">,&amp;</span>
                         <span class="n">ypout</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">wt</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">gi</span><span class="p">,&amp;</span>
                         <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xold</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">told</span><span class="p">,</span> <span class="n">delsgn</span><span class="p">,</span> <span class="n">tstop</span><span class="p">,</span> <span class="n">twou</span><span class="p">,</span> <span class="n">fouru</span><span class="p">,</span> <span class="n">start</span><span class="p">,&amp;</span>
                         <span class="n">phase1</span><span class="p">,</span> <span class="n">nornd</span><span class="p">,</span> <span class="n">stiff</span><span class="p">,</span> <span class="n">intout</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">kord</span><span class="p">,</span> <span class="n">kold</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">ksteps</span><span class="p">,&amp;</span>
@@ -1437,61 +1441,63 @@ implementation in a submodule of an interface in a parent module.</p>
 
     <span class="k">implicit none</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                            <span class="kd">::</span> <span class="n">neq</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">t</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">y</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                           <span class="kd">::</span> <span class="n">tout</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>            <span class="kd">::</span> <span class="n">info</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>           <span class="kd">::</span> <span class="n">rtol</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>           <span class="kd">::</span> <span class="n">atol</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">idid</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">ypout</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">yp</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">yy</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">wt</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">p</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>      <span class="kd">::</span> <span class="n">phi</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">alpha</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">beta</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">psi</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">v</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">w</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">sig</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">g</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>          <span class="kd">::</span> <span class="n">gi</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">h</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">eps</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">x</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">xold</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">hold</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">told</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">delsgn</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">tstop</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">twou</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                        <span class="kd">::</span> <span class="n">fouru</span>
-    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">start</span>
-    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">phase1</span>
-    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">nornd</span>
-    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">stiff</span>
-    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">intout</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">ns</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">kord</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">kold</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">init</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">ksteps</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">kle4</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">iquit</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">kprev</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">ivc</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>           <span class="kd">::</span> <span class="n">iv</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">kgi</span>
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>        <span class="kd">::</span> <span class="n">me</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                       <span class="kd">::</span> <span class="n">neq</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">t</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">y</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                      <span class="kd">::</span> <span class="n">tout</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">info</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>      <span class="kd">::</span> <span class="n">rtol</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>      <span class="kd">::</span> <span class="n">atol</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">idid</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">ypout</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">yp</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">yy</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">wt</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">p</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">phi</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">alpha</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">beta</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">psi</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">v</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">w</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">sig</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">g</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">gi</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">h</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">eps</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">x</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">xold</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">hold</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">told</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">delsgn</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">tstop</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">twou</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">fouru</span>
+    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">start</span>
+    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">phase1</span>
+    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">nornd</span>
+    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">stiff</span>
+    <span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">intout</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">ns</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">kord</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">kold</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">init</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">ksteps</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">kle4</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">iquit</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">kprev</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">ivc</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>      <span class="kd">::</span> <span class="n">iv</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">kgi</span>
 
     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">ltol</span><span class="p">,</span> <span class="n">natolp</span><span class="p">,</span> <span class="n">nrtolp</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">a</span><span class="p">,</span> <span class="n">absdel</span><span class="p">,</span> <span class="n">del</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">ha</span><span class="p">,</span> <span class="n">u</span>
     <span class="kt">logical</span> <span class="kd">::</span> <span class="n">crash</span>
     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xern1</span>
     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xern3</span><span class="p">,</span> <span class="n">xern4</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span>  <span class="c">! if user-triggered error</span>
 
     <span class="c">! on the first call, perform initialization</span>
 
@@ -1683,6 +1689,7 @@ implementation in a submodule of an interface in a parent module.</p>
         <span class="n">init</span><span class="o">=</span><span class="mi">1</span>
         <span class="n">a</span><span class="o">=</span><span class="n">t</span>
         <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">tout</span><span class="p">)</span> <span class="k">then</span>
 <span class="k">            </span><span class="n">idid</span><span class="o">=</span><span class="mi">2</span>
             <span class="n">ypout</span> <span class="o">=</span> <span class="n">yp</span>
@@ -1729,6 +1736,7 @@ implementation in a submodule of an interface in a parent module.</p>
 <span class="k">            </span><span class="n">dt</span> <span class="o">=</span> <span class="n">tout</span> <span class="o">-</span> <span class="n">x</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">dt</span><span class="o">*</span><span class="n">yp</span>
             <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">tout</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">ypout</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
             <span class="n">idid</span> <span class="o">=</span> <span class="mi">3</span>
             <span class="n">t</span> <span class="o">=</span> <span class="n">tout</span>
             <span class="n">told</span> <span class="o">=</span> <span class="n">t</span>
@@ -1793,6 +1801,7 @@ implementation in a submodule of an interface in a parent module.</p>
 <span class="k">        call </span><span class="n">me</span><span class="p">%</span><span class="n">dsteps</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">yy</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">eps</span><span class="p">,</span><span class="n">wt</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">hold</span><span class="p">,</span><span class="n">kord</span><span class="p">,</span><span class="n">kold</span><span class="p">,</span><span class="n">crash</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">p</span><span class="p">,&amp;</span>
                         <span class="n">yp</span><span class="p">,</span><span class="n">psi</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">sig</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">phase1</span><span class="p">,</span><span class="n">ns</span><span class="p">,</span><span class="n">nornd</span><span class="p">,</span><span class="n">ksteps</span><span class="p">,&amp;</span>
                         <span class="n">twou</span><span class="p">,</span><span class="n">fouru</span><span class="p">,</span><span class="n">xold</span><span class="p">,</span><span class="n">kprev</span><span class="p">,</span><span class="n">ivc</span><span class="p">,</span><span class="n">iv</span><span class="p">,</span><span class="n">kgi</span><span class="p">,</span><span class="n">gi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">crash</span><span class="p">)</span> <span class="k">then</span>
             <span class="c">! tolerances too small</span>
@@ -1830,12 +1839,18 @@ implementation in a submodule of an interface in a parent module.</p>
 
     <hr>
     <footer>
-        <div class="row">
-        <div class="col-md-4">&copy; 2015 </div>
-	<div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4"><span class="pull-right">Documentation generated by <a href="https://github.com/cmacmackin/ford">FORD</a></span></div>
+      <div class="row">
+        <div class="col-md-4">&copy; 2016 </div>
+        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
+        <div class="col-md-4">
+          <span class="pull-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </span>
         </div>
-        <br>
+      </div>
+      <br>
     </footer>
     </div> <!-- /container -->
 
@@ -1863,6 +1878,6 @@ implementation in a submodule of an interface in a parent module.</p>
         }
       });
     </script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   </body>
 </html>
