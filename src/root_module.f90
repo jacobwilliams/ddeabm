@@ -14,6 +14,7 @@
 
     !real parameters:
     real(wp),parameter :: zero  = 0.0_wp
+    real(wp),parameter :: half  = 0.5_wp
     real(wp),parameter :: one   = 1.0_wp
     real(wp),parameter :: two   = 2.0_wp
     real(wp),parameter :: three = 3.0_wp
@@ -43,7 +44,7 @@
 !
 !  It is assumed that \( f(a_x) \) and \( f(b_x) \) have opposite signs.
 !
-!#References
+!# References
 !  * R. P. Brent, "[An algorithm with guaranteed convergence for
 !    finding a zero of a function](http://maths-people.anu.edu.au/~brent/pd/rpb005.pdf)",
 !    The Computer Journal, Vol 14, No. 4., 1971.
@@ -94,13 +95,13 @@
         xzero = a
         fzero = fa
 
-    elseif (fb==zero) then
+    else if (fb==zero) then
 
         iflag = 0
         xzero = b
         fzero = fb
 
-    elseif (fa*(fb/abs(fb))<zero) then  ! check that f(ax) and f(bx) have different signs
+    else if (fa*(fb/abs(fb))<zero) then  ! check that f(ax) and f(bx) have different signs
 
         c=a
         fc=fa
@@ -118,8 +119,8 @@
                 fc=fa
             end if
 
-            tol1=two*eps*abs(b)+0.5_wp*tol
-            xm = 0.5_wp*(c-b)
+            tol1 = two*eps*abs(b)+half*tol
+            xm = half*(c-b)
             if ((abs(xm)<=tol1).or.(fb==zero)) exit
 
             ! see if a bisection is forced
@@ -144,7 +145,7 @@
                 s=e
                 e=d
                 if (((two*p)>=(three*xm*q-abs(tol1*q))) .or. &
-                    (p>=abs(0.5_wp*s*q))) then
+                    (p>=abs(half*s*q))) then
                     d=xm
                     e=d
                 else
