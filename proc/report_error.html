@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
     <title>report_error &ndash; ddeabm</title>
@@ -53,13 +53,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -70,6 +77,26 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
         
         <form action="../search.html" class="navbar-form navbar-right" role="search">
@@ -90,22 +117,29 @@
   
   <div class="row">
     <h1>report_error
-    <small>Subroutine</small>
+      <small>Subroutine</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
-    <li><i class="fa fa-pencil"></i> Jacob Williams</li>
+     <li><i class="fa fa-pencil"></i> Jacob Williams</li>
      
      
      
      
     
     
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 0.6% of total for procedures.">9 statements</a>
+     </li> 
+     
+     
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
   </ul>
@@ -120,99 +154,108 @@
 </div>
 </div>
 </div>
-    
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
     
 <div id="sidebar">
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/report_error.html#src">report_error</a>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/report_error.html#src">report_error</a>
   </div>
-  
+</div>
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs">All Procedures</a></h3></div>
-    <div id="allprocs" class="panel-collapse collapse">
-        <div class="list-group">
-          
-          <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-          
-          <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-          
-          <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-          
-          <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-          
-          <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-          
-          <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-          
-          <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-          
-          <a class="list-group-item" href="../proc/go.html">go</a>
-          
-          <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-          
-          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-          
-          <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-          
-          <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
-          
-        </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
+  <div id="allprocs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+      
+      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+      
+      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+      
+      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+      
+      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+      
+      <a class="list-group-item" href="../proc/go.html">go</a>
+      
+      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+      
+      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+      
+      <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
+      
     </div>
   </div>
-  
 </div>
+
+
+</div>  
 
     </div>
     
-    <div class="col-lg-9" id='text'>
+    <div class="col-md-9" id='text'>
     <h2>
 private subroutine report_error(subrou, messg, nerr, level)
     
     
-    
+	 
 </h2>
     
   
@@ -222,9 +265,112 @@ private subroutine report_error(subrou, messg, nerr, level)
       <li><a href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html">iso_fortran_env</a></li>
       
     </ul>
-  
+    
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: proc~~report_error~~UsesGraph Pages: 1 -->
+<svg id="procreport_errorUsesGraph" width="202pt" height="34pt"
+ viewBox="0.00 0.00 202.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~report_error~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<title>proc~~report_error~~UsesGraph</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 199,-30 199,5 -4,5"/>
+<!-- proc~report_error -->
+<g id="node1" class="node"><title>proc~report_error</title>
+<polygon fill="none" stroke="black" points="194,-26 124,-26 124,-1.24345e-14 194,-3.55271e-15 194,-26"/>
+<text text-anchor="middle" x="159" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">report_error</text>
+</g>
+<!-- iso_fortran_env -->
+<g id="node2" class="node"><title>iso_fortran_env</title>
+<a xlink:href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="87,-26 1,-26 1,-1.24345e-14 87,-3.55271e-15 87,-26"/>
+<text text-anchor="middle" x="44" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+<!-- iso_fortran_env&#45;&gt;proc~report_error -->
+<g id="edge2" class="edge"><title>iso_fortran_env&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M87.8046,-13C96.2884,-13 105.194,-13 113.724,-13"/>
+<polygon fill="#000000" stroke="#000000" points="113.888,-16.5001 123.888,-13 113.888,-9.5001 113.888,-16.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="486pt" height="34pt"
+ viewBox="0.00 0.00 486.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 483,-30 483,5 -4,5"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
+<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
+<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="220,-26 156,-26 156,-1.24345e-14 220,-3.55271e-15 220,-26"/>
+<text text-anchor="middle" x="188" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="292,-26 238,-26 238,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="265" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="478,-26 382,-26 382,-1.24345e-14 478,-3.55271e-15 478,-26"/>
+<text text-anchor="middle" x="430" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a parent (sub)module to the submodule which is
+    descended from it. Dashed arrows point from a module being used to the
+    module or program unit using it.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
 
 
+    
+    <p>Report an error message.</p>
+<p>Replacement for original <a href="http://www.netlib.org/slatec/src/xermsg.f">XERMSG</a>
+  error message printing routine. This one just prints the message to the console.</p>
+    
 
     <h3>Arguments</h3>
     
@@ -308,12 +454,6 @@ private subroutine report_error(subrou, messg, nerr, level)
     
     
     
-    <h3>Description</h3>
-    <p>Report an error message.</p>
-<p>Replacement for original <a href="http://www.netlib.org/slatec/src/xermsg.f">XERMSG</a>
-  error message printing routine. This one just prints the message to the console.</p>
-    
-    
      
      <h3>Called By</h3>
      
@@ -333,52 +473,52 @@ private subroutine report_error(subrou, messg, nerr, level)
 <polygon fill="none" stroke="black" points="260,-92 190,-92 190,-66 260,-66 260,-92"/>
 <text text-anchor="middle" x="225" y="-76.55" font-family="Helvetica,sans-Serif" font-size="10.50">report_error</text>
 </g>
-<!-- proc~ddeabm_with_event_wrapper -->
-<g id="node2" class="node"><title>proc~ddeabm_with_event_wrapper</title>
-<a xlink:href="../proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_wrapper">
-<polygon fill="#d9534f" stroke="#d9534f" points="154,-158 8.52651e-14,-158 0,-132 154,-132 154,-158"/>
-<text text-anchor="middle" x="77" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper</text>
-</a>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error -->
-<g id="edge2" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M129.878,-131.994C138.089,-129.377 146.371,-126.375 154,-123 169.516,-116.135 185.68,-106.355 198.658,-97.7574"/>
-<polygon fill="#000000" stroke="#000000" points="200.773,-100.552 207.087,-92.0449 196.846,-94.7578 200.773,-100.552"/>
-</g>
-<!-- proc~ddeabm_wrapper -->
-<g id="node3" class="node"><title>proc~ddeabm_wrapper</title>
-<a xlink:href="../proc/ddeabm_wrapper.html" xlink:title="ddeabm_wrapper">
-<polygon fill="#d9534f" stroke="#d9534f" points="125,-114 29,-114 29,-88 125,-88 125,-114"/>
-<text text-anchor="middle" x="77" y="-98.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_wrapper</text>
-</a>
-</g>
-<!-- proc~ddeabm_wrapper&#45;&gt;proc~report_error -->
-<g id="edge4" class="edge"><title>proc~ddeabm_wrapper&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M125.871,-93.7354C143.163,-91.165 162.532,-88.2857 179.53,-85.759"/>
-<polygon fill="#000000" stroke="#000000" points="180.391,-89.1696 189.768,-84.2372 179.362,-82.2457 180.391,-89.1696"/>
-</g>
-<!-- proc~ddes -->
-<g id="node4" class="node"><title>proc~ddes</title>
-<a xlink:href="../proc/ddes.html" xlink:title="ddes">
-<polygon fill="#d9534f" stroke="#d9534f" points="104,-70 50,-70 50,-44 104,-44 104,-70"/>
-<text text-anchor="middle" x="77" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
-</a>
-</g>
-<!-- proc~ddes&#45;&gt;proc~report_error -->
-<g id="edge6" class="edge"><title>proc~ddes&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M104.145,-61.0351C125.342,-64.186 155.252,-68.632 180.012,-72.3126"/>
-<polygon fill="#000000" stroke="#000000" points="179.511,-75.7765 189.917,-73.785 180.541,-68.8526 179.511,-75.7765"/>
-</g>
 <!-- proc~ddeabm -->
-<g id="node5" class="node"><title>proc~ddeabm</title>
+<g id="node2" class="node"><title>proc~ddeabm</title>
 <a xlink:href="../proc/ddeabm.html" xlink:title="ddeabm">
-<polygon fill="#d9534f" stroke="#d9534f" points="104,-26 50,-26 50,-1.24345e-14 104,-3.55271e-15 104,-26"/>
-<text text-anchor="middle" x="77" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="104,-158 50,-158 50,-132 104,-132 104,-158"/>
+<text text-anchor="middle" x="77" y="-142.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm</text>
 </a>
 </g>
 <!-- proc~ddeabm&#45;&gt;proc~report_error -->
-<g id="edge8" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M104.009,-18.7746C119.077,-22.472 137.98,-27.9122 154,-35 169.516,-41.8648 185.68,-51.6454 198.658,-60.2426"/>
+<g id="edge2" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M104.009,-139.225C119.077,-135.528 137.98,-130.088 154,-123 169.516,-116.135 185.68,-106.355 198.658,-97.7574"/>
+<polygon fill="#000000" stroke="#000000" points="200.773,-100.552 207.087,-92.0449 196.846,-94.7578 200.773,-100.552"/>
+</g>
+<!-- proc~ddes -->
+<g id="node3" class="node"><title>proc~ddes</title>
+<a xlink:href="../proc/ddes.html" xlink:title="ddes">
+<polygon fill="#d9534f" stroke="#d9534f" points="104,-114 50,-114 50,-88 104,-88 104,-114"/>
+<text text-anchor="middle" x="77" y="-98.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
+</a>
+</g>
+<!-- proc~ddes&#45;&gt;proc~report_error -->
+<g id="edge4" class="edge"><title>proc~ddes&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M104.145,-96.9649C125.342,-93.814 155.252,-89.368 180.012,-85.6874"/>
+<polygon fill="#000000" stroke="#000000" points="180.541,-89.1474 189.917,-84.215 179.511,-82.2235 180.541,-89.1474"/>
+</g>
+<!-- proc~ddeabm_wrapper -->
+<g id="node4" class="node"><title>proc~ddeabm_wrapper</title>
+<a xlink:href="../proc/ddeabm_wrapper.html" xlink:title="ddeabm_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="125,-70 29,-70 29,-44 125,-44 125,-70"/>
+<text text-anchor="middle" x="77" y="-54.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_wrapper</text>
+</a>
+</g>
+<!-- proc~ddeabm_wrapper&#45;&gt;proc~report_error -->
+<g id="edge6" class="edge"><title>proc~ddeabm_wrapper&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M125.871,-64.2646C143.163,-66.835 162.532,-69.7143 179.53,-72.241"/>
+<polygon fill="#000000" stroke="#000000" points="179.362,-75.7543 189.768,-73.7628 180.391,-68.8304 179.362,-75.7543"/>
+</g>
+<!-- proc~ddeabm_with_event_wrapper -->
+<g id="node5" class="node"><title>proc~ddeabm_with_event_wrapper</title>
+<a xlink:href="../proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="154,-26 8.52651e-14,-26 0,-1.24345e-14 154,-3.55271e-15 154,-26"/>
+<text text-anchor="middle" x="77" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper</text>
+</a>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error -->
+<g id="edge8" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M129.878,-26.0057C138.089,-28.6233 146.371,-31.6249 154,-35 169.516,-41.8648 185.68,-51.6454 198.658,-60.2426"/>
 <polygon fill="#000000" stroke="#000000" points="196.846,-63.2422 207.087,-65.9551 200.773,-57.4476 196.846,-63.2422"/>
 </g>
 </g>
@@ -394,83 +534,58 @@ private subroutine report_error(subrou, messg, nerr, level)
                       </div>
                       <div class="modal-body">
                         
-Nodes of different colours represent the following:
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.26.3 (20100126.1600)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="641pt" height="28pt"
- viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<svg width="556pt" height="34pt"
+ viewBox="0.00 0.00 556.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
-<!-- Module -->
-<g id="node1" class="node"><title>Module</title>
-<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
-<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
-</g>
-<!-- Submodule -->
-<g id="node2" class="node"><title>Submodule</title>
-<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
-<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
-</g>
-<!-- Type -->
-<g id="node3" class="node"><title>Type</title>
-<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
-<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
-</g>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 553,-30 553,5 -4,5"/>
 <!-- Subroutine -->
-<g id="node4" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
-<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-26 3.19744e-14,-26 0,-1.24345e-14 64,-3.55271e-15 64,-26"/>
+<text text-anchor="middle" x="32" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node5" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
-<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-26 82,-26 82,-1.24345e-14 136,-3.55271e-15 136,-26"/>
+<text text-anchor="middle" x="109" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
-<g id="node6" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
-<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="208,-26 154,-26 154,-1.24345e-14 208,-3.55271e-15 208,-26"/>
+<text text-anchor="middle" x="181" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
-<g id="node7" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
-<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="362,-26 226,-26 226,-1.24345e-14 362,-3.55271e-15 362,-26"/>
+<text text-anchor="middle" x="294" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node8" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
-<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="434,-26 380,-26 380,-1.24345e-14 434,-3.55271e-15 434,-26"/>
+<text text-anchor="middle" x="407" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node9" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
-<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="548,-26 452,-26 452,-1.24345e-14 548,-3.55271e-15 548,-26"/>
+<text text-anchor="middle" x="500" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
 
-Where possible, edges connecting nodes are given different colours to make them
-easier to distinguish in large graphs.
-<h5>Module Graph</h5>
-<p>Solid arrows point from a parent (sub)module to the submodule which is
-descended from it. Dashed arrows point from a module being used to the
-module using it.</p>
-<h5>Type Graph</h5>
-<p>Solid arrows point from one derived type to another which extends
-(inherits from) it. Dashed arrows point from a derived type to another
-type containing it as a components, with a label listing the name(s) of
-said component(s).</p>
-<h5>Call Graph</h5>
-<p>Solid arrows point from a procedure to one which it calls. Dashed 
-arrows point from an interface to procedures which implement that interface.
-This could include the module procedures in a generic interface or the
-implementation in a submodule of an interface in a parent module.</p>
-
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
                       </div>
                     </div>
                   </div>
@@ -478,6 +593,42 @@ implementation in a submodule of an interface in a parent module.</p>
                 
      
     <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/report_error.html#src">report_error</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
     
     
     
@@ -523,23 +674,78 @@ implementation in a submodule of an interface in a parent module.</p>
     </div>
   </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
+  <div id="allprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+      
+      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+      
+      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+      
+      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+      
+      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+      
+      <a class="list-group-item" href="../proc/go.html">go</a>
+      
+      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+      
+      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+      
+      <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+
+    <hr>    
+    </div> <!-- /container -->
     <footer>
+      <div class="container">
       <div class="row">
-        <div class="col-md-4">&copy; 2016 </div>
-        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4">
-          <span class="pull-right">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
             
-          </span>
+          </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
+      </div> <!-- /container -->    
     </footer>
-    </div> <!-- /container -->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

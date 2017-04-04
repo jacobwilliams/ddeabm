@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
     <title>dhstrt &ndash; ddeabm</title>
@@ -53,13 +53,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -70,6 +77,26 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
         
         <form action="../search.html" class="navbar-form navbar-right" role="search">
@@ -90,12 +117,12 @@
   
   <div class="row">
     <h1>dhstrt
-    <small>Subroutine</small>
+      <small>Subroutine</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
@@ -104,6 +131,13 @@
      
     
     
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 6.9% of total for procedures.">104 statements</a>
+     </li> 
+     
+     
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
   </ul>
@@ -118,152 +152,140 @@
 </div>
 </div>
 </div>
-    
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
     
 <div id="sidebar">
   
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
-    <div id="vars" class="panel-collapse collapse">
-      <div class="list-group">
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-j%7E2">j</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-k%7E3">k</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-lk">lk</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-absdx">absdx</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-da">da</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-delf">delf</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-dely">dely</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-dfdub">dfdub</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-dfdxb">dfdxb</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-dx">dx</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-dy">dy</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-fbnd">fbnd</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-relper">relper</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-srydpb">srydpb</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-tolexp">tolexp</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-tolmin">tolmin</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-tolp">tolp</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-tolsum">tolsum</a>
-        
-        <a class="list-group-item" href="../proc/dhstrt.html#variable-ydpb">ydpb</a>
-        
-      </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/dhstrt.html#src">dhstrt</a>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/dhstrt.html#src">dhstrt</a>
-    </div>
-  </div>
-  
+</div>
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs">All Procedures</a></h3></div>
-    <div id="allprocs" class="panel-collapse collapse">
-        <div class="list-group">
-          
-          <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-          
-          <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-          
-          <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-          
-          <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-          
-          <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-          
-          <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-          
-          <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-          
-          <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-          
-          <a class="list-group-item" href="../proc/go.html">go</a>
-          
-          <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-          
-          <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-          
-          <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-          
-          <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
-          
-        </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
+  <div id="allprocs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+      
+      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+      
+      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+      
+      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+      
+      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+      
+      <a class="list-group-item" href="../proc/go.html">go</a>
+      
+      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+      
+      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+      
+      <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
+      
     </div>
   </div>
-  
 </div>
+
+
+</div>  
 
     </div>
     
-    <div class="col-lg-9" id='text'>
+    <div class="col-md-9" id='text'>
     <h2>
 private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, spy, pv, yp, sf, h)
     
     
-    
+	 
 </h2>
     
   
 
 
+    
+    <p>Computes a starting step size to be used in solving initial
+  value problems in ordinary differential equations.</p>
+<p>It is based on an estimate of the local lipschitz constant for the
+  differential equation (lower bound on a norm of the jacobian) ,
+  a bound on the differential equation (first derivative), and
+  a bound on the partial derivative of the equation with respect to
+  the independent variable. (all approximated near the initial point a)</p>
+<p>subroutine dhstrt uses a function subprogram <a href="../proc/dhvnrm.html">dhvnrm</a> for computing
+  a vector norm. the maximum norm is presently utilized though it
+  can easily be replaced by any other vector norm. it is presumed
+  that any replacement norm routine would be carefully coded to
+  prevent unnecessary underflows or overflows from occurring, and
+  also, would not alter the vector or number of components.</p>
+<h1>History</h1>
+<ul>
+<li>820301  date written -- watts, h. a., (snla)</li>
+<li>890531  changed all specific intrinsics to generic.  (wrb)</li>
+<li>890831  modified array declarations.  (wrb)</li>
+<li>890911  removed unnecessary intrinsics.  (wrb)</li>
+<li>891024  changed references from dvnorm to dhvnrm.  (wrb)</li>
+<li>891214  prologue converted to version 4.0 format.  (bab)</li>
+<li>900328  added type section.  (wrb)</li>
+<li>910722  updated author section.  (als)</li>
+<li>December, 2015 : Refactored this routine (jw)</li>
+</ul>
+    
 
     <h3>Arguments</h3>
     
@@ -313,7 +335,7 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
 <tr>
   
-  <td><span class="anchor" id="variable-a%7E2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-a"></span>real(kind=wp),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -542,34 +564,6 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
     
     
     
-    <h3>Description</h3>
-    <p>Computes a starting step size to be used in solving initial
-  value problems in ordinary differential equations.</p>
-<p>It is based on an estimate of the local lipschitz constant for the
-  differential equation (lower bound on a norm of the jacobian) ,
-  a bound on the differential equation (first derivative), and
-  a bound on the partial derivative of the equation with respect to
-  the independent variable. (all approximated near the initial point a)</p>
-<p>subroutine dhstrt uses a function subprogram <a href="../proc/dhvnrm.html">dhvnrm</a> for computing
-  a vector norm. the maximum norm is presently utilized though it
-  can easily be replaced by any other vector norm. it is presumed
-  that any replacement norm routine would be carefully coded to
-  prevent unnecessary underflows or overflows from occurring, and
-  also, would not alter the vector or number of components.</p>
-<h1>History</h1>
-<ul>
-<li>820301  date written -- watts, h. a., (snla)</li>
-<li>890531  changed all specific intrinsics to generic.  (wrb)</li>
-<li>890831  modified array declarations.  (wrb)</li>
-<li>890911  removed unnecessary intrinsics.  (wrb)</li>
-<li>891024  changed references from dvnorm to dhvnrm.  (wrb)</li>
-<li>891214  prologue converted to version 4.0 format.  (bab)</li>
-<li>900328  added type section.  (wrb)</li>
-<li>910722  updated author section.  (als)</li>
-<li>December, 2015 : Refactored this routine (jw)</li>
-</ul>
-    
-    
      <h3>Calls</h3>
      
                 <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -613,83 +607,58 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
                       </div>
                       <div class="modal-body">
                         
-Nodes of different colours represent the following:
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.26.3 (20100126.1600)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="641pt" height="28pt"
- viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<svg width="556pt" height="34pt"
+ viewBox="0.00 0.00 556.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
-<!-- Module -->
-<g id="node1" class="node"><title>Module</title>
-<polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
-<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
-</g>
-<!-- Submodule -->
-<g id="node2" class="node"><title>Submodule</title>
-<polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
-<text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
-</g>
-<!-- Type -->
-<g id="node3" class="node"><title>Type</title>
-<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
-<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
-</g>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 553,-30 553,5 -4,5"/>
 <!-- Subroutine -->
-<g id="node4" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
-<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-26 3.19744e-14,-26 0,-1.24345e-14 64,-3.55271e-15 64,-26"/>
+<text text-anchor="middle" x="32" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node5" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
-<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-26 82,-26 82,-1.24345e-14 136,-3.55271e-15 136,-26"/>
+<text text-anchor="middle" x="109" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
-<g id="node6" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
-<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="208,-26 154,-26 154,-1.24345e-14 208,-3.55271e-15 208,-26"/>
+<text text-anchor="middle" x="181" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
-<g id="node7" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
-<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="362,-26 226,-26 226,-1.24345e-14 362,-3.55271e-15 362,-26"/>
+<text text-anchor="middle" x="294" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node8" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
-<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="434,-26 380,-26 380,-1.24345e-14 434,-3.55271e-15 434,-26"/>
+<text text-anchor="middle" x="407" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node9" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
-<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="548,-26 452,-26 452,-1.24345e-14 548,-3.55271e-15 548,-26"/>
+<text text-anchor="middle" x="500" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
 
-Where possible, edges connecting nodes are given different colours to make them
-easier to distinguish in large graphs.
-<h5>Module Graph</h5>
-<p>Solid arrows point from a parent (sub)module to the submodule which is
-descended from it. Dashed arrows point from a module being used to the
-module using it.</p>
-<h5>Type Graph</h5>
-<p>Solid arrows point from one derived type to another which extends
-(inherits from) it. Dashed arrows point from a derived type to another
-type containing it as a components, with a label listing the name(s) of
-said component(s).</p>
-<h5>Call Graph</h5>
-<p>Solid arrows point from a procedure to one which it calls. Dashed 
-arrows point from an interface to procedures which implement that interface.
-This could include the module procedures in a generic interface or the
-implementation in a submodule of an interface in a parent module.</p>
-
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
                       </div>
                     </div>
                   </div>
@@ -698,290 +667,42 @@ implementation in a submodule of an interface in a parent module.</p>
      
      
     <br>
-    
-    <section>
-    <h2>Variables</h2>
-    
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th>
 
-<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+    <section class="visible-xs visible-sm hidden-md">
+      
 
 
 
-<tbody>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-j%7E2"></span>integer,</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>j</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-k%7E3"></span>integer,</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>k</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-lk"></span>integer,</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>lk</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-absdx"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>absdx</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-da"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>da</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-delf"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>delf</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-dely"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>dely</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-dfdub"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>dfdub</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-dfdxb"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>dfdxb</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-dx"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>dx</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-dy"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>dy</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-fbnd"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>fbnd</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-relper"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>relper</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-srydpb"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>srydpb</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-tolexp"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>tolexp</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-tolmin"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>tolmin</strong></td><td></td><td></td><td></td>
-  
-</tr>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-tolp"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>tolp</strong></td><td></td><td></td><td></td>
-  
-</tr>
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/dhstrt.html#src">dhstrt</a>
+  </div>
+</div>
 
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-tolsum"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>tolsum</strong></td><td></td><td></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-ydpb"></span>real(kind=wp),</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>ydpb</strong></td><td></td><td></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
 
     </section>
-    <br>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
     
     
     
@@ -1231,23 +952,78 @@ implementation in a submodule of an interface in a parent module.</p>
     </div>
   </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
+  <div id="allprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+      
+      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+      
+      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+      
+      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+      
+      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+      
+      <a class="list-group-item" href="../proc/go.html">go</a>
+      
+      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+      
+      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+      
+      <a class="list-group-item" href="../proc/zeroin_test.html">zeroin_test</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+
+    <hr>    
+    </div> <!-- /container -->
     <footer>
+      <div class="container">
       <div class="row">
-        <div class="col-md-4">&copy; 2016 </div>
-        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4">
-          <span class="pull-right">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
             
-          </span>
+          </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
+      </div> <!-- /container -->    
     </footer>
-    </div> <!-- /container -->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

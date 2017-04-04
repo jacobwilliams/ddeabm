@@ -7,7 +7,7 @@
 	 
 	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
-    <meta name="author" content="Chris MacMackin" >
+    <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
     <title>ddeabm_module &ndash; ddeabm</title>
@@ -53,13 +53,20 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 				
-                
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
             <li><a href="../lists/files.html">Source Files</a></li>
 				
 				
             <li><a href="../lists/modules.html">Modules</a></li>
 				
-				
+            
+                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
 				
 				
@@ -70,6 +77,26 @@
 				
             <li><a href="../lists/programs.html">Programs</a></li>
 				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
           </ul>
         
         <form action="../search.html" class="navbar-form navbar-right" role="search">
@@ -93,19 +120,26 @@
     <small>Module</small>
     
     </h1>
-	 
+    
 <div class="row">
-<div class="col-lg-12">
+  <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
-    <li><i class="fa fa-pencil"></i> Jacob Williams</li>
+     <li><i class="fa fa-pencil"></i> Jacob Williams</li>
      
      
      
      
     
     
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title="87.7% of total for modules and submodules.">1391 statements</a>
+     </li> 
+     
+     
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
   </ul>
@@ -118,149 +152,154 @@
 </div>
 </div>
 </div>
-    
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   </div>
   
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
     
 <div id="sidebar">
   
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars">Variables</a></h3></div>
-    <div id="vars" class="panel-collapse collapse">
-      <div class="list-group">
-        
-        <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach2">d1mach2</a>
-        
-        <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach4">d1mach4</a>
-        
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints">Abstract Interfaces</a></h3></div>
-    <div id="absints" class="panel-collapse collapse">
-        <div class="list-group">
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#interface-deriv_func">deriv_func</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#interface-report_func">report_func</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func">event_func</a>
-          
-        </div>
-    </div>
-  </div>
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types">Derived Types</a></h3></div>
-    <div id="types" class="panel-collapse collapse">
-      <div class="list-group">
-        
-        <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_class">ddeabm_class</a>
-        
-        <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class">ddeabm_with_event_class</a>
-        
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#funcs">Functions</a></h3></div>
-    <div id="funcs" class="panel-collapse collapse">
-        <div class="list-group">
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhvnrm">dhvnrm</a>
-          
-        </div>
-    </div>
-  </div>
-  
-  
-  
-  <div class="panel panel-primary">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs">Subroutines</a></h3></div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
-        <div id="subs" class="panel-collapse collapse">
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_stop_integration">ddeabm_stop_integration</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_new_problem">ddeabm_new_problem</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_initialize">ddeabm_initialize</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize">ddeabm_with_event_initialize</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-destroy_ddeabm">destroy_ddeabm</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_wrapper">ddeabm_wrapper</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper">ddeabm_with_event_wrapper</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm">ddeabm</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddes">ddes</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhstrt">dhstrt</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-dintp">dintp</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-dsteps">dsteps</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-report_error">report_error</a>
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_test">ddeabm_test</a>
-          
-        </div>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach2">d1mach2</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach4">d1mach4</a>
+      
     </div>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  
+</div>
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints-0">Abstract Interfaces</a></h3></div>
+  <div id="absints-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#interface-deriv_func">deriv_func</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#interface-report_func">report_func</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func">event_func</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-0">Derived Types</a></h3></div>
+  <div id="types-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_class">ddeabm_class</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class">ddeabm_with_event_class</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#funcs-0">Functions</a></h3></div>
+  <div id="funcs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhvnrm">dhvnrm</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-0" class="panel-collapse collapse">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_stop_integration">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_new_problem">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_initialize">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-destroy_ddeabm">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_wrapper">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm">ddeabm</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddes">ddes</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhstrt">dhstrt</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dintp">dintp</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dsteps">dsteps</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-report_error">report_error</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_test">ddeabm_test</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
   <hr>
   
-  <div class="panel panel-default">
-    <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allmods">All Modules</a></h3></div>
-    <div id="allmods" class="panel-collapse collapse">
-        <div class="list-group">
-          
-          <a class="list-group-item" href="../module/ddeabm_module.html">ddeabm_module</a>
-          
-          <a class="list-group-item" href="../module/kind_module.html">kind_module</a>
-          
-          <a class="list-group-item" href="../module/root_module.html">root_module</a>
-          
-        </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allmods-0">All Modules</a></h3></div>
+  <div id="allmods-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html">ddeabm_module</a>
+      
+      <a class="list-group-item" href="../module/kind_module.html">kind_module</a>
+      
+      <a class="list-group-item" href="../module/root_module.html">root_module</a>
+      
     </div>
   </div>
-  
 </div>
+
+
+</div>  
 
     </div>
     
-    <div class="col-lg-9" id='text'>
-    
+    <div class="col-md-9" id='text'>
+      
     
   
     <ul class="list-inline">
@@ -271,8 +310,6 @@
       <li><a href='../module/root_module.html'>root_module</a></li>
       
     </ul>
-  
-
     
                 <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -344,18 +381,18 @@
                       </div>
                       <div class="modal-body">
                         
-Nodes of different colours represent the following:
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.26.3 (20100126.1600)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="641pt" height="28pt"
- viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<svg width="486pt" height="34pt"
+ viewBox="0.00 0.00 486.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 483,-30 483,5 -4,5"/>
 <!-- Module -->
 <g id="node1" class="node"><title>Module</title>
 <polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
@@ -366,66 +403,42 @@ Nodes of different colours represent the following:
 <polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
 <text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
 </g>
-<!-- Type -->
-<g id="node3" class="node"><title>Type</title>
-<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
-<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
-</g>
 <!-- Subroutine -->
-<g id="node4" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
-<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node3" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="220,-26 156,-26 156,-1.24345e-14 220,-3.55271e-15 220,-26"/>
+<text text-anchor="middle" x="188" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node5" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
-<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
-</g>
-<!-- Interface -->
-<g id="node6" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
-<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
-</g>
-<!-- Unknown Procedure Type -->
-<g id="node7" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
-<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="292,-26 238,-26 238,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="265" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Program -->
-<g id="node8" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
-<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node9" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
-<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="478,-26 382,-26 382,-1.24345e-14 478,-3.55271e-15 478,-26"/>
+<text text-anchor="middle" x="430" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
 
-Where possible, edges connecting nodes are given different colours to make them
-easier to distinguish in large graphs.
-<h5>Module Graph</h5>
-<p>Solid arrows point from a parent (sub)module to the submodule which is
-descended from it. Dashed arrows point from a module being used to the
-module using it.</p>
-<h5>Type Graph</h5>
-<p>Solid arrows point from one derived type to another which extends
-(inherits from) it. Dashed arrows point from a derived type to another
-type containing it as a components, with a label listing the name(s) of
-said component(s).</p>
-<h5>Call Graph</h5>
-<p>Solid arrows point from a procedure to one which it calls. Dashed 
-arrows point from an interface to procedures which implement that interface.
-This could include the module procedures in a generic interface or the
-implementation in a submodule of an interface in a parent module.</p>
-
+    
+    <p>Solid arrows point from a parent (sub)module to the submodule which is
+    descended from it. Dashed arrows point from a module being used to the
+    module or program unit using it.
+    </p>
+    
                       </div>
                     </div>
                   </div>
                 </div>
                 
+    
+
     
     <p>Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.</p>
 <h1>See also</h1>
@@ -499,18 +512,18 @@ implementation in a submodule of an interface in a parent module.</p>
                       </div>
                       <div class="modal-body">
                         
-Nodes of different colours represent the following:
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.26.3 (20100126.1600)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="641pt" height="28pt"
- viewBox="0.00 0.00 641.00 27.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph1" class="graph" transform="scale(0.817602 0.817602) rotate(0) translate(4 30)">
+<svg width="486pt" height="34pt"
+ viewBox="0.00 0.00 486.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 781,-30 781,5 -4,5"/>
+<polygon fill="white" stroke="white" points="-4,5 -4,-30 483,-30 483,5 -4,5"/>
 <!-- Module -->
 <g id="node1" class="node"><title>Module</title>
 <polygon fill="#337ab7" stroke="#337ab7" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
@@ -521,67 +534,158 @@ Nodes of different colours represent the following:
 <polygon fill="#5bc0de" stroke="#5bc0de" points="138,-26 72,-26 72,-1.24345e-14 138,-3.55271e-15 138,-26"/>
 <text text-anchor="middle" x="105" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
 </g>
-<!-- Type -->
-<g id="node3" class="node"><title>Type</title>
-<polygon fill="#5cb85c" stroke="#5cb85c" points="210,-26 156,-26 156,-1.24345e-14 210,-3.55271e-15 210,-26"/>
-<text text-anchor="middle" x="183" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
-</g>
 <!-- Subroutine -->
-<g id="node4" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="292,-26 228,-26 228,-1.24345e-14 292,-3.55271e-15 292,-26"/>
-<text text-anchor="middle" x="260" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node3" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="220,-26 156,-26 156,-1.24345e-14 220,-3.55271e-15 220,-26"/>
+<text text-anchor="middle" x="188" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node5" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
-<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
-</g>
-<!-- Interface -->
-<g id="node6" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="436,-26 382,-26 382,-1.24345e-14 436,-3.55271e-15 436,-26"/>
-<text text-anchor="middle" x="409" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
-</g>
-<!-- Unknown Procedure Type -->
-<g id="node7" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="590,-26 454,-26 454,-1.24345e-14 590,-3.55271e-15 590,-26"/>
-<text text-anchor="middle" x="522" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="292,-26 238,-26 238,-1.24345e-14 292,-3.55271e-15 292,-26"/>
+<text text-anchor="middle" x="265" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Program -->
-<g id="node8" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="662,-26 608,-26 608,-1.24345e-14 662,-3.55271e-15 662,-26"/>
-<text text-anchor="middle" x="635" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="364,-26 310,-26 310,-1.24345e-14 364,-3.55271e-15 364,-26"/>
+<text text-anchor="middle" x="337" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node9" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="776,-26 680,-26 680,-1.24345e-14 776,-3.55271e-15 776,-26"/>
-<text text-anchor="middle" x="728" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="478,-26 382,-26 382,-1.24345e-14 478,-3.55271e-15 478,-26"/>
+<text text-anchor="middle" x="430" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
 
-Where possible, edges connecting nodes are given different colours to make them
-easier to distinguish in large graphs.
-<h5>Module Graph</h5>
-<p>Solid arrows point from a parent (sub)module to the submodule which is
-descended from it. Dashed arrows point from a module being used to the
-module using it.</p>
-<h5>Type Graph</h5>
-<p>Solid arrows point from one derived type to another which extends
-(inherits from) it. Dashed arrows point from a derived type to another
-type containing it as a components, with a label listing the name(s) of
-said component(s).</p>
-<h5>Call Graph</h5>
-<p>Solid arrows point from a procedure to one which it calls. Dashed 
-arrows point from an interface to procedures which implement that interface.
-This could include the module procedures in a generic interface or the
-implementation in a submodule of an interface in a parent module.</p>
-
+    
+    <p>Solid arrows point from a parent (sub)module to the submodule which is
+    descended from it. Dashed arrows point from a module being used to the
+    module or program unit using it.
+    </p>
+    
                       </div>
                     </div>
                   </div>
                 </div>
                 
     <br>
+    
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach2">d1mach2</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach4">d1mach4</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints-1">Abstract Interfaces</a></h3></div>
+  <div id="absints-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#interface-deriv_func">deriv_func</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#interface-report_func">report_func</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func">event_func</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-1">Derived Types</a></h3></div>
+  <div id="types-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_class">ddeabm_class</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class">ddeabm_with_event_class</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#funcs-1">Functions</a></h3></div>
+  <div id="funcs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhvnrm">dhvnrm</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
+  <div class="list-group">
+    <div id="subs-1" class="panel-collapse collapse">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_stop_integration">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_new_problem">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_initialize">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-destroy_ddeabm">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_wrapper">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm">ddeabm</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddes">ddes</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhstrt">dhstrt</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dintp">dintp</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-dsteps">dsteps</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-report_error">report_error</a>
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_test">ddeabm_test</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
     
 
     
@@ -654,8 +758,17 @@ implementation in a submodule of an interface in a parent module.</p>
 private subroutine <a href='../interface/deriv_func.html'>deriv_func</a>(me, t, x, xdot)
     
     
-    
+	 
 </h3>
+    
+
+
+
+
+
+
+
+<p>Interface to the <a href="../type/ddeabm_class.html">ddeabm_class</a> derivative function.</p>
     
     <h4>Arguments</h4>
     
@@ -736,15 +849,6 @@ private subroutine <a href='../interface/deriv_func.html'>deriv_func</a>(me, t, 
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>Interface to the <a href="../type/ddeabm_class.html">ddeabm_class</a> derivative function.</p>
-        
 
     </li>
   </ul>
@@ -765,8 +869,17 @@ private subroutine <a href='../interface/deriv_func.html'>deriv_func</a>(me, t, 
 private subroutine <a href='../interface/report_func.html'>report_func</a>(me, t, x)
     
     
-    
+	 
 </h3>
+    
+
+
+
+
+
+
+
+<p>Interface to the step reporting function.</p>
     
     <h4>Arguments</h4>
     
@@ -832,15 +945,6 @@ private subroutine <a href='../interface/report_func.html'>report_func</a>(me, t
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>Interface to the step reporting function.</p>
-        
 
     </li>
   </ul>
@@ -861,8 +965,17 @@ private subroutine <a href='../interface/report_func.html'>report_func</a>(me, t
 private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, x, g)
     
     
-    
+	 
 </h3>
+    
+
+
+
+
+
+
+
+<p>Interface to the <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> scalar event function.</p>
     
     <h4>Arguments</h4>
     
@@ -944,15 +1057,6 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>Interface to the <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> scalar event function.</p>
-        
 
     </li>
   </ul>
@@ -973,6 +1077,10 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
     
   </h3></div>
   <div class="panel-body">
+    
+    
+    <p>The main DDEABM integration class.</p>
+    
      
      <h4>Components</h4>
     
@@ -1791,40 +1899,35 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
       <table class="table table-striped varlist">
       <tbody>
       
-       <tr><td>procedure, public, non_overridable :: <strong>initialize</strong>  => ddeabm_initialize </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-initialize'>initialize</a></strong>  => ddeabm_initialize </td>
        <td></td></tr>
       
-       <tr><td>procedure, public, non_overridable :: <strong>integrate</strong>  => ddeabm_wrapper </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-integrate'>integrate</a></strong>  => ddeabm_wrapper </td>
        <td></td></tr>
       
-       <tr><td>procedure, public, non_overridable :: <strong>destroy</strong>  => destroy_ddeabm </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-destroy'>destroy</a></strong>  => destroy_ddeabm </td>
        <td></td></tr>
       
-       <tr><td>procedure, public, non_overridable :: <strong>first_call</strong>  => ddeabm_new_problem </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-first_call'>first_call</a></strong>  => ddeabm_new_problem </td>
        <td></td></tr>
       
-       <tr><td>procedure, public, non_overridable :: <strong>stop_integration</strong>  => ddeabm_stop_integration </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
       
-       <tr><td>procedure, private, non_overridable :: <strong>ddeabm</strong>  </td>
+       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddeabm'>ddeabm</a></strong>  </td>
        <td></td></tr>
       
-       <tr><td>procedure, private, non_overridable :: <strong>ddes</strong>  </td>
+       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddes'>ddes</a></strong>  </td>
        <td></td></tr>
       
-       <tr><td>procedure, private, non_overridable :: <strong>dhstrt</strong>  </td>
+       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dhstrt'>dhstrt</a></strong>  </td>
        <td></td></tr>
       
-       <tr><td>procedure, private, non_overridable :: <strong>dsteps</strong>  </td>
+       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dsteps'>dsteps</a></strong>  </td>
        <td></td></tr>
       
        </tbody>
        </table>
-     
-     
-     <h4>Description</h4>
-       
-       <p>The main DDEABM integration class.</p>
      
   </div>
 </div>
@@ -1836,6 +1939,10 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
     
   </h3></div>
   <div class="panel-body">
+    
+    
+    <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p>
+    
      
      <h4>Components</h4>
     
@@ -1887,20 +1994,30 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
       <table class="table table-striped varlist">
       <tbody>
       
-       <tr><td>procedure, public, non_overridable :: <strong>initialize_event</strong>  => ddeabm_with_event_initialize </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-initialize'>initialize</a></strong>  => ddeabm_initialize </td>
        <td></td></tr>
       
-       <tr><td>procedure, public, non_overridable :: <strong>integrate_to_event</strong>  => ddeabm_with_event_wrapper </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-integrate'>integrate</a></strong>  => ddeabm_wrapper </td>
+       <td></td></tr>
+      
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-destroy'>destroy</a></strong>  => destroy_ddeabm </td>
+       <td></td></tr>
+      
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-first_call'>first_call</a></strong>  => ddeabm_new_problem </td>
+       <td></td></tr>
+      
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
+       <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
+      
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-initialize_event'>initialize_event</a></strong>  => ddeabm_with_event_initialize </td>
+       <td></td></tr>
+      
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-integrate_to_event'>integrate_to_event</a></strong>  => ddeabm_with_event_wrapper </td>
        <td><p>main routine for integration to an event
  (note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p></td></tr>
       
        </tbody>
        </table>
-     
-     
-     <h4>Description</h4>
-       
-       <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p>
      
   </div>
 </div>
@@ -1920,10 +2037,32 @@ private subroutine <a href='../interface/event_func.html'>event_func</a>(me, t, 
 private function <a href='../proc/dhvnrm.html'>dhvnrm</a>(v, n) result(m)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    <dt>Date</dt><dd>7/1/2014</dd>
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Compute the maximum norm of the first <code>n</code> elements of vector <code>v</code>.
+  Replacement for the original <a href="http://www.netlib.org/slatec/src/dhvnrm.f">SLATEC</a> routine.</p>
     
     <h4>Arguments</h4>
     
@@ -1983,28 +2122,6 @@ private function <a href='../proc/dhvnrm.html'>dhvnrm</a>(v, n) result(m)
   </small></h4>
   
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    <dt>Date</dt><dd>7/1/2014</dd>
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Compute the maximum norm of the first <code>n</code> elements of vector <code>v</code>.
-  Replacement for the original <a href="http://www.netlib.org/slatec/src/dhvnrm.f">SLATEC</a> routine.</p>
-        
 
   </div>
   </div>
@@ -2024,10 +2141,31 @@ private function <a href='../proc/dhvnrm.html'>dhvnrm</a>(v, n) result(m)
 private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a>(me)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Call this to abort the integration if there is an error.
+  (Can be called in <code>df</code> by the user.) The step
+  will be considered invalid and not returned.</p>
     
     <h4>Arguments</h4>
     
@@ -2063,27 +2201,6 @@ private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_in
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Call this to abort the integration if there is an error.
-  (Can be called in <code>df</code> by the user.) The step
-  will be considered invalid and not returned.</p>
-        
 
   </div>
   </div>
@@ -2095,10 +2212,30 @@ private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_in
 private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem</a>(me)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Call this to indicate that a new problem is being solved.
+  It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
     
     <h4>Arguments</h4>
     
@@ -2134,26 +2271,6 @@ private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem<
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Call this to indicate that a new problem is being solved.
-  It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
-        
 
   </div>
   </div>
@@ -2165,10 +2282,30 @@ private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem<
 private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a>(me, neq, maxnum, df, rtol, atol, report)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Initialize the <a href="../type/ddeabm_class.html">ddeabm_class</a>, and set the variables that
+  cannot be changed during a problem.</p>
     
     <h4>Arguments</h4>
     
@@ -2279,8 +2416,8 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
   
 <tr>
   
-  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>)</td>
-  <td>,</td>
+  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
+  <td></td>
   <td>optional</td>
   
   <td></td><td>::</td>
@@ -2294,26 +2431,6 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Initialize the <a href="../type/ddeabm_class.html">ddeabm_class</a>, and set the variables that
-  cannot be changed during a problem.</p>
-        
 
   </div>
   </div>
@@ -2325,10 +2442,30 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
 private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Initialize <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> class,
+  and set the variables that cannot be changed during a problem.</p>
     
     <h4>Arguments</h4>
     
@@ -2473,8 +2610,8 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
   
 <tr>
   
-  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>)</td>
-  <td>,</td>
+  <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
+  <td></td>
   <td>optional</td>
   
   <td></td><td>::</td>
@@ -2488,26 +2625,6 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Initialize <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> class,
-  and set the variables that cannot be changed during a problem.</p>
-        
 
   </div>
   </div>
@@ -2519,10 +2636,29 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
 private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Destructor for <a href="../type/ddeabm_class.html">ddeabm_class</a>.</p>
     
     <h4>Arguments</h4>
     
@@ -2558,25 +2694,6 @@ private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Destructor for <a href="../type/ddeabm_class.html">ddeabm_class</a>.</p>
-        
 
   </div>
   </div>
@@ -2588,10 +2705,29 @@ private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)
 private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, t, y, tout, tstop, idid, integration_mode)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p>
     
     <h4>Arguments</h4>
     
@@ -2727,25 +2863,6 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p>
-        
 
   </div>
   </div>
@@ -2757,10 +2874,32 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
 private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval, integration_mode)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding.
+  It will integrate until <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
+  Note that a root at the initial time is ignored (user should check for
+  this manually)</p>
     
     <h4>Arguments</h4>
     
@@ -2914,28 +3053,6 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding.
-  It will integrate until <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
-  Note that a root at the initial time is ignored (user should check for
-  this manually)</p>
-        
 
   </div>
   </div>
@@ -2947,10 +3064,20 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
 private subroutine <a href='../proc/ddeabm.html'>ddeabm</a>(me, neq, t, y, tout, info, rtol, atol, idid)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>solve an initial value problem in ordinary differential
+  equations using an adams-bashforth method.</p>
     
     <h4>Arguments</h4>
     
@@ -3106,16 +3233,6 @@ private subroutine <a href='../proc/ddeabm.html'>ddeabm</a>(me, neq, t, y, tout,
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>solve an initial value problem in ordinary differential
-  equations using an adams-bashforth method.</p>
-        
 
   </div>
   </div>
@@ -3127,10 +3244,21 @@ private subroutine <a href='../proc/ddeabm.html'>ddeabm</a>(me, neq, t, y, tout,
 private subroutine <a href='../proc/ddes.html'>ddes</a>(me, neq, t, y, tout, info, rtol, atol, idid, ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi, h, eps, x, xold, hold, told, delsgn, tstop, twou, fouru, start, phase1, nornd, stiff, intout, ns, kord, kold, init, ksteps, kle4, iquit, kprev, ivc, iv, kgi)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p><a href="../proc/ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
+  inconvenience of a long call list.  consequently ddes is used as
+  described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p>
     
     <h4>Arguments</h4>
     
@@ -3886,17 +4014,6 @@ private subroutine <a href='../proc/ddes.html'>ddes</a>(me, neq, t, y, tout, inf
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p><a href="../proc/ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
-  inconvenience of a long call list.  consequently ddes is used as
-  described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p>
-        
 
   </div>
   </div>
@@ -3908,10 +4025,20 @@ private subroutine <a href='../proc/ddes.html'>ddes</a>(me, neq, t, y, tout, inf
 private subroutine <a href='../proc/dhstrt.html'>dhstrt</a>(me, neq, a, b, y, yprime, etol, morder, small, big, spy, pv, yp, sf, h)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>Computes a starting step size to be used in solving initial
+  value problems in ordinary differential equations.</p>
     
     <h4>Arguments</h4>
     
@@ -4191,16 +4318,6 @@ private subroutine <a href='../proc/dhstrt.html'>dhstrt</a>(me, neq, a, b, y, yp
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>Computes a starting step size to be used in solving initial
-  value problems in ordinary differential equations.</p>
-        
 
   </div>
   </div>
@@ -4212,10 +4329,21 @@ private subroutine <a href='../proc/dhstrt.html'>dhstrt</a>(me, neq, a, b, y, yp
 private subroutine <a href='../proc/dintp.html'>dintp</a>(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi, gi, alpha, og, ow, ox, oy)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>approximate the solution at <code>xout</code> by evaluating the
+  polynomial computed in <a href="../proc/dsteps.html">dsteps</a> at <code>xout</code>.  must be used in
+  conjunction with <a href="../proc/dsteps.html">dsteps</a>.</p>
     
     <h4>Arguments</h4>
     
@@ -4491,17 +4619,6 @@ private subroutine <a href='../proc/dintp.html'>dintp</a>(x, y, xout, yout, ypou
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>approximate the solution at <code>xout</code> by evaluating the
-  polynomial computed in <a href="../proc/dsteps.html">dsteps</a> at <code>xout</code>.  must be used in
-  conjunction with <a href="../proc/dsteps.html">dsteps</a>.</p>
-        
 
   </div>
   </div>
@@ -4513,10 +4630,19 @@ private subroutine <a href='../proc/dintp.html'>dintp</a>(x, y, xout, yout, ypou
 private subroutine <a href='../proc/dsteps.html'>dsteps</a>(me, neqn, y, x, h, eps, wt, start, hold, k, kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g, phase1, ns, nornd, ksteps, twou, fouru, xold, kprev, ivc, iv, kgi, gi)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+
+
+<p>integrate a system of first order ordinary differential equations one step.</p>
     
     <h4>Arguments</h4>
     
@@ -5047,15 +5173,6 @@ private subroutine <a href='../proc/dsteps.html'>dsteps</a>(me, neqn, y, x, h, e
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-
-       
-       <p>integrate a system of first order ordinary differential equations one step.</p>
-        
 
   </div>
   </div>
@@ -5067,10 +5184,29 @@ private subroutine <a href='../proc/dsteps.html'>dsteps</a>(me, neqn, y, x, h, e
 private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, messg, nerr, level)
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
+    
+
+
+
+
+
+  <dl class="dl-horizontal">
+    
+    <dt>Author</dt><dd>Jacob Williams</dd>
+    
+    
+    
+    
+    
+  </dl>
+
+
+
+<p>Report an error message.</p>
     
     <h4>Arguments</h4>
     
@@ -5155,25 +5291,6 @@ private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, 
       
     
     
-    
-    <h4>Description</h4>
-       
-       
-
-<dl class="dl-horizontal">
-    
-    <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-  </dl>
-
-
-       
-       <p>Report an error message.</p>
-        
 
   </div>
   </div>
@@ -5185,22 +5302,17 @@ private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, 
 public subroutine <a href='../proc/ddeabm_test.html'>ddeabm_test</a>()
     
     
-    
+	 
 </h3></div>
   <div class="panel-body">
        
     
-    <h4>Arguments</h4>
-    
-      <em>None</em>
-    
-    
-    
-    <h4>Description</h4>
-       
-       
 
-<dl class="dl-horizontal">
+
+
+
+
+  <dl class="dl-horizontal">
     
     <dt>Author</dt><dd>Jacob Williams</dd>
     
@@ -5213,11 +5325,16 @@ public subroutine <a href='../proc/ddeabm_test.html'>ddeabm_test</a>()
   </dl>
 
 
-       
-       <p>Unit test for <a href="../type/ddeabm_class.html">ddeabm_class</a>.
+
+<p>Unit test for <a href="../type/ddeabm_class.html">ddeabm_class</a>.
   Integrate a two-body orbit around the Earth.
   Also tests integration to an event.</p>
-        
+    
+    <h4>Arguments</h4>
+    
+      <em>None</em>
+    
+    
 
   </div>
   </div>
@@ -5231,23 +5348,46 @@ public subroutine <a href='../proc/ddeabm_test.html'>ddeabm_test</a>()
     </div>
   </div>
 
+  <section class="visible-xs visible-sm hidden-md">
     <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allmods-1">All Modules</a></h3></div>
+  <div id="allmods-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../module/ddeabm_module.html">ddeabm_module</a>
+      
+      <a class="list-group-item" href="../module/kind_module.html">kind_module</a>
+      
+      <a class="list-group-item" href="../module/root_module.html">root_module</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+  
+    <hr>    
+    </div> <!-- /container -->
     <footer>
+      <div class="container">
       <div class="row">
-        <div class="col-md-4">&copy; 2016 </div>
-        <div class="col-md-4"><span class="text-center"> ddeabm was developed by Jacob Williams</span></div>
-        <div class="col-md-4">
-          <span class="pull-right">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2017 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
             
-          </span>
+          </p>
         </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
+      </div> <!-- /container -->    
     </footer>
-    </div> <!-- /container -->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
