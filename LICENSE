@@ -1,7 +1,7 @@
 DDEABM: Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm
 https://github.com/jacobwilliams/ddeabm
 
-Copyright (c) 2014-2015, Jacob Williams
+Copyright (c) 2014-2017, Jacob Williams
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
