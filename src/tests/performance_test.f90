@@ -11,7 +11,7 @@
     program ddeabm_performance_test
 
     use ddeabm_module
-    use kind_module
+    use ddeabm_kinds
     use pyplot_module
     use iso_fortran_env
 

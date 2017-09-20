@@ -6,7 +6,7 @@
 
     module root_module
 
-    use kind_module
+    use ddeabm_kinds
 
     implicit none
 

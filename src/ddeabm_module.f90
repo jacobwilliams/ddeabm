@@ -19,7 +19,7 @@
 
     module ddeabm_module
 
-    use kind_module
+    use ddeabm_kinds
     use root_module, only: zeroin
 
     implicit none

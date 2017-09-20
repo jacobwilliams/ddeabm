@@ -4,7 +4,7 @@
 !
 !  Numeric kind definitions.
 
-    module kind_module
+    module ddeabm_kinds
 
     use, intrinsic :: iso_fortran_env
 
@@ -14,5 +14,5 @@
 
     integer,parameter,public :: wp = real64  !! Using "double precision" real kinds
 
-    end module kind_module
+    end module ddeabm_kinds
 !*****************************************************************************************
