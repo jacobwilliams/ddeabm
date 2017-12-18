@@ -22,7 +22,9 @@ before_script:
   - FoBiS.py build -compiler gnu -cflags "-c -O2 -std=f2008" -dbld ./bin/ -s ./src/tests/ -dmod ./ -dobj ./ -colors -libs ./lib/libddeabm.a --include ./lib/
 
 script:
-  - ./bin/test
+  - ./bin/zeroin_test
+  - ./bin/ddeabm_test
+  - ./bin/ddeabm_test_vec
   - ./bin/performance_test
 
 after_success:
