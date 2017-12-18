@@ -907,6 +907,7 @@
     real(wp) :: tprev !! earliest time of root when there are
                       !! multiple roots on the integration
                       !! step interval
+    logical :: forward !! if `tmax>=t`
 
     !optional input:
     if (present(integration_mode)) then
@@ -914,6 +915,9 @@
     else
         mode = 1  !default
     end if
+
+    !if this is a "forward" (dt>=0) integration
+    forward = tmax>=t
 
     !check for invalid inputs:
     if (mode/=1 .and. mode/=2) then
@@ -1058,7 +1062,7 @@
                     !call the root finder:
                     call zeroin(zeroin_func,t1,t2,me%tol(i),tzero,gval(i),iflag,g1(i),g2(i))
                     if (iflag==0) then !root found at tzero
-                        if (tzero<tprev) then
+                        if ((forward .and. tzero<tprev) .or. (.not. forward .and. tzero>tprev) ) then
                             ! this is an earlier root so use it
                             idid = 1000 + ig
                             t = tzero
