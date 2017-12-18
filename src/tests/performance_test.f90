@@ -37,6 +37,7 @@
     real(wp),dimension(exp_min:exp_max) :: fevals_vec
     character(len=10) :: istr
     character(len=:),allocatable :: kind_str
+    integer :: istat !! status code
 
     character(len=1),dimension(7) :: colors = ['b','g','r','c','m','k','y'] !! plot colors
 
@@ -86,26 +87,26 @@
         !generate the plot:
         call plt%add_plot(dble(err_vec_x),dble(fevals_vec),label='Test '//trim(adjustl(istr))//' r',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
-                            markersize=5,linewidth=2)
+                            markersize=5,linewidth=2,istat=istat)
         call plt%add_plot(dble(err_vec_y),dble(fevals_vec),label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
-                            markersize=5,linewidth=2)
+                            markersize=5,linewidth=2,istat=istat)
         call plt%add_plot(dble(err_vec_z),dble(fevals_vec),label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
-                            markersize=5,linewidth=2)
+                            markersize=5,linewidth=2,istat=istat)
         call plt%add_plot(dble(err_vec_vx),dble(fevals_vec),label='Test '//trim(adjustl(istr))//' v',&
                             linestyle=colors(1+mod(j,size(colors)))//'o--',&
-                            markersize=5,linewidth=2)
+                            markersize=5,linewidth=2,istat=istat)
         call plt%add_plot(dble(err_vec_vy),dble(fevals_vec),label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o--',&
-                            markersize=5,linewidth=2)
+                            markersize=5,linewidth=2,istat=istat)
         call plt%add_plot(dble(err_vec_vz),dble(fevals_vec),label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o--',&
-                            markersize=5,linewidth=2)
+                            markersize=5,linewidth=2,istat=istat)
 
     end do
 
-    call plt%savefig('ddeabm_performance_test.png')
+    call plt%savefig('ddeabm_performance_test.png',istat=istat)
 
     contains
 !*****************************************************************************************
