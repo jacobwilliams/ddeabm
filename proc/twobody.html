@@ -134,18 +134,18 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 1.3% of total for procedures.">19 statements</a>
+	  title=" 1.2% of total for procedures.">19 statements</a>
      </li> 
      
      
-    <li><i class="fa fa-code"></i><a href="../src/performance_test.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/ddeabm_test_vec.f90"> Source File</a></li>
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
-     <li><a href='../sourcefile/performance_test.f90.html'>performance_test.f90</a></li>
+     <li><a href='../sourcefile/ddeabm_test_vec.f90.html'>ddeabm_test_vec.f90</a></li>
   
-     <li><a href='../program/ddeabm_performance_test.html'>ddeabm_performance_test</a></li>
+     <li><a href='../program/ddeabm_test_vec.html'>ddeabm_test_vec</a></li>
   
      <li class="active">twobody</li>
   </ol>
@@ -201,6 +201,8 @@
   <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
+      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -209,11 +211,13 @@
       
       <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
       
-      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-      
       <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
       
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
+      
       <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
       
       <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
       
@@ -231,9 +235,27 @@
       
       <a class="list-group-item" href="../proc/go.html">go</a>
       
+      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
+      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
       
+      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
+      
+      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
+      
       <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       
@@ -260,7 +282,7 @@ subroutine twobody(me, t, x, xdot)
 
 
     
-    <p>derivative routine for two-body orbit propagation.</p>
+    <p>derivative routine for two-body orbit propagation</p>
     
 
     <h3>Arguments</h3>
@@ -281,7 +303,7 @@ subroutine twobody(me, t, x, xdot)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E15"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E18"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -296,12 +318,12 @@ subroutine twobody(me, t, x, xdot)
   
 <tr>
   
-  <td><span class="anchor" id="variable-t%7E9"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-t%7E11"></span>real(kind=wp),</td>
   <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>t</strong></td><td><p>time [\(s\)]</p></td>
+  <td><strong>t</strong></td><td></td>
   
 </tr>
 
@@ -311,12 +333,12 @@ subroutine twobody(me, t, x, xdot)
   
 <tr>
   
-  <td><span class="anchor" id="variable-x%7E8"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x%7E9"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
   <td>dimension(:)</td><td>::</td>
-  <td><strong>x</strong></td><td><p>state vector [\(km\), \(km/s\)]</p></td>
+  <td><strong>x</strong></td><td></td>
   
 </tr>
 
@@ -331,7 +353,7 @@ subroutine twobody(me, t, x, xdot)
   <td></td>
   
   <td>dimension(:)</td><td>::</td>
-  <td><strong>xdot</strong></td><td><p>state vector derivative [\(km/s\), \(km/s^2\)]</p></td>
+  <td><strong>xdot</strong></td><td></td>
   
 </tr>
 
@@ -397,16 +419,16 @@ subroutine twobody(me, t, x, xdot)
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>        <span class="k">subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
 
-        <span class="c">!! derivative routine for two-body orbit propagation.</span>
+        <span class="c">!! derivative routine for two-body orbit propagation</span>
 
         <span class="k">implicit none</span>
 
 <span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>    <span class="c">!! time [\(s\)]</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>    <span class="c">!! state vector [\(km\), \(km/s\)]</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span> <span class="c">!! state vector derivative [\(km/s\), \(km/s^2\)]</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
 
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
@@ -426,7 +448,7 @@ subroutine twobody(me, t, x, xdot)
 
         <span class="k">end select</span>
 
-<span class="k">    end subroutine </span><span class="n">twobody</span>
+<span class="k">        end subroutine </span><span class="n">twobody</span>
 </pre></div>
 
     </section>
@@ -445,6 +467,8 @@ subroutine twobody(me, t, x, xdot)
   <div id="allprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
+      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -453,11 +477,13 @@ subroutine twobody(me, t, x, xdot)
       
       <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
       
-      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-      
       <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
       
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
+      
       <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
       
       <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
       
@@ -475,9 +501,27 @@ subroutine twobody(me, t, x, xdot)
       
       <a class="list-group-item" href="../proc/go.html">go</a>
       
+      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
+      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
       
+      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
+      
+      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
+      
       <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       

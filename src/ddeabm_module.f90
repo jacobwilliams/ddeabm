@@ -13,13 +13,13 @@
 !# License
 !  The original SLATEC code is a public domain work of the US Government.
 !  The modifications are
-!  [Copyright (c) 2014-2015, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
+!  [Copyright (c) 2014-2017, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
 !
 !*****************************************************************************************
 
     module ddeabm_module
 
-    use kind_module
+    use ddeabm_kinds
     use root_module, only: zeroin
 
     implicit none
@@ -177,6 +177,35 @@
 
     end type ddeabm_with_event_class
 
+    type,extends(ddeabm_class),public :: ddeabm_with_event_class_vec
+
+        !! A version of [[ddeabm_class]] with event location (root finding)
+        !! of a vector function (it will stop on the first root it encounters)
+        !!
+        !! Call *initialize_event* to set up the integration.
+        !!
+        !! See also: [[ddeabm_with_event_class]]
+
+        private
+
+        integer :: n_g_eqns = 0 !! number of `gfunc` event equations
+
+        real(wp),dimension(:),allocatable :: tol   !! tolerance for root finding (see [[zeroin]])
+                                                   !! this is a vector (size `n_g_eqns`)
+
+        procedure(event_func_vec),pointer :: gfunc => null()  !! event function: g(t,x)=0 at event
+
+    contains
+
+        private
+
+        procedure,non_overridable,public :: initialize_event   => ddeabm_with_event_initialize_vec
+        procedure,non_overridable,public :: integrate_to_event => ddeabm_with_event_wrapper_vec
+            !! main routine for integration to an event
+            !! (note that *integrate* can also still be used from [[ddeabm_class]])
+
+    end type ddeabm_with_event_class_vec
+
     abstract interface
 
         subroutine deriv_func(me,t,x,xdot)
@@ -209,9 +238,25 @@
                                                     !! The event is located when \( g(t,x)=0 \).
         end subroutine event_func
 
-    end interface
+        subroutine event_func_vec(me,t,x,g,ig)
+            !! Interface to the [[ddeabm_with_event_class_vec]] scalar event function.
+            import :: wp,ddeabm_with_event_class_vec
+            implicit none
+            class(ddeabm_with_event_class_vec),intent(inout) :: me
+            real(wp),intent(in)               :: t  !! time
+            real(wp),dimension(:),intent(in)  :: x  !! state
+            real(wp),dimension(:),intent(out) :: g  !! vector event function: \( g(t,x) \).
+                                                    !! The event is located when any \( g(t,x)=0 \).
+            integer,intent(in),optional       :: ig !! the event function to compute:
+                                                    !!
+                                                    !! * if not present, then they are all computed.
+                                                    !! * if `i>0` then `g(i)` is computed, and
+                                                    !!   the other elements are ignored.
+                                                    !!
+                                                    !! If `i<=0` or `i>ng`, then this is a fatal error.
+        end subroutine event_func_vec
 
-    public :: ddeabm_test
+    end interface
 
     contains
 !*****************************************************************************************
@@ -329,7 +374,7 @@
     !  Note: this is a modification of the original dsteps code.
     !  The full-precision coefficients are used here, instead
     !  of the less precise ones in the original.
-    !  These were computed recursivly using the equation on p. 159 of
+    !  These are computed recursively using the equation on p. 159 of
     !  Shampine/Gordon, "Computer Solution of Ordinary Differential Equations", 1975.
     allocate(me%two(max_order + 1))
     allocate(me%gstr(0:max_order + 1))
@@ -386,6 +431,56 @@
     me%gfunc => g
 
     end subroutine ddeabm_with_event_initialize
+!*****************************************************************************************
+
+!*****************************************************************************************
+!> author: Jacob Williams
+!
+!  Initialize [[ddeabm_with_event_class_vec]] class,
+!  and set the variables that cannot be changed during a problem.
+!
+!#See also
+!  * [[ddeabm_initialize]]
+
+    subroutine ddeabm_with_event_initialize_vec(me,neq,maxnum,df,rtol,atol,ng,g,root_tol,report)
+
+    implicit none
+
+    class(ddeabm_with_event_class_vec),intent(inout) :: me
+    integer,intent(in)                           :: neq       !! number of equations to be integrated
+    integer,intent(in)                           :: maxnum    !! maximum number of integration steps allowed
+    procedure(deriv_func)                        :: df        !! derivative function \( dx/dt \)
+    real(wp),dimension(:),intent(in)             :: rtol      !! relative tolerance for integration (see [[ddeabm]])
+    real(wp),dimension(:),intent(in)             :: atol      !! absolution tolerance for integration (see [[ddeabm]])
+    integer,intent(in)                           :: ng        !! number of event functions in `g`
+    procedure(event_func_vec)                    :: g         !! Event function \( g(t,x) \). This should be a smooth function
+                                                              !! than can have values \( <0 \) and \( \ge 0 \).
+                                                              !! When \( g=0 \) (within the tolerance),
+                                                              !! then a root has been located and
+                                                              !! the integration will stop.
+    real(wp),dimension(:),intent(in)             :: root_tol  !! tolerance for the root finding (see [[zeroin]]).
+                                                              !! This should be sized `ng` or `1` (in which
+                                                              !! case the value is used for all elements)
+    procedure(report_func),optional              :: report    !! reporting function
+
+    !base class initialization:
+    call me%initialize(neq,maxnum,df,rtol,atol,report)
+
+    !event finding variables:
+    me%n_g_eqns = ng
+    allocate(me%tol(ng))
+    if (size(root_tol)==1) then
+        me%tol = root_tol(1) ! use this one for all of them
+    elseif (size(root_tol)==ng) then
+        me%tol = root_tol
+    else
+        write(*,*) 'Error in ddeabm_with_event_initialize_vec: '//&
+                   'incorrect size for root_tol input. Using first element only.'
+        me%tol = root_tol(1)
+    endif
+    me%gfunc => g
+
+    end subroutine ddeabm_with_event_initialize_vec
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -547,6 +642,7 @@
 !##See also
 !  * Inspired by [sderoot](http://www.netlib.no/netlib/ode/sderoot.f),
 !    but no code from that routine was used here.
+!  * [[ddeabm_with_event_wrapper_vec]] -- for vector `g` function
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
@@ -665,7 +761,7 @@
             exit
         end if
 
-        !evalute event function at new point:
+        !evaluate event function at new point:
         t2 = t
         y2 = y
         call me%gfunc(t2,y2,g2)
@@ -714,7 +810,9 @@
                 if (mode==2) call me%report(t,y)
                 return
             else
+                ! unlikely to occur since zeroin is "guaranteed" to converge...
                 write(*,*) 'Error locating root in ddeabm_with_event_wrapper.'
+                idid = -2000 ! if no root is found
                 return
             end if
 
@@ -752,6 +850,279 @@
         end function zeroin_func
 
     end subroutine ddeabm_with_event_wrapper
+!*****************************************************************************************
+
+!*****************************************************************************************
+!> author: Jacob Williams
+!
+!  Wrapper routine for [[ddeabm]], with event finding for multiple functions.
+!  It will integrate until any `g(t,x)=0` or `t=tmax` (whichever comes first).
+!  Note that a root at the initial time is ignored (user should check for
+!  this manually)
+!
+!  If starting a new problem, must first call `me%first_call()`.
+!
+!##See also
+!  * [[ddeabm_with_event_wrapper]] -- for scalar `g` function
+!
+!@note Currently not using the recommended tols if `idid=-2`.
+
+    subroutine ddeabm_with_event_wrapper_vec(me,t,y,tmax,tstop,idid,gval,integration_mode)
+
+    implicit none
+
+    class(ddeabm_with_event_class_vec),intent(inout) :: me
+    real(wp),intent(inout)                         :: t
+    real(wp),dimension(me%neq),intent(inout)       :: y
+    real(wp),intent(in)                            :: tmax    !! max time at which a solution is desired.
+                                                              !! (if root not located, it will integrate to `tmax`)
+    real(wp),intent(in),optional                   :: tstop   !! for some problems it may not be permissible to integrate
+                                                              !! past a point `tstop` because a discontinuity occurs there
+                                                              !! or the solution or its derivative is not defined beyond
+                                                              !! `tstop`.  when you have declared a `tstop` point (see `info(4)`),
+                                                              !! you have told the code not to integrate past `tstop`.
+                                                              !! in this case any `tmax` beyond `tstop` is invalid input.
+                                                              !! [not used if not present]
+    integer,intent(out)                            :: idid    !! indicator reporting what the code did.
+                                                              !! you must monitor this integer variable to
+                                                              !! decide what action to take next.
+                                                              !! `idid>1000` means a root was found for the
+                                                              !! (`idid-1000`)th `g` function.
+                                                              !! See [[ddeabm]] for other values.
+    real(wp),dimension(:),intent(out)              :: gval    !! value of the event functions `g(t,x)` at the final time `t`
+    integer,intent(in),optional :: integration_mode           !! Step mode:
+                                                              !! *1* - normal integration from `t` to `tout`, no reporting [default].
+                                                              !! *2* - normal integration from `t` to `tout`, report each step.
+
+    !local variables:
+    real(wp),dimension(me%n_g_eqns) :: g1,g2
+    real(wp) :: t1,t2,tzero,t0
+    integer :: iflag
+    logical :: first
+    real(wp),dimension(me%neq) :: y1,y2
+    real(wp),dimension(me%neq) :: yc  !! interpolated state at tc
+    integer :: mode  !! local copy of integration_mode
+    integer :: i !! counter
+    integer :: ig !! `gfunc` to compute
+    real(wp) :: tprev !! earliest time of root when there are
+                      !! multiple roots on the integration
+                      !! step interval
+    logical :: forward !! if `tmax>=t`
+
+    !optional input:
+    if (present(integration_mode)) then
+        mode = integration_mode
+    else
+        mode = 1  !default
+    end if
+
+    !if this is a "forward" (dt>=0) integration
+    forward = tmax>=t
+
+    !check for invalid inputs:
+    if (mode/=1 .and. mode/=2) then
+        call report_error('ddeabm_with_event_wrapper_vec', &
+                            'integration_mode must be 1 or 2.', 0, 0)
+        idid = -33
+        return
+    end if
+    if ((mode==2) .and. (.not. associated(me%report))) then
+        call report_error('ddeabm_with_event_wrapper_vec', &
+                            'REPORT procedure must be associated for integration_mode=2.', 0, 0)
+        idid = -33
+        return
+    end if
+
+    !make sure the event function was set:
+    if (.not. associated(me%gfunc)) then
+        call report_error('ddeabm_with_event_wrapper_vec', &
+                            'the event function GFUNC has not been associated.', 0, 0)
+        idid=-33
+        return
+    end if
+
+    !set info array:
+
+    !info(1) is set when ddeabm_new_problem is called
+
+    !info(2)
+    if (me%scalar_tols) then
+        me%info(2) = 0
+    else
+        me%info(2) = 1
+    end if
+
+    !info(3)
+    me%info(3) = 1  !intermediate output mode: return after each step
+
+    !info(4)
+    if (present(tstop)) then
+        me%info(4) = 1
+        me%tstop = tstop
+    else
+        me%info(4) = 0
+        me%tstop = 0.0_wp !not used
+    end if
+
+    !make a copy of the tols, since the routine might change them:
+    me%rtol_tmp = me%rtol
+    me%atol_tmp = me%atol
+
+    !evaluate the event function at the initial point:
+    first = .true.  !to avoid catching a root at the initial time
+    t1 = t
+    y1 = y
+    call me%gfunc(t1,y1,g1)  ! compute all the g functions
+    if (mode==2) call me%report(t,y)  !initial point
+
+    do
+
+        !call the lower-level routine:
+        call me%ddeabm( neq     = me%neq,&
+                          t     = t,&
+                          y     = y,&
+                          tout  = tmax,&
+                          info  = me%info,&
+                          rtol  = me%rtol_tmp,&
+                          atol  = me%atol_tmp,&
+                          idid  = idid)
+
+        !if there was a user-triggered error:
+        if (me%error) then
+            idid = -1000
+            exit
+        end if
+
+        !evaluate all event functions at new point:
+        t2 = t
+        y2 = y
+        call me%gfunc(t2,y2,g2)
+
+        !check status (see ddeabm or idid codes):
+        select case (idid)
+        case(1)
+            !intermediate step successful, continue
+        case(2,3)
+            !tmax was reached. check it for any root
+            gval = g2
+            do i = 1, me%n_g_eqns
+                if (abs(gval(i))<=me%tol(i)) then
+                    idid = 1000 + i !root found
+                    exit
+                end if
+            end do
+            if (mode==2) call me%report(t,y)  !final point
+            return
+        case default
+            !some error
+            return
+        end select
+
+        if (any(abs(g2)<=me%tol)) then  !intermediate t2 is a root
+
+            do i = 1, me%n_g_eqns
+                if (abs(g2(i))<=me%tol(i)) then
+                    idid = 1000 + i !root found
+                    exit
+                end if
+            end do
+
+            gval = g2
+            t = t2
+            y = y2
+            if (mode==2) call me%report(t,y)
+            return
+
+        else if (first .and. any(abs(g1)<=me%tol)) then  !root at initial time
+
+            !note: maybe we could have an option to also
+            !      check for roots at the initial time?
+
+            !ignore this root
+            if (mode==2) call me%report(t,y)
+
+        else if (any(g1*g2<=0.0_wp)) then
+            ! different signs - root somewhere on [t1,t2]
+            ! note: we ignore if a root on the initial time
+
+            ! have to check all the functions where this is true,
+            ! and select the one with the earlier root.
+
+            ! initialize. goal is to find the earliest one:
+            tprev = huge(1.0_wp)
+            idid = -2000 ! if no root is found
+
+            do i = 1, me%n_g_eqns
+
+                if (g1(i)*g2(i)<=0.0_wp) then  ! this func has a root
+
+                    ig = i  ! when calling zeroin, we only need to compute
+                            ! the ith function
+
+                    !call the root finder:
+                    call zeroin(zeroin_func,t1,t2,me%tol(i),tzero,gval(i),iflag,g1(i),g2(i))
+                    if (iflag==0) then !root found at tzero
+                        if ((forward .and. tzero<tprev) .or. (.not. forward .and. tzero>tprev) ) then
+                            ! this is an earlier root so use it
+                            idid = 1000 + ig
+                            t = tzero
+                            y = yc
+                            tprev = t
+                        end if
+                    else
+                        ! unlikely to occur since zeroin is "guaranteed" to converge...
+                        write(*,*) 'Error locating root in ddeabm_with_event_wrapper_vec for function ',i
+                        idid = -2000 ! if no root is found
+                    end if
+
+                end if
+
+            end do
+            ! if no errors, report the root if necessary, then return:
+            if (idid>0) then
+                if (mode==2) call me%report(t,y)
+                call me%gfunc(t,y,gval) ! compute all funcs for output
+            end if
+            return
+
+        else
+            if (mode==2) call me%report(t,y)
+        end if
+
+        !set up for next step:
+        first = .false.
+        g1 = g2
+        t1 = t2
+        y1 = y2
+
+    end do
+
+    contains
+
+        function zeroin_func(tc) result(g)
+            !! evaluate the g function at tc using interpolation ([[dintp]]).
+
+            implicit none
+
+            real(wp),intent(in)  :: tc  !! current time
+            real(wp)             :: g   !! value of event function
+
+            real(wp),dimension(me%n_g_eqns) :: gtmp
+
+            ! interpolate to get the state at tc:
+            call dintp(t2,y2,tc,yc,&
+                         me%ypout,me%neq,me%kold,me%phi,&     !! class variables
+                         me%ivc,me%iv,me%kgi,me%gi,me%alpha,&
+                         me%g,me%w,me%xold,me%p)
+
+            ! user defined event function:
+            ! [only compute the one we need]
+            call me%gfunc(tc,yc,gtmp,ig)
+            g = gtmp(ig)
+
+        end function zeroin_func
+
+    end subroutine ddeabm_with_event_wrapper_vec
 !*****************************************************************************************
 
 !*****************************************************************************************
@@ -2700,257 +3071,6 @@
     write(error_unit,'(A)') 'Error in '//trim(subrou)//': '//trim(messg)
 
     end subroutine report_error
-!*****************************************************************************************
-
-!*****************************************************************************************
-!> author: Jacob Williams
-!  date: 12/16/2015
-!
-!  Unit test for [[ddeabm_class]].
-!  Integrate a two-body orbit around the Earth.
-!  Also tests integration to an event.
-
-    subroutine ddeabm_test()
-
-    implicit none
-
-    type,extends(ddeabm_with_event_class) :: spacecraft
-        !! spacecraft propagation type.
-        !! extends the [[ddeabm_class]] to include data used in the deriv routine
-        real(wp) :: mu = 0.0_wp      !! central body gravitational parameter (km3/s2)
-        integer :: fevals = 0        !! number of function evaluations
-        logical :: first = .true.    !! first point is being exported
-    end type spacecraft
-
-    integer,parameter  :: n = 6            !! number of state variables
-    real(wp),parameter :: tol = 1.0e-12_wp !! event location tolerance
-
-    type(spacecraft) :: s
-    real(wp),dimension(n) :: x0,xf,x02,x
-    real(wp) :: t0,tf,dt,gf,tf_actual,t,gval,z_target
-    integer :: idid
-
-    write(*,*) ''
-    write(*,*) '---------------'
-    write(*,*) ' ddeabm_test'
-    write(*,*) '---------------'
-    write(*,*) ''
-
-    !***************************************************************************
-
-    write(*,*) ''
-    write(*,*) '-----------------------'
-    write(*,*) 'forward/backward test:'
-    write(*,*) '-----------------------'
-    write(*,*) ''
-
-    !constructor (main body is Earth):
-
-    call s%initialize(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
-                        report=twobody_report)
-    s%mu = 398600.436233_wp  !earth
-
-    !initial conditions:
-    x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
-            1.0_wp,2.0_wp,3.0_wp]
-    t0 = 0.0_wp       !initial time (sec)
-    tf = 1000.0_wp    !final time (sec)
-    s%fevals = 0
-
-    write(*,'(A/,*(F15.6/))') 'Initial time:',t0
-    write(*,'(A/,*(F15.6/))') 'Initial state:',x0
-    s%fevals = 0
-    s%first = .true.
-    t = t0
-    x = x0
-    call s%first_call()
-    call s%integrate(t,x,tf,idid=idid,integration_mode=2)    !forward (report points)
-    xf = x
-    write(*,*) ''
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'Final time:',t
-    write(*,'(A/,*(F15.6/))') 'Final state:',xf
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    t = tf
-    x = xf
-    s%fevals = 0
-    call s%first_call()  !restarting the integration
-    call s%integrate(t,x,t0,idid=idid)  !backwards
-    x02 = x
-
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'Initial state:',x02
-    write(*,*) ''
-    write(*,'(A/,*(E20.12/))') 'Error:',x02-x0
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    write(*,*) ''
-    write(*,*) '-----------------------'
-    write(*,*) 'continue integration:'
-    write(*,*) '-----------------------'
-    write(*,*) ''
-
-    t = t0
-    x = x02
-    tf = t0 - 100.0_wp
-    s%fevals = 0
-    call s%first_call()  !restarting the integration (go from t -> tf)
-    call s%integrate(t,x,tf,idid=idid)  !backwards
-    xf = x
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'Final time:',t
-    write(*,'(A/,*(F15.6/))') 'Final state:',xf
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    !***************************************************************************
-
-    !integration to event test (integrate until z-coordinate is 12,000 km)
-
-    write(*,*) ''
-    write(*,*) '-----------------------'
-    write(*,*) 'integration to event:'
-    write(*,*) '-----------------------'
-    write(*,*) ''
-
-    call s%initialize_event(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
-                                g=twobody_event,root_tol=1.0e-12_wp,report=twobody_report)
-    s%mu = 398600.436233_wp  !earth
-    s%fevals = 0
-
-    !initial conditions:
-    x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
-            1.0_wp,2.0_wp,3.0_wp]
-    t0 = 0.0_wp       !initial time (sec)
-
-    write(*,'(A/,*(F15.6/))') 'Initial time:',t0
-    write(*,'(A/,*(F15.6/))') 'Initial state:',x0
-    s%fevals = 0
-    s%first = .true.
-    t = t0
-    x = x0
-    tf = 1000.0_wp    !max final time (sec)
-    z_target = 12000.0_wp
-    call s%first_call()
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2)
-    xf = x
-    write(*,*) ''
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'gval: ',gval
-    write(*,'(A/,*(F15.6/))') 'Final time:',t
-    write(*,'(A/,*(F15.6/))') 'Final state:',xf
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    ! Now, continue integration (until z-coordinate is 13,000 km)
-
-    write(*,*) '======================='
-    write(*,*) 'continue integration...'
-    write(*,*) '======================='
-
-    s%mu = 398600.436233_wp  !earth
-    s%fevals = 0
-    s%first = .true.
-    x = xf
-    tf = 2000.0_wp    !max final time (sec)
-    z_target = 13000.0_wp !change the target value
-    write(*,'(A/,*(F15.6/))') 'Initial time     :',t
-    write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
-    write(*,'(A/,*(F15.6/))') 'Initial state    :',x
-    call s%first_call()  !have to restart the integration after a root finding
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2)
-    xf = x
-    write(*,*) ''
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'gval: ',gval
-    write(*,'(A/,*(F15.6/))') 'Final time:',t
-    write(*,'(A/,*(F15.6/))') 'Final state:',xf
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    contains
-!*****************************************************************************************
-
-    !*********************************************************
-        subroutine twobody(me,t,x,xdot)
-
-        !! derivative routine for two-body orbit propagation
-
-        implicit none
-
-        class(ddeabm_class),intent(inout) :: me
-        real(wp),intent(in)               :: t
-        real(wp),dimension(:),intent(in)  :: x
-        real(wp),dimension(:),intent(out) :: xdot
-
-        real(wp),dimension(3) :: r,v,a_grav
-        real(wp) :: rmag
-
-        select type (me)
-        class is (spacecraft)
-
-            r = x(1:3)
-            v = x(4:6)
-            rmag = norm2(r)
-            a_grav = -me%mu/rmag**3 * r !acceleration due to gravity
-
-            xdot(1:3) = v
-            xdot(4:6) = a_grav
-
-            me%fevals = me%fevals + 1
-
-        end select
-
-        end subroutine twobody
-    !*********************************************************
-
-    !*********************************************************
-        subroutine twobody_report(me,t,x)
-
-        !! report function - write time,state to console
-
-        implicit none
-
-        class(ddeabm_class),intent(inout)    :: me
-        real(wp),intent(in)                  :: t
-        real(wp),dimension(:),intent(in)     :: x
-
-        select type (me)
-        class is (spacecraft)
-            if (me%first) then  !print header
-                write(*,*) ''
-                write(*,'(*(A15,1X))')  'time (sec)','x (km)','y (km)','z (km)',&
-                                        'vx (km/s)','vy (km/s)','vz (km/s)'
-                me%first = .false.
-            end if
-        end select
-
-        write(*,'(*(F15.6,1X))') t,x
-
-        end subroutine twobody_report
-    !*********************************************************
-
-    !*********************************************************
-        subroutine twobody_event(me,t,x,g)
-
-        !! event function for z = 12,000 km
-
-        implicit none
-
-        class(ddeabm_with_event_class),intent(inout) :: me
-        real(wp),intent(in)                          :: t
-        real(wp),dimension(:),intent(in)             :: x
-        real(wp),intent(out)                         :: g
-
-        g = z_target - x(3)  !z coordinate
-
-        end subroutine twobody_event
-    !*********************************************************
-
-    end subroutine ddeabm_test
 !*****************************************************************************************
 
 !*****************************************************************************************

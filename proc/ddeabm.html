@@ -134,7 +134,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 2.2% of total for procedures.">33 statements</a>
+	  title=" 2.0% of total for procedures.">33 statements</a>
      </li> 
      
      
@@ -201,6 +201,8 @@
   <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
+      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -209,11 +211,13 @@
       
       <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
       
-      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-      
       <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
       
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
+      
       <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
       
       <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
       
@@ -231,9 +235,27 @@
       
       <a class="list-group-item" href="../proc/go.html">go</a>
       
+      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
+      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
       
+      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
+      
+      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
+      
       <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       
@@ -686,7 +708,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E11"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E14"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -701,7 +723,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-neq%7E4"></span>integer,</td>
+  <td><span class="anchor" id="variable-neq%7E5"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -716,7 +738,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-t%7E7"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-t%7E9"></span>real(kind=wp),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -731,7 +753,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-y%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-y%7E4"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -776,7 +798,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-rtol%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-rtol%7E5"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -791,7 +813,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-atol%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-atol%7E5"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -806,7 +828,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-idid%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-idid%7E4"></span>integer,</td>
   <td>intent(out)</td>
   <td></td>
   
@@ -826,30 +848,31 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
                 <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+<!-- Generated by graphviz version 2.36.0 (20140111.2315)
  -->
 <!-- Title: proc~~ddeabm~~CallsGraph Pages: 1 -->
-<svg id="procddeabmCallsGraph" width="168pt" height="34pt"
- viewBox="0.00 0.00 168.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~ddeabm~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<svg id="procddeabmCallsGraph" width="168pt" height="32pt"
+ viewBox="0.00 0.00 168.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>proc~~ddeabm~~CallsGraph</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 165,-30 165,5 -4,5"/>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 164,-28 164,4 -4,4"/>
 <!-- proc~ddeabm -->
-<g id="node1" class="node"><title>proc~ddeabm</title>
-<polygon fill="none" stroke="black" points="54,-26 2.13163e-14,-26 0,-1.24345e-14 54,-3.55271e-15 54,-26"/>
-<text text-anchor="middle" x="27" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm</text>
+<g id="proc~~ddeabm~~CallsGraph_node1" class="node"><title>proc~ddeabm</title>
+<polygon fill="none" stroke="black" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm</text>
 </g>
 <!-- proc~report_error -->
-<g id="node2" class="node"><title>proc~report_error</title>
-<a xlink:href="../proc/report_error.html" xlink:title="report_error">
-<polygon fill="#d9534f" stroke="#d9534f" points="160,-26 90,-26 90,-1.24345e-14 160,-3.55271e-15 160,-26"/>
-<text text-anchor="middle" x="125" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+<g id="proc~~ddeabm~~CallsGraph_node2" class="node"><title>proc~report_error</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node2"><a xlink:href="../proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="160,-24 90,-24 90,-0 160,-0 160,-24"/>
+<text text-anchor="middle" x="125" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
 </a>
 </g>
+</g>
 <!-- proc~ddeabm&#45;&gt;proc~report_error -->
-<g id="edge2" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M54.0384,-13C62.0196,-13 70.9811,-13 79.7791,-13"/>
-<polygon fill="#000000" stroke="#000000" points="79.9636,-16.5001 89.9635,-13 79.9635,-9.5001 79.9636,-16.5001"/>
+<g id="proc~~ddeabm~~CallsGraph_edge1" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M54.2324,-12C62.1329,-12 71.0316,-12 79.7632,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.8668,-15.5001 89.8668,-12 79.8667,-8.5001 79.8668,-15.5001"/>
 </g>
 </g>
 </svg>
@@ -868,43 +891,43 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.26.3 (20100126.1600)
+<!-- Generated by graphviz version 2.36.0 (20140111.2315)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="556pt" height="34pt"
- viewBox="0.00 0.00 556.00 34.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 30)">
+<svg width="559pt" height="32pt"
+ viewBox="0.00 0.00 559.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="white" points="-4,5 -4,-30 553,-30 553,5 -4,5"/>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 555,-28 555,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="64,-26 3.19744e-14,-26 0,-1.24345e-14 64,-3.55271e-15 64,-26"/>
-<text text-anchor="middle" x="32" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
 <g id="node2" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-26 82,-26 82,-1.24345e-14 136,-3.55271e-15 136,-26"/>
-<text text-anchor="middle" x="109" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
 <g id="node3" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="208,-26 154,-26 154,-1.24345e-14 208,-3.55271e-15 208,-26"/>
-<text text-anchor="middle" x="181" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.25,-24 154.75,-24 154.75,-0 209.25,-0 209.25,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
 <g id="node4" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="362,-26 226,-26 226,-1.24345e-14 362,-3.55271e-15 362,-26"/>
-<text text-anchor="middle" x="294" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
 <g id="node5" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="434,-26 380,-26 380,-1.24345e-14 434,-3.55271e-15 434,-26"/>
-<text text-anchor="middle" x="407" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
 <g id="node6" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="548,-26 452,-26 452,-1.24345e-14 548,-3.55271e-15 548,-26"/>
-<text text-anchor="middle" x="500" y="-10.55" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="551.25,-24 454.75,-24 454.75,-0 551.25,-0 551.25,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -1057,6 +1080,8 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   <div id="allprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
+      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -1065,11 +1090,13 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
       
       <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
       
-      <a class="list-group-item" href="../proc/ddeabm_test.html">ddeabm_test</a>
-      
       <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
       
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
+      
       <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
       
       <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
       
@@ -1087,9 +1114,27 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
       
       <a class="list-group-item" href="../proc/go.html">go</a>
       
+      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
+      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
       
+      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
+      
+      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
+      
       <a class="list-group-item" href="../proc/twobody.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
+      
+      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       
