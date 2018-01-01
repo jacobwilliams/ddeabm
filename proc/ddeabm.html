@@ -75,8 +75,6 @@
             <li><a href="../lists/types.html">Derived Types</a></li>
 				
 				
-            <li><a href="../lists/programs.html">Programs</a></li>
-				
             </ul>
             </li>
 
@@ -94,8 +92,6 @@
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
 
-
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
 
           </ul>
         
@@ -134,7 +130,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 2.1% of total for procedures.">33 statements</a>
+	  title=" 2.3% of total for procedures.">33 statements</a>
      </li> 
      
      
@@ -201,8 +197,6 @@
   <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
-      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -233,29 +227,7 @@
       
       <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
       
-      <a class="list-group-item" href="../proc/go.html">go</a>
-      
-      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
-      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
-      
-      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
-      
-      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       
@@ -301,7 +273,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <code>neq, t, y(*), tout, info(*), rtol, atol</code></p>
 <p><strong>quantities which may be altered by the code are:</strong>
     <code>t, y(*), info(1), rtol, atol, idid</code></p>
-<h1>description of the arguments to ddeabm (an overview)</h1>
+<h3>Description of the arguments to ddeabm (an overview)</h3>
 <p>the parameters are</p>
 <div class="codehilite"><pre><span></span>  df -- this is the name of a subroutine which you provide to
          define the differential equations.
@@ -336,7 +308,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
 </pre></div>
 
 
-<h1>input -- what to do on the first call to ddeabm</h1>
+<h3>input -- what to do on the first call to ddeabm</h3>
 <p>the first call of the code is defined to be the start of each new
    problem.  read through the descriptions of all the following items,
    provide sufficient storage space for designated arrays, set
@@ -511,7 +483,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
 </pre></div>
 
 
-<h1>output -- after any return from ddeabm</h1>
+<h3>output -- after any return from ddeabm</h3>
 <p>the principal aim of the code is to return a computed solution at
    tout, although it is also possible to obtain intermediate results
    along the way.  to find out whether the code achieved its goal
@@ -578,7 +550,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
 </pre></div>
 
 
-<h1>input -- what to do to continue the integration (calls after the first)</h1>
+<h3>input -- what to do to continue the integration (calls after the first)</h3>
 <p>this code is organized so that subsequent calls to continue the
   integration involve little (if any) additional effort on your
   part. you must monitor the <code>idid</code> parameter in order to determine
@@ -661,18 +633,18 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
 </pre></div>
 
 
-<h1>Authors</h1>
+<h3>Authors</h3>
 <ul>
 <li>L. F. Shampine</li>
 <li>H. A. Watts</li>
 <li>M. K. Gordon</li>
 </ul>
-<h1>Reference</h1>
+<h3>Reference</h3>
 <ul>
 <li>L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented
      package of ode solvers", Report SAND79-2374, Sandia Laboratories, 1979.</li>
 </ul>
-<h1>History</h1>
+<h3>History</h3>
 <ul>
 <li>820301  date written</li>
 <li>890531  changed all specific intrinsics to generic.  (wrb)</li>
@@ -1078,8 +1050,6 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   <div id="allprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
-      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -1110,29 +1080,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
       
       <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
       
-      <a class="list-group-item" href="../proc/go.html">go</a>
-      
-      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
-      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
-      
-      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
-      
-      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       

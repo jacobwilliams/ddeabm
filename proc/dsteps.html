@@ -75,8 +75,6 @@
             <li><a href="../lists/types.html">Derived Types</a></li>
 				
 				
-            <li><a href="../lists/programs.html">Programs</a></li>
-				
             </ul>
             </li>
 
@@ -94,8 +92,6 @@
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
 
-
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
 
           </ul>
         
@@ -134,7 +130,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title="21.3% of total for procedures.">333 statements</a>
+	  title="24.7% of total for procedures.">353 statements</a>
      </li> 
      
      
@@ -201,8 +197,6 @@
   <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
-      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -233,29 +227,7 @@
       
       <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
       
-      <a class="list-group-item" href="../proc/go.html">go</a>
-      
-      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
-      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
-      
-      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
-      
-      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       
@@ -293,7 +265,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
    per unit step in a generalized sense.  special devices are included
    to control roundoff error and to detect when the user is requesting
    too much accuracy.</p>
-<h1>input to dsteps</h1>
+<h3>Input to dsteps</h3>
 <p><strong>first call</strong></p>
 <p>the user must provide storage in his calling program for all arrays
    in the call list, namely</p>
@@ -342,7 +314,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
                  relative-absolute test where  relerr  is relative
                  error,  abserr  is absolute error and  eps =
                  max(relerr,abserr) .</p>
-<h1>subsequent calls</h1>
+<h3>Subsequent calls</h3>
 <p>subroutine dsteps is designed so that all information needed to
    continue the integration, including the step size <code>h</code> and the order
    <code>k</code>, is returned with each step.  with the exception of the step
@@ -357,7 +329,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
    i.e., the sign of <code>h</code>, requires the user set <code>start = .true.</code> before
    calling dsteps again.  this is the only situation in which <code>start</code>
    should be altered.</p>
-<h1>output from dsteps</h1>
+<h3>Output from dsteps</h3>
 <p><strong>successful step</strong></p>
 <p>the subroutine returns after each successful step with <code>start</code> and
    <code>crash</code> set .false. .  <code>x</code> represents the independent variable
@@ -373,7 +345,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
    before returning.  to continue with the larger tolerance, the user
    just calls the code again.  a restart is neither required nor
    desirable.</p>
-<h1>References</h1>
+<h3>References</h3>
 <ul>
 <li>L. F. Shampine, M. K. Gordon, "Solving ordinary differential
      equations with ODE, STEP, and INTERP", Report SLA-73-1060,
@@ -382,7 +354,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
      differential equations, the initial value problem",
      W. H. Freeman and Company, 1975.</li>
 </ul>
-<h1>History</h1>
+<h3>History</h3>
 <ul>
 <li>740101  date written --
      shampine, l. f., (snla)
@@ -394,6 +366,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
 <li>891214  prologue converted to version 4.0 format.  (bab)</li>
 <li>920501  reformatted the references section.  (wrb)</li>
 <li>December, 2015 : Refactored this routine (jw)</li>
+<li>January, 2017 : Added options for initial step mode (jw)</li>
 </ul>
     
 
@@ -1029,7 +1002,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">absh</span><span class="p">,</span> <span class="n">big</span><span class="p">,&amp;</span>
                 <span class="n">erk</span><span class="p">,</span> <span class="n">erkm1</span><span class="p">,</span> <span class="n">erkm2</span><span class="p">,</span> <span class="n">erkp1</span><span class="p">,</span> <span class="n">err</span><span class="p">,&amp;</span>
                 <span class="n">hnew</span><span class="p">,</span> <span class="n">p5eps</span><span class="p">,</span> <span class="n">r</span><span class="p">,&amp;</span>
-                <span class="n">reali</span><span class="p">,</span> <span class="n">realns</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">round</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">temp1</span><span class="p">,&amp;</span>
+                <span class="n">reali</span><span class="p">,</span> <span class="n">realns</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">round</span><span class="p">,</span> <span class="nb">sum</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">temp1</span><span class="p">,&amp;</span>
                 <span class="n">temp2</span><span class="p">,</span> <span class="n">temp3</span><span class="p">,</span> <span class="n">temp4</span><span class="p">,</span> <span class="n">temp5</span><span class="p">,</span> <span class="n">temp6</span><span class="p">,</span> <span class="n">u</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
@@ -1068,38 +1041,51 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
       <span class="k">if</span> <span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="k">then</span>
 
     <span class="c">!   initialize.  compute appropriate step size for first step</span>
-    <span class="c">!     call me%df(x,y,yp)</span>
-    <span class="c">!     if (me%error) return ! user-triggered error</span>
-    <span class="c">!     sum = 0.0_wp</span>
-          <span class="k">do </span><span class="n">l</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">neqn</span>
+    <span class="c">!   [There are three modes]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">            call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
+        <span class="k">end if</span>
+<span class="k">        </span><span class="n">u</span> <span class="o">=</span> <span class="n">d1mach4</span>
+        <span class="n">big</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">d1mach2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span> <span class="nb">sum</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+        <span class="k">do </span><span class="n">l</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">neqn</span>
             <span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
             <span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
-          <span class="k">end do</span>
-    <span class="c">!       sum = sum + (yp(l)/wt(l))**2</span>
-    <span class="c">!     end do</span>
-    <span class="c">!     sum = sqrt(sum)</span>
-    <span class="c">!     absh = abs(h)</span>
-    <span class="c">!     if (eps &lt; 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)</span>
-    <span class="c">!     h = sign(max(absh,fouru*abs(x)),h)</span>
-    <span class="c">!</span>
-          <span class="n">u</span> <span class="o">=</span> <span class="n">d1mach4</span>
-          <span class="n">big</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">d1mach2</span><span class="p">)</span>
-          <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">dhstrt</span><span class="p">(</span><span class="n">neqn</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">wt</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">big</span><span class="p">,&amp;</span>
-                       <span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">h</span><span class="p">)</span>
-          <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
-          <span class="n">hold</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
-          <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
-          <span class="n">kold</span> <span class="o">=</span> <span class="mi">0</span>
-          <span class="n">kprev</span> <span class="o">=</span> <span class="mi">0</span>
-          <span class="n">start</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
-          <span class="n">phase1</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-          <span class="n">nornd</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
-          <span class="k">if</span> <span class="p">(</span><span class="n">p5eps</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">round</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">              </span><span class="n">nornd</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
-              <span class="k">do </span><span class="n">l</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">neqn</span>
-                <span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
-              <span class="k">end do</span>
-<span class="k">          end if</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span> <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="p">(</span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">/</span><span class="n">wt</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">end do</span>
+<span class="k">        select case</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="p">)</span>
+        <span class="k">case</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">dhstrt</span><span class="p">(</span><span class="n">neqn</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">wt</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">big</span><span class="p">,&amp;</span>
+                           <span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">h</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
+            <span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span> <span class="o">=</span> <span class="n">h</span> <span class="c">! save it</span>
+        <span class="k">case</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+            <span class="n">absh</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">eps</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="mf">6.0_wp</span><span class="o">*</span><span class="nb">sum</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">h</span><span class="p">)</span> <span class="n">absh</span> <span class="o">=</span> <span class="mf">0.25_wp</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">eps</span><span class="o">/</span><span class="nb">sum</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">absh</span><span class="p">,</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span> <span class="o">=</span> <span class="n">h</span> <span class="c">! save it</span>
+        <span class="k">case</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span><span class="p">)</span>
+        <span class="k">case </span><span class="n">default</span>
+            <span class="n">error</span> <span class="k">stop</span> <span class="s1">&#39;invalid value for initial_step_mode&#39;</span>
+        <span class="k">end select</span>
+
+<span class="k">        </span><span class="n">hold</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">kold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">kprev</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+        <span class="n">phase1</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+        <span class="n">nornd</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p5eps</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">round</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">            </span><span class="n">nornd</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+            <span class="k">do </span><span class="n">l</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">neqn</span>
+              <span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+            <span class="k">end do</span>
+<span class="k">        end if</span>
 
 <span class="k">      end if</span>
 
@@ -1485,8 +1471,6 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
   <div id="allprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/cos_func.html">cos_func</a>
-      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -1517,29 +1501,7 @@ private subroutine dsteps(me, neqn, y, x, h, eps, wt, start, hold, k, kold, cras
       
       <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
       
-      <a class="list-group-item" href="../proc/go.html">go</a>
-      
-      <a class="list-group-item" href="../proc/log_func.html">log_func</a>
-      
       <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/sin_func.html">sin_func</a>
-      
-      <a class="list-group-item" href="../proc/tan_func.html">tan_func</a>
-      
-      <a class="list-group-item" href="../proc/twobody.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E2.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody%7E3.html">twobody</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_event%7E2.html">twobody_event</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report.html">twobody_report</a>
-      
-      <a class="list-group-item" href="../proc/twobody_report%7E2.html">twobody_report</a>
       
       <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
       
