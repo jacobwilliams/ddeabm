@@ -1,16 +1,17 @@
 !*****************************************************************************************
 !> author: Jacob Williams
+!  license: BSD
 !
 !  Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.
 !
-!# See also
+!### See also
 !   * [SLATEC](http://www.netlib.org/slatec/src/)
 !
-!# History
+!### History
 !   * Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.
 !   * Development continues at [GitHub](https://github.com/jacobwilliams/ddeabm).
 !
-!# License
+!### License
 !  The original SLATEC code is a public domain work of the US Government.
 !  The modifications are
 !  [Copyright (c) 2014-2017, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
@@ -69,6 +70,15 @@
         real(wp),allocatable,dimension(:) :: atol_tmp    !! abs tol used internally
 
         integer,dimension(4) :: info = 0  !! info array
+
+        ! initial step mode:
+        integer :: initial_step_mode = 1    !! how to choose the initial step `h`:
+                                            !!
+                                            !! 1. Use [[dhstrt]].
+                                            !! 2. Use the older (quicker) algorithm.
+                                            !! 3. Use a user-specified value.
+        real(wp) :: initial_step_size = 0.0_wp !! when `initial_step_mode=3`, the `h` value to use.
+                                               !! (for the other modes, this will also contain the value used)
 
         !variables formerly in work arrays:
 
@@ -305,7 +315,7 @@
 !  Initialize the [[ddeabm_class]], and set the variables that
 !  cannot be changed during a problem.
 
-    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol,report)
+    subroutine ddeabm_initialize(me,neq,maxnum,df,rtol,atol,report,initial_step_mode,initial_step_size)
 
     implicit none
 
@@ -316,6 +326,12 @@
     real(wp),dimension(:),intent(in)    :: rtol    !! relative tolerance for integration (see [[ddeabm]])
     real(wp),dimension(:),intent(in)    :: atol    !! absolution tolerance for integration (see [[ddeabm]])
     procedure(report_func),optional     :: report  !! reporting function
+    integer,intent(in),optional         :: initial_step_mode !! how to choose the initial step `h`:
+                                                             !!
+                                                             !! 1. Use [[dhstrt]].
+                                                             !! 2. Use the older (quicker) algorithm.
+                                                             !! 3. Use the user-specified value `initial_step_size` (>0).
+    real(wp),intent(in),optional        :: initial_step_size !! for `initial_step_mode=3`
 
     logical :: vector_tols
     integer :: i,j,k
@@ -393,6 +409,30 @@
     end do
     me%gstr = abs(me%gstr)
 
+    ! initial step size (can have initial_step_mode 1, 2, or 3):
+    me%initial_step_size = 0.0_wp ! dummy value (only used if initial_step_mode is 3)
+    if (present(initial_step_mode)) then
+        select case(initial_step_mode)
+        case(1,2,3)
+            me%initial_step_mode = initial_step_mode
+            if (initial_step_mode==3) then
+                if (present(initial_step_size)) then
+                    if (initial_step_size>0.0_wp) then
+                        me%initial_step_size = initial_step_size
+                    else
+                        error stop 'Error in ddeabm_initialize: initial_step_size must be > 0'
+                    end if
+                else
+                    error stop 'Error in ddeabm_initialize: initial_step_size must be input when initial_step_mode=3'
+                end if
+            end if
+        case default
+            error stop 'Error in ddeabm_initialize: invalid input for initial_step_mode'
+        end select
+    else
+        me%initial_step_mode = 1 ! original method (dhstrt) if none is specified
+    end if
+
     end subroutine ddeabm_initialize
 !*****************************************************************************************
 
@@ -402,7 +442,7 @@
 !  Initialize [[ddeabm_with_event_class]] class,
 !  and set the variables that cannot be changed during a problem.
 !
-!#See also
+!### See also
 !  * [[ddeabm_initialize]]
 
     subroutine ddeabm_with_event_initialize(me,neq,maxnum,df,rtol,atol,g,root_tol,report)
@@ -439,7 +479,7 @@
 !  Initialize [[ddeabm_with_event_class_vec]] class,
 !  and set the variables that cannot be changed during a problem.
 !
-!#See also
+!### See also
 !  * [[ddeabm_initialize]]
 
     subroutine ddeabm_with_event_initialize_vec(me,neq,maxnum,df,rtol,atol,ng,g,root_tol,report)
@@ -639,7 +679,7 @@
 !
 !  If starting a new problem, must first call `me%first_call()`.
 !
-!##See also
+!### See also
 !  * Inspired by [sderoot](http://www.netlib.no/netlib/ode/sderoot.f),
 !    but no code from that routine was used here.
 !  * [[ddeabm_with_event_wrapper_vec]] -- for vector `g` function
@@ -862,7 +902,7 @@
 !
 !  If starting a new problem, must first call `me%first_call()`.
 !
-!##See also
+!### See also
 !  * [[ddeabm_with_event_wrapper]] -- for scalar `g` function
 !
 !@note Currently not using the recommended tols if `idid=-2`.
@@ -1153,7 +1193,7 @@
 !  **quantities which may be altered by the code are:**
 !    `t, y(*), info(1), rtol, atol, idid`
 !
-!# description of the arguments to ddeabm (an overview)
+!### Description of the arguments to ddeabm (an overview)
 !
 !   the parameters are
 !
@@ -1188,7 +1228,7 @@
 !             the code did.  you must monitor this integer variable to
 !             decide what action to take next.
 !
-!# input -- what to do on the first call to ddeabm
+!### input -- what to do on the first call to ddeabm
 !
 !   the first call of the code is defined to be the start of each new
 !   problem.  read through the descriptions of all the following items,
@@ -1363,7 +1403,7 @@
 !             advise you if you ask for too much accuracy and inform
 !             you as to the maximum accuracy it believes possible.
 !
-!# output -- after any return from ddeabm
+!### output -- after any return from ddeabm
 !
 !   the principal aim of the code is to return a computed solution at
 !   tout, although it is also possible to obtain intermediate results
@@ -1430,7 +1470,7 @@
 !             reported solution at t was obtained using the input values
 !             of rtol and atol.
 !
-!# input -- what to do to continue the integration (calls after the first)
+!### input -- what to do to continue the integration (calls after the first)
 !
 !  this code is organized so that subsequent calls to continue the
 !  integration involve little (if any) additional effort on your
@@ -1519,16 +1559,16 @@
 !                     problem.  an attempt to do so will result in your
 !                     run being terminated.
 !
-!# Authors
+!### Authors
 !   * L. F. Shampine
 !   * H. A. Watts
 !   * M. K. Gordon
 !
-!# Reference
+!### Reference
 !   * L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented
 !     package of ode solvers", Report SAND79-2374, Sandia Laboratories, 1979.
 !
-!# History
+!### History
 !   * 820301  date written
 !   * 890531  changed all specific intrinsics to generic.  (wrb)
 !   * 890831  modified array declarations.  (wrb)
@@ -1610,10 +1650,10 @@
 !  inconvenience of a long call list.  consequently ddes is used as
 !  described in the comments for [[ddeabm]].
 !
-!# Author
+!### Author
 !   * watts, h. a., (snla)
 !
-!# History
+!### History
 !   * 820301  date written
 !   * 890531  changed all specific intrinsics to generic.  (wrb)
 !   * 890831  modified array declarations.  (wrb)
@@ -2038,7 +2078,7 @@
 !  prevent unnecessary underflows or overflows from occurring, and
 !  also, would not alter the vector or number of components.
 !
-!# History
+!### History
 !   * 820301  date written -- watts, h. a., (snla)
 !   * 890531  changed all specific intrinsics to generic.  (wrb)
 !   * 890831  modified array declarations.  (wrb)
@@ -2304,14 +2344,14 @@
 !  `xout` by evaluating the polynomial there.  information defining this
 !  polynomial is passed from [[dsteps]] so [[dintp]] cannot be used alone.
 !
-!# References
+!### References
 !   * L. F. Shampine, M. K. Gordon, "Computer solution of ordinary
 !     differential equations, the initial value problem",
 !     W. H. Freeman and Company, 1975.
 !   * H. A. Watts, "A smoother interpolant for DE/STEP, INTRP and DEABM: II",
 !     Report SAND84-0293, Sandia Laboratories, 1984.
 !
-!# History
+!### History
 !   * 840201  date written -- watts, h. a., (snla)
 !   * 890831  modified array declarations.  (wrb)
 !   * 890831  revision date from version 3.2
@@ -2447,7 +2487,7 @@
 !   to control roundoff error and to detect when the user is requesting
 !   too much accuracy.
 !
-!# input to dsteps
+!### Input to dsteps
 !
 !   **first call**
 !
@@ -2499,7 +2539,7 @@
 !                 error,  abserr  is absolute error and  eps =
 !                 max(relerr,abserr) .
 !
-!# subsequent calls
+!### Subsequent calls
 !
 !   subroutine dsteps is designed so that all information needed to
 !   continue the integration, including the step size `h` and the order
@@ -2516,7 +2556,7 @@
 !   calling dsteps again.  this is the only situation in which `start`
 !   should be altered.
 !
-!# output from dsteps
+!### Output from dsteps
 !
 !   **successful step**
 !
@@ -2537,7 +2577,7 @@
 !   just calls the code again.  a restart is neither required nor
 !   desirable.
 !
-!# References
+!### References
 !   * L. F. Shampine, M. K. Gordon, "Solving ordinary differential
 !     equations with ODE, STEP, and INTERP", Report SLA-73-1060,
 !     Sandia Laboratories, 1973.
@@ -2545,7 +2585,7 @@
 !     differential equations, the initial value problem",
 !     W. H. Freeman and Company, 1975.
 !
-!# History
+!### History
 !   * 740101  date written --
 !     shampine, l. f., (snla)
 !     gordon, m. k., (snla)
@@ -2556,6 +2596,7 @@
 !   * 891214  prologue converted to version 4.0 format.  (bab)
 !   * 920501  reformatted the references section.  (wrb)
 !   * December, 2015 : Refactored this routine (jw)
+!   * January, 2017 : Added options for initial step mode (jw)
 
     subroutine dsteps (me, neqn, y, x, h, eps, wt, start, hold, k,&
                        kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g,&
@@ -2605,7 +2646,7 @@
     real(wp) :: absh, big,&
                 erk, erkm1, erkm2, erkp1, err,&
                 hnew, p5eps, r,&
-                reali, realns, rho, round, tau, temp1,&
+                reali, realns, rho, round, sum, tau, temp1,&
                 temp2, temp3, temp4, temp5, temp6, u
 
     if (me%error) return !user-triggered error
@@ -2644,38 +2685,51 @@
       if (start) then
 
     !   initialize.  compute appropriate step size for first step
-    !     call me%df(x,y,yp)
-    !     if (me%error) return ! user-triggered error
-    !     sum = 0.0_wp
-          do l = 1,neqn
+    !   [There are three modes]
+
+        if (me%initial_step_mode==2) then
+            call me%df(x,y,yp)
+            if (me%error) return ! user-triggered error
+        end if
+        u = d1mach4
+        big = sqrt(d1mach2)
+        if (me%initial_step_mode==2) sum = 0.0_wp
+        do l = 1,neqn
             phi(l,1) = yp(l)
             phi(l,2) = 0.0_wp
-          end do
-    !       sum = sum + (yp(l)/wt(l))**2
-    !     end do
-    !     sum = sqrt(sum)
-    !     absh = abs(h)
-    !     if (eps < 16.0*sum*h*h) absh = 0.25*sqrt(eps/sum)
-    !     h = sign(max(absh,fouru*abs(x)),h)
-    !
-          u = d1mach4
-          big = sqrt(d1mach2)
-          call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
-                       phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
-          if (me%error) return !user-triggered error
-          hold = 0.0_wp
-          k = 1
-          kold = 0
-          kprev = 0
-          start = .false.
-          phase1 = .true.
-          nornd = .true.
-          if (p5eps <= 100.0_wp*round) then
-              nornd = .false.
-              do l = 1,neqn
-                phi(l,15) = 0.0_wp
-              end do
-          end if
+            if (me%initial_step_mode==2) sum = sum + (yp(l)/wt(l))**2
+        end do
+        select case (me%initial_step_mode)
+        case(1)
+            call me%dhstrt(neqn,x,x+h,y,yp,wt,1,u,big,&
+                           phi(1,3),phi(1,4),phi(1,5),phi(1,6),h)
+            if (me%error) return !user-triggered error
+            me%initial_step_size = h ! save it
+        case(2)
+            sum = sqrt(sum)
+            absh = abs(h)
+            if (eps < 16.0_wp*sum*h*h) absh = 0.25_wp*sqrt(eps/sum)
+            h = sign(max(absh,fouru*abs(x)),h)
+            me%initial_step_size = h ! save it
+        case(3)
+            h = abs(me%initial_step_size)
+        case default
+            error stop 'invalid value for initial_step_mode'
+        end select
+
+        hold = 0.0_wp
+        k = 1
+        kold = 0
+        kprev = 0
+        start = .false.
+        phase1 = .true.
+        nornd = .true.
+        if (p5eps <= 100.0_wp*round) then
+            nornd = .false.
+            do l = 1,neqn
+              phi(l,15) = 0.0_wp
+            end do
+        end if
 
       end if
 

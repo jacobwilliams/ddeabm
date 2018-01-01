@@ -1,7 +1,7 @@
 DDEABM: Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm
 https://github.com/jacobwilliams/ddeabm
 
-Copyright (c) 2014-2017, Jacob Williams
+Copyright (c) 2014-2018, Jacob Williams
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -27,3 +27,10 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--------------------------------------------------------------------------------
+
+This software contains components from the SLATEC Common Mathematical Library,
+a public domain work of the US government.
+
+http://www.netlib.org/slatec/

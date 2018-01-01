@@ -1,6 +1,7 @@
 !*****************************************************************************************
 !> author: Jacob Williams
 !  date: 12/22/2015
+!  license: BSD
 !
 !  Numeric kind definitions.
 
