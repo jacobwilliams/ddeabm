@@ -25,7 +25,7 @@ This example shows how to integrate a conic orbit (6 state equations) around the
 program ddeabm_example
 
 use ddeabm_module
-use kind_module
+use ddeabm_kinds
 
 implicit none
 
@@ -45,13 +45,13 @@ x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
 t0 = 0.0_wp       !initial time (sec)
 tf = 1000.0_wp    !final time (sec)
 
-write(*,'(A/,*(F15.6/))') 'Initial time:',t0
+write(*,'(A/,*(F15.6/))') 'Initial time: ',t0
 write(*,'(A/,*(F15.6/))') 'Initial state:',x0
 t = t0
 x = x0
 call s%integrate(t,x,tf,idid=idid)
-write(*,'(A/,*(F15.6/))') 'Final time:',t
-write(*,'(A/,*(F15.6/))') 'Initial time:',x
+write(*,'(A/,*(F15.6/))') 'Final time: ',t
+write(*,'(A/,*(F15.6/))') 'Final state:',x
 
 contains
 
