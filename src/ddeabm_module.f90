@@ -2712,7 +2712,7 @@
             h = sign(max(absh,fouru*abs(x)),h)
             me%initial_step_size = h ! save it
         case(3)
-            h = abs(me%initial_step_size)
+            h = sign(abs(me%initial_step_size),h)   ! user specified
         case default
             error stop 'invalid value for initial_step_mode'
         end select
