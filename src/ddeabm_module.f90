@@ -14,7 +14,7 @@
 !### License
 !  The original SLATEC code is a public domain work of the US Government.
 !  The modifications are
-!  [Copyright (c) 2014-2017, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
+!  [Copyright (c) 2014-2018, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
 !
 !*****************************************************************************************
 
@@ -546,7 +546,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_wrapper(me,t,y,tout,tstop,idid,integration_mode)
+    subroutine ddeabm_wrapper(me,t,y,tout,tstop,idid,integration_mode,dt)
 
     implicit none
 
@@ -567,14 +567,29 @@
     integer,intent(in),optional :: integration_mode     !! Step mode:
                                                         !! *1* - normal integration from `t` to `tout`, no reporting [default].
                                                         !! *2* - normal integration from `t` to `tout`, report each step.
+    real(wp),intent(in),optional :: dt    !! Fixed time step to use for `integration_mode=2`.
+                                          !! If not present, then default integrator steps are used.
+                                          !! If `integration_mode=1`, then this is ignored.
 
-    integer :: mode  !! local copy of integration_mode
+    integer :: mode  !! local copy of `integration_mode`
+    logical :: fixed_output_step !! if reporting output at a fixed step size
+    real(wp) :: t2   !! for fixed step size: an intermediate step
+    logical :: last !! for fixed step size: the last step
+    real(wp) :: direction !! direction of integration for
+                          !! fixed step size: +1: dt>=0, -1: dt<0
 
     !optional input:
     if (present(integration_mode)) then
         mode = integration_mode
     else
         mode = 1  !default
+    end if
+
+    ! if we are reporting the output at a fixed step size:
+    fixed_output_step = present(dt) .and. mode==2
+    if (fixed_output_step) then
+        direction = sign(1.0_wp,tout-t)
+        last = .false.
     end if
 
     !check for invalid inputs:
@@ -601,7 +616,7 @@
     end if
 
     !info(3)
-    if (mode==2) then  !requires the intermediate steps
+    if (mode==2 .and. .not. fixed_output_step) then  !requires the intermediate steps
         me%info(3) = 1
     else
         me%info(3) = 0
@@ -642,11 +657,22 @@
 
         do
 
+            if (fixed_output_step) then
+                ! here, we will take one step from t to t2=t+dt and return
+                t2 = t + direction*dt
+                ! adjust last time step if necessary:
+                last = ((direction==1.0_wp .and. t2>=tout) .or. &
+                        (direction==-1.0_wp .and. t2<=tout))
+                if (last) t2 = tout
+            else
+                t2 = tout
+            end if
+
             !take one step (note: info(3)=1 for this case):
             call me%ddeabm( neq   = me%neq,&
                             t     = t,&
                             y     = y,&
-                            tout  = tout,&
+                            tout  = t2,&
                             info  = me%info,&
                             rtol  = me%rtol_tmp,&
                             atol  = me%atol_tmp,&
@@ -659,8 +685,14 @@
             end if
 
             !check status (see ddeabm or idid codes):
-            if (idid>0) call me%report(t,y)  !report a successful intermediate or final step
-            if (idid/=1) exit                !exit if finished, or if there was an error
+            if (idid>0) call me%report(t,y)  ! report a successful intermediate or final step
+
+            if (fixed_output_step) then
+                if (last) exit  ! exit if finished
+                if (.not. (idid==2 .or. idid==3) ) exit  ! exit on error
+            else
+                if (idid/=1) exit      ! exit if finished, or if there was an error
+            end if
 
         end do
 
