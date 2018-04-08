@@ -660,14 +660,11 @@
         do
 
             if (fixed_output_step) then
-                ! here, we will take one step from t to t2=t+dt and return
-                t2 = t + dt
-                ! adjust last time step if necessary:
-                last = ((direction==1.0_wp .and. t2>=tout) .or. &
-                        (direction==-1.0_wp .and. t2<=tout))
-                if (last) t2 = tout
+                t2 = t + dt  ! take one step to t2 and return
+                last = direction*(tout-t2) <= 0.0_wp  ! if last point
+                if (last) t2 = tout  ! adjust last time step if necessary
             else
-                t2 = tout
+                t2 = tout  ! take a step in the direction of tout and return
             end if
 
             !take one step (note: info(3)=1 for this case):
