@@ -546,7 +546,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_wrapper(me,t,y,tout,tstop,idid,integration_mode,dt)
+    subroutine ddeabm_wrapper(me,t,y,tout,tstop,idid,integration_mode,tstep)
 
     implicit none
 
@@ -567,14 +567,15 @@
     integer,intent(in),optional :: integration_mode     !! Step mode:
                                                         !! *1* - normal integration from `t` to `tout`, no reporting [default].
                                                         !! *2* - normal integration from `t` to `tout`, report each step.
-    real(wp),intent(in),optional :: dt    !! Fixed time step to use for `integration_mode=2`.
-                                          !! If not present, then default integrator steps are used.
-                                          !! If `integration_mode=1`, then this is ignored.
+    real(wp),intent(in),optional :: tstep    !! Fixed time step to use for `integration_mode=2`.
+                                             !! If not present, then default integrator steps are used.
+                                             !! If `integration_mode=1`, then this is ignored.
 
     integer :: mode  !! local copy of `integration_mode`
     logical :: fixed_output_step !! if reporting output at a fixed step size
     real(wp) :: t2   !! for fixed step size: an intermediate step
     logical :: last !! for fixed step size: the last step
+    real(wp) :: dt  !! for fixed step size: actual signed time step
     real(wp) :: direction !! direction of integration for
                           !! fixed step size: +1: dt>=0, -1: dt<0
 
@@ -586,9 +587,10 @@
     end if
 
     ! if we are reporting the output at a fixed step size:
-    fixed_output_step = present(dt) .and. mode==2
+    fixed_output_step = present(tstep) .and. mode==2
     if (fixed_output_step) then
         direction = sign(1.0_wp,tout-t)
+        dt = direction*abs(tstep)
         last = .false.
     end if
 
@@ -659,7 +661,7 @@
 
             if (fixed_output_step) then
                 ! here, we will take one step from t to t2=t+dt and return
-                t2 = t + direction*dt
+                t2 = t + dt
                 ! adjust last time step if necessary:
                 last = ((direction==1.0_wp .and. t2>=tout) .or. &
                         (direction==-1.0_wp .and. t2<=tout))
@@ -745,7 +747,7 @@
                                                               !! *2* - normal integration from `t` to `tout`, report each step.
 
     !local variables:
-    real(wp) :: g1,g2,t1,t2,tzero,t0
+    real(wp) :: g1,g2,t1,t2,tzero
     integer :: iflag
     logical :: first
     real(wp),dimension(me%neq) :: y1,y2
@@ -968,7 +970,7 @@
 
     !local variables:
     real(wp),dimension(me%n_g_eqns) :: g1,g2
-    real(wp) :: t1,t2,tzero,t0
+    real(wp) :: t1,t2,tzero
     integer :: iflag
     logical :: first
     real(wp),dimension(me%neq) :: y1,y2
