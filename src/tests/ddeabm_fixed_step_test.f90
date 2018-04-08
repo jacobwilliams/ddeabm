@@ -3,7 +3,7 @@
 !  date: 4/7/2018
 !
 !  Unit test for [[ddeabm_class]].
-!  Test a fixed-step size reporting
+!  Test fixed-step size reporting.
 
     program ddeabm_fixed_step_test
 
@@ -63,7 +63,7 @@
     t = t0
     x = x0
     call s%first_call()
-    call s%integrate(t,x,tf,idid=idid,integration_mode=2,dt=dt)    !forward (report points)
+    call s%integrate(t,x,tf,idid=idid,integration_mode=2,tstep=dt)    !forward (report points)
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
@@ -76,7 +76,7 @@
     x = xf
     s%fevals = 0
     call s%first_call()  !restarting the integration
-    call s%integrate(t,x,t0,idid=idid,integration_mode=2,dt=dt)  !backwards
+    call s%integrate(t,x,t0,idid=idid,integration_mode=2,tstep=dt)  !backwards
     x02 = x
 
     write(*,'(A/,*(I5/))')    'idid: ',idid
