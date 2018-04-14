@@ -160,7 +160,7 @@
     write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
     write(*,'(A/,*(F15.6/))') 'Initial state    :',x
     call s%first_call()  !have to restart the integration after a root finding
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2)
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2,tstep=50.0_wp) ! test dense output here
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid

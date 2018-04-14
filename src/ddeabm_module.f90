@@ -717,7 +717,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_with_event_wrapper(me,t,y,tmax,tstop,idid,gval,integration_mode)
+    subroutine ddeabm_with_event_wrapper(me,t,y,tmax,tstop,idid,gval,integration_mode,tstep)
 
     implicit none
 
@@ -742,6 +742,9 @@
     integer,intent(in),optional :: integration_mode           !! Step mode:
                                                               !! *1* - normal integration from `t` to `tout`, no reporting [default].
                                                               !! *2* - normal integration from `t` to `tout`, report each step.
+    real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
+                                             !! evaluation of event function. If not present,
+                                             !! then default integrator steps are used.
 
     !local variables:
     real(wp) :: g1,g2,t1,t2,tzero
@@ -750,12 +753,25 @@
     real(wp),dimension(me%neq) :: y1,y2
     real(wp),dimension(me%neq) :: yc  !! interpolated state at tc
     integer :: mode  !! local copy of integration_mode
+    logical :: fixed_step !! if using the fixed step size `tstep`
+    logical :: last !! for fixed step size: the last step
+    real(wp) :: dt  !! for fixed step size: actual signed time step
+    real(wp) :: direction !! direction of integration for
+                          !! fixed step size: +1: dt>=0, -1: dt<0
 
     !optional input:
     if (present(integration_mode)) then
         mode = integration_mode
     else
         mode = 1  !default
+    end if
+
+    ! if we are reporting the output at a fixed step size:
+    fixed_step = present(tstep)
+    if (fixed_step) then
+        direction = sign(1.0_wp,tmax-t)
+        dt = direction*abs(tstep)
+        last = .false.
     end if
 
     !check for invalid inputs:
@@ -792,7 +808,11 @@
     end if
 
     !info(3)
-    me%info(3) = 1  !intermediate output mode: return after each step
+    if (fixed_step) then
+        me%info(3) = 0  !return after integrating to the specified (fixed step) time
+    else
+        me%info(3) = 1  !intermediate output mode: return after each default step
+    end if
 
     !info(4)
     if (present(tstop)) then
@@ -816,11 +836,19 @@
 
     do
 
+        if (fixed_step) then
+            t2 = t + dt  ! take one step to t2 and return
+            last = direction*(tmax-t2) <= 0.0_wp  ! if last point
+            if (last) t2 = tmax  ! adjust last time step if necessary
+        else
+            t2 = tmax  ! take a step in the direction of tmax and return
+        end if
+
         !call the lower-level routine:
         call me%ddeabm( neq     = me%neq,&
                           t     = t,&
                           y     = y,&
-                          tout  = tmax,&
+                          tout  = t2,&
                           info  = me%info,&
                           rtol  = me%rtol_tmp,&
                           atol  = me%atol_tmp,&
@@ -838,19 +866,39 @@
         call me%gfunc(t2,y2,g2)
 
         !check status (see ddeabm or idid codes):
-        select case (idid)
-        case(1)
-            !intermediate step successful, continue
-        case(2,3)
-            !tmax was reached. check it for root
-            gval = g2
-            if (abs(gval)<=me%tol) idid = 1000 !root found
-            if (mode==2) call me%report(t,y)  !final point
-            return
-        case default
-            !some error
-            return
-        end select
+        if (fixed_step) then
+            ! fixed step to t2
+            if (last) then
+                !tmax was reached. check it for root
+                gval = g2
+                if (abs(gval)<=me%tol) idid = 1000 !root found
+                if (mode==2) call me%report(t,y)  !final point
+                return
+            else
+                select case (idid)
+                case(2,3)
+                    !intermediate step successful, continue
+                case default
+                    !some error
+                    return
+                end select
+            end if
+        else
+            ! default steps in direction of t2
+            select case (idid)
+            case(1)
+                !intermediate step successful, continue
+            case(2,3)
+                !tmax was reached. check it for root
+                gval = g2
+                if (abs(gval)<=me%tol) idid = 1000 !root found
+                if (mode==2) call me%report(t,y)  !final point
+                return
+            case default
+                !some error
+                return
+            end select
+        end if
 
         if (abs(g2)<=me%tol) then  !intermediate t2 is a root
 

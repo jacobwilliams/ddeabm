@@ -16,12 +16,14 @@ source: true
 graph: true
 media_dir: media
 exclude: pyplot_module.f90
+         test.f90
+         zeroin_test.f90
+         performance_test.f90
          ddeabm_test_vec.f90
          ddeabm_test.f90
-         performance_test.f90
-         pyplot_module.f90
-         zeroin_test.f90
          ddeabm_stepsize_test.f90
+         ddeabm_example.f90
+         ddeabm_fixed_step_test.f90
 extra_mods: pyplot_module:https://github.com/jacobwilliams/pyplot-fortran
             iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
 
