@@ -1,12 +1,11 @@
 !*****************************************************************************************
 !> author: Jacob Williams
-!  date: 12/16/2015
+!  date: 4/7/2018
 !
 !  Unit test for [[ddeabm_class]].
-!  Integrate a two-body orbit around the Earth.
-!  Also tests integration to an event.
+!  Test fixed-step size reporting.
 
-    program ddeabm_test
+    program ddeabm_fixed_step_test
 
     use ddeabm_kinds
     use ddeabm_module
@@ -23,15 +22,16 @@
 
     integer,parameter  :: n = 6            !! number of state variables
     real(wp),parameter :: tol = 1.0e-12_wp !! event location tolerance
+    real(wp),parameter :: dt = 100.0_wp    !! output step size (sec)
 
     type(spacecraft) :: s
     real(wp),dimension(n) :: x0,xf,x02,x
-    real(wp) :: t0,tf,dt,gf,tf_actual,t,gval,z_target
+    real(wp) :: t0,tf,gf,tf_actual,t,gval,z_target
     integer :: idid
 
     write(*,*) ''
     write(*,*) '---------------'
-    write(*,*) ' ddeabm_test'
+    write(*,*) ' ddeabm_fixed_step_test'
     write(*,*) '---------------'
     write(*,*) ''
 
@@ -53,7 +53,7 @@
     x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
             1.0_wp,2.0_wp,3.0_wp]
     t0 = 0.0_wp       !initial time (sec)
-    tf = 1000.0_wp    !final time (sec)
+    tf = 1002.1_wp    !final time (sec)
     s%fevals = 0
 
     write(*,'(A/,*(F15.6/))') 'Initial time:',t0
@@ -63,7 +63,7 @@
     t = t0
     x = x0
     call s%first_call()
-    call s%integrate(t,x,tf,idid=idid,integration_mode=2)    !forward (report points)
+    call s%integrate(t,x,tf,idid=idid,integration_mode=2,tstep=dt)    !forward (report points)
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
@@ -76,7 +76,7 @@
     x = xf
     s%fevals = 0
     call s%first_call()  !restarting the integration
-    call s%integrate(t,x,t0,idid=idid)  !backwards
+    call s%integrate(t,x,t0,idid=idid,integration_mode=2,tstep=dt)  !backwards
     x02 = x
 
     write(*,'(A/,*(I5/))')    'idid: ',idid
@@ -100,71 +100,6 @@
     call s%integrate(t,x,tf,idid=idid)  !backwards
     xf = x
     write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'Final time:',t
-    write(*,'(A/,*(F15.6/))') 'Final state:',xf
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    !***************************************************************************
-
-    !integration to event test (integrate until z-coordinate is 12,000 km)
-
-    write(*,*) ''
-    write(*,*) '-----------------------'
-    write(*,*) 'integration to event:'
-    write(*,*) '-----------------------'
-    write(*,*) ''
-
-    call s%initialize_event(n,maxnum=10000,df=twobody,rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
-                                g=twobody_event,root_tol=1.0e-12_wp,report=twobody_report)
-    s%mu = 398600.436233_wp  !earth
-    s%fevals = 0
-
-    !initial conditions:
-    x0 = [10000.0_wp,10000.0_wp,10000.0_wp,&   !initial state [r,v] (km,km/s)
-            1.0_wp,2.0_wp,3.0_wp]
-    t0 = 0.0_wp       !initial time (sec)
-
-    write(*,'(A/,*(F15.6/))') 'Initial time:',t0
-    write(*,'(A/,*(F15.6/))') 'Initial state:',x0
-    s%fevals = 0
-    s%first = .true.
-    t = t0
-    x = x0
-    tf = 1000.0_wp    !max final time (sec)
-    z_target = 12000.0_wp
-    call s%first_call()
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2)
-    xf = x
-    write(*,*) ''
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'gval: ',gval
-    write(*,'(A/,*(F15.6/))') 'Final time:',t
-    write(*,'(A/,*(F15.6/))') 'Final state:',xf
-    write(*,'(A,I5)') 'Function evaluations:', s%fevals
-    write(*,*) ''
-
-    ! Now, continue integration (until z-coordinate is 13,000 km)
-
-    write(*,*) '======================='
-    write(*,*) 'continue integration...'
-    write(*,*) '======================='
-
-    s%mu = 398600.436233_wp  !earth
-    s%fevals = 0
-    s%first = .true.
-    x = xf
-    tf = 2000.0_wp    !max final time (sec)
-    z_target = 13000.0_wp !change the target value
-    write(*,'(A/,*(F15.6/))') 'Initial time     :',t
-    write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
-    write(*,'(A/,*(F15.6/))') 'Initial state    :',x
-    call s%first_call()  !have to restart the integration after a root finding
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2,tstep=50.0_wp) ! test dense output here
-    xf = x
-    write(*,*) ''
-    write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'gval: ',gval
     write(*,'(A/,*(F15.6/))') 'Final time:',t
     write(*,'(A/,*(F15.6/))') 'Final state:',xf
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
@@ -249,5 +184,5 @@
         end subroutine twobody_event
     !*********************************************************
 
-    end program ddeabm_test
+    end program ddeabm_fixed_step_test
 !*****************************************************************************************

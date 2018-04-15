@@ -141,6 +141,11 @@ if the equations are integrated using the `integration_mode=2` option like so:
 call s%integrate(t,x,tf,idid=idid,integration_mode=2)
 ```
 
+Dense output at a specified time step can also be enabled using the optional `tstep` argument like so:
+```Fortran
+call s%integrate(t,x,tf,idid=idid,integration_mode=2,tstep=100.0_wp)
+```
+
 ## Event location
 
 A user-defined event function `g(t,x)` can also be defined in order to stop the integration at a specified event (i.e., when `g(t,x)=0`). In the above example, say it is desired that the integration stop when `z = x(3) = 12,000 km`.  The event function for this would be:
