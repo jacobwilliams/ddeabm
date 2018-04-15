@@ -1,23 +1,20 @@
-ddeabm
-======
-
-# Status
+## Status
 
 [![Build Status](https://img.shields.io/travis/jacobwilliams/bspline-fortran/master.svg?style=plastic)](https://travis-ci.org/jacobwilliams/bspline-fortran)
 
-# Description
+## Description
 
 This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the [SLATEC library](http://www.netlib.org/slatec/src/). It has been extensively refactored.
 
-DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form `dx/dt = f(t,x)`. Also included is an event-location capability, where the equations can be integrated until a specified function `g(t,x) = 0`.
+DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form `dx/dt = f(t,x)`. Also included is an event-location capability, where the equations can be integrated until a specified function `g(t,x) = 0`. Dense output is also supported.
 
 This project is hosted on [GitHub](https://github.com/jacobwilliams/ddeabm).
 
-# Examples
+## Examples
 
 The `ddeabm_module` provides a thread-safe and object-oriented interface to the DDEABM method. Some example use cases are presented below:
 
-## Basic integration
+### Basic integration
 
 This example shows how to integrate a conic orbit (6 state equations) around the Earth from an initial time `t0` to a final time `tf`:
 
@@ -108,7 +105,7 @@ Initial time:
        2.322509
 ```
 
-## Reporting of intermediate points
+### Reporting of intermediate points
 
 The intermediate integration points can also be reported to a user-defined procedure.  For the above example, the following subroutine could be defined:
 
@@ -141,12 +138,7 @@ if the equations are integrated using the `integration_mode=2` option like so:
 call s%integrate(t,x,tf,idid=idid,integration_mode=2)
 ```
 
-Dense output at a specified time step can also be enabled using the optional `tstep` argument like so:
-```Fortran
-call s%integrate(t,x,tf,idid=idid,integration_mode=2,tstep=100.0_wp)
-```
-
-## Event location
+### Event location
 
 A user-defined event function `g(t,x)` can also be defined in order to stop the integration at a specified event (i.e., when `g(t,x)=0`). In the above example, say it is desired that the integration stop when `z = x(3) = 12,000 km`.  The event function for this would be:
 
@@ -179,15 +171,46 @@ call s%integrate_to_event(t,x,tf,idid=idid,gval=gval)
 ```
 In this case, `root_tol` is the tolerance for the event location, and `gval` is the value of the event function at the final time (note that the integration will stop when `g(t,x)=0` or at `t=tf`, whichever occurs first).
 
-# Documentation
+A vector event function is also supported (in which case, the integration stops if *any* of the roots are found). This is done using the `ddeabm_with_event_class_vec` type.
+
+### Fixed time step
+
+All of the integration methods have an optional argument (`tstep`) to enable a fixed time step, which can be used for dense output, or to specify a fixed step used for event finding (since the default step may be too large). For example, for performing a root-finding integration with the event function evaluated every 100 seconds:
+
+```Fortran
+call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,tstep=100.0_wp)
+```
+
+## Building DDEABM
+
+DDEABM and the test programs will build with any modern Fortran compiler. A [FoBiS](https://github.com/szaghi/FoBiS) configuration file (`ddeabm.fobis`) is provided that can build the library and/or the example programs. Use the `mode` flag to indicate what to build. For example:
+
+  * To build all the examples using gfortran: `FoBiS.py build -f ddeabm.fobis -mode tests-gnu`
+  * To build all the examples using ifort:    `FoBiS.py build -f ddeabm.fobis -mode tests-intel`
+  * To build a static library using gfortran: `FoBiS.py build -f ddeabm.fobis -mode static-gnu`
+  * To build a static library using ifort:    `FoBiS.py build -f ddeabm.fobis -mode static-intel`
+
+The full set of modes are: `static-gnu`, `static-gnu-debug`, `static-intel`, `static-intel-debug`, `shared-gnu`, `shared-gnu-debug`, `shared-intel`, `shared-intel-debug`, `tests-gnu`, `tests-gnu-debug`, `tests-intel`, `tests-intel-debug`
+
+To generate the documentation using [ford](https://github.com/cmacmackin/ford), run:
+
+```
+  FoBis.py rule --execute makedoc -f ddeabm.fobis
+```
+
+## Documentation
 
 The latest API documentation can be found [here](http://jacobwilliams.github.io/ddeabm/). This was generated from the source code using [FORD](https://github.com/cmacmackin/ford) (note that the included `build.sh` script will also generate these files).
 
-# License
+## License
 
 The ddeabm source code and related files and documentation are distributed under a permissive free software [license](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE) (BSD-style).  The original DDEABM Fortran 77 code is [public domain](http://www.netlib.org/slatec/guide).
 
-# References
+## Keywords
+
+Adams-Bashforth-Moulton Method, DEPAC, Initial Value Problems, ODE, Ordinary Differential Equations, Predictor-Corrector, SLATEC, Modern Fortran
+
+## References
 
 1. L. F. Shampine, M. K. Gordon, "Solving ordinary differential equations with ODE, STEP, and INTRP",  Report SLA-73-1060, Sandia Laboratories, 1973.
 2. L. F. Shampine, M. K. Gordon, "Computer solution of ordinary differential equations, the initial value problem", W. H. Freeman and Company, 1975.
