@@ -15,8 +15,6 @@
 !  The original SLATEC code is a public domain work of the US Government.
 !  The modifications are
 !  [Copyright (c) 2014-2018, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
-!
-!*****************************************************************************************
 
     module ddeabm_module
 
@@ -29,7 +27,7 @@
 
     !parameters:
     real(wp),parameter :: d1mach2 = huge(1.0_wp)        !! the largest magnitude
-    real(wp),parameter :: d1mach4 = epsilon(1.0_wp)        !! the largest relative spacing
+    real(wp),parameter :: d1mach4 = epsilon(1.0_wp)     !! the largest relative spacing
 
     type,public :: ddeabm_class
 
@@ -986,7 +984,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_with_event_wrapper_vec(me,t,y,tmax,tstop,idid,gval,integration_mode)
+    subroutine ddeabm_with_event_wrapper_vec(me,t,y,tmax,tstop,idid,gval,integration_mode,tstep)
 
     implicit none
 
@@ -1012,6 +1010,9 @@
     integer,intent(in),optional :: integration_mode           !! Step mode:
                                                               !! *1* - normal integration from `t` to `tout`, no reporting [default].
                                                               !! *2* - normal integration from `t` to `tout`, report each step.
+    real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
+                                             !! evaluation of event function. If not present,
+                                             !! then default integrator steps are used.
 
     !local variables:
     real(wp),dimension(me%n_g_eqns) :: g1,g2
@@ -1026,7 +1027,14 @@
     real(wp) :: tprev !! earliest time of root when there are
                       !! multiple roots on the integration
                       !! step interval
+
     logical :: forward !! if `tmax>=t`
+
+    logical :: fixed_step !! if using the fixed step size `tstep`
+    logical :: last !! for fixed step size: the last step
+    real(wp) :: dt  !! for fixed step size: actual signed time step
+    real(wp) :: direction !! direction of integration for
+                          !! fixed step size: +1: dt>=0, -1: dt<0
 
     !optional input:
     if (present(integration_mode)) then
@@ -1037,6 +1045,14 @@
 
     !if this is a "forward" (dt>=0) integration
     forward = tmax>=t
+
+    ! if we are reporting the output at a fixed step size:
+    fixed_step = present(tstep)
+    if (fixed_step) then
+        direction = sign(1.0_wp,tmax-t)
+        dt = direction*abs(tstep)
+        last = .false.
+    end if
 
     !check for invalid inputs:
     if (mode/=1 .and. mode/=2) then
@@ -1072,7 +1088,11 @@
     end if
 
     !info(3)
-    me%info(3) = 1  !intermediate output mode: return after each step
+    if (fixed_step) then
+        me%info(3) = 0  !return after integrating to the specified (fixed step) time
+    else
+        me%info(3) = 1  !intermediate output mode: return after each default step
+    end if
 
     !info(4)
     if (present(tstop)) then
@@ -1096,11 +1116,19 @@
 
     do
 
+        if (fixed_step) then
+            t2 = t + dt  ! take one step to t2 and return
+            last = direction*(tmax-t2) <= 0.0_wp  ! if last point
+            if (last) t2 = tmax  ! adjust last time step if necessary
+        else
+            t2 = tmax  ! take a step in the direction of tmax and return
+        end if
+
         !call the lower-level routine:
         call me%ddeabm( neq     = me%neq,&
                           t     = t,&
                           y     = y,&
-                          tout  = tmax,&
+                          tout  = t2,&
                           info  = me%info,&
                           rtol  = me%rtol_tmp,&
                           atol  = me%atol_tmp,&
@@ -1118,24 +1146,50 @@
         call me%gfunc(t2,y2,g2)
 
         !check status (see ddeabm or idid codes):
-        select case (idid)
-        case(1)
-            !intermediate step successful, continue
-        case(2,3)
-            !tmax was reached. check it for any root
-            gval = g2
-            do i = 1, me%n_g_eqns
-                if (abs(gval(i))<=me%tol(i)) then
-                    idid = 1000 + i !root found
-                    exit
-                end if
-            end do
-            if (mode==2) call me%report(t,y)  !final point
-            return
-        case default
-            !some error
-            return
-        end select
+
+        !check status (see ddeabm or idid codes):
+        if (fixed_step) then
+            ! fixed step to t2
+            if (last) then
+                !tmax was reached. check it for root
+                gval = g2
+                do i = 1, me%n_g_eqns
+                    if (abs(gval(i))<=me%tol(i)) then
+                        idid = 1000 + i !root found
+                        exit
+                    end if
+                end do
+                if (mode==2) call me%report(t,y)  !final point
+                return
+            else
+                select case (idid)
+                case(2,3)
+                    !intermediate step successful, continue
+                case default
+                    !some error
+                    return
+                end select
+            end if
+        else
+            select case (idid)
+            case(1)
+                !intermediate step successful, continue
+            case(2,3)
+                !tmax was reached. check it for any root
+                gval = g2
+                do i = 1, me%n_g_eqns
+                    if (abs(gval(i))<=me%tol(i)) then
+                        idid = 1000 + i !root found
+                        exit
+                    end if
+                end do
+                if (mode==2) call me%report(t,y)  !final point
+                return
+            case default
+                !some error
+                return
+            end select
+        end if
 
         if (any(abs(g2)<=me%tol)) then  !intermediate t2 is a root
 
