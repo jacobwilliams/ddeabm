@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+    
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>dhstrt &ndash; ddeabm</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+				
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+		 aria-expanded="false">Contents <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+				
+				
+            <li><a href="../lists/modules.html">Modules</a></li>
+				
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+				
+				
+            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
+								
+            <li><a href="../lists/types.html">Derived Types</a></li>
+				
+				
+            </ul>
+            </li>
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>dhstrt
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+	  data-placement="bottom" data-html="true"
+	  title=" 6.8% of total for procedures.">104 statements</a>
+     </li> 
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
+  
+     <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+  
+     <li class="active">dhstrt</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/dhstrt.html#src">dhstrt</a>
+  </div>
+</div>
+
+
+  <hr>
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
+  <div id="allprocs-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+      
+      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+      
+      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+      
+      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+      
+      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+      
+      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+      
+      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+      
+    </div>
+  </div>
+</div>
+
+
+</div>  
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, spy, pv, yp, sf, h)
+    
+    
+	 
+</h2>
+    
+  
+
+
+    
+    <p>Computes a starting step size to be used in solving initial
+  value problems in ordinary differential equations.</p>
+<p>It is based on an estimate of the local lipschitz constant for the
+  differential equation (lower bound on a norm of the jacobian) ,
+  a bound on the differential equation (first derivative), and
+  a bound on the partial derivative of the equation with respect to
+  the independent variable. (all approximated near the initial point a)</p>
+<p>subroutine dhstrt uses a function subprogram <a href="../proc/dhvnrm.html">dhvnrm</a> for computing
+  a vector norm. the maximum norm is presently utilized though it
+  can easily be replaced by any other vector norm. it is presumed
+  that any replacement norm routine would be carefully coded to
+  prevent unnecessary underflows or overflows from occurring, and
+  also, would not alter the vector or number of components.</p>
+<h3>History</h3>
+<ul>
+<li>820301  date written -- watts, h. a., (snla)</li>
+<li>890531  changed all specific intrinsics to generic.  (wrb)</li>
+<li>890831  modified array declarations.  (wrb)</li>
+<li>890911  removed unnecessary intrinsics.  (wrb)</li>
+<li>891024  changed references from dvnorm to dhvnrm.  (wrb)</li>
+<li>891214  prologue converted to version 4.0 format.  (bab)</li>
+<li>900328  added type section.  (wrb)</li>
+<li>910722  updated author section.  (als)</li>
+<li>December, 2015 : Refactored this routine (jw)</li>
+</ul>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-me%7E16"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td>intent(inout)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>me</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-neq%7E7"></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>neq</strong></td><td><p>the number of (first order) differential equations to be integrated.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-a"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>a</strong></td><td><p>the initial point of integration.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>b</strong></td><td><p>a value of the independent variable used to define
+ the direction of integration. a reasonable choice is to
+ set <code>b</code> to the first point at which a solution is desired.
+ you can also use <code>b</code>, if necessary, to restrict the length
+ of the first integration step because the algorithm will
+ not compute a starting step length which is bigger than
+ <code>abs(b-a)</code>, unless <code>b</code> has been chosen too close to <code>a</code>.
+ (it is presumed that dhstrt has been called with <code>b</code>
+ different from <code>a</code> on the machine being used. also see the
+ discussion about the parameter <code>small</code>.)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-y%7E6"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>y</strong></td><td><p>the vector of initial values of the <code>neq</code> solution
+ components at the initial point <code>a</code>.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-yprime"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>yprime</strong></td><td><p>the vector of derivatives of the <code>neq</code>
+ solution components at the initial point <code>a</code>.
+ (defined by the differential equations in subroutine <code>me%df</code>)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-etol"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>etol</strong></td><td><p>the vector of error tolerances corresponding to
+ the <code>neq</code> solution components. it is assumed that all
+ elements are positive. following the first integration
+ step, the tolerances are expected to be used by the
+ integrator in an error test which roughly requires that
+ <code>abs(local error) &lt;= etol</code> for each vector component.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-morder"></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>morder</strong></td><td><p>the order of the formula which will be used by
+ the initial value method for taking the first integration
+ step.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-small"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>small</strong></td><td><p>a small positive machine dependent constant
+ which is used for protecting against computations with
+ numbers which are too small relative to the precision of
+ floating point arithmetic.  <code>small</code> should be set to
+ (approximately) the smallest positive double precision
+ number such that <code>(1.0_wp+small) &gt; 1.0_wp</code>.  on the machine being
+ used. the quantity <code>small**(3.0_wp/8.0_wp)</code> is used in computing
+ increments of variables for approximating derivatives by
+ differences.  also the algorithm will not compute a
+ starting step length which is smaller than
+ <code>100.0_wp*small*abs(a)</code>.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-big"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>big</strong></td><td><p>a large positive machine dependent constant which
+ is used for preventing machine overflows. a reasonable
+ choice is to set big to (approximately) the square root of
+ the largest double precision number which can be held in
+ the machine.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-spy"></span>real(kind=wp),</td>
+  <td>intent(inout),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>spy</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-pv"></span>real(kind=wp),</td>
+  <td>intent(inout),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>pv</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-yp%7E3"></span>real(kind=wp),</td>
+  <td>intent(inout),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>yp</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sf"></span>real(kind=wp),</td>
+  <td>intent(inout),</td>
+  <td></td>
+  
+  <td>dimension(neq)</td><td>::</td>
+  <td><strong>sf</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-h%7E3"></span>real(kind=wp),</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>h</strong></td><td><p>appropriate starting step size to be attempted by the
+ differential equation method.</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+     <h3>Calls</h3>
+     
+                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+ -->
+<!-- Title: proc~~dhstrt~~CallsGraph Pages: 1 -->
+<svg id="procdhstrtCallsGraph" width="152pt" height="32pt"
+ viewBox="0.00 0.00 152.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~dhstrt~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~dhstrt~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 148,-28 148,4 -4,4"/>
+<!-- proc~dhstrt -->
+<g id="proc~~dhstrt~~CallsGraph_node1" class="node"><title>proc~dhstrt</title>
+<polygon fill="none" stroke="black" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">dhstrt</text>
+</g>
+<!-- proc~dhvnrm -->
+<g id="proc~~dhstrt~~CallsGraph_node2" class="node"><title>proc~dhvnrm</title>
+<g id="a_proc~~dhstrt~~CallsGraph_node2"><a xlink:href="../proc/dhvnrm.html" xlink:title="dhvnrm">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="144,-24 90,-24 90,-0 144,-0 144,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhvnrm</text>
+</a>
+</g>
+</g>
+<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
+<g id="proc~~dhstrt~~CallsGraph_edge1" class="edge"><title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
+<path fill="none" stroke="#000000" d="M54.4029,-12C62.3932,-12 71.3106,-12 79.8241,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.919,-15.5001 89.919,-12 79.919,-8.5001 79.919,-15.5001"/>
+</g>
+</g>
+</svg>
+</div>
+                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
+                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="559pt" height="32pt"
+ viewBox="0.00 0.00 559.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 555,-28 555,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.25,-24 154.75,-24 154.75,-0 209.25,-0 209.25,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="551.25,-24 454.75,-24 454.75,-0 551.25,-0 551.25,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+     
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/dhstrt.html#src">dhstrt</a>
+  </div>
+</div>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">dhstrt</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yprime</span><span class="p">,</span><span class="n">etol</span><span class="p">,</span><span class="n">morder</span><span class="p">,</span><span class="n">small</span><span class="p">,</span><span class="n">big</span><span class="p">,</span><span class="n">spy</span><span class="p">,</span><span class="n">pv</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">sf</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+
+    <span class="k">implicit none</span>
+
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">me</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                 <span class="kd">::</span> <span class="n">neq</span>       <span class="c">!! the number of (first order) differential equations to be integrated.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">a</span>         <span class="c">!! the initial point of integration.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">b</span>         <span class="c">!! a value of the independent variable used to define</span>
+                                                    <span class="c">!! the direction of integration. a reasonable choice is to</span>
+                                                    <span class="c">!! set `b` to the first point at which a solution is desired.</span>
+                                                    <span class="c">!! you can also use `b`, if necessary, to restrict the length</span>
+                                                    <span class="c">!! of the first integration step because the algorithm will</span>
+                                                    <span class="c">!! not compute a starting step length which is bigger than</span>
+                                                    <span class="c">!! `abs(b-a)`, unless `b` has been chosen too close to `a`.</span>
+                                                    <span class="c">!! (it is presumed that dhstrt has been called with `b`</span>
+                                                    <span class="c">!! different from `a` on the machine being used. also see the</span>
+                                                    <span class="c">!! discussion about the parameter `small`.)</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">y</span>         <span class="c">!! the vector of initial values of the `neq` solution</span>
+                                                    <span class="c">!! components at the initial point `a`.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">yprime</span>    <span class="c">!! the vector of derivatives of the `neq`</span>
+                                                    <span class="c">!! solution components at the initial point `a`.</span>
+                                                    <span class="c">!! (defined by the differential equations in subroutine `me%df`)</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">etol</span>      <span class="c">!! the vector of error tolerances corresponding to</span>
+                                                    <span class="c">!! the `neq` solution components. it is assumed that all</span>
+                                                    <span class="c">!! elements are positive. following the first integration</span>
+                                                    <span class="c">!! step, the tolerances are expected to be used by the</span>
+                                                    <span class="c">!! integrator in an error test which roughly requires that</span>
+                                                    <span class="c">!! `abs(local error) &lt;= etol` for each vector component.</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">morder</span>    <span class="c">!! the order of the formula which will be used by</span>
+                                    <span class="c">!! the initial value method for taking the first integration</span>
+                                    <span class="c">!! step.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">small</span>    <span class="c">!! a small positive machine dependent constant</span>
+                                    <span class="c">!! which is used for protecting against computations with</span>
+                                    <span class="c">!! numbers which are too small relative to the precision of</span>
+                                    <span class="c">!! floating point arithmetic.  `small` should be set to</span>
+                                    <span class="c">!! (approximately) the smallest positive double precision</span>
+                                    <span class="c">!! number such that `(1.0_wp+small) &gt; 1.0_wp`.  on the machine being</span>
+                                    <span class="c">!! used. the quantity `small**(3.0_wp/8.0_wp)` is used in computing</span>
+                                    <span class="c">!! increments of variables for approximating derivatives by</span>
+                                    <span class="c">!! differences.  also the algorithm will not compute a</span>
+                                    <span class="c">!! starting step length which is smaller than</span>
+                                    <span class="c">!! `100.0_wp*small*abs(a)`.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">big</span>      <span class="c">!! a large positive machine dependent constant which</span>
+                                    <span class="c">!! is used for preventing machine overflows. a reasonable</span>
+                                    <span class="c">!! choice is to set big to (approximately) the square root of</span>
+                                    <span class="c">!! the largest double precision number which can be held in</span>
+                                    <span class="c">!! the machine.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">h</span>       <span class="c">!! appropriate starting step size to be attempted by the</span>
+                                    <span class="c">!! differential equation method.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">spy</span>  <span class="c">!! work array of length `neq` which provide the routine with needed storage space.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">pv</span>   <span class="c">!! work array of length `neq` which provide the routine with needed storage space.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">yp</span>   <span class="c">!! work array of length `neq` which provide the routine with needed storage space.</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">sf</span>   <span class="c">!! work array of length `neq` which provide the routine with needed storage space.</span>
+
+    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">lk</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">absdx</span><span class="p">,</span> <span class="n">da</span><span class="p">,</span> <span class="n">delf</span><span class="p">,</span> <span class="n">dely</span><span class="p">,&amp;</span>
+                <span class="n">dfdub</span><span class="p">,</span> <span class="n">dfdxb</span><span class="p">,&amp;</span>
+                <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">fbnd</span><span class="p">,</span> <span class="n">relper</span><span class="p">,&amp;</span>
+                <span class="n">srydpb</span><span class="p">,</span> <span class="n">tolexp</span><span class="p">,</span> <span class="n">tolmin</span><span class="p">,</span> <span class="n">tolp</span><span class="p">,</span> <span class="n">tolsum</span><span class="p">,</span> <span class="n">ydpb</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">!user-triggered error</span>
+
+    <span class="c">! begin block permitting</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+    <span class="n">absdx</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span>
+    <span class="n">relper</span> <span class="o">=</span> <span class="n">small</span><span class="o">**</span><span class="mf">0.375_wp</span>
+
+    <span class="c">! compute an approximate bound (dfdxb) on the partial</span>
+    <span class="c">! derivative of the equation with respect to the</span>
+    <span class="c">! independent variable. protect against an overflow.</span>
+    <span class="c">! also compute a bound (fbnd) on the first derivative</span>
+    <span class="c">! locally.</span>
+
+    <span class="n">da</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">relper</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="n">absdx</span><span class="p">),</span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">small</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)),</span><span class="n">dx</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">da</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">da</span> <span class="o">=</span> <span class="n">relper</span><span class="o">*</span><span class="n">dx</span>
+    <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">da</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">sf</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
+    <span class="n">yp</span> <span class="o">=</span> <span class="n">sf</span> <span class="o">-</span> <span class="n">yprime</span>
+    <span class="n">delf</span> <span class="o">=</span> <span class="n">dhvnrm</span><span class="p">(</span><span class="n">yp</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+    <span class="n">dfdxb</span> <span class="o">=</span> <span class="n">big</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">delf</span> <span class="o">&lt;</span> <span class="n">big</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">da</span><span class="p">))</span> <span class="n">dfdxb</span> <span class="o">=</span> <span class="n">delf</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+    <span class="n">fbnd</span> <span class="o">=</span> <span class="n">dhvnrm</span><span class="p">(</span><span class="n">sf</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+
+    <span class="c">! compute an estimate (dfdub) of the local lipschitz</span>
+    <span class="c">! constant for the system of differential equations. this</span>
+    <span class="c">! also represents an estimate of the norm of the jacobian</span>
+    <span class="c">! locally.  three iterations (two when neq=1) are used to</span>
+    <span class="c">! estimate the lipschitz constant by numerical differences.</span>
+    <span class="c">! the first perturbation vector is based on the initial</span>
+    <span class="c">! derivatives and direction of integration. the second</span>
+    <span class="c">! perturbation vector is formed using another evaluation of</span>
+    <span class="c">! the differential equation.  the third perturbation vector</span>
+    <span class="c">! is formed using perturbations based only on the initial</span>
+    <span class="c">! values. components that are zero are always changed to</span>
+    <span class="c">! non-zero values (except on the first iteration). when</span>
+    <span class="c">! information is available, care is taken to ensure that</span>
+    <span class="c">! components of the perturbation vector have signs which are</span>
+    <span class="c">! consistent with the slopes of local solution curves.</span>
+    <span class="c">! also choose the largest bound (fbnd) for the first</span>
+    <span class="c">! derivative.</span>
+    <span class="c">!</span>
+    <span class="c">! perturbation vector size is held</span>
+    <span class="c">! constant for all iterations. compute</span>
+    <span class="c">! this change from the</span>
+    <span class="c">! size of the vector of initial</span>
+    <span class="c">! values.</span>
+
+    <span class="n">dely</span> <span class="o">=</span> <span class="n">relper</span><span class="o">*</span><span class="n">dhvnrm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dely</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">dely</span> <span class="o">=</span> <span class="n">relper</span>
+    <span class="n">dely</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="n">dely</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span>
+    <span class="n">delf</span> <span class="o">=</span> <span class="n">dhvnrm</span><span class="p">(</span><span class="n">yprime</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+    <span class="n">fbnd</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">fbnd</span><span class="p">,</span><span class="n">delf</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">delf</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="k">then</span>
+        <span class="c">! cannot have a null perturbation vector</span>
+        <span class="n">spy</span>  <span class="o">=</span> <span class="mf">0.0_wp</span>
+        <span class="n">yp</span>   <span class="o">=</span> <span class="mf">1.0_wp</span>
+        <span class="n">delf</span> <span class="o">=</span> <span class="n">dhvnrm</span><span class="p">(</span><span class="n">yp</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+    <span class="k">else</span>
+        <span class="c">! use initial derivatives for first perturbation</span>
+        <span class="n">spy</span> <span class="o">=</span> <span class="n">yprime</span>
+        <span class="n">yp</span>  <span class="o">=</span> <span class="n">yprime</span>
+    <span class="k">end if</span>
+
+<span class="k">    </span><span class="n">dfdub</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+    <span class="n">lk</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">neq</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lk</span>
+        <span class="c">! define perturbed vector of initial values</span>
+        <span class="n">pv</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">yp</span> <span class="o">*</span> <span class="p">(</span><span class="n">dely</span><span class="o">/</span><span class="n">delf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+            <span class="c">! use a shifted value of the independent variable</span>
+            <span class="c">! in computing one estimate</span>
+            <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">da</span><span class="p">,</span><span class="n">pv</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
+            <span class="n">pv</span> <span class="o">=</span> <span class="n">yp</span> <span class="o">-</span> <span class="n">sf</span>
+        <span class="k">else</span>
+            <span class="c">! evaluate derivatives associated with perturbed</span>
+            <span class="c">! vector and compute corresponding differences</span>
+            <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">pv</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="c">! user-triggered error</span>
+            <span class="n">pv</span> <span class="o">=</span> <span class="n">yp</span> <span class="o">-</span> <span class="n">yprime</span>
+        <span class="k">end if</span>
+        <span class="c">! choose largest bounds on the first derivative</span>
+        <span class="c">! and a local lipschitz constant</span>
+        <span class="n">fbnd</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">fbnd</span><span class="p">,</span><span class="n">dhvnrm</span><span class="p">(</span><span class="n">yp</span><span class="p">,</span><span class="n">neq</span><span class="p">))</span>
+        <span class="n">delf</span> <span class="o">=</span> <span class="n">dhvnrm</span><span class="p">(</span><span class="n">pv</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">delf</span> <span class="o">&gt;=</span> <span class="n">big</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">dely</span><span class="p">))</span> <span class="k">then</span>
+            <span class="c">! protect against an overflow</span>
+            <span class="n">dfdub</span> <span class="o">=</span> <span class="n">big</span>
+            <span class="k">exit</span>
+<span class="k">        end if</span>
+<span class="k">        </span><span class="n">dfdub</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dfdub</span><span class="p">,</span><span class="n">delf</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">dely</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="n">lk</span><span class="p">)</span> <span class="k">exit</span>
+
+        <span class="c">! choose next perturbation vector</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">delf</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">delf</span> <span class="o">=</span> <span class="mf">1.0_wp</span>
+        <span class="k">do </span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">neq</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">                </span><span class="n">dy</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">dy</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">dely</span><span class="o">/</span><span class="n">relper</span>
+            <span class="k">else</span>
+<span class="k">                </span><span class="n">dy</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">dy</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">delf</span>
+            <span class="k">end if</span>
+<span class="k">            if</span> <span class="p">(</span><span class="n">spy</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">spy</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">yp</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">spy</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">/=</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">dy</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="n">spy</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+            <span class="n">yp</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">dy</span>
+        <span class="k">end do</span>
+<span class="k">        </span><span class="n">delf</span> <span class="o">=</span> <span class="n">dhvnrm</span><span class="p">(</span><span class="n">yp</span><span class="p">,</span><span class="n">neq</span><span class="p">)</span>
+    <span class="k">end do</span>
+
+    <span class="c">! compute a bound (ydpb) on the norm of the second derivative</span>
+
+    <span class="n">ydpb</span> <span class="o">=</span> <span class="n">dfdxb</span> <span class="o">+</span> <span class="n">dfdub</span><span class="o">*</span><span class="n">fbnd</span>
+
+    <span class="c">! define the tolerance parameter upon which the starting step</span>
+    <span class="c">! size is to be based.  a value in the middle of the error</span>
+    <span class="c">! tolerance range is selected.</span>
+
+    <span class="n">tolmin</span> <span class="o">=</span> <span class="n">big</span>
+    <span class="n">tolsum</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+    <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">neq</span>
+        <span class="n">tolexp</span> <span class="o">=</span> <span class="n">log10</span><span class="p">(</span><span class="n">etol</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="n">tolmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">tolmin</span><span class="p">,</span><span class="n">tolexp</span><span class="p">)</span>
+        <span class="n">tolsum</span> <span class="o">=</span> <span class="n">tolsum</span> <span class="o">+</span> <span class="n">tolexp</span>
+    <span class="k">end do</span>
+<span class="k">    </span><span class="n">tolp</span> <span class="o">=</span> <span class="mi">1</span><span class="mf">0.0_wp</span><span class="o">**</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="o">*</span><span class="p">(</span><span class="n">tolsum</span><span class="o">/</span><span class="n">neq</span> <span class="o">+</span> <span class="n">tolmin</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">morder</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="c">! compute a starting step size based on the above first and</span>
+    <span class="c">! second derivative information</span>
+    <span class="c">!</span>
+    <span class="c">! restrict the step length to be not bigger</span>
+    <span class="c">! than abs(b-a). (unless b is too close to a)</span>
+
+    <span class="n">h</span> <span class="o">=</span> <span class="n">absdx</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ydpb</span> <span class="o">==</span> <span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="n">fbnd</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="k">then</span>
+        <span class="c">! both first derivative term (fbnd) and second</span>
+        <span class="c">! derivative term (ydpb) are zero</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tolp</span> <span class="o">&lt;</span> <span class="mf">1.0_wp</span><span class="p">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">absdx</span><span class="o">*</span><span class="n">tolp</span>
+    <span class="k">else if</span> <span class="p">(</span><span class="n">ydpb</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="k">then</span>
+        <span class="c">! only second derivative term (ydpb) is zero</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tolp</span> <span class="o">&lt;</span> <span class="n">fbnd</span><span class="o">*</span><span class="n">absdx</span><span class="p">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">tolp</span><span class="o">/</span><span class="n">fbnd</span>
+    <span class="k">else</span>
+        <span class="c">! second derivative term (ydpb) is non-zero</span>
+        <span class="n">srydpb</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">ydpb</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tolp</span> <span class="o">&lt;</span> <span class="n">srydpb</span><span class="o">*</span><span class="n">absdx</span><span class="p">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">tolp</span><span class="o">/</span><span class="n">srydpb</span>
+    <span class="k">end if</span>
+
+    <span class="c">! further restrict the step length to be not bigger than  1/dfdub</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">dfdub</span> <span class="o">&gt;</span> <span class="mf">1.0_wp</span><span class="p">)</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="n">dfdub</span>
+
+    <span class="c">! finally, restrict the step length to be not</span>
+    <span class="c">! smaller than 100*small*abs(a). however, if</span>
+    <span class="c">! a=0. and the computed h underflowed to zero,</span>
+    <span class="c">! the algorithm returns small*abs(b) for the step length.</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">small</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">h</span> <span class="o">==</span> <span class="mf">0.0_wp</span><span class="p">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">small</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="c">! now set direction of integration</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span>
+
+    <span class="k">end subroutine </span><span class="n">dhstrt</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+  <section class="visible-xs visible-sm hidden-md">
+    <hr>
+    
+
+<div class="panel panel-default">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
+  <div id="allprocs-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+      
+      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
+      
+      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
+      
+      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
+      
+      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
+      
+      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
+      
+      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
+      
+      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
+      
+      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
+      
+    </div>
+  </div>
+</div>
+
+
+  </section>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2018 </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
+        'HTML-CSS': { 
+           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
+        }
+      });
+    </script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </body>
+</html>
