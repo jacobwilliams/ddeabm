@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 1.0% of total for procedures.">15 statements</a>
+	  title=" 1.4% of total for procedures.">22 statements</a>
      </li> 
      
      
@@ -199,9 +199,13 @@
   <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/bracket_function_default.html">bracket_function_default</a>
+      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
       
       <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
       
@@ -244,7 +248,7 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, g, root_tol, report)
+private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, g, root_tol, report, bracket)
     
     
 	 
@@ -280,7 +284,7 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E8"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E10"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -413,6 +417,22 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-bracket%7E2"></span>procedure(<a href='../interface/bracket_func.html'>bracket_func</a>),</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
+ the default (<a href="../proc/bracket_function_default.html">bracket_function_default</a>) is used.</p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -475,7 +495,7 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">,</span><span class="n">report</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">,</span><span class="n">report</span><span class="p">,</span><span class="n">bracket</span><span class="p">)</span>
 
     <span class="k">implicit none</span>
 
@@ -492,15 +512,28 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
                                                               <span class="c">!! the integration will stop.</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">root_tol</span>  <span class="c">!! tolerance for the root finding (see [[zeroin]])</span>
     <span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="k">optional</span>              <span class="kd">::</span> <span class="n">report</span>    <span class="c">!! reporting function</span>
+    <span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func</span><span class="p">),</span><span class="k">optional</span>             <span class="kd">::</span> <span class="n">bracket</span>   <span class="c">!! root bracketing function. if not present,</span>
+                                                              <span class="c">!! the default ([[bracket_function_default]]) is used.</span>
 
     <span class="c">!base class initialization:</span>
     <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">report</span><span class="p">)</span>
+
+    <span class="c">! saved time and state:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span> <span class="k">deallocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">)</span>
 
     <span class="c">!event finding variables:</span>
     <span class="n">me</span><span class="p">%</span><span class="n">tol</span> <span class="o">=</span> <span class="n">root_tol</span>
     <span class="n">me</span><span class="p">%</span><span class="n">gfunc</span> <span class="o">=&gt;</span> <span class="n">g</span>
 
-    <span class="k">end subroutine </span><span class="n">ddeabm_with_event_initialize</span>
+    <span class="c">! bracketing function</span>
+    <span class="c">! (if not specified, use the default):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">bracket</span><span class="p">))</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span> <span class="o">=&gt;</span> <span class="n">bracket</span>
+    <span class="k">else</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span> <span class="o">=&gt;</span> <span class="n">bracket_function_default</span>
+    <span class="k">end if</span>
+
+<span class="k">    end subroutine </span><span class="n">ddeabm_with_event_initialize</span>
 </pre></div>
 
     </section>
@@ -519,9 +552,13 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
   <div id="allprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
+      <a class="list-group-item" href="../proc/bracket_function_default.html">bracket_function_default</a>
+      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
+      
+      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
       
       <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
       
@@ -565,7 +602,7 @@ private subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol,
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2018 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
