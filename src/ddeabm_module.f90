@@ -1086,28 +1086,8 @@
         real(wp),intent(in)  :: tc  !! current time
         real(wp)             :: g   !! value of event function
 
-        ! write(*,*) ''
-        ! write(*,*) 'me%ypout : ', me%ypout
-        ! write(*,*) 'me%neq : ', me%neq
-        ! write(*,*) 'me%kold : ', me%kold
-        ! write(*,*) 'me%phi  : ', me%phi
-        ! write(*,*) 'me%ivc : ', me%ivc
-        ! write(*,*) 'me%iv : ', me%iv
-        ! write(*,*) 'me%kgi : ', me%kgi
-        ! write(*,*) 'me%gi : ', me%gi
-        ! write(*,*) 'me%alpha : ', me%alpha
-        ! write(*,*) 'me%g : ', me%g
-        ! write(*,*) 'me%w : ', me%w
-        ! write(*,*) 'me%xold : ', me%xold
-        ! write(*,*) 'me%p : ', me%p
-        ! write(*,*) ''
-
         ! interpolate to get the state at tc:
-        call me%ddeabm_interp(t2,y2,tc,yc)
-        ! call dintp(t2,y2,tc,yc,&
-        !                 me%ypout,me%neq,me%kold,me%phi,&     !! class variables
-        !                 me%ivc,me%iv,me%kgi,me%gi,me%alpha,&
-        !                 me%g,me%w,me%xold,me%p)
+        call me%ddeabm_interp(me%x,me%yy,tc,yc)
 
         ! user defined event function:
         call me%gfunc(tc,yc,g)
