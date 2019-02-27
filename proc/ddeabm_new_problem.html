@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 0.6% of total for procedures.">10 statements</a>
+	  title=" 0.8% of total for procedures.">12 statements</a>
      </li> 
      
      
@@ -278,7 +278,7 @@ private subroutine ddeabm_new_problem(me)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E7"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E8"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -360,6 +360,8 @@ private subroutine ddeabm_new_problem(me)
 
     <span class="k">select type</span> <span class="p">(</span><span class="n">me</span><span class="p">)</span>
     <span class="k">class is</span> <span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span> <span class="k">deallocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">)</span>
+    <span class="k">class is</span> <span class="p">(</span><span class="n">ddeabm_with_event_class_vec</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span> <span class="k">deallocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">)</span>
     <span class="k">end select</span>
 

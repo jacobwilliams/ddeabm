@@ -132,7 +132,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 1.6% of total for procedures.">25 statements</a>
+	  title=" 2.1% of total for procedures.">33 statements</a>
      </li> 
      
      
@@ -246,7 +246,7 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report)
+private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report, bracket, initial_step_mode, initial_step_size)
     
     
 	 
@@ -282,7 +282,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E10"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
+  <td><span class="anchor" id="variable-me%7E11"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -432,6 +432,57 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-bracket%7E4"></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
+ the default is used.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-initial_step_mode%7E4"></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p>
+<ol>
+<li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
+<li>Use the older (quicker) algorithm.</li>
+<li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
+</ol></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-initial_step_size%7E4"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>initial_step_size</strong></td><td><p>for <code>initial_step_mode=3</code></p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -494,7 +545,9 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize_vec</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">ng</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">,</span><span class="n">report</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize_vec</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,&amp;</span>
+                                                <span class="n">ng</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">,</span><span class="n">report</span><span class="p">,</span><span class="n">bracket</span><span class="p">,&amp;</span>
+                                                <span class="n">initial_step_mode</span><span class="p">,</span><span class="n">initial_step_size</span><span class="p">)</span>
 
     <span class="k">implicit none</span>
 
@@ -514,9 +567,17 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
                                                               <span class="c">!! This should be sized `ng` or `1` (in which</span>
                                                               <span class="c">!! case the value is used for all elements)</span>
     <span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="k">optional</span>              <span class="kd">::</span> <span class="n">report</span>    <span class="c">!! reporting function</span>
+    <span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func_vec</span><span class="p">),</span><span class="k">optional</span>         <span class="kd">::</span> <span class="n">bracket</span>   <span class="c">!! root bracketing function. if not present,</span>
+                                                              <span class="c">!! the default is used.</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span>         <span class="kd">::</span> <span class="n">initial_step_mode</span> <span class="c">!! how to choose the initial step `h`:</span>
+                                                             <span class="c">!!</span>
+                                                             <span class="c">!! 1. Use [[dhstrt]].</span>
+                                                             <span class="c">!! 2. Use the older (quicker) algorithm.</span>
+                                                             <span class="c">!! 3. Use the user-specified value `initial_step_size` (&gt;0).</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span>        <span class="kd">::</span> <span class="n">initial_step_size</span> <span class="c">!! for `initial_step_mode=3`</span>
 
     <span class="c">!base class initialization:</span>
-    <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">report</span><span class="p">)</span>
+    <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">report</span><span class="p">,</span><span class="n">initial_step_mode</span><span class="p">,</span><span class="n">initial_step_size</span><span class="p">)</span>
 
     <span class="c">!event finding variables:</span>
     <span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span> <span class="o">=</span> <span class="n">ng</span>
@@ -532,7 +593,15 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
     <span class="n">endif</span>
     <span class="n">me</span><span class="p">%</span><span class="n">gfunc</span> <span class="o">=&gt;</span> <span class="n">g</span>
 
-    <span class="k">end subroutine </span><span class="n">ddeabm_with_event_initialize_vec</span>
+    <span class="c">! bracketing function</span>
+    <span class="c">! (if not specified, use the default):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">bracket</span><span class="p">))</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span> <span class="o">=&gt;</span> <span class="n">bracket</span>
+    <span class="k">else</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span> <span class="o">=&gt;</span> <span class="nb">null</span><span class="p">()</span>
+    <span class="k">end if</span>
+
+<span class="k">    end subroutine </span><span class="n">ddeabm_with_event_initialize_vec</span>
 </pre></div>
 
     </section>

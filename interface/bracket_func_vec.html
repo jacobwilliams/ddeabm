@@ -11,7 +11,7 @@
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
-    <title>report_func &ndash; ddeabm</title>
+    <title>bracket_func_vec &ndash; ddeabm</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -113,7 +113,7 @@
     
   
   <div class="row">
-    <h1>report_func
+    <h1>bracket_func_vec
 	 <small>Abstract Interface</small>
     
     </h1>
@@ -145,7 +145,7 @@
   
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
   
-     <li class="active">report_func</li>
+     <li class="active">bracket_func_vec</li>
   </ol>
 </div>
 </div>
@@ -221,7 +221,7 @@
     
     <h2>abstract interface <br>
     
-private subroutine report_func(me, t, x)
+private function bracket_func_vec(me, ig, t1, t2, x1, x2, g1, g2) result(bracketed)
     
     
 	 
@@ -250,7 +250,7 @@ private subroutine report_func(me, t, x)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E2"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E6"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -265,12 +265,12 @@ private subroutine report_func(me, t, x)
   
 <tr>
   
-  <td><span class="anchor" id="variable-t%7E3"></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-ig%7E2"></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
   
   <td></td><td>::</td>
-  <td><strong>t</strong></td><td><p>time</p></td>
+  <td><strong>ig</strong></td><td><p>the event function number</p></td>
   
 </tr>
 
@@ -280,12 +280,87 @@ private subroutine report_func(me, t, x)
   
 <tr>
   
-  <td><span class="anchor" id="variable-x%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-t1%7E2"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>t1</strong></td><td><p>first time point</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-t2%7E2"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>t2</strong></td><td><p>second time point</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x1%7E2"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
   <td>dimension(:)</td><td>::</td>
-  <td><strong>x</strong></td><td><p>state</p></td>
+  <td><strong>x1</strong></td><td><p>state at t1</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x2%7E2"></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td></td>
+  
+  <td>dimension(:)</td><td>::</td>
+  <td><strong>x2</strong></td><td><p>state at t1</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-g1%7E2"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>g1</strong></td><td><p>event function ig value at t1</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-g2%7E2"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>g2</strong></td><td><p>event function ig value at t2</p></td>
   
 </tr>
 
@@ -295,8 +370,17 @@ private subroutine report_func(me, t, x)
     
     
     
+    
+    
+    
+    
+      <h3>Return Value <span class="anchor" id="variable-bracketed%7E2"></span><small>logical
+  </small></h3>
+    <p>if the root is bracketed</p>
+    
+    
     <h3>Description</h3>
-    <p>Interface to the step reporting function.</p>
+    <p>function to determine if a root is bracketed (vector event version)</p>
     
     <br>
 

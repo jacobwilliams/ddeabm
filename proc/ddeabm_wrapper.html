@@ -279,7 +279,7 @@ private subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode,
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E12"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E13"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -594,13 +594,13 @@ private subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode,
                                              <span class="c">!! If not present, then default integrator steps are used.</span>
                                              <span class="c">!! If `integration_mode=1`, then this is ignored.</span>
 
-    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">mode</span>  <span class="c">!! local copy of `integration_mode`</span>
-    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">fixed_output_step</span> <span class="c">!! if reporting output at a fixed step size</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t2</span>   <span class="c">!! for fixed step size: an intermediate step</span>
-    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">last</span> <span class="c">!! for fixed step size: the last step</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dt</span>  <span class="c">!! for fixed step size: actual signed time step</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">direction</span> <span class="c">!! direction of integration for</span>
-                          <span class="c">!! fixed step size: +1: dt&gt;=0, -1: dt&lt;0</span>
+    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">mode</span>                 <span class="c">!! local copy of `integration_mode`</span>
+    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">fixed_output_step</span>    <span class="c">!! if reporting output at a fixed step size</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t2</span>                  <span class="c">!! for fixed step size: an intermediate step</span>
+    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">last</span>                 <span class="c">!! for fixed step size: the last step</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dt</span>                  <span class="c">!! for fixed step size: actual signed time step</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">direction</span>           <span class="c">!! direction of integration for</span>
+                                    <span class="c">!! fixed step size: `+1: dt&gt;=0`, `-1: dt&lt;0`</span>
 
     <span class="c">!optional input:</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">integration_mode</span><span class="p">))</span> <span class="k">then</span>

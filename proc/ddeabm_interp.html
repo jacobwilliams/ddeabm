@@ -276,7 +276,7 @@ private subroutine ddeabm_interp(me, tc, yc)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E14"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E15"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -483,9 +483,9 @@ private subroutine ddeabm_interp(me, tc, yc)
 
     <span class="k">implicit none</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">tc</span>  <span class="c">!! point at which solution is desired</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">yc</span>  <span class="c">!! interpolated state at `tc`</span>
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">me</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                     <span class="kd">::</span> <span class="n">tc</span>  <span class="c">!! point at which solution is desired</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">yc</span>  <span class="c">!! interpolated state at `tc`</span>
 
     <span class="c">! interpolate to get the state at tc:</span>
     <span class="k">call </span><span class="n">dintp</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">yy</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">,&amp;</span>

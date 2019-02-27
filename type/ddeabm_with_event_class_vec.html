@@ -130,7 +130,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title="<p>10.6% of total for derived types.</p>Including implementation: 410 statements, 22.5% of total for derived types.">10 statements</a>
+	  title="<p>13.4% of total for derived types.</p>Including implementation: 435 statements, 23.4% of total for derived types.">13 statements</a>
      </li> 
      
      
@@ -172,7 +172,13 @@
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-tol%7E2">tol</a>
       
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-t_saved%7E2">t_saved</a>
+      
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-x_saved%7E2">x_saved</a>
+      
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-gfunc%7E2">gfunc</a>
+      
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-bracket%7E2">bracket</a>
       
     </div>
   </div>
@@ -206,6 +212,8 @@
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-destroy">destroy</a>
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-first_call">first_call</a>
+      
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-interpolate">interpolate</a>
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-stop_integration">stop_integration</a>
       
@@ -355,7 +363,13 @@
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-tol%7E2">tol</a>
       
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-t_saved%7E2">t_saved</a>
+      
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-x_saved%7E2">x_saved</a>
+      
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-gfunc%7E2">gfunc</a>
+      
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#variable-bracket%7E2">bracket</a>
       
     </div>
   </div>
@@ -389,6 +403,8 @@
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-destroy">destroy</a>
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-first_call">first_call</a>
+      
+      <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-interpolate">interpolate</a>
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class_vec.html#boundprocedure-stop_integration">stop_integration</a>
       
@@ -461,11 +477,57 @@
   
 <tr>
   
+  <td><span class="anchor" id="variable-t_saved%7E2"></span>real(kind=wp),</td>
+  
+  <td>private</td>
+  <td></td><td>::</td>
+  <td><strong>t_saved</strong></td><td> =</td><td>0.0_wp</td><td><p>time of last successful step
+ (used to continue after a root finding)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x_saved%7E2"></span>real(kind=wp),</td>
+  
+  <td>private,</td>
+  <td>dimension(:), allocatable</td><td>::</td>
+  <td><strong>x_saved</strong></td><td></td><td></td><td><p>state of last successful step.  size <code>(neq)</code>.
+ (used to continue after a root finding)</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
   <td><span class="anchor" id="variable-gfunc%7E2"></span>procedure(<a href='../interface/event_func_vec.html'>event_func_vec</a>),</td>
   
   <td>private,</td>
   <td>pointer</td><td>::</td>
   <td><strong>gfunc</strong></td><td>=> </td><td>null()</td><td><p>event function: g(t,x)=0 at event</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-bracket%7E2"></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
+  
+  <td>private,</td>
+  <td>pointer</td><td>::</td>
+  <td><strong>bracket</strong></td><td>=> </td><td>null()</td><td><p>a function for determining if the root is bracketed.
+ the default just checks for a sign change in the event function.
+ the user can specify this to use other conditions.</p></td>
   
 </tr>
 
@@ -1045,6 +1107,114 @@ private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem<
     
 	   
 <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-interpolate"></span><h3>procedure, public, non_overridable :: <strong>interpolate</strong>  => <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a> 
+    
+  </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>state interpolation function</p>
+  </div>
+  
+  <ul class="list-group">
+    
+      <li class="list-group-item">
+      
+         
+    
+    <h3>
+private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, tc, yc)
+    
+    
+	 
+</h3>
+    
+
+
+
+
+
+
+
+<p>Interpolation function. Can be used for dense output after a step.
+  It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td>intent(inout)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>me</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>tc</strong></td><td><p>point at which solution is desired</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(out),</td>
+  <td></td>
+  
+  <td>dimension(me%neq)</td><td>::</td>
+  <td><strong>yc</strong></td><td><p>interpolated state at <code>tc</code></p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+      
+      </li>
+    
+  </ul>
+</div>
+
+    
+	   
+<div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-stop_integration"></span><h3>procedure, public, non_overridable :: <strong>stop_integration</strong>  => <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a> 
     
   </h3></div>
@@ -1145,7 +1315,7 @@ private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_in
          
     
     <h3>
-private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a>(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report)
+private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a>(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report, bracket, initial_step_mode, initial_step_size)
     
     
 	 
@@ -1340,6 +1510,52 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
+  <td></td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
+ the default is used.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>initial_step_size</strong></td><td><p>for <code>initial_step_mode=3</code></p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -1375,7 +1591,7 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
          
     
     <h3>
-private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a>(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep)
+private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a>(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)
     
     
 	 
@@ -1567,6 +1783,26 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>logical,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>continue</strong></td><td><p>to continue after a previous event location.
+ This option can be used after a previous call to this routine
+ has found an event, to continue integration to the next event
+ without having to restart the integration. It will not report
+ the initial point (which would have been reported as the last
+ point of the previous call).</p></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -1603,7 +1839,17 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
         <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">tol</span>   <span class="c">!! tolerance for root finding (see [[zeroin]])</span>
                                                    <span class="c">!! this is a vector (size `n_g_eqns`)</span>
 
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t_saved</span> <span class="o">=</span> <span class="mf">0.0_wp</span>            <span class="c">!! time of last successful step</span>
+                                                <span class="c">!! (used to continue after a root finding)</span>
+        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">x_saved</span> <span class="c">!! state of last successful step.  size `(neq)`.</span>
+                                                    <span class="c">!! (used to continue after a root finding)</span>
+
         <span class="k">procedure</span><span class="p">(</span><span class="n">event_func_vec</span><span class="p">),</span><span class="k">pointer</span> <span class="kd">::</span> <span class="n">gfunc</span> <span class="o">=&gt;</span> <span class="nb">null</span><span class="p">()</span>  <span class="c">!! event function: g(t,x)=0 at event</span>
+
+        <span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func_vec</span><span class="p">),</span><span class="k">pointer</span> <span class="kd">::</span> <span class="n">bracket</span> <span class="o">=&gt;</span> <span class="nb">null</span><span class="p">()</span>
+            <span class="c">!! a function for determining if the root is bracketed.</span>
+            <span class="c">!! the default just checks for a sign change in the event function.</span>
+            <span class="c">!! the user can specify this to use other conditions.</span>
 
     <span class="k">contains</span>
 

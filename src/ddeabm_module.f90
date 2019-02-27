@@ -60,11 +60,6 @@
             !! using the `mode` argument in [[ddeabm_wrapper]]
             !! or [[ddeabm_with_event_wrapper]]
 
-        procedure(bracket_func),pointer :: bracket => null()
-            !! a function for determining if the root is bracketed.
-            !! the default just checks for a sign change in the event function.
-            !! the user can specify this to use other conditions.
-
         !tolerances
         logical :: scalar_tols = .true.
         real(wp),allocatable,dimension(:) :: rtol        !! the user input rel tol
@@ -151,10 +146,11 @@
 
         private
 
-        procedure,non_overridable,public :: initialize => ddeabm_initialize
-        procedure,non_overridable,public :: integrate  => ddeabm_wrapper
-        procedure,non_overridable,public :: destroy    => destroy_ddeabm
-        procedure,non_overridable,public :: first_call => ddeabm_new_problem
+        procedure,non_overridable,public :: initialize  => ddeabm_initialize
+        procedure,non_overridable,public :: integrate   => ddeabm_wrapper
+        procedure,non_overridable,public :: destroy     => destroy_ddeabm
+        procedure,non_overridable,public :: first_call  => ddeabm_new_problem
+        procedure,non_overridable,public :: interpolate => ddeabm_interp !! state interpolation function
 
         procedure,non_overridable,public :: stop_integration => ddeabm_stop_integration
                 !! user can call this in `df` routine to stop the integration
@@ -184,11 +180,15 @@
 
         procedure(event_func),pointer :: gfunc => null()  !! event function: g(t,x)=0 at event
 
+        procedure(bracket_func),pointer :: bracket => null()
+            !! a function for determining if the root is bracketed.
+            !! the default just checks for a sign change in the event function.
+            !! the user can specify this to use other conditions.
+
     contains
 
         private
 
-        procedure,non_overridable,public :: interpolate        => ddeabm_interp !! state interpolation function
         procedure,non_overridable,public :: initialize_event   => ddeabm_with_event_initialize
         procedure,non_overridable,public :: integrate_to_event => ddeabm_with_event_wrapper
             !! main routine for integration to an event
@@ -212,7 +212,17 @@
         real(wp),dimension(:),allocatable :: tol   !! tolerance for root finding (see [[zeroin]])
                                                    !! this is a vector (size `n_g_eqns`)
 
+        real(wp) :: t_saved = 0.0_wp            !! time of last successful step
+                                                !! (used to continue after a root finding)
+        real(wp),dimension(:),allocatable :: x_saved !! state of last successful step.  size `(neq)`.
+                                                    !! (used to continue after a root finding)
+
         procedure(event_func_vec),pointer :: gfunc => null()  !! event function: g(t,x)=0 at event
+
+        procedure(bracket_func_vec),pointer :: bracket => null()
+            !! a function for determining if the root is bracketed.
+            !! the default just checks for a sign change in the event function.
+            !! the user can specify this to use other conditions.
 
     contains
 
@@ -248,9 +258,9 @@
 
         function bracket_func(me,t1,t2,x1,x2,g1,g2) result(bracketed)
             !! function to determine if a root is bracketed
-            import :: wp,ddeabm_class
+            import :: wp,ddeabm_with_event_class
             implicit none
-            class(ddeabm_class),intent(inout) :: me
+            class(ddeabm_with_event_class),intent(inout) :: me
             real(wp),intent(in)               :: t1  !! first time point
             real(wp),intent(in)               :: t2  !! second time point
             real(wp),dimension(:),intent(in)  :: x1  !! state at t1
@@ -288,6 +298,21 @@
                                                     !!
                                                     !! If `i<=0` or `i>ng`, then this is a fatal error.
         end subroutine event_func_vec
+
+        function bracket_func_vec(me,ig,t1,t2,x1,x2,g1,g2) result(bracketed)
+            !! function to determine if a root is bracketed (vector event version)
+            import :: wp,ddeabm_with_event_class_vec
+            implicit none
+            class(ddeabm_with_event_class_vec),intent(inout) :: me
+            integer,intent(in),optional       :: ig  !! the event function number
+            real(wp),intent(in)               :: t1  !! first time point
+            real(wp),intent(in)               :: t2  !! second time point
+            real(wp),dimension(:),intent(in)  :: x1  !! state at t1
+            real(wp),dimension(:),intent(in)  :: x2  !! state at t1
+            real(wp),intent(in)               :: g1  !! event function ig value at t1
+            real(wp),intent(in)               :: g2  !! event function ig value at t2
+            logical                           :: bracketed  !! if the root is bracketed
+        end function bracket_func_vec
 
     end interface
 
@@ -331,6 +356,8 @@
 
     select type (me)
     class is (ddeabm_with_event_class)
+        if (allocated(me%x_saved)) deallocate(me%x_saved)
+    class is (ddeabm_with_event_class_vec)
         if (allocated(me%x_saved)) deallocate(me%x_saved)
     end select
 
@@ -493,7 +520,7 @@
     real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding (see [[zeroin]])
     procedure(report_func),optional              :: report    !! reporting function
     procedure(bracket_func),optional             :: bracket   !! root bracketing function. if not present,
-                                                              !! the default ([[bracket_function_default]]) is used.
+                                                              !! the default is used.
     integer,intent(in),optional         :: initial_step_mode !! how to choose the initial step `h`:
                                                              !!
                                                              !! 1. Use [[dhstrt]].
@@ -531,7 +558,9 @@
 !### See also
 !  * [[ddeabm_initialize]]
 
-    subroutine ddeabm_with_event_initialize_vec(me,neq,maxnum,df,rtol,atol,ng,g,root_tol,report)
+    subroutine ddeabm_with_event_initialize_vec(me,neq,maxnum,df,rtol,atol,&
+                                                ng,g,root_tol,report,bracket,&
+                                                initial_step_mode,initial_step_size)
 
     implicit none
 
@@ -551,9 +580,17 @@
                                                               !! This should be sized `ng` or `1` (in which
                                                               !! case the value is used for all elements)
     procedure(report_func),optional              :: report    !! reporting function
+    procedure(bracket_func_vec),optional         :: bracket   !! root bracketing function. if not present,
+                                                              !! the default is used.
+    integer,intent(in),optional         :: initial_step_mode !! how to choose the initial step `h`:
+                                                             !!
+                                                             !! 1. Use [[dhstrt]].
+                                                             !! 2. Use the older (quicker) algorithm.
+                                                             !! 3. Use the user-specified value `initial_step_size` (>0).
+    real(wp),intent(in),optional        :: initial_step_size !! for `initial_step_mode=3`
 
     !base class initialization:
-    call me%initialize(neq,maxnum,df,rtol,atol,report)
+    call me%initialize(neq,maxnum,df,rtol,atol,report,initial_step_mode,initial_step_size)
 
     !event finding variables:
     me%n_g_eqns = ng
@@ -568,6 +605,14 @@
         me%tol = root_tol(1)
     endif
     me%gfunc => g
+
+    ! bracketing function
+    ! (if not specified, use the default):
+    if (present(bracket)) then
+        me%bracket => bracket
+    else
+        me%bracket => null()
+    end if
 
     end subroutine ddeabm_with_event_initialize_vec
 !*****************************************************************************************
@@ -620,13 +665,13 @@
                                              !! If not present, then default integrator steps are used.
                                              !! If `integration_mode=1`, then this is ignored.
 
-    integer :: mode  !! local copy of `integration_mode`
-    logical :: fixed_output_step !! if reporting output at a fixed step size
-    real(wp) :: t2   !! for fixed step size: an intermediate step
-    logical :: last !! for fixed step size: the last step
-    real(wp) :: dt  !! for fixed step size: actual signed time step
-    real(wp) :: direction !! direction of integration for
-                          !! fixed step size: +1: dt>=0, -1: dt<0
+    integer :: mode                 !! local copy of `integration_mode`
+    logical :: fixed_output_step    !! if reporting output at a fixed step size
+    real(wp) :: t2                  !! for fixed step size: an intermediate step
+    logical :: last                 !! for fixed step size: the last step
+    real(wp) :: dt                  !! for fixed step size: actual signed time step
+    real(wp) :: direction           !! direction of integration for
+                                    !! fixed step size: `+1: dt>=0`, `-1: dt<0`
 
     !optional input:
     if (present(integration_mode)) then
@@ -801,7 +846,10 @@
                                             !! the initial point (which would have been reported as the last
                                             !! point of the previous call).
 
-    !local variables:
+    ! local variables:
+    real(wp),dimension(me%neq) :: y1  !! initial state in an interval
+    real(wp),dimension(me%neq) :: y2  !! final state in an interval
+    real(wp),dimension(me%neq) :: yc  !! interpolated state at `tc`
     real(wp) :: g1          !! value of event function at `t1`
     real(wp) :: g2          !! value of event function at `t2`
     real(wp) :: t1          !! initial time of an interval
@@ -809,22 +857,19 @@
     real(wp) :: tzero       !! time where an event occurs in `[t1,t2]`
     integer :: iflag        !! [[zeroin]] status flag
     logical :: first        !! flag for the first step
-    real(wp),dimension(me%neq) :: y1  !! initial state in an interval
-    real(wp),dimension(me%neq) :: y2  !! final state in an interval
-    real(wp),dimension(me%neq) :: yc  !! interpolated state at `tc`
     integer :: mode         !! local copy of integration_mode
     logical :: fixed_step   !! if using the fixed step size `tstep`
     logical :: last         !! for fixed step size: the last step
     real(wp) :: dt          !! for fixed step size: actual signed time step
     real(wp) :: direction   !! direction of integration for
-                            !! fixed step size: +1: dt>=0, -1: dt<0
+                            !! fixed step size: `+1: dt>=0`, `-1: dt<0`
     logical :: continuing   !! local copy of optional `continue` argument
     real(wp) :: first_dt    !! for fixed step size: the `dt` for the
                             !! first step  (can differ from `dt` if
                             !! continuing from a previous event solve)
     logical :: root_found   !! if a root was found
 
-    !optional inputs:
+    ! optional inputs:
     if (present(integration_mode)) then
         mode = integration_mode
     else
@@ -1023,7 +1068,7 @@
             if (idid==2 .or. idid==3) return
         end if
 
-        !set up for next step:
+        ! set up for next step:
         first = .false.
         g1 = g2
         t1 = t2
@@ -1035,7 +1080,8 @@
 
         function zeroin_func(tc) result(g)
 
-        !! evaluate the g function at `tc` using interpolation ([[dintp]]).
+        !! evaluate the g function at `tc`
+        !! using interpolation ([[dintp]]).
 
         implicit none
 
@@ -1062,9 +1108,9 @@
 
     implicit none
 
-    class(ddeabm_with_event_class),intent(inout) :: me
-    real(wp),intent(in)                          :: tc  !! point at which solution is desired
-    real(wp),dimension(me%neq),intent(out)       :: yc  !! interpolated state at `tc`
+    class(ddeabm_class),intent(inout)       :: me
+    real(wp),intent(in)                     :: tc  !! point at which solution is desired
+    real(wp),dimension(me%neq),intent(out)  :: yc  !! interpolated state at `tc`
 
     ! interpolate to get the state at tc:
     call dintp(me%x,me%yy,tc,yc,&
@@ -1090,7 +1136,7 @@
 !
 !@note Currently not using the recommended tols if `idid=-2`.
 
-    subroutine ddeabm_with_event_wrapper_vec(me,t,y,tmax,tstop,idid,gval,integration_mode,tstep)
+    subroutine ddeabm_with_event_wrapper_vec(me,t,y,tmax,tstop,idid,gval,integration_mode,tstep,continue)
 
     implicit none
 
@@ -1119,34 +1165,57 @@
     real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
                                              !! evaluation of event function. If not present,
                                              !! then default integrator steps are used.
+    logical,intent(in),optional :: continue !! to continue after a previous event location.
+                                            !! This option can be used after a previous call to this routine
+                                            !! has found an event, to continue integration to the next event
+                                            !! without having to restart the integration. It will not report
+                                            !! the initial point (which would have been reported as the last
+                                            !! point of the previous call).
 
-    !local variables:
-    real(wp),dimension(me%n_g_eqns) :: g1,g2
-    real(wp) :: t1,t2,tzero
-    integer :: iflag
-    logical :: first
-    real(wp),dimension(me%neq) :: y1,y2
-    real(wp),dimension(me%neq) :: yc  !! interpolated state at tc
-    integer :: mode  !! local copy of integration_mode
-    integer :: i !! counter
-    integer :: ig !! `gfunc` to compute
-    real(wp) :: tprev !! earliest time of root when there are
-                      !! multiple roots on the integration
-                      !! step interval
+    ! local variables:
+    real(wp),dimension(me%n_g_eqns) :: g1         !! value of event function at `t1`
+    real(wp),dimension(me%n_g_eqns) :: g2         !! value of event function at `t2`
+    logical,dimension(me%n_g_eqns) :: root_found  !! if a root was found
+    real(wp),dimension(me%neq) :: y1  !! initial state in an interval
+    real(wp),dimension(me%neq) :: y2  !! final state in an interval
+    real(wp),dimension(me%neq) :: yc  !! interpolated state at `tc`
+    real(wp) :: t1              !! initial time of an interval
+    real(wp) :: t2              !! final time of an interval
+    real(wp) :: tzero           !! time where an event occurs in `[t1,t2]`
+    integer :: iflag            !! [[zeroin]] status flag
+    logical :: first            !! flag for the first step
+    integer :: mode             !! local copy of integration_mode
+    integer :: i                !! counter
+    integer :: ig               !! `gfunc` to compute
+    real(wp) :: tprev           !! earliest time of root when there are
+                                !! multiple roots on the integration
+                                !! step interval
+    logical :: forward          !! if `tmax>=t`
+    logical :: fixed_step       !! if using the fixed step size `tstep`
+    logical :: last             !! for fixed step size: the last step
+    real(wp) :: dt              !! for fixed step size: actual signed time step
+    real(wp) :: direction       !! direction of integration for
+                                !! fixed step size: `+1: dt>=0`, `-1: dt<0`
+    logical :: continuing       !! local copy of optional `continue` argument
+    real(wp) :: first_dt        !! for fixed step size: the `dt` for the
+                                !! first step  (can differ from `dt` if
+                                !! continuing from a previous event solve)
+    character(len=10) :: istr   !! for integer to string conversion
+    integer :: istat            !! for write statement `iostat`
 
-    logical :: forward !! if `tmax>=t`
-
-    logical :: fixed_step !! if using the fixed step size `tstep`
-    logical :: last !! for fixed step size: the last step
-    real(wp) :: dt  !! for fixed step size: actual signed time step
-    real(wp) :: direction !! direction of integration for
-                          !! fixed step size: +1: dt>=0, -1: dt<0
-
-    !optional input:
+    ! optional inputs:
     if (present(integration_mode)) then
         mode = integration_mode
     else
         mode = 1  !default
+    end if
+    if (present(continue)) then
+        ! if there hasn't yet been a successful
+        ! step yet, then proceed as normal without
+        ! continuing. Otherwise, enable continue mode.
+        continuing = (continue .and. allocated(me%x_saved))
+    else
+        continuing = .false.
     end if
 
     !if this is a "forward" (dt>=0) integration
@@ -1157,7 +1226,37 @@
     if (fixed_step) then
         direction = sign(1.0_wp,tmax-t)
         dt = direction*abs(tstep)
+        first_dt = dt
         last = .false.
+    end if
+
+    if (continuing) then
+        ! if continuing, then we reset the t,y inputs
+        ! to the values from the last successful step
+        ! (note than an event may have been found in the
+        ! last call, so the input values aren't correct)
+        if (fixed_step) then
+            ! we need the first step to be from the
+            ! last reported point, not the last
+            ! successful step:
+            first_dt = (t + dt) - me%t_saved
+
+            ! make sure not a 0 dt or in the wrong direction:
+            if (first_dt==0.0_wp .or. sign(1.0_wp,first_dt)/=sign(1.0_wp,dt)) first_dt = dt
+            !
+            ! WARNING: this can happen if the previous step was
+            ! larger than t+dt.... in that case, first_dt will be
+            ! the wrong sign (we can't change the direction of integration)...
+            ! what needs to be done is the interp
+            ! routine should be called to fill in the rest of the
+            ! points until we get past the last step.  TDB !
+            !
+            !... we'd also need to check those points for roots...
+            !
+        end if
+        t = me%t_saved
+        y = me%x_saved
+        me%info(1) = 1   ! necessary? (doesn't seem to matter)
     end if
 
     !check for invalid inputs:
@@ -1218,12 +1317,17 @@
     t1 = t
     y1 = y
     call me%gfunc(t1,y1,g1)  ! compute all the g functions
-    if (mode==2) call me%report(t,y)  !initial point
+    if (mode==2 .and. .not. continuing) call me%report(t,y)  !initial point
 
     do
 
         if (fixed_step) then
-            t2 = t + dt  ! take one step to t2 and return
+            ! take one step to t2 and return
+            if (first) then
+                t2 = t + first_dt
+            else
+                t2 = t + dt
+            end if
             last = direction*(tmax-t2) <= 0.0_wp  ! if last point
             if (last) t2 = tmax  ! adjust last time step if necessary
         else
@@ -1240,135 +1344,117 @@
                           atol  = me%atol_tmp,&
                           idid  = idid)
 
+        ! if there was an integration error (see ddeabm or idid codes):
+        if (idid<0) exit
+
         !if there was a user-triggered error:
         if (me%error) then
             idid = -1000
             exit
         end if
 
+        !save the last successful step in the class:
+        me%t_saved = t
+        me%x_saved = y
+
         !evaluate all event functions at new point:
         t2 = t
         y2 = y
         call me%gfunc(t2,y2,g2)
 
-        !check status (see ddeabm or idid codes):
+        if (first .and. any(abs(g1)<=me%tol)) then
 
-        !check status (see ddeabm or idid codes):
-        if (fixed_step) then
-            ! fixed step to t2
-            if (last) then
-                !tmax was reached. check it for root
-                gval = g2
-                do i = 1, me%n_g_eqns
-                    if (abs(gval(i))<=me%tol(i)) then
-                        idid = 1000 + i !root found
-                        exit
-                    end if
-                end do
-                if (mode==2) call me%report(t,y)  !final point
-                return
-            else
-                select case (idid)
-                case(2,3)
-                    !intermediate step successful, continue
-                case default
-                    !some error
-                    return
-                end select
-            end if
-        else
-            select case (idid)
-            case(1)
-                !intermediate step successful, continue
-            case(2,3)
-                !tmax was reached. check it for any root
-                gval = g2
-                do i = 1, me%n_g_eqns
-                    if (abs(gval(i))<=me%tol(i)) then
-                        idid = 1000 + i !root found
-                        exit
-                    end if
-                end do
-                if (mode==2) call me%report(t,y)  !final point
-                return
-            case default
-                !some error
-                return
-            end select
-        end if
+            ! ignore a root at the initial time (first point)
+            ! (or if continuing integration from a previous root)
 
-        if (any(abs(g2)<=me%tol)) then  !intermediate t2 is a root
+            ! warning: is this check always sufficient? or
+            !          is it possible for zeroin to have
+            !          converged to a root outside this tol?
 
+        else if (any(g1*g2<=0.0_wp)) then ! change in sign of the event function
+
+            ! find the one(s) with sign change:
             do i = 1, me%n_g_eqns
-                if (abs(g2(i))<=me%tol(i)) then
-                    idid = 1000 + i !root found
-                    exit
-                end if
+                root_found(i) = g1(i)*g2(i)<=0.0_wp
             end do
+            ! the users's bracket function can impose
+            ! additional constraints on the root, so
+            ! we check that now if it was associated:
+            if (associated(me%bracket)) then
+                do i = 1, me%n_g_eqns
+                    if (root_found(i)) then
+                        root_found(i) = me%bracket(i,t1,t2,y1,y2,g1(i),g2(i))
+                    end if
+                end do
+            end if
 
-            gval = g2
-            t = t2
-            y = y2
-            if (mode==2) call me%report(t,y)
-            return
+            if (any(root_found)) then
+                ! root somewhere on [t1,t2]
 
-        else if (first .and. any(abs(g1)<=me%tol)) then  !root at initial time
+                ! have to check all the functions where this is true,
+                ! and select the one with the earlier root.
 
-            !note: maybe we could have an option to also
-            !      check for roots at the initial time?
+                ! initialize. goal is to find the earliest
+                ! one (in direction of integration):
+                if (forward) then
+                    tprev = huge(1.0_wp)
+                else
+                    tprev = -huge(1.0_wp)
+                end if
+                idid = -2000 ! if no root is found
 
-            !ignore this root
-            if (mode==2) call me%report(t,y)
+                do i = 1, me%n_g_eqns
+                    if (.not. root_found(i)) cycle
 
-        else if (any(g1*g2<=0.0_wp)) then
-            ! different signs - root somewhere on [t1,t2]
-            ! note: we ignore if a root on the initial time
-
-            ! have to check all the functions where this is true,
-            ! and select the one with the earlier root.
-
-            ! initialize. goal is to find the earliest one:
-            tprev = huge(1.0_wp)
-            idid = -2000 ! if no root is found
-
-            do i = 1, me%n_g_eqns
-
-                if (g1(i)*g2(i)<=0.0_wp) then  ! this func has a root
+                    ! this func has a root somewhere on [t1,t2]
 
                     ig = i  ! when calling zeroin, we only need to compute
                             ! the ith function
 
-                    !call the root finder:
+                    ! call the root finder:
                     call zeroin(zeroin_func,t1,t2,me%tol(i),tzero,gval(i),iflag,g1(i),g2(i))
                     if (iflag==0) then !root found at tzero
                         if ((forward .and. tzero<tprev) .or. (.not. forward .and. tzero>tprev) ) then
                             ! this is an earlier root so use it
-                            idid = 1000 + ig
+                            idid = 1000 + ig  ! root found
                             t = tzero
                             y = yc
                             tprev = t
                         end if
                     else
-                        ! unlikely to occur since zeroin is "guaranteed" to converge...
-                        write(*,*) 'Error locating root in ddeabm_with_event_wrapper_vec for function ',i
-                        idid = -2000 ! if no root is found
+                        ! unlikely to occur since zeroin is
+                        ! "guaranteed" to converge, but just in case:
+                        write(istr,'(I10)',iostat=istat) i
+                        call report_error('ddeabm_with_event_wrapper_vec',&
+                                          'Error locating root for function '//&
+                                          trim(adjustl(istr)),0,0)
+                        ! don't reset idid in case another root was found
                     end if
-
+                end do
+                ! if no errors, report the root if necessary, then return:
+                if (idid>0) then
+                    if (mode==2) call me%report(t,y)
+                    call me%gfunc(t,y,gval) ! compute all funcs for output
+                else
+                    call report_error('ddeabm_with_event_wrapper_vec', &
+                                        'Error locating root.', 0, 0)
                 end if
-
-            end do
-            ! if no errors, report the root if necessary, then return:
-            if (idid>0) then
-                if (mode==2) call me%report(t,y)
-                call me%gfunc(t,y,gval) ! compute all funcs for output
+                return
             end if
-            return
 
-        else
-            if (mode==2) call me%report(t,y)
         end if
 
-        !set up for next step:
+        ! report this point:
+        if (mode==2) call me%report(t,y)
+
+        ! integration is finished (see ddeabm or idid codes):
+        if (fixed_step) then
+            if (last) return
+        else
+            if (idid==2 .or. idid==3) return
+        end if
+
+        ! set up for next step:
         first = .false.
         g1 = g2
         t1 = t2
@@ -1379,7 +1465,9 @@
     contains
 
         function zeroin_func(tc) result(g)
-            !! evaluate the g function at tc using interpolation ([[dintp]]).
+
+            !! evaluate the `ig`th `g` function at `tc`
+            !! using interpolation ([[dintp]]).
 
             implicit none
 
@@ -1389,10 +1477,7 @@
             real(wp),dimension(me%n_g_eqns) :: gtmp
 
             ! interpolate to get the state at tc:
-            call dintp(t2,y2,tc,yc,&
-                         me%ypout,me%neq,me%kold,me%phi,&     !! class variables
-                         me%ivc,me%iv,me%kgi,me%gi,me%alpha,&
-                         me%g,me%w,me%xold,me%p)
+            call me%interpolate(tc,yc)
 
             ! user defined event function:
             ! [only compute the one we need]
