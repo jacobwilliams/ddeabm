@@ -130,7 +130,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title="<p>12.8% of total for derived types.</p>Including implementation: 385 statements, 21.2% of total for derived types.">12 statements</a>
+	  title="<p>12.8% of total for derived types.</p>Including implementation: 392 statements, 21.5% of total for derived types.">12 statements</a>
      </li> 
      
      
@@ -211,7 +211,7 @@
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-stop_integration">stop_integration</a>
       
-      <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-ddeabm_interp">ddeabm_interp</a>
+      <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-interpolate">interpolate</a>
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-initialize_event">initialize_event</a>
       
@@ -396,7 +396,7 @@
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-stop_integration">stop_integration</a>
       
-      <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-ddeabm_interp">ddeabm_interp</a>
+      <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-interpolate">interpolate</a>
       
       <a class="list-group-item" href="../type/ddeabm_with_event_class.html#boundprocedure-initialize_event">initialize_event</a>
       
@@ -1155,9 +1155,16 @@ private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_in
     
 	   
 <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-ddeabm_interp"></span><h3>procedure, public, non_overridable :: <strong>ddeabm_interp</strong>  
+  <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-interpolate"></span><h3>procedure, public, non_overridable :: <strong>interpolate</strong>  => <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a> 
     
   </h3></div>
+  
+  <div class="panel-body">
+    
+
+
+    <p>state interpolation function</p>
+  </div>
   
   <ul class="list-group">
     
@@ -1166,7 +1173,7 @@ private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_in
          
     
     <h3>
-private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, t2, y2, tc, yc)
+private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, tc, yc)
     
     
 	 
@@ -1179,7 +1186,8 @@ private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, t2
 
 
 
-<p>Interpolation function.</p>
+<p>Interpolation function. Can be used for dense output after a step.
+  It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
     
     <h4>Arguments</h4>
     
@@ -1220,36 +1228,6 @@ private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, t2
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>t2</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
-  <td><strong>y2</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
   <td><strong>tc</strong></td><td><p>point at which solution is desired</p></td>
   
 </tr>
@@ -1265,7 +1243,7 @@ private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, t2
   <td></td>
   
   <td>dimension(me%neq)</td><td>::</td>
-  <td><strong>yc</strong></td><td><p>interpolated state at tc</p></td>
+  <td><strong>yc</strong></td><td><p>interpolated state at <code>tc</code></p></td>
   
 </tr>
 
@@ -1296,7 +1274,7 @@ private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, t2
          
     
     <h3>
-private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report, bracket)
+private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report, bracket, initial_step_mode, initial_step_size)
     
     
 	 
@@ -1486,7 +1464,37 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_wi
   
   <td></td><td>::</td>
   <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
- the default (<a href="../proc/bracket_function_default.html">bracket_function_default</a>) is used.</p></td>
+ the default ([[bracket_function_default]]) is used.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>integer,</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>real(kind=wp),</td>
+  <td>intent(in),</td>
+  <td>optional</td>
+  
+  <td></td><td>::</td>
+  <td><strong>initial_step_size</strong></td><td><p>for <code>initial_step_mode=3</code></p></td>
   
 </tr>
 
@@ -1777,7 +1785,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_
 
 <span class="k">        private</span>
 
-<span class="k">        procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span> <span class="kd">::</span> <span class="n">ddeabm_interp</span>
+<span class="k">        procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span> <span class="kd">::</span> <span class="n">interpolate</span>        <span class="o">=&gt;</span> <span class="n">ddeabm_interp</span> <span class="c">!! state interpolation function</span>
         <span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span> <span class="kd">::</span> <span class="n">initialize_event</span>   <span class="o">=&gt;</span> <span class="n">ddeabm_with_event_initialize</span>
         <span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span> <span class="kd">::</span> <span class="n">integrate_to_event</span> <span class="o">=&gt;</span> <span class="n">ddeabm_with_event_wrapper</span>
             <span class="c">!! main routine for integration to an event</span>

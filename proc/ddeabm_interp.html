@@ -130,7 +130,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
 	  data-placement="bottom" data-html="true"
-	  title=" 0.6% of total for procedures.">9 statements</a>
+	  title=" 0.4% of total for procedures.">7 statements</a>
      </li> 
      
      
@@ -197,8 +197,6 @@
   <div id="allprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/bracket_function_default.html">bracket_function_default</a>
-      
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
       <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
@@ -246,7 +244,7 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-private subroutine ddeabm_interp(me, t2, y2, tc, yc)
+private subroutine ddeabm_interp(me, tc, yc)
     
     
 	 
@@ -256,8 +254,8 @@ private subroutine ddeabm_interp(me, t2, y2, tc, yc)
 
 
     
-    <p>Interpolation function.</p>
-<p>class variables</p>
+    <p>Interpolation function. Can be used for dense output after a step.
+  It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
     
 
     <h3>Arguments</h3>
@@ -278,42 +276,12 @@ private subroutine ddeabm_interp(me, t2, y2, tc, yc)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E15"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
+  <td><span class="anchor" id="variable-me%7E14"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
   <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-t2%7E3"></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>t2</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-y2"></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
-  <td><strong>y2</strong></td><td></td>
   
 </tr>
 
@@ -343,7 +311,7 @@ private subroutine ddeabm_interp(me, t2, y2, tc, yc)
   <td></td>
   
   <td>dimension(me%neq)</td><td>::</td>
-  <td><strong>yc</strong></td><td><p>interpolated state at tc</p></td>
+  <td><strong>yc</strong></td><td><p>interpolated state at <code>tc</code></p></td>
   
 </tr>
 
@@ -511,19 +479,17 @@ private subroutine ddeabm_interp(me, t2, y2, tc, yc)
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_interp</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t2</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_interp</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span>
 
     <span class="k">implicit none</span>
 
 <span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                     <span class="kd">::</span> <span class="n">t2</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">y2</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                     <span class="kd">::</span> <span class="n">tc</span>  <span class="c">!! point at which solution is desired</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">yc</span>  <span class="c">!! interpolated state at tc</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">tc</span>  <span class="c">!! point at which solution is desired</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">yc</span>  <span class="c">!! interpolated state at `tc`</span>
 
     <span class="c">! interpolate to get the state at tc:</span>
-    <span class="k">call </span><span class="n">dintp</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">,&amp;</span>
-                    <span class="n">me</span><span class="p">%</span><span class="n">ypout</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">kold</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">phi</span><span class="p">,&amp;</span>     <span class="c">!! class variables</span>
+    <span class="k">call </span><span class="n">dintp</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">yy</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">,&amp;</span>
+                    <span class="n">me</span><span class="p">%</span><span class="n">ypout</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">kold</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">phi</span><span class="p">,&amp;</span>
                     <span class="n">me</span><span class="p">%</span><span class="n">ivc</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">iv</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">kgi</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">gi</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">alpha</span><span class="p">,&amp;</span>
                     <span class="n">me</span><span class="p">%</span><span class="n">g</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">w</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">xold</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">p</span><span class="p">)</span>
 
@@ -545,8 +511,6 @@ private subroutine ddeabm_interp(me, t2, y2, tc, yc)
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
   <div id="allprocs-1" class="panel-collapse collapse">
     <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/bracket_function_default.html">bracket_function_default</a>
       
       <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
       
