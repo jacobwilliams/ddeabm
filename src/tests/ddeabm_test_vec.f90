@@ -68,7 +68,7 @@
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'gval: ',gval
+    write(*,'(A/,*(F30.16/))') 'gval: ',gval
     write(*,'(A/,*(F15.6/))') 'Final time:',t
     write(*,'(A/,*(F15.6/))') 'Final state:',xf
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
@@ -87,12 +87,12 @@
     write(*,'(A/,*(F15.6/))') 'Initial time     :',t
     write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
     write(*,'(A/,*(F15.6/))') 'Initial state    :',x
-    call s%first_call()  !have to restart the integration after a root finding
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2,tstep=25.0_wp) ! test fixed output step here
+    !call s%first_call()  ! instead of restarting, we use the "continue" argument, for efficiency
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2,tstep=25.0_wp,continue=.true.) ! test fixed output step here
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
-    write(*,'(A/,*(F15.6/))') 'gval: ',gval
+    write(*,'(A/,*(F30.16/))') 'gval: ',gval
     write(*,'(A/,*(F15.6/))') 'Final time:',t
     write(*,'(A/,*(F15.6/))') 'Final state:',xf
     write(*,'(A,I5)') 'Function evaluations:', s%fevals
