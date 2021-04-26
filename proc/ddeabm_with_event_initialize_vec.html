@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
@@ -17,6 +17,9 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
     
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,13 +29,6 @@
     
     <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -52,33 +48,37 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="../lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="../lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="../lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="../lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
@@ -131,19 +131,23 @@
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
-	  data-placement="bottom" data-html="true"
-	  title=" 2.1% of total for procedures.">33 statements</a>
+    data-placement="bottom" data-html="true"
+    title=" 2.1% of total for procedures.">33 statements</a>
      </li> 
+     
      
      
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
+     
   </ul>
   <ol class="breadcrumb in-well text-right">
   
+    
      <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-  
+    
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+    
   
      <li class="active">ddeabm_with_event_initialize_vec</li>
   </ol>
@@ -163,6 +167,9 @@
     
 <div id="sidebar">
   
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -191,56 +198,8 @@
 </div>
 
 
-  <hr>
-  
 
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
-  <div id="allprocs-0" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
 </div>
-
-
-</div>  
 
     </div>
     
@@ -249,7 +208,7 @@
 private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report, bracket, initial_step_mode, initial_step_size)
     
     
-	 
+   
 </h2>
     
   
@@ -282,7 +241,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E11"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
+  <td><span class="anchor" id="variable-me~11"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -297,7 +256,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-neq%7E4"></span>integer,</td>
+  <td><span class="anchor" id="variable-neq~4"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -312,7 +271,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-maxnum%7E4"></span>integer,</td>
+  <td><span class="anchor" id="variable-maxnum~4"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -327,12 +286,13 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-df%7E4"></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>)</td>
+  <td><span class="anchor" id="variable-df~4"></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>df</strong></td><td><p>derivative function \( dx/dt \)</p></td>
+  <td><strong>df</strong></td><td><p>derivative function <script type="math/tex"> dx/dt </script>
+</p></td>
   
 </tr>
 
@@ -342,7 +302,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-rtol%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-rtol~4"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -357,7 +317,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-atol%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-atol~4"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -387,14 +347,14 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-g%7E5"></span>procedure(<a href='../interface/event_func_vec.html'>event_func_vec</a>)</td>
+  <td><span class="anchor" id="variable-g~5"></span>procedure(<a href='../interface/event_func_vec.html'>event_func_vec</a>)</td>
   <td></td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>g</strong></td><td><p>Event function \( g(t,x) \). This should be a smooth function
- than can have values \( &lt;0 \) and \( \ge 0 \).
- When \( g=0 \) (within the tolerance),
+  <td><strong>g</strong></td><td><p>Event function <script type="math/tex"> g(t,x) </script>. This should be a smooth function
+ than can have values <script type="math/tex"> <0 </script> and <script type="math/tex"> \ge 0 </script>.
+ When <script type="math/tex"> g=0 </script> (within the tolerance),
  then a root has been located and
  the integration will stop.</p></td>
   
@@ -406,7 +366,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-root_tol%7E2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-root_tol~2"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -423,7 +383,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-report%7E4"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
+  <td><span class="anchor" id="variable-report~4"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
   <td></td>
   <td>optional</td>
   
@@ -438,7 +398,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-bracket%7E4"></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
+  <td><span class="anchor" id="variable-bracket~4"></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
   <td></td>
   <td>optional</td>
   
@@ -454,7 +414,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-initial_step_mode%7E4"></span>integer,</td>
+  <td><span class="anchor" id="variable-initial_step_mode~4"></span>integer,</td>
   <td>intent(in),</td>
   <td>optional</td>
   
@@ -474,7 +434,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
   
 <tr>
   
-  <td><span class="anchor" id="variable-initial_step_size%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-initial_step_size~4"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td>optional</td>
   
@@ -489,11 +449,15 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
     
     
     
+    
      
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
       
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -520,6 +484,7 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
     <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html#src">ddeabm_with_event_initialize_vec</a>
   </div>
 </div>
+
 
 
     </section>
@@ -590,8 +555,8 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
 <span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span> <span class="s1">&#39;Error in ddeabm_with_event_initialize_vec: &#39;</span><span class="o">//</span><span class="p">&amp;</span>
                    <span class="s1">&#39;incorrect size for root_tol input. Using first element only.&#39;</span>
         <span class="n">me</span><span class="p">%</span><span class="n">tol</span> <span class="o">=</span> <span class="n">root_tol</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">endif</span>
-    <span class="n">me</span><span class="p">%</span><span class="n">gfunc</span> <span class="o">=&gt;</span> <span class="n">g</span>
+    <span class="k">endif</span>
+<span class="k">    </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span> <span class="o">=&gt;</span> <span class="n">g</span>
 
     <span class="c">! bracketing function</span>
     <span class="c">! (if not specified, use the default):</span>
@@ -611,64 +576,14 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
     </div>
   </div>
 
-  <section class="visible-xs visible-sm hidden-md">
-    <hr>
-    
-
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
-  <div id="allprocs-1" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
-</div>
-
-
-  </section>
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -699,12 +614,17 @@ private subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, a
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>

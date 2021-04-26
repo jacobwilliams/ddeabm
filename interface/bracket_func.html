@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
@@ -18,6 +18,9 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
     
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,13 +30,6 @@
     
     <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -53,33 +49,37 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="../lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="../lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="../lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="../lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
@@ -114,7 +114,7 @@
   
   <div class="row">
     <h1>bracket_func
-	 <small>Abstract Interface</small>
+   <small>Abstract Interface</small>
     
     </h1>
     
@@ -131,19 +131,23 @@
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
-	  data-placement="bottom" data-html="true"
-	  title="16.3% of total for abstract interfaces.">59 statements</a>
+    data-placement="bottom" data-html="true"
+    title="16.3% of total for abstract interfaces.">59 statements</a>
      </li> 
+     
      
      
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
+     
   </ul>
   <ol class="breadcrumb in-well text-right">
   
+    
      <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-  
+    
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+    
   
      <li class="active">bracket_func</li>
   </ol>
@@ -164,6 +168,8 @@
     
 <div id="sidebar">
   
+<h3>Contents</h3>
+ 
 
 
 
@@ -185,46 +191,22 @@
 
 
 
-  <hr>
-  
-
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allabsints-0">All Abstract Interfaces</a></h3></div>
-  <div id="allabsints-0" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../interface/bracket_func.html">bracket_func</a>
-      
-      <a class="list-group-item" href="../interface/bracket_func_vec.html">bracket_func_vec</a>
-      
-      <a class="list-group-item" href="../interface/deriv_func.html">deriv_func</a>
-      
-      <a class="list-group-item" href="../interface/event_func.html">event_func</a>
-      
-      <a class="list-group-item" href="../interface/event_func_vec.html">event_func_vec</a>
-      
-      <a class="list-group-item" href="../interface/func.html">func</a>
-      
-      <a class="list-group-item" href="../interface/report_func.html">report_func</a>
-      
-    </div>
-  </div>
-</div> 
+<em>None</em>
 
 
-</div>  
+</div>
 
     </div>
     
     <div class="col-md-9" id='text'>
-	
     
-    <h2>abstract interface <br>
     
+      <h2>abstract interface <br>
+      
 private function bracket_func(me, t1, t2, x1, x2, g1, g2) result(bracketed)
     
     
-	 
+   
 </h2>    
     
 
@@ -250,7 +232,7 @@ private function bracket_func(me, t1, t2, x1, x2, g1, g2) result(bracketed)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E5"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
+  <td><span class="anchor" id="variable-me"></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -372,42 +354,14 @@ private function bracket_func(me, t1, t2, x1, x2, g1, g2) result(bracketed)
  </div>
 </div>
 
-  <section class="visible-xs visible-sm hidden-md">
-    <hr>
-    
-
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allabsints-1">All Abstract Interfaces</a></h3></div>
-  <div id="allabsints-1" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../interface/bracket_func.html">bracket_func</a>
-      
-      <a class="list-group-item" href="../interface/bracket_func_vec.html">bracket_func_vec</a>
-      
-      <a class="list-group-item" href="../interface/deriv_func.html">deriv_func</a>
-      
-      <a class="list-group-item" href="../interface/event_func.html">event_func</a>
-      
-      <a class="list-group-item" href="../interface/event_func_vec.html">event_func_vec</a>
-      
-      <a class="list-group-item" href="../interface/func.html">func</a>
-      
-      <a class="list-group-item" href="../interface/report_func.html">report_func</a>
-      
-    </div>
-  </div>
-</div> 
-
-
-  </section>
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -438,12 +392,17 @@ private function bracket_func(me, t1, t2, x1, x2, g1, g2) result(bracketed)
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>

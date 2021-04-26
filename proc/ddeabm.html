@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
@@ -17,6 +17,9 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
     
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,13 +29,6 @@
     
     <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -52,33 +48,37 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="../lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="../lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="../lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="../lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
@@ -129,19 +129,23 @@
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
-	  data-placement="bottom" data-html="true"
-	  title=" 2.1% of total for procedures.">33 statements</a>
+    data-placement="bottom" data-html="true"
+    title=" 2.1% of total for procedures.">33 statements</a>
      </li> 
+     
      
      
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
+     
   </ul>
   <ol class="breadcrumb in-well text-right">
   
+    
      <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-  
+    
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+    
   
      <li class="active">ddeabm</li>
   </ol>
@@ -161,6 +165,9 @@
     
 <div id="sidebar">
   
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -189,56 +196,8 @@
 </div>
 
 
-  <hr>
-  
 
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
-  <div id="allprocs-0" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
 </div>
-
-
-</div>  
 
     </div>
     
@@ -247,7 +206,7 @@
 private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     
     
-	 
+   
 </h2>
     
   
@@ -277,38 +236,37 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <code>t, y(*), info(1), rtol, atol, idid</code></p>
 <h3>Description of the arguments to ddeabm (an overview)</h3>
 <p>the parameters are</p>
-<div class="codehilite"><pre><span></span>  df -- this is the name of a subroutine which you provide to
-         define the differential equations.
+<div class="codehilite"><pre><span></span><code>  <span class="n">df</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">subroutine</span> <span class="n">which</span> <span class="n">you</span> <span class="n">provide</span> <span class="n">to</span>
+         <span class="n">define</span> <span class="n">the</span> <span class="n">differential</span> <span class="n">equations</span><span class="o">.</span>
 
-  neq -- this is the number of (first order) differential
-         equations to be integrated.
+  <span class="n">neq</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="p">(</span><span class="n">first</span> <span class="n">order</span><span class="p">)</span> <span class="n">differential</span>
+         <span class="n">equations</span> <span class="n">to</span> <span class="n">be</span> <span class="n">integrated</span><span class="o">.</span>
 
-  t -- this is a double precision value of the independent
-       variable.
+  <span class="n">t</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">a</span> <span class="n">double</span> <span class="n">precision</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">independent</span>
+       <span class="n">variable</span><span class="o">.</span>
 
-  y(*) -- this double precision array contains the solution
-          components at t.
+  <span class="n">y</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">--</span> <span class="n">this</span> <span class="n">double</span> <span class="n">precision</span> <span class="n">array</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">solution</span>
+          <span class="n">components</span> <span class="n">at</span> <span class="n">t</span><span class="o">.</span>
 
-  tout -- this is a double precision point at which a solution is
-          desired.
+  <span class="n">tout</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">a</span> <span class="n">double</span> <span class="n">precision</span> <span class="n">point</span> <span class="n">at</span> <span class="n">which</span> <span class="n">a</span> <span class="n">solution</span> <span class="k">is</span>
+          <span class="n">desired</span><span class="o">.</span>
 
-  info(*) -- the basic task of the code is to integrate the
-         differential equations from t to tout and return an
-         answer at tout.  info(*) is an integer array which is used
-         to communicate exactly how you want this task to be
-         carried out.
+  <span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">--</span> <span class="n">the</span> <span class="n">basic</span> <span class="n">task</span> <span class="n">of</span> <span class="n">the</span> <span class="n">code</span> <span class="k">is</span> <span class="n">to</span> <span class="n">integrate</span> <span class="n">the</span>
+         <span class="n">differential</span> <span class="n">equations</span> <span class="n">from</span> <span class="n">t</span> <span class="n">to</span> <span class="n">tout</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">an</span>
+         <span class="n">answer</span> <span class="n">at</span> <span class="n">tout</span><span class="o">.</span>  <span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">is</span> <span class="n">an</span> <span class="n">integer</span> <span class="n">array</span> <span class="n">which</span> <span class="k">is</span> <span class="n">used</span>
+         <span class="n">to</span> <span class="n">communicate</span> <span class="n">exactly</span> <span class="n">how</span> <span class="n">you</span> <span class="n">want</span> <span class="n">this</span> <span class="n">task</span> <span class="n">to</span> <span class="n">be</span>
+         <span class="n">carried</span> <span class="n">out</span><span class="o">.</span>
 
-  rtol, atol -- these double precision quantities represent
-                relative and absolute error tolerances which you
-                provide to indicate how accurately you wish the
-                solution to be computed.  you may choose them to be
-                both scalars or else both vectors.
+  <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span> <span class="o">--</span> <span class="n">these</span> <span class="n">double</span> <span class="n">precision</span> <span class="n">quantities</span> <span class="n">represent</span>
+                <span class="n">relative</span> <span class="ow">and</span> <span class="n">absolute</span> <span class="n">error</span> <span class="n">tolerances</span> <span class="n">which</span> <span class="n">you</span>
+                <span class="n">provide</span> <span class="n">to</span> <span class="n">indicate</span> <span class="n">how</span> <span class="n">accurately</span> <span class="n">you</span> <span class="n">wish</span> <span class="n">the</span>
+                <span class="n">solution</span> <span class="n">to</span> <span class="n">be</span> <span class="n">computed</span><span class="o">.</span>  <span class="n">you</span> <span class="n">may</span> <span class="n">choose</span> <span class="n">them</span> <span class="n">to</span> <span class="n">be</span>
+                <span class="n">both</span> <span class="n">scalars</span> <span class="ow">or</span> <span class="k">else</span> <span class="n">both</span> <span class="n">vectors</span><span class="o">.</span>
 
-  idid -- this scalar quantity is an indicator reporting what
-         the code did.  you must monitor this integer variable to
-         decide what action to take next.
-</pre></div>
-
+  <span class="n">idid</span> <span class="o">--</span> <span class="n">this</span> <span class="n">scalar</span> <span class="n">quantity</span> <span class="k">is</span> <span class="n">an</span> <span class="n">indicator</span> <span class="n">reporting</span> <span class="n">what</span>
+         <span class="n">the</span> <span class="n">code</span> <span class="n">did</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">monitor</span> <span class="n">this</span> <span class="n">integer</span> <span class="n">variable</span> <span class="n">to</span>
+         <span class="n">decide</span> <span class="n">what</span> <span class="n">action</span> <span class="n">to</span> <span class="n">take</span> <span class="n">next</span><span class="o">.</span>
+</code></pre></div>
 
 <h3>input -- what to do on the first call to ddeabm</h3>
 <p>the first call of the code is defined to be the start of each new
@@ -316,174 +274,173 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
    provide sufficient storage space for designated arrays, set
    appropriate variables for the initialization of the problem, and
    give information about how you want the problem to be solved.</p>
-<div class="codehilite"><pre><span></span>  df -- provide a subroutine of the form
-                           df(x,u,uprime)
-         to define the system of first order differential equations
-         which is to be solved.  for the given values of x and the
-         vector u(*)=(u(1),u(2),...,u(neq)), the subroutine must
-         evaluate the neq components of the system of differential
-         equations du/dx=df(x,u) and store the derivatives in the
-         array uprime(*), that is, uprime(i) = du(i)/dx for
-         equations i=1,...,neq.
+<div class="codehilite"><pre><span></span><code>  <span class="n">df</span> <span class="o">--</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">subroutine</span> <span class="n">of</span> <span class="n">the</span> <span class="n">form</span>
+                           <span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">uprime</span><span class="p">)</span>
+         <span class="n">to</span> <span class="n">define</span> <span class="n">the</span> <span class="n">system</span> <span class="n">of</span> <span class="n">first</span> <span class="n">order</span> <span class="n">differential</span> <span class="n">equations</span>
+         <span class="n">which</span> <span class="k">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">solved</span><span class="o">.</span>  <span class="k">for</span> <span class="n">the</span> <span class="n">given</span> <span class="n">values</span> <span class="n">of</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">the</span>
+         <span class="n">vector</span> <span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">u</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="o">...</span><span class="p">,</span><span class="n">u</span><span class="p">(</span><span class="n">neq</span><span class="p">)),</span> <span class="n">the</span> <span class="n">subroutine</span> <span class="n">must</span>
+         <span class="n">evaluate</span> <span class="n">the</span> <span class="n">neq</span> <span class="n">components</span> <span class="n">of</span> <span class="n">the</span> <span class="n">system</span> <span class="n">of</span> <span class="n">differential</span>
+         <span class="n">equations</span> <span class="n">du</span><span class="o">/</span><span class="n">dx</span><span class="o">=</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">u</span><span class="p">)</span> <span class="ow">and</span> <span class="n">store</span> <span class="n">the</span> <span class="n">derivatives</span> <span class="ow">in</span> <span class="n">the</span>
+         <span class="n">array</span> <span class="n">uprime</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="n">that</span> <span class="k">is</span><span class="p">,</span> <span class="n">uprime</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">du</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span> <span class="k">for</span>
+         <span class="n">equations</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">neq</span><span class="o">.</span>
 
-         subroutine df must not alter x or u(*).  you must declare
-         the name df in an external statement in your program that
-         calls ddeabm.  you must dimension u and uprime in df.
+         <span class="n">subroutine</span> <span class="n">df</span> <span class="n">must</span> <span class="ow">not</span> <span class="n">alter</span> <span class="n">x</span> <span class="ow">or</span> <span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">declare</span>
+         <span class="n">the</span> <span class="n">name</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">external</span> <span class="n">statement</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">program</span> <span class="n">that</span>
+         <span class="n">calls</span> <span class="n">ddeabm</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">dimension</span> <span class="n">u</span> <span class="ow">and</span> <span class="n">uprime</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span>
 
-  neq -- set it to the number of differential equations.
-         (neq &gt;= 1)
+  <span class="n">neq</span> <span class="o">--</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">differential</span> <span class="n">equations</span><span class="o">.</span>
+         <span class="p">(</span><span class="n">neq</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
 
-  t -- set it to the initial point of the integration.
-         you must use a program variable for t because the code
-         changes its value.
+  <span class="n">t</span> <span class="o">--</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">point</span> <span class="n">of</span> <span class="n">the</span> <span class="n">integration</span><span class="o">.</span>
+         <span class="n">you</span> <span class="n">must</span> <span class="n">use</span> <span class="n">a</span> <span class="n">program</span> <span class="n">variable</span> <span class="k">for</span> <span class="n">t</span> <span class="n">because</span> <span class="n">the</span> <span class="n">code</span>
+         <span class="n">changes</span> <span class="n">its</span> <span class="n">value</span><span class="o">.</span>
 
-  y(*) -- set this vector to the initial values of the neq solution
-         components at the initial point.  you must dimension y at
-         least neq in your calling program.
+  <span class="n">y</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">--</span> <span class="n">set</span> <span class="n">this</span> <span class="n">vector</span> <span class="n">to</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">values</span> <span class="n">of</span> <span class="n">the</span> <span class="n">neq</span> <span class="n">solution</span>
+         <span class="n">components</span> <span class="n">at</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">point</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">dimension</span> <span class="n">y</span> <span class="n">at</span>
+         <span class="n">least</span> <span class="n">neq</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">calling</span> <span class="n">program</span><span class="o">.</span>
 
-  tout -- set it to the first point at which a solution
-         is desired.  you can take tout = t, in which case the code
-         will evaluate the derivative of the solution at t and
-         return. integration either forward in t (tout &gt; t) or
-         backward in t (tout &lt; t) is permitted.
+  <span class="n">tout</span> <span class="o">--</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">the</span> <span class="n">first</span> <span class="n">point</span> <span class="n">at</span> <span class="n">which</span> <span class="n">a</span> <span class="n">solution</span>
+         <span class="k">is</span> <span class="n">desired</span><span class="o">.</span>  <span class="n">you</span> <span class="n">can</span> <span class="n">take</span> <span class="n">tout</span> <span class="o">=</span> <span class="n">t</span><span class="p">,</span> <span class="ow">in</span> <span class="n">which</span> <span class="n">case</span> <span class="n">the</span> <span class="n">code</span>
+         <span class="n">will</span> <span class="n">evaluate</span> <span class="n">the</span> <span class="n">derivative</span> <span class="n">of</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">at</span> <span class="n">t</span> <span class="ow">and</span>
+         <span class="k">return</span><span class="o">.</span> <span class="n">integration</span> <span class="n">either</span> <span class="n">forward</span> <span class="ow">in</span> <span class="n">t</span> <span class="p">(</span><span class="n">tout</span> <span class="o">&gt;</span> <span class="n">t</span><span class="p">)</span> <span class="ow">or</span>
+         <span class="n">backward</span> <span class="ow">in</span> <span class="n">t</span> <span class="p">(</span><span class="n">tout</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">)</span> <span class="k">is</span> <span class="n">permitted</span><span class="o">.</span>
 
-         the code advances the solution from t to tout using
-         step sizes which are automatically selected so as to
-         achieve the desired accuracy.  if you wish, the code will
-         return with the solution and its derivative following
-         each intermediate step (intermediate-output mode) so that
-         you can monitor them, but you still must provide tout in
-         accord with the basic aim of the code.
+         <span class="n">the</span> <span class="n">code</span> <span class="n">advances</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">from</span> <span class="n">t</span> <span class="n">to</span> <span class="n">tout</span> <span class="n">using</span>
+         <span class="n">step</span> <span class="n">sizes</span> <span class="n">which</span> <span class="n">are</span> <span class="n">automatically</span> <span class="n">selected</span> <span class="n">so</span> <span class="k">as</span> <span class="n">to</span>
+         <span class="n">achieve</span> <span class="n">the</span> <span class="n">desired</span> <span class="n">accuracy</span><span class="o">.</span>  <span class="k">if</span> <span class="n">you</span> <span class="n">wish</span><span class="p">,</span> <span class="n">the</span> <span class="n">code</span> <span class="n">will</span>
+         <span class="k">return</span> <span class="n">with</span> <span class="n">the</span> <span class="n">solution</span> <span class="ow">and</span> <span class="n">its</span> <span class="n">derivative</span> <span class="n">following</span>
+         <span class="n">each</span> <span class="n">intermediate</span> <span class="n">step</span> <span class="p">(</span><span class="n">intermediate</span><span class="o">-</span><span class="n">output</span> <span class="n">mode</span><span class="p">)</span> <span class="n">so</span> <span class="n">that</span>
+         <span class="n">you</span> <span class="n">can</span> <span class="n">monitor</span> <span class="n">them</span><span class="p">,</span> <span class="n">but</span> <span class="n">you</span> <span class="n">still</span> <span class="n">must</span> <span class="n">provide</span> <span class="n">tout</span> <span class="ow">in</span>
+         <span class="n">accord</span> <span class="n">with</span> <span class="n">the</span> <span class="n">basic</span> <span class="n">aim</span> <span class="n">of</span> <span class="n">the</span> <span class="n">code</span><span class="o">.</span>
 
-         the first step taken by the code is a critical one
-         because it must reflect how fast the solution changes near
-         the initial point.  the code automatically selects an
-         initial step size which is practically always suitable for
-         the problem. by using the fact that the code will not step
-         past tout in the first step, you could, if necessary,
-         restrict the length of the initial step size.
+         <span class="n">the</span> <span class="n">first</span> <span class="n">step</span> <span class="n">taken</span> <span class="n">by</span> <span class="n">the</span> <span class="n">code</span> <span class="k">is</span> <span class="n">a</span> <span class="n">critical</span> <span class="n">one</span>
+         <span class="n">because</span> <span class="n">it</span> <span class="n">must</span> <span class="n">reflect</span> <span class="n">how</span> <span class="n">fast</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">changes</span> <span class="n">near</span>
+         <span class="n">the</span> <span class="n">initial</span> <span class="n">point</span><span class="o">.</span>  <span class="n">the</span> <span class="n">code</span> <span class="n">automatically</span> <span class="n">selects</span> <span class="n">an</span>
+         <span class="n">initial</span> <span class="n">step</span> <span class="n">size</span> <span class="n">which</span> <span class="k">is</span> <span class="n">practically</span> <span class="n">always</span> <span class="n">suitable</span> <span class="k">for</span>
+         <span class="n">the</span> <span class="n">problem</span><span class="o">.</span> <span class="n">by</span> <span class="n">using</span> <span class="n">the</span> <span class="n">fact</span> <span class="n">that</span> <span class="n">the</span> <span class="n">code</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">step</span>
+         <span class="n">past</span> <span class="n">tout</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">first</span> <span class="n">step</span><span class="p">,</span> <span class="n">you</span> <span class="n">could</span><span class="p">,</span> <span class="k">if</span> <span class="n">necessary</span><span class="p">,</span>
+         <span class="n">restrict</span> <span class="n">the</span> <span class="n">length</span> <span class="n">of</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">step</span> <span class="n">size</span><span class="o">.</span>
 
-         for some problems it may not be permissible to integrate
-         past a point tstop because a discontinuity occurs there
-         or the solution or its derivative is not defined beyond
-         tstop.  when you have declared a tstop point (see info(4)),
-         you have told the code not to integrate past tstop.
-         in this case any tout beyond tstop is invalid input.
+         <span class="k">for</span> <span class="n">some</span> <span class="n">problems</span> <span class="n">it</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">permissible</span> <span class="n">to</span> <span class="n">integrate</span>
+         <span class="n">past</span> <span class="n">a</span> <span class="n">point</span> <span class="n">tstop</span> <span class="n">because</span> <span class="n">a</span> <span class="n">discontinuity</span> <span class="n">occurs</span> <span class="n">there</span>
+         <span class="ow">or</span> <span class="n">the</span> <span class="n">solution</span> <span class="ow">or</span> <span class="n">its</span> <span class="n">derivative</span> <span class="k">is</span> <span class="ow">not</span> <span class="n">defined</span> <span class="n">beyond</span>
+         <span class="n">tstop</span><span class="o">.</span>  <span class="n">when</span> <span class="n">you</span> <span class="n">have</span> <span class="n">declared</span> <span class="n">a</span> <span class="n">tstop</span> <span class="n">point</span> <span class="p">(</span><span class="n">see</span> <span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+         <span class="n">you</span> <span class="n">have</span> <span class="n">told</span> <span class="n">the</span> <span class="n">code</span> <span class="ow">not</span> <span class="n">to</span> <span class="n">integrate</span> <span class="n">past</span> <span class="n">tstop</span><span class="o">.</span>
+         <span class="ow">in</span> <span class="n">this</span> <span class="n">case</span> <span class="n">any</span> <span class="n">tout</span> <span class="n">beyond</span> <span class="n">tstop</span> <span class="k">is</span> <span class="n">invalid</span> <span class="n">input</span><span class="o">.</span>
 
-  info(*) -- use the info array to give the code more details about
-         how you want your problem solved.  this array should be
-         dimensioned of length 4.  you must respond to all of
-         the following items which are arranged as questions.  the
-         simplest use of the code corresponds to answering all
-         questions as yes ,i.e. setting all entries of info to 0.
+  <span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">--</span> <span class="n">use</span> <span class="n">the</span> <span class="n">info</span> <span class="n">array</span> <span class="n">to</span> <span class="n">give</span> <span class="n">the</span> <span class="n">code</span> <span class="n">more</span> <span class="n">details</span> <span class="n">about</span>
+         <span class="n">how</span> <span class="n">you</span> <span class="n">want</span> <span class="n">your</span> <span class="n">problem</span> <span class="n">solved</span><span class="o">.</span>  <span class="n">this</span> <span class="n">array</span> <span class="n">should</span> <span class="n">be</span>
+         <span class="n">dimensioned</span> <span class="n">of</span> <span class="n">length</span> <span class="mf">4.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">respond</span> <span class="n">to</span> <span class="n">all</span> <span class="n">of</span>
+         <span class="n">the</span> <span class="n">following</span> <span class="n">items</span> <span class="n">which</span> <span class="n">are</span> <span class="n">arranged</span> <span class="k">as</span> <span class="n">questions</span><span class="o">.</span>  <span class="n">the</span>
+         <span class="n">simplest</span> <span class="n">use</span> <span class="n">of</span> <span class="n">the</span> <span class="n">code</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">answering</span> <span class="n">all</span>
+         <span class="n">questions</span> <span class="k">as</span> <span class="n">yes</span> <span class="p">,</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">setting</span> <span class="n">all</span> <span class="n">entries</span> <span class="n">of</span> <span class="n">info</span> <span class="n">to</span> <span class="mf">0.</span>
 
-    info(1) -- this parameter enables the code to initialize
-           itself.  you must set it to indicate the start of every
-           new problem.
+    <span class="n">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">--</span> <span class="n">this</span> <span class="n">parameter</span> <span class="n">enables</span> <span class="n">the</span> <span class="n">code</span> <span class="n">to</span> <span class="n">initialize</span>
+           <span class="n">itself</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">indicate</span> <span class="n">the</span> <span class="n">start</span> <span class="n">of</span> <span class="n">every</span>
+           <span class="n">new</span> <span class="n">problem</span><span class="o">.</span>
 
-        **** is this the first call for this problem ...
-              yes -- set info(1) = 0
-               no -- not applicable here.
-                     see below for continuation calls.  ****
+        <span class="o">****</span> <span class="k">is</span> <span class="n">this</span> <span class="n">the</span> <span class="n">first</span> <span class="n">call</span> <span class="k">for</span> <span class="n">this</span> <span class="n">problem</span> <span class="o">...</span>
+              <span class="n">yes</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+               <span class="n">no</span> <span class="o">--</span> <span class="ow">not</span> <span class="n">applicable</span> <span class="n">here</span><span class="o">.</span>
+                     <span class="n">see</span> <span class="n">below</span> <span class="k">for</span> <span class="n">continuation</span> <span class="n">calls</span><span class="o">.</span>  <span class="o">****</span>
 
-    info(2) -- how much accuracy you want of your solution
-           is specified by the error tolerances rtol and atol.
-           the simplest use is to take them both to be scalars.
-           to obtain more flexibility, they can both be vectors.
-           the code must be told your choice.
+    <span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">--</span> <span class="n">how</span> <span class="n">much</span> <span class="n">accuracy</span> <span class="n">you</span> <span class="n">want</span> <span class="n">of</span> <span class="n">your</span> <span class="n">solution</span>
+           <span class="k">is</span> <span class="n">specified</span> <span class="n">by</span> <span class="n">the</span> <span class="n">error</span> <span class="n">tolerances</span> <span class="n">rtol</span> <span class="ow">and</span> <span class="n">atol</span><span class="o">.</span>
+           <span class="n">the</span> <span class="n">simplest</span> <span class="n">use</span> <span class="k">is</span> <span class="n">to</span> <span class="n">take</span> <span class="n">them</span> <span class="n">both</span> <span class="n">to</span> <span class="n">be</span> <span class="n">scalars</span><span class="o">.</span>
+           <span class="n">to</span> <span class="n">obtain</span> <span class="n">more</span> <span class="n">flexibility</span><span class="p">,</span> <span class="n">they</span> <span class="n">can</span> <span class="n">both</span> <span class="n">be</span> <span class="n">vectors</span><span class="o">.</span>
+           <span class="n">the</span> <span class="n">code</span> <span class="n">must</span> <span class="n">be</span> <span class="n">told</span> <span class="n">your</span> <span class="n">choice</span><span class="o">.</span>
 
-        **** are both error tolerances rtol, atol scalars ...
-              yes -- set info(2) = 0
-                     and input scalars for both rtol and atol
-               no -- set info(2) = 1
-                     and input arrays for both rtol and atol ****
+        <span class="o">****</span> <span class="n">are</span> <span class="n">both</span> <span class="n">error</span> <span class="n">tolerances</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span> <span class="n">scalars</span> <span class="o">...</span>
+              <span class="n">yes</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+                     <span class="ow">and</span> <span class="n">input</span> <span class="n">scalars</span> <span class="k">for</span> <span class="n">both</span> <span class="n">rtol</span> <span class="ow">and</span> <span class="n">atol</span>
+               <span class="n">no</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+                     <span class="ow">and</span> <span class="n">input</span> <span class="n">arrays</span> <span class="k">for</span> <span class="n">both</span> <span class="n">rtol</span> <span class="ow">and</span> <span class="n">atol</span> <span class="o">****</span>
 
-    info(3) -- the code integrates from t in the direction
-           of tout by steps.  if you wish, it will return the
-           computed solution and derivative at the next
-           intermediate step (the intermediate-output mode) or
-           tout, whichever comes first.  this is a good way to
-           proceed if you want to see the behavior of the solution.
-           if you must have solutions at a great many specific
-           tout points, this code will compute them efficiently.
+    <span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">--</span> <span class="n">the</span> <span class="n">code</span> <span class="n">integrates</span> <span class="n">from</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">direction</span>
+           <span class="n">of</span> <span class="n">tout</span> <span class="n">by</span> <span class="n">steps</span><span class="o">.</span>  <span class="k">if</span> <span class="n">you</span> <span class="n">wish</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="k">return</span> <span class="n">the</span>
+           <span class="n">computed</span> <span class="n">solution</span> <span class="ow">and</span> <span class="n">derivative</span> <span class="n">at</span> <span class="n">the</span> <span class="n">next</span>
+           <span class="n">intermediate</span> <span class="n">step</span> <span class="p">(</span><span class="n">the</span> <span class="n">intermediate</span><span class="o">-</span><span class="n">output</span> <span class="n">mode</span><span class="p">)</span> <span class="ow">or</span>
+           <span class="n">tout</span><span class="p">,</span> <span class="n">whichever</span> <span class="n">comes</span> <span class="n">first</span><span class="o">.</span>  <span class="n">this</span> <span class="k">is</span> <span class="n">a</span> <span class="n">good</span> <span class="n">way</span> <span class="n">to</span>
+           <span class="n">proceed</span> <span class="k">if</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">behavior</span> <span class="n">of</span> <span class="n">the</span> <span class="n">solution</span><span class="o">.</span>
+           <span class="k">if</span> <span class="n">you</span> <span class="n">must</span> <span class="n">have</span> <span class="n">solutions</span> <span class="n">at</span> <span class="n">a</span> <span class="n">great</span> <span class="n">many</span> <span class="n">specific</span>
+           <span class="n">tout</span> <span class="n">points</span><span class="p">,</span> <span class="n">this</span> <span class="n">code</span> <span class="n">will</span> <span class="n">compute</span> <span class="n">them</span> <span class="n">efficiently</span><span class="o">.</span>
 
-        **** do you want the solution only at
-             tout (and not at the next intermediate step) ...
-              yes -- set info(3) = 0
-               no -- set info(3) = 1 ****
+        <span class="o">****</span> <span class="n">do</span> <span class="n">you</span> <span class="n">want</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">only</span> <span class="n">at</span>
+             <span class="n">tout</span> <span class="p">(</span><span class="ow">and</span> <span class="ow">not</span> <span class="n">at</span> <span class="n">the</span> <span class="n">next</span> <span class="n">intermediate</span> <span class="n">step</span><span class="p">)</span> <span class="o">...</span>
+              <span class="n">yes</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+               <span class="n">no</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">****</span>
 
-    info(4) -- to handle solutions at a great many specific
-           values tout efficiently, this code may integrate past
-           tout and interpolate to obtain the result at tout.
-           sometimes it is not possible to integrate beyond some
-           point tstop because the equation changes there or it is
-           not defined past tstop.  then you must tell the code
-           not to go past.
+    <span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">--</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">solutions</span> <span class="n">at</span> <span class="n">a</span> <span class="n">great</span> <span class="n">many</span> <span class="n">specific</span>
+           <span class="n">values</span> <span class="n">tout</span> <span class="n">efficiently</span><span class="p">,</span> <span class="n">this</span> <span class="n">code</span> <span class="n">may</span> <span class="n">integrate</span> <span class="n">past</span>
+           <span class="n">tout</span> <span class="ow">and</span> <span class="n">interpolate</span> <span class="n">to</span> <span class="n">obtain</span> <span class="n">the</span> <span class="n">result</span> <span class="n">at</span> <span class="n">tout</span><span class="o">.</span>
+           <span class="n">sometimes</span> <span class="n">it</span> <span class="k">is</span> <span class="ow">not</span> <span class="n">possible</span> <span class="n">to</span> <span class="n">integrate</span> <span class="n">beyond</span> <span class="n">some</span>
+           <span class="n">point</span> <span class="n">tstop</span> <span class="n">because</span> <span class="n">the</span> <span class="n">equation</span> <span class="n">changes</span> <span class="n">there</span> <span class="ow">or</span> <span class="n">it</span> <span class="k">is</span>
+           <span class="ow">not</span> <span class="n">defined</span> <span class="n">past</span> <span class="n">tstop</span><span class="o">.</span>  <span class="n">then</span> <span class="n">you</span> <span class="n">must</span> <span class="n">tell</span> <span class="n">the</span> <span class="n">code</span>
+           <span class="ow">not</span> <span class="n">to</span> <span class="n">go</span> <span class="n">past</span><span class="o">.</span>
 
-        **** can the integration be carried out without any
-             restrictions on the independent variable t ...
-              yes -- set info(4)=0
-               no -- set info(4)=1
-                     and define the stopping point me%tstop ****
+        <span class="o">****</span> <span class="n">can</span> <span class="n">the</span> <span class="n">integration</span> <span class="n">be</span> <span class="n">carried</span> <span class="n">out</span> <span class="n">without</span> <span class="n">any</span>
+             <span class="n">restrictions</span> <span class="n">on</span> <span class="n">the</span> <span class="n">independent</span> <span class="n">variable</span> <span class="n">t</span> <span class="o">...</span>
+              <span class="n">yes</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span>
+               <span class="n">no</span> <span class="o">--</span> <span class="n">set</span> <span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span>
+                     <span class="ow">and</span> <span class="n">define</span> <span class="n">the</span> <span class="n">stopping</span> <span class="n">point</span> <span class="n">me</span><span class="o">%</span><span class="n">tstop</span> <span class="o">****</span>
 
-  rtol, atol -- you must assign relative (rtol) and absolute (atol)
-         error tolerances to tell the code how accurately you want
-         the solution to be computed.  they must be defined as
-         program variables because the code may change them.  you
-         have two choices --
-              both rtol and atol are scalars. (info(2)=0)
-              both rtol and atol are vectors. (info(2)=1)
-         in either case all components must be non-negative.
+  <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span> <span class="o">--</span> <span class="n">you</span> <span class="n">must</span> <span class="n">assign</span> <span class="n">relative</span> <span class="p">(</span><span class="n">rtol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">absolute</span> <span class="p">(</span><span class="n">atol</span><span class="p">)</span>
+         <span class="n">error</span> <span class="n">tolerances</span> <span class="n">to</span> <span class="n">tell</span> <span class="n">the</span> <span class="n">code</span> <span class="n">how</span> <span class="n">accurately</span> <span class="n">you</span> <span class="n">want</span>
+         <span class="n">the</span> <span class="n">solution</span> <span class="n">to</span> <span class="n">be</span> <span class="n">computed</span><span class="o">.</span>  <span class="n">they</span> <span class="n">must</span> <span class="n">be</span> <span class="n">defined</span> <span class="k">as</span>
+         <span class="n">program</span> <span class="n">variables</span> <span class="n">because</span> <span class="n">the</span> <span class="n">code</span> <span class="n">may</span> <span class="n">change</span> <span class="n">them</span><span class="o">.</span>  <span class="n">you</span>
+         <span class="n">have</span> <span class="n">two</span> <span class="n">choices</span> <span class="o">--</span>
+              <span class="n">both</span> <span class="n">rtol</span> <span class="ow">and</span> <span class="n">atol</span> <span class="n">are</span> <span class="n">scalars</span><span class="o">.</span> <span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+              <span class="n">both</span> <span class="n">rtol</span> <span class="ow">and</span> <span class="n">atol</span> <span class="n">are</span> <span class="n">vectors</span><span class="o">.</span> <span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+         <span class="ow">in</span> <span class="n">either</span> <span class="n">case</span> <span class="n">all</span> <span class="n">components</span> <span class="n">must</span> <span class="n">be</span> <span class="n">non</span><span class="o">-</span><span class="n">negative</span><span class="o">.</span>
 
-         the tolerances are used by the code in a local error test
-         at each step which requires roughly that
-                 abs(local error) &lt;= rtol*abs(y)+atol
-         for each vector component.
-         (more specifically, a euclidean norm is used to measure
-         the size of vectors, and the error test uses the magnitude
-         of the solution at the beginning of the step.)
+         <span class="n">the</span> <span class="n">tolerances</span> <span class="n">are</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">local</span> <span class="n">error</span> <span class="n">test</span>
+         <span class="n">at</span> <span class="n">each</span> <span class="n">step</span> <span class="n">which</span> <span class="n">requires</span> <span class="n">roughly</span> <span class="n">that</span>
+                 <span class="nb">abs</span><span class="p">(</span><span class="n">local</span> <span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">rtol</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">+</span><span class="n">atol</span>
+         <span class="k">for</span> <span class="n">each</span> <span class="n">vector</span> <span class="n">component</span><span class="o">.</span>
+         <span class="p">(</span><span class="n">more</span> <span class="n">specifically</span><span class="p">,</span> <span class="n">a</span> <span class="n">euclidean</span> <span class="n">norm</span> <span class="k">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">measure</span>
+         <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">vectors</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">error</span> <span class="n">test</span> <span class="n">uses</span> <span class="n">the</span> <span class="n">magnitude</span>
+         <span class="n">of</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">at</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">the</span> <span class="n">step</span><span class="o">.</span><span class="p">)</span>
 
-         the true (global) error is the difference between the true
-         solution of the initial value problem and the computed
-         approximation.  practically all present day codes,
-         including this one, control the local error at each step
-         and do not even attempt to control the global error
-         directly.  roughly speaking, they produce a solution y(t)
-         which satisfies the differential equations with a
-         residual r(t), dy(t)/dt = df(t,y(t)) + r(t),
-         and, almost always, r(t) is bounded by the error
-         tolerances.  usually, but not always, the true accuracy of
-         the computed y is comparable to the error tolerances. this
-         code will usually, but not always, deliver a more accurate
-         solution if you reduce the tolerances and integrate again.
-         by comparing two such solutions you can get a fairly
-         reliable idea of the true error in the solution at the
-         bigger tolerances.
+         <span class="n">the</span> <span class="bp">true</span> <span class="p">(</span><span class="n">global</span><span class="p">)</span> <span class="n">error</span> <span class="k">is</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">the</span> <span class="bp">true</span>
+         <span class="n">solution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">value</span> <span class="n">problem</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">computed</span>
+         <span class="n">approximation</span><span class="o">.</span>  <span class="n">practically</span> <span class="n">all</span> <span class="n">present</span> <span class="n">day</span> <span class="n">codes</span><span class="p">,</span>
+         <span class="n">including</span> <span class="n">this</span> <span class="n">one</span><span class="p">,</span> <span class="n">control</span> <span class="n">the</span> <span class="n">local</span> <span class="n">error</span> <span class="n">at</span> <span class="n">each</span> <span class="n">step</span>
+         <span class="ow">and</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">even</span> <span class="n">attempt</span> <span class="n">to</span> <span class="n">control</span> <span class="n">the</span> <span class="n">global</span> <span class="n">error</span>
+         <span class="n">directly</span><span class="o">.</span>  <span class="n">roughly</span> <span class="n">speaking</span><span class="p">,</span> <span class="n">they</span> <span class="n">produce</span> <span class="n">a</span> <span class="n">solution</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+         <span class="n">which</span> <span class="n">satisfies</span> <span class="n">the</span> <span class="n">differential</span> <span class="n">equations</span> <span class="n">with</span> <span class="n">a</span>
+         <span class="n">residual</span> <span class="n">r</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">dy</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="n">dt</span> <span class="o">=</span> <span class="n">df</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">+</span> <span class="n">r</span><span class="p">(</span><span class="n">t</span><span class="p">),</span>
+         <span class="ow">and</span><span class="p">,</span> <span class="n">almost</span> <span class="n">always</span><span class="p">,</span> <span class="n">r</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">is</span> <span class="n">bounded</span> <span class="n">by</span> <span class="n">the</span> <span class="n">error</span>
+         <span class="n">tolerances</span><span class="o">.</span>  <span class="n">usually</span><span class="p">,</span> <span class="n">but</span> <span class="ow">not</span> <span class="n">always</span><span class="p">,</span> <span class="n">the</span> <span class="bp">true</span> <span class="n">accuracy</span> <span class="n">of</span>
+         <span class="n">the</span> <span class="n">computed</span> <span class="n">y</span> <span class="k">is</span> <span class="n">comparable</span> <span class="n">to</span> <span class="n">the</span> <span class="n">error</span> <span class="n">tolerances</span><span class="o">.</span> <span class="n">this</span>
+         <span class="n">code</span> <span class="n">will</span> <span class="n">usually</span><span class="p">,</span> <span class="n">but</span> <span class="ow">not</span> <span class="n">always</span><span class="p">,</span> <span class="n">deliver</span> <span class="n">a</span> <span class="n">more</span> <span class="n">accurate</span>
+         <span class="n">solution</span> <span class="k">if</span> <span class="n">you</span> <span class="n">reduce</span> <span class="n">the</span> <span class="n">tolerances</span> <span class="ow">and</span> <span class="n">integrate</span> <span class="n">again</span><span class="o">.</span>
+         <span class="n">by</span> <span class="n">comparing</span> <span class="n">two</span> <span class="n">such</span> <span class="n">solutions</span> <span class="n">you</span> <span class="n">can</span> <span class="n">get</span> <span class="n">a</span> <span class="n">fairly</span>
+         <span class="n">reliable</span> <span class="n">idea</span> <span class="n">of</span> <span class="n">the</span> <span class="bp">true</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">at</span> <span class="n">the</span>
+         <span class="n">bigger</span> <span class="n">tolerances</span><span class="o">.</span>
 
-         setting atol=0.0_wp results in a pure relative error test on
-         that component. setting rtol=0. results in a pure absolute
-         error test on that component.  a mixed test with non-zero
-         rtol and atol corresponds roughly to a relative error
-         test when the solution component is much bigger than atol
-         and to an absolute error test when the solution component
-         is smaller than the threshold atol.
+         <span class="n">setting</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.0</span><span class="n">_wp</span> <span class="n">results</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">pure</span> <span class="n">relative</span> <span class="n">error</span> <span class="n">test</span> <span class="n">on</span>
+         <span class="n">that</span> <span class="n">component</span><span class="o">.</span> <span class="n">setting</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.</span> <span class="n">results</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">pure</span> <span class="n">absolute</span>
+         <span class="n">error</span> <span class="n">test</span> <span class="n">on</span> <span class="n">that</span> <span class="n">component</span><span class="o">.</span>  <span class="n">a</span> <span class="n">mixed</span> <span class="n">test</span> <span class="n">with</span> <span class="n">non</span><span class="o">-</span><span class="n">zero</span>
+         <span class="n">rtol</span> <span class="ow">and</span> <span class="n">atol</span> <span class="n">corresponds</span> <span class="n">roughly</span> <span class="n">to</span> <span class="n">a</span> <span class="n">relative</span> <span class="n">error</span>
+         <span class="n">test</span> <span class="n">when</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">component</span> <span class="k">is</span> <span class="n">much</span> <span class="n">bigger</span> <span class="n">than</span> <span class="n">atol</span>
+         <span class="ow">and</span> <span class="n">to</span> <span class="n">an</span> <span class="n">absolute</span> <span class="n">error</span> <span class="n">test</span> <span class="n">when</span> <span class="n">the</span> <span class="n">solution</span> <span class="n">component</span>
+         <span class="k">is</span> <span class="n">smaller</span> <span class="n">than</span> <span class="n">the</span> <span class="n">threshold</span> <span class="n">atol</span><span class="o">.</span>
 
-         proper selection of the absolute error control parameters
-         atol  requires you to have some idea of the scale of the
-         solution components.  to acquire this information may mean
-         that you will have to solve the problem more than once. in
-         the absence of scale information, you should ask for some
-         relative accuracy in all the components (by setting  rtol
-         values non-zero) and perhaps impose extremely small
-         absolute error tolerances to protect against the danger of
-         a solution component becoming zero.
+         <span class="n">proper</span> <span class="n">selection</span> <span class="n">of</span> <span class="n">the</span> <span class="n">absolute</span> <span class="n">error</span> <span class="n">control</span> <span class="n">parameters</span>
+         <span class="n">atol</span>  <span class="n">requires</span> <span class="n">you</span> <span class="n">to</span> <span class="n">have</span> <span class="n">some</span> <span class="n">idea</span> <span class="n">of</span> <span class="n">the</span> <span class="n">scale</span> <span class="n">of</span> <span class="n">the</span>
+         <span class="n">solution</span> <span class="n">components</span><span class="o">.</span>  <span class="n">to</span> <span class="n">acquire</span> <span class="n">this</span> <span class="n">information</span> <span class="n">may</span> <span class="n">mean</span>
+         <span class="n">that</span> <span class="n">you</span> <span class="n">will</span> <span class="n">have</span> <span class="n">to</span> <span class="n">solve</span> <span class="n">the</span> <span class="n">problem</span> <span class="n">more</span> <span class="n">than</span> <span class="n">once</span><span class="o">.</span> <span class="ow">in</span>
+         <span class="n">the</span> <span class="n">absence</span> <span class="n">of</span> <span class="n">scale</span> <span class="n">information</span><span class="p">,</span> <span class="n">you</span> <span class="n">should</span> <span class="n">ask</span> <span class="k">for</span> <span class="n">some</span>
+         <span class="n">relative</span> <span class="n">accuracy</span> <span class="ow">in</span> <span class="n">all</span> <span class="n">the</span> <span class="n">components</span> <span class="p">(</span><span class="n">by</span> <span class="n">setting</span>  <span class="n">rtol</span>
+         <span class="n">values</span> <span class="n">non</span><span class="o">-</span><span class="n">zero</span><span class="p">)</span> <span class="ow">and</span> <span class="n">perhaps</span> <span class="n">impose</span> <span class="n">extremely</span> <span class="n">small</span>
+         <span class="n">absolute</span> <span class="n">error</span> <span class="n">tolerances</span> <span class="n">to</span> <span class="n">protect</span> <span class="n">against</span> <span class="n">the</span> <span class="n">danger</span> <span class="n">of</span>
+         <span class="n">a</span> <span class="n">solution</span> <span class="n">component</span> <span class="n">becoming</span> <span class="n">zero</span><span class="o">.</span>
 
-         the code will not attempt to compute a solution at an
-         accuracy unreasonable for the machine being used.  it will
-         advise you if you ask for too much accuracy and inform
-         you as to the maximum accuracy it believes possible.
-</pre></div>
-
+         <span class="n">the</span> <span class="n">code</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">attempt</span> <span class="n">to</span> <span class="n">compute</span> <span class="n">a</span> <span class="n">solution</span> <span class="n">at</span> <span class="n">an</span>
+         <span class="n">accuracy</span> <span class="n">unreasonable</span> <span class="k">for</span> <span class="n">the</span> <span class="n">machine</span> <span class="n">being</span> <span class="n">used</span><span class="o">.</span>  <span class="n">it</span> <span class="n">will</span>
+         <span class="n">advise</span> <span class="n">you</span> <span class="k">if</span> <span class="n">you</span> <span class="n">ask</span> <span class="k">for</span> <span class="n">too</span> <span class="n">much</span> <span class="n">accuracy</span> <span class="ow">and</span> <span class="n">inform</span>
+         <span class="n">you</span> <span class="k">as</span> <span class="n">to</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">accuracy</span> <span class="n">it</span> <span class="n">believes</span> <span class="n">possible</span><span class="o">.</span>
+</code></pre></div>
 
 <h3>output -- after any return from ddeabm</h3>
 <p>the principal aim of the code is to return a computed solution at
@@ -491,66 +448,65 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
    along the way.  to find out whether the code achieved its goal
    or if the integration process was interrupted before the task was
    completed, you must check the idid parameter.</p>
-<div class="codehilite"><pre><span></span>  t -- the solution was successfully advanced to the
-         output value of t.
+<div class="codehilite"><pre><span></span><code>  <span class="nv">t</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">solution</span> <span class="nv">was</span> <span class="nv">successfully</span> <span class="nv">advanced</span> <span class="nv">to</span> <span class="nv">the</span>
+         <span class="nv">output</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">t</span>.
 
-  y(*) -- contains the computed solution approximation at t.
-         you may also be interested in the approximate derivative
-         of the solution at t.  it is contained in me%ypout.
+  <span class="nv">y</span><span class="ss">(</span><span class="o">*</span><span class="ss">)</span> <span class="o">--</span> <span class="nv">contains</span> <span class="nv">the</span> <span class="nv">computed</span> <span class="nv">solution</span> <span class="nv">approximation</span> <span class="nv">at</span> <span class="nv">t</span>.
+         <span class="nv">you</span> <span class="nv">may</span> <span class="nv">also</span> <span class="nv">be</span> <span class="nv">interested</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">approximate</span> <span class="nv">derivative</span>
+         <span class="nv">of</span> <span class="nv">the</span> <span class="nv">solution</span> <span class="nv">at</span> <span class="nv">t</span>.  <span class="nv">it</span> <span class="nv">is</span> <span class="nv">contained</span> <span class="nv">in</span> <span class="nv">me</span><span class="o">%</span><span class="nv">ypout</span>.
 
-  idid -- reports what the code did
+  <span class="nv">idid</span> <span class="o">--</span> <span class="nv">reports</span> <span class="nv">what</span> <span class="nv">the</span> <span class="nv">code</span> <span class="nv">did</span>
 
-                     *** task completed ***
-               reported by positive values of idid
+                     <span class="o">***</span> <span class="nv">task</span> <span class="nv">completed</span> <span class="o">***</span>
+               <span class="nv">reported</span> <span class="nv">by</span> <span class="nv">positive</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">idid</span>
 
-         idid = 1 -- a step was successfully taken in the
-                   intermediate-output mode.  the code has not
-                   yet reached tout.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--</span> <span class="nv">a</span> <span class="nv">step</span> <span class="nv">was</span> <span class="nv">successfully</span> <span class="nv">taken</span> <span class="nv">in</span> <span class="nv">the</span>
+                   <span class="nv">intermediate</span><span class="o">-</span><span class="nv">output</span> <span class="nv">mode</span>.  <span class="nv">the</span> <span class="nv">code</span> <span class="nv">has</span> <span class="nv">not</span>
+                   <span class="nv">yet</span> <span class="nv">reached</span> <span class="nv">tout</span>.
 
-         idid = 2 -- the integration to tout was successfully
-                   completed (t=tout) by stepping exactly to tout.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">integration</span> <span class="nv">to</span> <span class="nv">tout</span> <span class="nv">was</span> <span class="nv">successfully</span>
+                   <span class="nv">completed</span> <span class="ss">(</span><span class="nv">t</span><span class="o">=</span><span class="nv">tout</span><span class="ss">)</span> <span class="nv">by</span> <span class="nv">stepping</span> <span class="nv">exactly</span> <span class="nv">to</span> <span class="nv">tout</span>.
 
-         idid = 3 -- the integration to tout was successfully
-                   completed (t=tout) by stepping past tout.
-                   y(*) is obtained by interpolation.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">integration</span> <span class="nv">to</span> <span class="nv">tout</span> <span class="nv">was</span> <span class="nv">successfully</span>
+                   <span class="nv">completed</span> <span class="ss">(</span><span class="nv">t</span><span class="o">=</span><span class="nv">tout</span><span class="ss">)</span> <span class="nv">by</span> <span class="nv">stepping</span> <span class="nv">past</span> <span class="nv">tout</span>.
+                   <span class="nv">y</span><span class="ss">(</span><span class="o">*</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">obtained</span> <span class="nv">by</span> <span class="nv">interpolation</span>.
 
-                     *** task interrupted ***
-               reported by negative values of idid
+                     <span class="o">***</span> <span class="nv">task</span> <span class="nv">interrupted</span> <span class="o">***</span>
+               <span class="nv">reported</span> <span class="nv">by</span> <span class="nv">negative</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">idid</span>
 
-         idid = -1 -- a large amount of work has been expended.
-                   (maxnum steps attempted)
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">--</span> <span class="nv">a</span> <span class="nv">large</span> <span class="nv">amount</span> <span class="nv">of</span> <span class="nv">work</span> <span class="nv">has</span> <span class="nv">been</span> <span class="nv">expended</span>.
+                   <span class="ss">(</span><span class="nv">maxnum</span> <span class="nv">steps</span> <span class="nv">attempted</span><span class="ss">)</span>
 
-         idid = -2 -- the error tolerances are too stringent.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">error</span> <span class="nv">tolerances</span> <span class="nv">are</span> <span class="nv">too</span> <span class="nv">stringent</span>.
 
-         idid = -3 -- the local error test cannot be satisfied
-                   because you specified a zero component in atol
-                   and the corresponding computed solution
-                   component is zero.  thus, a pure relative error
-                   test is impossible for this component.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">local</span> <span class="nv">error</span> <span class="nv">test</span> <span class="nv">cannot</span> <span class="nv">be</span> <span class="nv">satisfied</span>
+                   <span class="nv">because</span> <span class="nv">you</span> <span class="nv">specified</span> <span class="nv">a</span> <span class="nv">zero</span> <span class="nv">component</span> <span class="nv">in</span> <span class="nv">atol</span>
+                   <span class="nv">and</span> <span class="nv">the</span> <span class="nv">corresponding</span> <span class="nv">computed</span> <span class="nv">solution</span>
+                   <span class="nv">component</span> <span class="nv">is</span> <span class="nv">zero</span>.  <span class="nv">thus</span>, <span class="nv">a</span> <span class="nv">pure</span> <span class="nv">relative</span> <span class="nv">error</span>
+                   <span class="nv">test</span> <span class="nv">is</span> <span class="nv">impossible</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">component</span>.
 
-         idid = -4 -- the problem appears to be stiff.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">problem</span> <span class="nv">appears</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">stiff</span>.
 
-         idid = -5,-6,-7,..,-32  -- not applicable for this code
-                   but used by other members of depac or possible
-                   future extensions.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>,<span class="o">-</span><span class="mi">6</span>,<span class="o">-</span><span class="mi">7</span>,..,<span class="o">-</span><span class="mi">32</span>  <span class="o">--</span> <span class="nv">not</span> <span class="nv">applicable</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">code</span>
+                   <span class="nv">but</span> <span class="nv">used</span> <span class="nv">by</span> <span class="nv">other</span> <span class="nv">members</span> <span class="nv">of</span> <span class="nv">depac</span> <span class="nv">or</span> <span class="nv">possible</span>
+                   <span class="nv">future</span> <span class="nv">extensions</span>.
 
-                     *** task terminated ***
-               reported by the value of idid=-33
+                     <span class="o">***</span> <span class="nv">task</span> <span class="nv">terminated</span> <span class="o">***</span>
+               <span class="nv">reported</span> <span class="nv">by</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">idid</span><span class="o">=-</span><span class="mi">33</span>
 
-         idid = -33 -- the code has encountered trouble from which
-                   it cannot recover.  a message is printed
-                   explaining the trouble and control is returned
-                   to the calling program. for example, this occurs
-                   when invalid input is detected.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">33</span> <span class="o">--</span> <span class="nv">the</span> <span class="nv">code</span> <span class="nv">has</span> <span class="nv">encountered</span> <span class="nv">trouble</span> <span class="nv">from</span> <span class="nv">which</span>
+                   <span class="nv">it</span> <span class="nv">cannot</span> <span class="nv">recover</span>.  <span class="nv">a</span> <span class="nv">message</span> <span class="nv">is</span> <span class="nv">printed</span>
+                   <span class="nv">explaining</span> <span class="nv">the</span> <span class="nv">trouble</span> <span class="nv">and</span> <span class="nv">control</span> <span class="nv">is</span> <span class="nv">returned</span>
+                   <span class="nv">to</span> <span class="nv">the</span> <span class="nv">calling</span> <span class="nv">program</span>. <span class="k">for</span> <span class="nv">example</span>, <span class="nv">this</span> <span class="nv">occurs</span>
+                   <span class="nv">when</span> <span class="nv">invalid</span> <span class="nv">input</span> <span class="nv">is</span> <span class="nv">detected</span>.
 
-  rtol, atol -- these quantities remain unchanged except when
-         idid = -2.  in this case, the error tolerances have been
-         increased by the code to values which are estimated to be
-         appropriate for continuing the integration.  however, the
-         reported solution at t was obtained using the input values
-         of rtol and atol.
-</pre></div>
-
+  <span class="nv">rtol</span>, <span class="nv">atol</span> <span class="o">--</span> <span class="nv">these</span> <span class="nv">quantities</span> <span class="nv">remain</span> <span class="nv">unchanged</span> <span class="nv">except</span> <span class="nv">when</span>
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>.  <span class="nv">in</span> <span class="nv">this</span> <span class="nv">case</span>, <span class="nv">the</span> <span class="nv">error</span> <span class="nv">tolerances</span> <span class="nv">have</span> <span class="nv">been</span>
+         <span class="nv">increased</span> <span class="nv">by</span> <span class="nv">the</span> <span class="nv">code</span> <span class="nv">to</span> <span class="nv">values</span> <span class="nv">which</span> <span class="nv">are</span> <span class="nv">estimated</span> <span class="nv">to</span> <span class="nv">be</span>
+         <span class="nv">appropriate</span> <span class="k">for</span> <span class="nv">continuing</span> <span class="nv">the</span> <span class="nv">integration</span>.  <span class="nv">however</span>, <span class="nv">the</span>
+         <span class="nv">reported</span> <span class="nv">solution</span> <span class="nv">at</span> <span class="nv">t</span> <span class="nv">was</span> <span class="nv">obtained</span> <span class="nv">using</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">values</span>
+         <span class="nv">of</span> <span class="nv">rtol</span> <span class="nv">and</span> <span class="nv">atol</span>.
+</code></pre></div>
 
 <h3>input -- what to do to continue the integration (calls after the first)</h3>
 <p>this code is organized so that subsequent calls to continue the
@@ -586,54 +542,53 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   <code>info(1)=1</code> if you wish to continue after an interrupted task.
   do not set <code>info(1)=0</code> on a continuation call unless you
   want the code to restart at the current <code>t</code>.</p>
-<div class="codehilite"><pre><span></span>                     *** following a completed task ***
-     if
-         idid = 1, call the code again to continue the integration
-                 another step in the direction of tout.
+<div class="codehilite"><pre><span></span><code>                     <span class="o">***</span> <span class="nv">following</span> <span class="nv">a</span> <span class="nv">completed</span> <span class="nv">task</span> <span class="o">***</span>
+     <span class="k">if</span>
+         <span class="nv">idid</span> <span class="o">=</span> <span class="mi">1</span>, <span class="k">call</span> <span class="nl">the</span> <span class="nv">code</span> <span class="nv">again</span> <span class="nv">to</span> <span class="k">continue</span> <span class="nv">the</span> <span class="nv">integration</span>
+                 <span class="nv">another</span> <span class="nv">step</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">direction</span> <span class="nv">of</span> <span class="nv">tout</span>.
 
-         idid = 2 or 3, define a new tout and call the code again.
-                 tout must be different from t. you cannot change
-                 the direction of integration without restarting.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="mi">2</span> <span class="nv">or</span> <span class="mi">3</span>, <span class="nv">define</span> <span class="nv">a</span> <span class="nv">new</span> <span class="nv">tout</span> <span class="nv">and</span> <span class="k">call</span> <span class="nl">the</span> <span class="nv">code</span> <span class="nv">again</span>.
+                 <span class="nv">tout</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">different</span> <span class="nv">from</span> <span class="nv">t</span>. <span class="nv">you</span> <span class="nv">cannot</span> <span class="nv">change</span>
+                 <span class="nv">the</span> <span class="nv">direction</span> <span class="nv">of</span> <span class="nv">integration</span> <span class="nv">without</span> <span class="nv">restarting</span>.
 
-                     *** following an interrupted task ***
-                 to show the code that you realize the task was
-                 interrupted and that you want to continue, you
-                 must take appropriate action and reset info(1) = 1
-     if
-         idid = -1, the code has attempted maxnum steps.
-                 if you want to continue, set info(1) = 1 and
-                 call the code again. an additional maxnum steps
-                 will be allowed.
+                     <span class="o">***</span> <span class="nv">following</span> <span class="nv">an</span> <span class="nv">interrupted</span> <span class="nv">task</span> <span class="o">***</span>
+                 <span class="nv">to</span> <span class="k">show</span> <span class="nv">the</span> <span class="nv">code</span> <span class="nv">that</span> <span class="nv">you</span> <span class="nv">realize</span> <span class="nv">the</span> <span class="nv">task</span> <span class="nv">was</span>
+                 <span class="nv">interrupted</span> <span class="nv">and</span> <span class="nv">that</span> <span class="nv">you</span> <span class="nv">want</span> <span class="nv">to</span> <span class="k">continue</span>, <span class="nv">you</span>
+                 <span class="nv">must</span> <span class="nv">take</span> <span class="nv">appropriate</span> <span class="nv">action</span> <span class="nv">and</span> <span class="nv">reset</span> <span class="nv">info</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">1</span>
+     <span class="k">if</span>
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>, <span class="nv">the</span> <span class="nv">code</span> <span class="nv">has</span> <span class="nv">attempted</span> <span class="nv">maxnum</span> <span class="nv">steps</span>.
+                 <span class="k">if</span> <span class="nv">you</span> <span class="nv">want</span> <span class="nv">to</span> <span class="k">continue</span>, <span class="nv">set</span> <span class="nv">info</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="nv">and</span>
+                 <span class="k">call</span> <span class="nl">the</span> <span class="nv">code</span> <span class="nv">again</span>. <span class="nv">an</span> <span class="nv">additional</span> <span class="nv">maxnum</span> <span class="nv">steps</span>
+                 <span class="nv">will</span> <span class="nv">be</span> <span class="nv">allowed</span>.
 
-         idid = -2, the error tolerances rtol, atol have been
-                 increased to values the code estimates appropriate
-                 for continuing.  you may want to change them
-                 yourself.  if you are sure you want to continue
-                 with relaxed error tolerances, set info(1)=1 and
-                 call the code again.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>, <span class="nv">the</span> <span class="nv">error</span> <span class="nv">tolerances</span> <span class="nv">rtol</span>, <span class="nv">atol</span> <span class="nv">have</span> <span class="nv">been</span>
+                 <span class="nv">increased</span> <span class="nv">to</span> <span class="nv">values</span> <span class="nv">the</span> <span class="nv">code</span> <span class="nv">estimates</span> <span class="nv">appropriate</span>
+                 <span class="k">for</span> <span class="nv">continuing</span>.  <span class="nv">you</span> <span class="nv">may</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">change</span> <span class="nv">them</span>
+                 <span class="nv">yourself</span>.  <span class="k">if</span> <span class="nv">you</span> <span class="nv">are</span> <span class="nv">sure</span> <span class="nv">you</span> <span class="nv">want</span> <span class="nv">to</span> <span class="k">continue</span>
+                 <span class="nv">with</span> <span class="nv">relaxed</span> <span class="nv">error</span> <span class="nv">tolerances</span>, <span class="nv">set</span> <span class="nv">info</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span><span class="o">=</span><span class="mi">1</span> <span class="nv">and</span>
+                 <span class="k">call</span> <span class="nl">the</span> <span class="nv">code</span> <span class="nv">again</span>.
 
-         idid = -3, a solution component is zero and you set the
-                 corresponding component of atol to zero.  if you
-                 are sure you want to continue, you must first
-                 alter the error criterion to use positive values
-                 for those components of atol corresponding to zero
-                 solution components, then set info(1)=1 and call
-                 the code again.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>, <span class="nv">a</span> <span class="nv">solution</span> <span class="nv">component</span> <span class="nv">is</span> <span class="nv">zero</span> <span class="nv">and</span> <span class="nv">you</span> <span class="nv">set</span> <span class="nv">the</span>
+                 <span class="nv">corresponding</span> <span class="nv">component</span> <span class="nv">of</span> <span class="nv">atol</span> <span class="nv">to</span> <span class="nv">zero</span>.  <span class="k">if</span> <span class="nv">you</span>
+                 <span class="nv">are</span> <span class="nv">sure</span> <span class="nv">you</span> <span class="nv">want</span> <span class="nv">to</span> <span class="k">continue</span>, <span class="nv">you</span> <span class="nv">must</span> <span class="nv">first</span>
+                 <span class="nv">alter</span> <span class="nv">the</span> <span class="nv">error</span> <span class="nv">criterion</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">positive</span> <span class="nv">values</span>
+                 <span class="k">for</span> <span class="nv">those</span> <span class="nv">components</span> <span class="nv">of</span> <span class="nv">atol</span> <span class="nv">corresponding</span> <span class="nv">to</span> <span class="nv">zero</span>
+                 <span class="nv">solution</span> <span class="nv">components</span>, <span class="k">then</span> <span class="nv">set</span> <span class="nv">info</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span><span class="o">=</span><span class="mi">1</span> <span class="nv">and</span> <span class="nv">call</span>
+                 <span class="nv">the</span> <span class="nv">code</span> <span class="nv">again</span>.
 
-         idid = -4, the problem appears to be stiff.  it is very
-                 inefficient to solve such problems with ddeabm.
-                 the code ddebdf in depac handles this task
-                 efficiently.  if you are absolutely sure you want
-                 to continue with ddeabm, set info(1)=1 and call
-                 the code again.
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>, <span class="nv">the</span> <span class="nv">problem</span> <span class="nv">appears</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">stiff</span>.  <span class="nv">it</span> <span class="nv">is</span> <span class="nv">very</span>
+                 <span class="nv">inefficient</span> <span class="nv">to</span> <span class="nv">solve</span> <span class="nv">such</span> <span class="nv">problems</span> <span class="nv">with</span> <span class="nv">ddeabm</span>.
+                 <span class="nv">the</span> <span class="nv">code</span> <span class="nv">ddebdf</span> <span class="nv">in</span> <span class="nv">depac</span> <span class="nv">handles</span> <span class="nv">this</span> <span class="nv">task</span>
+                 <span class="nv">efficiently</span>.  <span class="k">if</span> <span class="nv">you</span> <span class="nv">are</span> <span class="nv">absolutely</span> <span class="nv">sure</span> <span class="nv">you</span> <span class="nv">want</span>
+                 <span class="nv">to</span> <span class="k">continue</span> <span class="nv">with</span> <span class="nv">ddeabm</span>, <span class="nv">set</span> <span class="nv">info</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span><span class="o">=</span><span class="mi">1</span> <span class="nv">and</span> <span class="nv">call</span>
+                 <span class="nv">the</span> <span class="nv">code</span> <span class="nv">again</span>.
 
-                     *** following a terminated task ***
-     if
-         idid = -33, you cannot continue the solution of this
-                 problem.  an attempt to do so will result in your
-                 run being terminated.
-</pre></div>
-
+                     <span class="o">***</span> <span class="nv">following</span> <span class="nv">a</span> <span class="nv">terminated</span> <span class="nv">task</span> <span class="o">***</span>
+     <span class="k">if</span>
+         <span class="nv">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">33</span>, <span class="nv">you</span> <span class="nv">cannot</span> <span class="k">continue</span> <span class="nv">the</span> <span class="nv">solution</span> <span class="nv">of</span> <span class="nv">this</span>
+                 <span class="nv">problem</span>.  <span class="nv">an</span> <span class="nv">attempt</span> <span class="nv">to</span> <span class="k">do</span> <span class="nv">so</span> <span class="nv">will</span> <span class="nb">result</span> <span class="nv">in</span> <span class="nv">your</span>
+                 <span class="nv">run</span> <span class="nv">being</span> <span class="nv">terminated</span>.
+</code></pre></div>
 
 <h3>Authors</h3>
 <ul>
@@ -680,7 +635,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E17"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
+  <td><span class="anchor" id="variable-me~17"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -695,7 +650,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-neq%7E5"></span>integer,</td>
+  <td><span class="anchor" id="variable-neq~5"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -710,7 +665,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-t%7E9"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-t~9"></span>real(kind=wp),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -725,7 +680,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-y%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-y~4"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -740,7 +695,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-tout%7E2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-tout~2"></span>real(kind=wp),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -755,7 +710,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-info%7E2"></span>integer,</td>
+  <td><span class="anchor" id="variable-info~2"></span>integer,</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -770,7 +725,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-rtol%7E5"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-rtol~5"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -785,7 +740,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-atol%7E5"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-atol~5"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -800,7 +755,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   
 <tr>
   
-  <td><span class="anchor" id="variable-idid%7E4"></span>integer,</td>
+  <td><span class="anchor" id="variable-idid~4"></span>integer,</td>
   <td>intent(out)</td>
   <td></td>
   
@@ -815,91 +770,96 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     
     
     
-     <h3>Calls</h3>
-     
-                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <br>
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Calls</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~ddeabm~~CallsGraph Pages: 1 -->
-<svg id="procddeabmCallsGraph" width="168pt" height="32pt"
- viewBox="0.00 0.00 168.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procddeabmCallsGraph" width="177pt" height="32pt"
+ viewBox="0.00 0.00 177.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~ddeabm~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>proc~~ddeabm~~CallsGraph</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-28 164,-28 164,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 173,-28 173,4 -4,4"/>
 <!-- proc~ddeabm -->
-<g id="proc~~ddeabm~~CallsGraph_node1" class="node"><title>proc~ddeabm</title>
-<polygon fill="none" stroke="black" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
-<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm</text>
+<g id="proc~~ddeabm~~CallsGraph_node1" class="node">
+<title>proc~ddeabm</title>
+<polygon fill="none" stroke="black" points="57,-24 0,-24 0,0 57,0 57,-24"/>
+<text text-anchor="middle" x="28.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm</text>
 </g>
 <!-- proc~report_error -->
-<g id="proc~~ddeabm~~CallsGraph_node2" class="node"><title>proc~report_error</title>
-<g id="a_proc~~ddeabm~~CallsGraph_node2"><a xlink:href="../proc/report_error.html" xlink:title="report_error">
-<polygon fill="#d9534f" stroke="#d9534f" points="160,-24 90,-24 90,-0 160,-0 160,-24"/>
-<text text-anchor="middle" x="125" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+<g id="proc~~ddeabm~~CallsGraph_node2" class="node">
+<title>proc~report_error</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node2"><a xlink:href=".././proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="169,-24 93,-24 93,0 169,0 169,-24"/>
+<text text-anchor="middle" x="131" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
 </a>
 </g>
 </g>
 <!-- proc~ddeabm&#45;&gt;proc~report_error -->
-<g id="proc~~ddeabm~~CallsGraph_edge1" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M54.2324,-12C62.1329,-12 71.0316,-12 79.7632,-12"/>
-<polygon fill="#000000" stroke="#000000" points="79.8668,-15.5001 89.8668,-12 79.8667,-8.5001 79.8668,-15.5001"/>
+<g id="proc~~ddeabm~~CallsGraph_edge1" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M57.23,-12C65.16,-12 74.04,-12 82.8,-12"/>
+<polygon fill="#000000" stroke="#000000" points="82.95,-15.5 92.95,-12 82.95,-8.5 82.95,-15.5"/>
 </g>
 </g>
 </svg>
-</div>
-                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
-                      </div>
-                      <div class="modal-body">
-                        
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
     <p>Nodes of different colours represent the following: </p>
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="559pt" height="32pt"
- viewBox="0.00 0.00 559.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="597pt" height="32pt"
+ viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-28 555,-28 555,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
 <!-- Subroutine -->
-<g id="node1" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
-<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node2" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
-<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
-<g id="node3" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="209.25,-24 154.75,-24 154.75,-0 209.25,-0 209.25,-24"/>
-<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
-<g id="node4" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
-<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
+<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
-<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
+<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="551.25,-24 454.75,-24 454.75,-0 551.25,-0 551.25,-24"/>
-<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
+<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -910,18 +870,18 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     This could include the module procedures in a generic interface or the
     implementation in a submodule of an interface in a parent module.
     </p>
-    
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
+    </div></div></div></div>
+      </div>
+    </div>
      
      
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
       
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -948,6 +908,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <a class="list-group-item" href="../proc/ddeabm.html#src">ddeabm</a>
   </div>
 </div>
+
 
 
     </section>
@@ -1043,64 +1004,14 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     </div>
   </div>
 
-  <section class="visible-xs visible-sm hidden-md">
-    <hr>
-    
-
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
-  <div id="allprocs-1" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
-</div>
-
-
-  </section>
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -1131,12 +1042,17 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>

@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="./favicon.png">
@@ -17,6 +17,9 @@
     <link href="./css/font-awesome.min.css" rel="stylesheet">
     <link href="./css/local.css" rel="stylesheet">
     
+    <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,13 +29,6 @@
     
     <script src="./js/jquery-2.1.3.min.js"></script>
     <script src="./js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="./tipuesearch/tipuesearch_content.js"></script>
-    <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="./tipuesearch/tipuesearch_set.js"></script>
-    <script src="./tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -52,33 +48,37 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="./lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="./lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="./lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="./lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="./lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
@@ -132,8 +132,8 @@
         <div class="col-md-8">
 		  
           <h1>ddeabm</h1>
-          <h2>Status</h2>
-<p><a href="https://travis-ci.org/jacobwilliams/bspline-fortran"><img alt="Build Status" src="https://img.shields.io/travis/jacobwilliams/bspline-fortran/master.svg?style=plastic"></a></p>
+          <h1>Status</h1>
+<p><img alt="Build Status" src="https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg"></p>
 <h2>Description</h2>
 <p>This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the <a href="http://www.netlib.org/slatec/src/">SLATEC library</a>. It has been extensively refactored.</p>
 <p>DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form <code>dx/dt = f(t,x)</code>. Also included is an event-location capability, where the equations can be integrated until a specified function <code>g(t,x) = 0</code>. Dense output is also supported.</p>
@@ -142,7 +142,7 @@
 <p>The <code>ddeabm_module</code> provides a thread-safe and object-oriented interface to the DDEABM method. Some example use cases are presented below:</p>
 <h3>Basic integration</h3>
 <p>This example shows how to integrate a conic orbit (6 state equations) around the Earth from an initial time <code>t0</code> to a final time <code>tf</code>:</p>
-<div class="codehilite"><pre><span></span><span class="k">program </span><span class="n">ddeabm_example</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">ddeabm_example</span>
 
 <span class="k">use </span><span class="n">ddeabm_module</span>
 <span class="k">use </span><span class="n">ddeabm_kinds</span>
@@ -200,11 +200,10 @@
     <span class="k">end subroutine </span><span class="n">twobody</span>
 
 <span class="k">end program </span><span class="n">ddeabm_example</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>It produces the following output:</p>
-<div class="codehilite"><pre><span></span>Initial time:
+<div class="codehilite"><pre><span></span><code>Initial time:
        0.000000
 
 Initial state:
@@ -225,12 +224,11 @@ Initial time:
        0.377639
        1.350074
        2.322509
-</pre></div>
-
+</code></pre></div>
 
 <h3>Reporting of intermediate points</h3>
 <p>The intermediate integration points can also be reported to a user-defined procedure.  For the above example, the following subroutine could be defined:</p>
-<div class="codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">twobody_report</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">subroutine </span><span class="n">twobody_report</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
 
     <span class="c">!! report function - write time,state to console</span>
 
@@ -243,25 +241,22 @@ Initial time:
     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(F15.6,1X))&#39;</span><span class="p">)</span> <span class="n">t</span><span class="p">,</span><span class="n">x</span>
 
 <span class="k">end subroutine </span><span class="n">twobody_report</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Which can be added to the class on initialization:</p>
-<div class="codehilite"><pre><span></span><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span>
                   <span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
                   <span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>This function is then called at each time step
 if the equations are integrated using the <code>integration_mode=2</code> option like so:</p>
-<div class="codehilite"><pre><span></span><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-
+<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
 
 <h3>Event location</h3>
 <p>A user-defined event function <code>g(t,x)</code> can also be defined in order to stop the integration at a specified event (i.e., when <code>g(t,x)=0</code>). In the above example, say it is desired that the integration stop when <code>z = x(3) = 12,000 km</code>.  The event function for this would be:</p>
-<div class="codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">twobody_event</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">subroutine </span><span class="n">twobody_event</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
 
     <span class="c">!! event function for z = 12,000 km</span>
 
@@ -275,27 +270,24 @@ if the equations are integrated using the <code>integration_mode=2</code> option
     <span class="n">g</span> <span class="o">=</span> <span class="mi">1200</span><span class="mf">0.0_wp</span> <span class="o">-</span> <span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="k">end subroutine </span><span class="n">twobody_event</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>For event finding, the <code>ddeabm_with_event_class</code> type is used (which is an extension of the main <code>ddeabm_class</code>).  For example:</p>
-<div class="codehilite"><pre><span></span><span class="k">type</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
+<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
 <span class="p">...</span>
 <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize_event</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span>
                         <span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
                         <span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">)</span>
 <span class="p">...</span>
 <span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>In this case, <code>root_tol</code> is the tolerance for the event location, and <code>gval</code> is the value of the event function at the final time (note that the integration will stop when <code>g(t,x)=0</code> or at <code>t=tf</code>, whichever occurs first).</p>
 <p>A vector event function is also supported (in which case, the integration stops if <em>any</em> of the roots are found). This is done using the <code>ddeabm_with_event_class_vec</code> type.</p>
 <h3>Fixed time step</h3>
 <p>All of the integration methods have an optional argument (<code>tstep</code>) to enable a fixed time step, which can be used for dense output, or to specify a fixed step used for event finding (since the default step may be too large). For example, for performing a root-finding integration with the event function evaluated every 100 seconds:</p>
-<div class="codehilite"><pre><span></span><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">tstep</span><span class="o">=</span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="p">)</span>
-</pre></div>
-
+<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">tstep</span><span class="o">=</span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="p">)</span>
+</code></pre></div>
 
 <h2>Building DDEABM</h2>
 <p>DDEABM and the test programs will build with any modern Fortran compiler. A <a href="https://github.com/szaghi/FoBiS">FoBiS</a> configuration file (<code>ddeabm.fobis</code>) is provided that can build the library and/or the example programs. Use the <code>mode</code> flag to indicate what to build. For example:</p>
@@ -307,9 +299,8 @@ if the equations are integrated using the <code>integration_mode=2</code> option
 </ul>
 <p>The full set of modes are: <code>static-gnu</code>, <code>static-gnu-debug</code>, <code>static-intel</code>, <code>static-intel-debug</code>, <code>shared-gnu</code>, <code>shared-gnu-debug</code>, <code>shared-intel</code>, <code>shared-intel-debug</code>, <code>tests-gnu</code>, <code>tests-gnu-debug</code>, <code>tests-intel</code>, <code>tests-intel-debug</code></p>
 <p>To generate the documentation using <a href="https://github.com/cmacmackin/ford">ford</a>, run:</p>
-<div class="codehilite"><pre><span></span>  FoBis.py rule --execute makedoc -f ddeabm.fobis
-</pre></div>
-
+<div class="codehilite"><pre><span></span><code>  FoBis.py rule --execute makedoc -f ddeabm.fobis
+</code></pre></div>
 
 <h2>Documentation</h2>
 <p>The latest API documentation can be found <a href="http://jacobwilliams.github.io/ddeabm/">here</a>. This was generated from the source code using <a href="https://github.com/cmacmackin/ford">FORD</a> (note that the included <code>build.sh</code> script will also generate these files).</p>
@@ -489,7 +480,8 @@ if the equations are integrated using the <code>integration_mode=2</code> option
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -520,12 +512,17 @@ if the equations are integrated using the <code>integration_mode=2</code> option
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="./tipuesearch/tipuesearch_content.js"></script>
+    <script src="./tipuesearch/tipuesearch_set.js"></script>
+    <script src="./tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>

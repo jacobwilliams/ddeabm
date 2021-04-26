@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
@@ -17,6 +17,9 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
     
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,13 +29,6 @@
     
     <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -52,33 +48,37 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="../lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="../lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="../lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="../lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
@@ -131,19 +131,23 @@
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
-	  data-placement="bottom" data-html="true"
-	  title="12.1% of total for procedures.">191 statements</a>
+    data-placement="bottom" data-html="true"
+    title="12.1% of total for procedures.">191 statements</a>
      </li> 
+     
      
      
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
+     
   </ul>
   <ol class="breadcrumb in-well text-right">
   
+    
      <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-  
+    
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+    
   
      <li class="active">ddeabm_with_event_wrapper_vec</li>
   </ol>
@@ -163,6 +167,9 @@
     
 <div id="sidebar">
   
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -191,56 +198,8 @@
 </div>
 
 
-  <hr>
-  
 
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
-  <div id="allprocs-0" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
 </div>
-
-
-</div>  
 
     </div>
     
@@ -249,7 +208,7 @@
 private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)
     
     
-	 
+   
 </h2>
     
   
@@ -286,7 +245,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-me%7E16"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
+  <td><span class="anchor" id="variable-me~16"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -301,7 +260,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-t%7E8"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-t~8"></span>real(kind=wp),</td>
   <td>intent(inout)</td>
   <td></td>
   
@@ -316,7 +275,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-y%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-y~3"></span>real(kind=wp),</td>
   <td>intent(inout),</td>
   <td></td>
   
@@ -331,7 +290,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-tmax%7E2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-tmax~2"></span>real(kind=wp),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -347,7 +306,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-tstop%7E4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-tstop~4"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td>optional</td>
   
@@ -368,7 +327,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-idid%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-idid~3"></span>integer,</td>
   <td>intent(out)</td>
   <td></td>
   
@@ -388,7 +347,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-gval%7E2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-gval~2"></span>real(kind=wp),</td>
   <td>intent(out),</td>
   <td></td>
   
@@ -403,14 +362,16 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-integration_mode%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-integration_mode~3"></span>integer,</td>
   <td>intent(in),</td>
   <td>optional</td>
   
   <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
- <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
- <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
+ <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
+  no reporting [default].
+ <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
+  report each step.</p></td>
   
 </tr>
 
@@ -420,7 +381,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-tstep%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-tstep~3"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td>optional</td>
   
@@ -437,7 +398,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
   
 <tr>
   
-  <td><span class="anchor" id="variable-continue%7E2"></span>logical,</td>
+  <td><span class="anchor" id="variable-continue~2"></span>logical,</td>
   <td>intent(in),</td>
   <td>optional</td>
   
@@ -457,104 +418,96 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
     
     
     
-     <h3>Calls</h3>
-     
-                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <br>
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Calls</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~ddeabm_with_event_wrapper_vec~~CallsGraph Pages: 1 -->
-<svg id="procddeabm_with_event_wrapper_vecCallsGraph" width="290pt" height="74pt"
- viewBox="0.00 0.00 290.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<svg id="procddeabm_with_event_wrapper_vecCallsGraph" width="313pt" height="32pt"
+ viewBox="0.00 0.00 313.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>proc~~ddeabm_with_event_wrapper_vec~~CallsGraph</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-70 286,-70 286,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 309,-28 309,4 -4,4"/>
 <!-- proc~ddeabm_with_event_wrapper_vec -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node1" class="node"><title>proc~ddeabm_with_event_wrapper_vec</title>
-<polygon fill="none" stroke="black" points="176,-45 1.42109e-14,-45 1.42109e-14,-21 176,-21 176,-45"/>
-<text text-anchor="middle" x="88" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_with_event_wrapper_vec</text>
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node1" class="node">
+<title>proc~ddeabm_with_event_wrapper_vec</title>
+<polygon fill="none" stroke="black" points="193,-24 0,-24 0,0 193,0 193,-24"/>
+<text text-anchor="middle" x="96.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_with_event_wrapper_vec</text>
 </g>
 <!-- proc~report_error -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2" class="node"><title>proc~report_error</title>
-<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2"><a xlink:href="../proc/report_error.html" xlink:title="report_error">
-<polygon fill="#d9534f" stroke="#d9534f" points="282,-66 212,-66 212,-42 282,-42 282,-66"/>
-<text text-anchor="middle" x="247" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2" class="node">
+<title>proc~report_error</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2"><a xlink:href=".././proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="305,-24 229,-24 229,0 305,0 305,-24"/>
+<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
 </a>
 </g>
 </g>
 <!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge1" class="edge"><title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M176.223,-44.6668C184.959,-45.8352 193.548,-46.9841 201.552,-48.0547"/>
-<polygon fill="#000000" stroke="#000000" points="201.323,-51.5552 211.699,-49.4119 202.251,-44.617 201.323,-51.5552"/>
-</g>
-<!-- proc~zeroin -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node3" class="node"><title>proc~zeroin</title>
-<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node3"><a xlink:href="../proc/zeroin.html" xlink:title="zeroin">
-<polygon fill="#d9534f" stroke="#d9534f" points="274,-24 220,-24 220,-0 274,-0 274,-24"/>
-<text text-anchor="middle" x="247" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~zeroin -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge2" class="edge"><title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="#000000" d="M176.223,-21.3332C188.062,-19.7497 199.632,-18.202 209.84,-16.8367"/>
-<polygon fill="#000000" stroke="#000000" points="210.491,-20.2809 219.938,-15.486 209.563,-13.3427 210.491,-20.2809"/>
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge1" class="edge">
+<title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M193.07,-12C201.85,-12 210.47,-12 218.52,-12"/>
+<polygon fill="#000000" stroke="#000000" points="218.76,-15.5 228.76,-12 218.76,-8.5 218.76,-15.5"/>
 </g>
 </g>
 </svg>
-</div>
-                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
-                      </div>
-                      <div class="modal-body">
-                        
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
     <p>Nodes of different colours represent the following: </p>
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="559pt" height="32pt"
- viewBox="0.00 0.00 559.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="597pt" height="32pt"
+ viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-28 555,-28 555,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
 <!-- Subroutine -->
-<g id="node1" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
-<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node2" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
-<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
-<g id="node3" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="209.25,-24 154.75,-24 154.75,-0 209.25,-0 209.25,-24"/>
-<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
-<g id="node4" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
-<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
+<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
-<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
+<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="551.25,-24 454.75,-24 454.75,-0 551.25,-0 551.25,-24"/>
-<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
+<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -565,18 +518,18 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
     This could include the module procedures in a generic interface or the
     implementation in a submodule of an interface in a parent module.
     </p>
-    
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
+    </div></div></div></div>
+      </div>
+    </div>
      
      
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
       
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -603,6 +556,7 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
     <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html#src">ddeabm_with_event_wrapper_vec</a>
   </div>
 </div>
+
 
 
     </section>
@@ -652,8 +606,10 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
                                                               <span class="c">!! See [[ddeabm]] for other values.</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>              <span class="kd">::</span> <span class="n">gval</span>    <span class="c">!! value of the event functions `g(t,x)` at the final time `t`</span>
     <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span> <span class="kd">::</span> <span class="n">integration_mode</span>           <span class="c">!! Step mode:</span>
-                                                              <span class="c">!! *1* - normal integration from `t` to `tout`, no reporting [default].</span>
-                                                              <span class="c">!! *2* - normal integration from `t` to `tout`, report each step.</span>
+                                                              <span class="c">!! *1* - normal integration from `t` to `tout`, </span>
+                                                              <span class="c">!!  no reporting [default].</span>
+                                                              <span class="c">!! *2* - normal integration from `t` to `tout`, </span>
+                                                              <span class="c">!!  report each step.</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span> <span class="kd">::</span> <span class="n">tstep</span>    <span class="c">!! Fixed time step to use for reporting and</span>
                                              <span class="c">!! evaluation of event function. If not present,</span>
                                              <span class="c">!! then default integrator steps are used.</span>
@@ -988,64 +944,14 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
     </div>
   </div>
 
-  <section class="visible-xs visible-sm hidden-md">
-    <hr>
-    
-
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
-  <div id="allprocs-1" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
-</div>
-
-
-  </section>
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -1076,12 +982,17 @@ private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gv
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>

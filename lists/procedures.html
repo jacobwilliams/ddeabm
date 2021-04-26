@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
@@ -19,6 +19,9 @@ All Procedures &ndash; ddeabm
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
     
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -28,13 +31,6 @@ All Procedures &ndash; ddeabm
     
     <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -54,33 +50,37 @@ All Procedures &ndash; ddeabm
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="../lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="../lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="../lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="../lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
@@ -120,7 +120,7 @@ All Procedures &ndash; ddeabm
 			 <tbody>
 			 
 			   <tr><td><a href='../proc/ddeabm.html'>ddeabm</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>solve an initial value problem in ordinary differential
-  equations using an adams-bashforth method.</p></td></tr>
+  equations using an adams-bashforth method.</p><a href="../proc/ddeabm.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Initialize the <a href="../type/ddeabm_class.html">ddeabm_class</a>, and set the variables that
   cannot be changed during a problem.</p></td></tr>
@@ -133,312 +133,329 @@ All Procedures &ndash; ddeabm
 			 
 			   <tr><td><a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Call this to abort the integration if there is an error.
   (Can be called in <code>df</code> by the user.) The step
-  will be considered invalid and not returned.</p></td></tr>
+  will be considered invalid and not returned.</p><a href="../proc/ddeabm_stop_integration.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Initialize <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> class,
-  and set the variables that cannot be changed during a problem.</p></td></tr>
+  and set the variables that cannot be changed during a problem.</p><a href="../proc/ddeabm_with_event_initialize.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Initialize <a href="../type/ddeabm_with_event_class_vec.html">ddeabm_with_event_class_vec</a> class,
-  and set the variables that cannot be changed during a problem.</p></td></tr>
+  and set the variables that cannot be changed during a problem.</p><a href="../proc/ddeabm_with_event_initialize_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding.
   It will integrate until <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
-  this manually)</p></td></tr>
+  this manually)</p><a href="../proc/ddeabm_with_event_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding for multiple functions.
   It will integrate until any <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
-  this manually)</p></td></tr>
+  this manually)</p><a href="../proc/ddeabm_with_event_wrapper_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p></td></tr>
+			   <tr><td><a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/ddes.html'>ddes</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p><a href="../proc/ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
   inconvenience of a long call list.  consequently ddes is used as
-  described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p></td></tr>
+  described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddes.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Destructor for <a href="../type/ddeabm_class.html">ddeabm_class</a>.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/dhstrt.html'>dhstrt</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Computes a starting step size to be used in solving initial
-  value problems in ordinary differential equations.</p></td></tr>
+  value problems in ordinary differential equations.</p><a href="../proc/dhstrt.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			   <tr><td><a href='../proc/dhvnrm.html'>dhvnrm</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Function</td><td><p>Compute the maximum norm of the first <code>n</code> elements of vector <code>v</code>.
   Replacement for the original <a href="http://www.netlib.org/slatec/src/dhvnrm.f">SLATEC</a> routine.</p></td></tr>
 			 
 			   <tr><td><a href='../proc/dintp.html'>dintp</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>approximate the solution at <code>xout</code> by evaluating the
   polynomial computed in <a href="../proc/dsteps.html">dsteps</a> at <code>xout</code>.  must be used in
-  conjunction with <a href="../proc/dsteps.html">dsteps</a>.</p></td></tr>
+  conjunction with <a href="../proc/dsteps.html">dsteps</a>.</p><a href="../proc/dintp.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/dsteps.html'>dsteps</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>integrate a system of first order ordinary differential equations one step.</p></td></tr>
+			   <tr><td><a href='../proc/dsteps.html'>dsteps</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>integrate a system of first order ordinary differential equations one step.</p><a href="../proc/dsteps.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/report_error.html'>report_error</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Report an error message.</p></td></tr>
+			   <tr><td><a href='../proc/report_error.html'>report_error</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td>Subroutine</td><td><p>Report an error message.</p><a href="../proc/report_error.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
-			   <tr><td><a href='../proc/zeroin.html'>zeroin</a></td><td><a href='../module/root_module.html'>root_module</a></td><td>Subroutine</td><td><p>Find a zero of the function \( f(x) \) in the given interval
-  \( [a_x,b_x] \) to within a tolerance \( 4 \epsilon |x| + tol \),
-  where \( \epsilon \) is the relative machine precision defined as
-  the smallest representable number such that \( 1.0 + \epsilon &gt; 1.0 \).</p></td></tr>
+			   <tr><td><a href='../proc/zeroin.html'>zeroin</a></td><td><a href='../module/root_module.html'>root_module</a></td><td>Subroutine</td><td><p>Find a zero of the function <script type="math/tex"> f(x) </script> in the given interval
+  <script type="math/tex"> [a_x,b_x] </script> to within a tolerance <script type="math/tex"> 4 \epsilon |x| + tol </script>,
+  where <script type="math/tex"> \epsilon </script> is the relative machine precision defined as
+  the smallest representable number such that <script type="math/tex"> 1.0 + \epsilon > 1.0 </script>.</p><a href="../proc/zeroin.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
 			 
 			 </tbody></table>
-             
-                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+             <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: call~~graph~~CallGraph Pages: 1 -->
-<svg id="callgraphCallGraph" width="290pt" height="578pt"
- viewBox="0.00 0.00 290.00 578.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="callgraphCallGraph" width="313pt" height="578pt"
+ viewBox="0.00 0.00 313.00 578.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="call~~graph~~CallGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 574)">
 <title>call~~graph~~CallGraph</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-574 286,-574 286,4 -4,4"/>
-<!-- proc~dintp -->
-<g id="call~~graph~~CallGraph_node1" class="node"><title>proc~dintp</title>
-<g id="a_call~~graph~~CallGraph_node1"><a xlink:href="../proc/dintp.html" xlink:title="dintp">
-<polygon fill="#d9534f" stroke="#d9534f" points="274,-213 220,-213 220,-189 274,-189 274,-213"/>
-<text text-anchor="middle" x="247" y="-198.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dintp</text>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-574 309,-574 309,4 -4,4"/>
+<!-- proc~ddeabm_stop_integration -->
+<g id="call~~graph~~CallGraph_node1" class="node">
+<title>proc~ddeabm_stop_integration</title>
+<g id="a_call~~graph~~CallGraph_node1"><a xlink:href=".././proc/ddeabm_stop_integration.html" xlink:title="ddeabm_stop_integration">
+<polygon fill="#d9534f" stroke="#d9534f" points="170.5,-24 22.5,-24 22.5,0 170.5,0 170.5,-24"/>
+<text text-anchor="middle" x="96.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_stop_integration</text>
 </a>
 </g>
 </g>
 <!-- proc~ddeabm_with_event_initialize -->
-<g id="call~~graph~~CallGraph_node2" class="node"><title>proc~ddeabm_with_event_initialize</title>
-<g id="a_call~~graph~~CallGraph_node2"><a xlink:href="../proc/ddeabm_with_event_initialize.html" xlink:title="ddeabm_with_event_initialize">
-<polygon fill="#d9534f" stroke="#d9534f" points="164,-276 12,-276 12,-252 164,-252 164,-276"/>
-<text text-anchor="middle" x="88" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_initialize</text>
+<g id="call~~graph~~CallGraph_node2" class="node">
+<title>proc~ddeabm_with_event_initialize</title>
+<g id="a_call~~graph~~CallGraph_node2"><a xlink:href=".././proc/ddeabm_with_event_initialize.html" xlink:title="ddeabm_with_event_initialize">
+<polygon fill="#d9534f" stroke="#d9534f" points="181,-66 12,-66 12,-42 181,-42 181,-66"/>
+<text text-anchor="middle" x="96.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_initialize</text>
 </a>
 </g>
-</g>
-<!-- proc~dhstrt -->
-<g id="call~~graph~~CallGraph_node3" class="node"><title>proc~dhstrt</title>
-<g id="a_call~~graph~~CallGraph_node3"><a xlink:href="../proc/dhstrt.html" xlink:title="dhstrt">
-<polygon fill="#d9534f" stroke="#d9534f" points="115,-318 61,-318 61,-294 115,-294 115,-318"/>
-<text text-anchor="middle" x="88" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhstrt</text>
-</a>
-</g>
-</g>
-<!-- proc~dhvnrm -->
-<g id="call~~graph~~CallGraph_node12" class="node"><title>proc~dhvnrm</title>
-<g id="a_call~~graph~~CallGraph_node12"><a xlink:href="../proc/dhvnrm.html" xlink:title="dhvnrm">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="274,-318 220,-318 220,-294 274,-294 274,-318"/>
-<text text-anchor="middle" x="247" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhvnrm</text>
-</a>
-</g>
-</g>
-<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
-<g id="call~~graph~~CallGraph_edge1" class="edge"><title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
-<path fill="none" stroke="#000000" d="M115.278,-306C141.167,-306 180.926,-306 209.799,-306"/>
-<polygon fill="#000000" stroke="#000000" points="209.898,-309.5 219.898,-306 209.898,-302.5 209.898,-309.5"/>
-</g>
-<!-- proc~ddeabm_with_event_wrapper_vec -->
-<g id="call~~graph~~CallGraph_node4" class="node"><title>proc~ddeabm_with_event_wrapper_vec</title>
-<g id="a_call~~graph~~CallGraph_node4"><a xlink:href="../proc/ddeabm_with_event_wrapper_vec.html" xlink:title="ddeabm_with_event_wrapper_vec">
-<polygon fill="#d9534f" stroke="#d9534f" points="176,-66 1.42109e-14,-66 1.42109e-14,-42 176,-42 176,-66"/>
-<text text-anchor="middle" x="88" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper_vec</text>
-</a>
-</g>
-</g>
-<!-- proc~zeroin -->
-<g id="call~~graph~~CallGraph_node5" class="node"><title>proc~zeroin</title>
-<g id="a_call~~graph~~CallGraph_node5"><a xlink:href="../proc/zeroin.html" xlink:title="zeroin">
-<polygon fill="#d9534f" stroke="#d9534f" points="274,-45 220,-45 220,-21 274,-21 274,-45"/>
-<text text-anchor="middle" x="247" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~zeroin -->
-<g id="call~~graph~~CallGraph_edge3" class="edge"><title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="#000000" d="M176.223,-42.3332C188.062,-40.7497 199.632,-39.202 209.84,-37.8367"/>
-<polygon fill="#000000" stroke="#000000" points="210.491,-41.2809 219.938,-36.486 209.563,-34.3427 210.491,-41.2809"/>
-</g>
-<!-- proc~report_error -->
-<g id="call~~graph~~CallGraph_node17" class="node"><title>proc~report_error</title>
-<g id="a_call~~graph~~CallGraph_node17"><a xlink:href="../proc/report_error.html" xlink:title="report_error">
-<polygon fill="#d9534f" stroke="#d9534f" points="282,-108 212,-108 212,-84 282,-84 282,-108"/>
-<text text-anchor="middle" x="247" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error -->
-<g id="call~~graph~~CallGraph_edge2" class="edge"><title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M141.103,-66.0858C152.626,-68.8951 164.751,-71.9574 176,-75 184.543,-77.3106 193.627,-79.921 202.323,-82.4964"/>
-<polygon fill="#000000" stroke="#000000" points="201.343,-85.8565 211.927,-85.3713 203.351,-79.1505 201.343,-85.8565"/>
-</g>
-<!-- proc~ddeabm_stop_integration -->
-<g id="call~~graph~~CallGraph_node6" class="node"><title>proc~ddeabm_stop_integration</title>
-<g id="a_call~~graph~~CallGraph_node6"><a xlink:href="../proc/ddeabm_stop_integration.html" xlink:title="ddeabm_stop_integration">
-<polygon fill="#d9534f" stroke="#d9534f" points="155,-360 21,-360 21,-336 155,-336 155,-360"/>
-<text text-anchor="middle" x="88" y="-345.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_stop_integration</text>
-</a>
-</g>
-</g>
-<!-- proc~destroy_ddeabm -->
-<g id="call~~graph~~CallGraph_node7" class="node"><title>proc~destroy_ddeabm</title>
-<g id="a_call~~graph~~CallGraph_node7"><a xlink:href="../proc/destroy_ddeabm.html" xlink:title="destroy_ddeabm">
-<polygon fill="#d9534f" stroke="#d9534f" points="134.5,-402 41.5,-402 41.5,-378 134.5,-378 134.5,-402"/>
-<text text-anchor="middle" x="88" y="-387.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy_ddeabm</text>
-</a>
-</g>
-</g>
-<!-- proc~ddes -->
-<g id="call~~graph~~CallGraph_node8" class="node"><title>proc~ddes</title>
-<g id="a_call~~graph~~CallGraph_node8"><a xlink:href="../proc/ddes.html" xlink:title="ddes">
-<polygon fill="#d9534f" stroke="#d9534f" points="115,-192 61,-192 61,-168 115,-168 115,-192"/>
-<text text-anchor="middle" x="88" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
-</a>
-</g>
-</g>
-<!-- proc~ddes&#45;&gt;proc~dintp -->
-<g id="call~~graph~~CallGraph_edge5" class="edge"><title>proc~ddes&#45;&gt;proc~dintp</title>
-<path fill="none" stroke="#000000" d="M115.278,-183.515C141.167,-186.978 180.926,-192.296 209.799,-196.158"/>
-<polygon fill="#000000" stroke="#000000" points="209.522,-199.652 219.898,-197.509 210.45,-192.714 209.522,-199.652"/>
-</g>
-<!-- proc~ddes&#45;&gt;proc~report_error -->
-<g id="call~~graph~~CallGraph_edge4" class="edge"><title>proc~ddes&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M115.321,-177.098C133.23,-174.315 157.029,-168.993 176,-159 196.557,-148.171 215.862,-129.951 228.97,-115.883"/>
-<polygon fill="#000000" stroke="#000000" points="231.832,-117.935 235.934,-108.167 226.636,-113.245 231.832,-117.935"/>
-</g>
-<!-- proc~ddeabm_with_event_wrapper -->
-<g id="call~~graph~~CallGraph_node9" class="node"><title>proc~ddeabm_with_event_wrapper</title>
-<g id="a_call~~graph~~CallGraph_node9"><a xlink:href="../proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_wrapper">
-<polygon fill="#d9534f" stroke="#d9534f" points="165,-24 11,-24 11,-0 165,-0 165,-24"/>
-<text text-anchor="middle" x="88" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
-<g id="call~~graph~~CallGraph_edge7" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="#000000" d="M165.2,-22.1924C180.736,-24.2704 196.391,-26.3644 209.73,-28.1486"/>
-<polygon fill="#000000" stroke="#000000" points="209.509,-31.6501 219.885,-29.5069 210.437,-24.7119 209.509,-31.6501"/>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error -->
-<g id="call~~graph~~CallGraph_edge6" class="edge"><title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M154.445,-24.0264C161.919,-26.4922 169.264,-29.4516 176,-33 196.557,-43.8288 215.862,-62.0487 228.97,-76.117"/>
-<polygon fill="#000000" stroke="#000000" points="226.636,-78.7548 235.934,-83.8332 231.832,-74.0647 226.636,-78.7548"/>
-</g>
-<!-- proc~dsteps -->
-<g id="call~~graph~~CallGraph_node10" class="node"><title>proc~dsteps</title>
-<g id="a_call~~graph~~CallGraph_node10"><a xlink:href="../proc/dsteps.html" xlink:title="dsteps">
-<polygon fill="#d9534f" stroke="#d9534f" points="115,-444 61,-444 61,-420 115,-420 115,-444"/>
-<text text-anchor="middle" x="88" y="-429.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dsteps</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_with_event_initialize_vec -->
-<g id="call~~graph~~CallGraph_node11" class="node"><title>proc~ddeabm_with_event_initialize_vec</title>
-<g id="a_call~~graph~~CallGraph_node11"><a xlink:href="../proc/ddeabm_with_event_initialize_vec.html" xlink:title="ddeabm_with_event_initialize_vec">
-<polygon fill="#d9534f" stroke="#d9534f" points="175.5,-486 0.5,-486 0.5,-462 175.5,-462 175.5,-486"/>
-<text text-anchor="middle" x="88" y="-471.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_initialize_vec</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_initialize -->
-<g id="call~~graph~~CallGraph_node13" class="node"><title>proc~ddeabm_initialize</title>
-<g id="a_call~~graph~~CallGraph_node13"><a xlink:href="../proc/ddeabm_initialize.html" xlink:title="ddeabm_initialize">
-<polygon fill="#d9534f" stroke="#d9534f" points="135.5,-528 40.5,-528 40.5,-504 135.5,-504 135.5,-528"/>
-<text text-anchor="middle" x="88" y="-513.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_initialize</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_interp -->
-<g id="call~~graph~~CallGraph_node14" class="node"><title>proc~ddeabm_interp</title>
-<g id="a_call~~graph~~CallGraph_node14"><a xlink:href="../proc/ddeabm_interp.html" xlink:title="ddeabm_interp">
-<polygon fill="#d9534f" stroke="#d9534f" points="130.5,-234 45.5,-234 45.5,-210 130.5,-210 130.5,-234"/>
-<text text-anchor="middle" x="88" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_interp</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_interp&#45;&gt;proc~dintp -->
-<g id="call~~graph~~CallGraph_edge8" class="edge"><title>proc~ddeabm_interp&#45;&gt;proc~dintp</title>
-<path fill="none" stroke="#000000" d="M130.661,-216.428C155.351,-213.125 186.328,-208.982 209.961,-205.821"/>
-<polygon fill="#000000" stroke="#000000" points="210.478,-209.283 219.926,-204.488 209.55,-202.344 210.478,-209.283"/>
-</g>
-<!-- proc~ddeabm_new_problem -->
-<g id="call~~graph~~CallGraph_node15" class="node"><title>proc~ddeabm_new_problem</title>
-<g id="a_call~~graph~~CallGraph_node15"><a xlink:href="../proc/ddeabm_new_problem.html" xlink:title="ddeabm_new_problem">
-<polygon fill="#d9534f" stroke="#d9534f" points="149,-570 27,-570 27,-546 149,-546 149,-570"/>
-<text text-anchor="middle" x="88" y="-555.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_new_problem</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_wrapper -->
-<g id="call~~graph~~CallGraph_node16" class="node"><title>proc~ddeabm_wrapper</title>
-<g id="a_call~~graph~~CallGraph_node16"><a xlink:href="../proc/ddeabm_wrapper.html" xlink:title="ddeabm_wrapper">
-<polygon fill="#d9534f" stroke="#d9534f" points="136.5,-150 39.5,-150 39.5,-126 136.5,-126 136.5,-150"/>
-<text text-anchor="middle" x="88" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_wrapper</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_wrapper&#45;&gt;proc~report_error -->
-<g id="call~~graph~~CallGraph_edge9" class="edge"><title>proc~ddeabm_wrapper&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M136.53,-127.024C149.377,-123.922 163.251,-120.448 176,-117 184.543,-114.689 193.627,-112.079 202.323,-109.504"/>
-<polygon fill="#000000" stroke="#000000" points="203.351,-112.849 211.927,-106.629 201.343,-106.143 203.351,-112.849"/>
 </g>
 <!-- proc~ddeabm -->
-<g id="call~~graph~~CallGraph_node18" class="node"><title>proc~ddeabm</title>
-<g id="a_call~~graph~~CallGraph_node18"><a xlink:href="../proc/ddeabm.html" xlink:title="ddeabm">
-<polygon fill="#d9534f" stroke="#d9534f" points="115,-108 61,-108 61,-84 115,-84 115,-108"/>
-<text text-anchor="middle" x="88" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm</text>
+<g id="call~~graph~~CallGraph_node3" class="node">
+<title>proc~ddeabm</title>
+<g id="a_call~~graph~~CallGraph_node3"><a xlink:href=".././proc/ddeabm.html" xlink:title="ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="125,-318 68,-318 68,-294 125,-294 125,-318"/>
+<text text-anchor="middle" x="96.5" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm</text>
+</a>
+</g>
+</g>
+<!-- proc~report_error -->
+<g id="call~~graph~~CallGraph_node18" class="node">
+<title>proc~report_error</title>
+<g id="a_call~~graph~~CallGraph_node18"><a xlink:href=".././proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="305,-234 229,-234 229,-210 305,-210 305,-234"/>
+<text text-anchor="middle" x="267" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
 </a>
 </g>
 </g>
 <!-- proc~ddeabm&#45;&gt;proc~report_error -->
-<g id="call~~graph~~CallGraph_edge10" class="edge"><title>proc~ddeabm&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M115.278,-96C138.809,-96 173.797,-96 201.656,-96"/>
-<polygon fill="#000000" stroke="#000000" points="201.945,-99.5001 211.945,-96 201.945,-92.5001 201.945,-99.5001"/>
+<g id="call~~graph~~CallGraph_edge1" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M125.04,-303.58C144.8,-301 171.6,-295.72 193,-285 214.47,-274.25 234.8,-255.77 248.52,-241.59"/>
+<polygon fill="#000000" stroke="#000000" points="251.14,-243.92 255.44,-234.24 246.04,-239.13 251.14,-243.92"/>
+</g>
+<!-- proc~ddes -->
+<g id="call~~graph~~CallGraph_node4" class="node">
+<title>proc~ddes</title>
+<g id="a_call~~graph~~CallGraph_node4"><a xlink:href=".././proc/ddes.html" xlink:title="ddes">
+<polygon fill="#d9534f" stroke="#d9534f" points="123.5,-150 69.5,-150 69.5,-126 123.5,-126 123.5,-150"/>
+<text text-anchor="middle" x="96.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
+</a>
+</g>
+</g>
+<!-- proc~dintp -->
+<g id="call~~graph~~CallGraph_node16" class="node">
+<title>proc~dintp</title>
+<g id="a_call~~graph~~CallGraph_node16"><a xlink:href=".././proc/dintp.html" xlink:title="dintp">
+<polygon fill="#d9534f" stroke="#d9534f" points="294,-129 240,-129 240,-105 294,-105 294,-129"/>
+<text text-anchor="middle" x="267" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dintp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dintp -->
+<g id="call~~graph~~CallGraph_edge2" class="edge">
+<title>proc~ddes&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M123.83,-134.72C152.27,-131.17 197.78,-125.5 229.62,-121.53"/>
+<polygon fill="#000000" stroke="#000000" points="230.37,-124.97 239.86,-120.26 229.5,-118.02 230.37,-124.97"/>
+</g>
+<!-- proc~ddes&#45;&gt;proc~report_error -->
+<g id="call~~graph~~CallGraph_edge3" class="edge">
+<title>proc~ddes&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M123.88,-139.29C144.05,-141.3 171.88,-146.36 193,-159 214.1,-171.63 210.03,-185.37 229,-201 230.33,-202.1 231.73,-203.17 233.17,-204.21"/>
+<polygon fill="#000000" stroke="#000000" points="231.44,-207.26 241.72,-209.83 235.28,-201.41 231.44,-207.26"/>
+</g>
+<!-- proc~ddeabm_new_problem -->
+<g id="call~~graph~~CallGraph_node5" class="node">
+<title>proc~ddeabm_new_problem</title>
+<g id="a_call~~graph~~CallGraph_node5"><a xlink:href=".././proc/ddeabm_new_problem.html" xlink:title="ddeabm_new_problem">
+<polygon fill="#d9534f" stroke="#d9534f" points="163,-360 30,-360 30,-336 163,-336 163,-360"/>
+<text text-anchor="middle" x="96.5" y="-345.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_new_problem</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_initialize -->
+<g id="call~~graph~~CallGraph_node6" class="node">
+<title>proc~ddeabm_initialize</title>
+<g id="a_call~~graph~~CallGraph_node6"><a xlink:href=".././proc/ddeabm_initialize.html" xlink:title="ddeabm_initialize">
+<polygon fill="#d9534f" stroke="#d9534f" points="149.5,-402 43.5,-402 43.5,-378 149.5,-378 149.5,-402"/>
+<text text-anchor="middle" x="96.5" y="-387.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_initialize</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec -->
+<g id="call~~graph~~CallGraph_node7" class="node">
+<title>proc~ddeabm_with_event_wrapper_vec</title>
+<g id="a_call~~graph~~CallGraph_node7"><a xlink:href=".././proc/ddeabm_with_event_wrapper_vec.html" xlink:title="ddeabm_with_event_wrapper_vec">
+<polygon fill="#d9534f" stroke="#d9534f" points="193,-276 0,-276 0,-252 193,-252 193,-276"/>
+<text text-anchor="middle" x="96.5" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper_vec</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error -->
+<g id="call~~graph~~CallGraph_edge4" class="edge">
+<title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M154.96,-251.99C167.53,-249.19 180.74,-246.11 193,-243 201.54,-240.83 210.6,-238.37 219.33,-235.9"/>
+<polygon fill="#000000" stroke="#000000" points="220.33,-239.26 228.99,-233.14 218.41,-232.53 220.33,-239.26"/>
+</g>
+<!-- proc~zeroin -->
+<g id="call~~graph~~CallGraph_node8" class="node">
+<title>proc~zeroin</title>
+<g id="a_call~~graph~~CallGraph_node8"><a xlink:href=".././proc/zeroin.html" xlink:title="zeroin">
+<polygon fill="#d9534f" stroke="#d9534f" points="294,-192 240,-192 240,-168 294,-168 294,-192"/>
+<text text-anchor="middle" x="267" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_interp -->
+<g id="call~~graph~~CallGraph_node9" class="node">
+<title>proc~ddeabm_interp</title>
+<g id="a_call~~graph~~CallGraph_node9"><a xlink:href=".././proc/ddeabm_interp.html" xlink:title="ddeabm_interp">
+<polygon fill="#d9534f" stroke="#d9534f" points="143.5,-108 49.5,-108 49.5,-84 143.5,-84 143.5,-108"/>
+<text text-anchor="middle" x="96.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_interp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_interp&#45;&gt;proc~dintp -->
+<g id="call~~graph~~CallGraph_edge5" class="edge">
+<title>proc~ddeabm_interp&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M143.54,-101.74C170.66,-105.12 204.47,-109.33 229.69,-112.47"/>
+<polygon fill="#000000" stroke="#000000" points="229.57,-115.99 239.93,-113.75 230.44,-109.04 229.57,-115.99"/>
+</g>
+<!-- proc~dhstrt -->
+<g id="call~~graph~~CallGraph_node10" class="node">
+<title>proc~dhstrt</title>
+<g id="a_call~~graph~~CallGraph_node10"><a xlink:href=".././proc/dhstrt.html" xlink:title="dhstrt">
+<polygon fill="#d9534f" stroke="#d9534f" points="123.5,-444 69.5,-444 69.5,-420 123.5,-420 123.5,-444"/>
+<text text-anchor="middle" x="96.5" y="-429.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhstrt</text>
+</a>
+</g>
+</g>
+<!-- proc~dhvnrm -->
+<g id="call~~graph~~CallGraph_node17" class="node">
+<title>proc~dhvnrm</title>
+<g id="a_call~~graph~~CallGraph_node17"><a xlink:href=".././proc/dhvnrm.html" xlink:title="dhvnrm">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="294,-444 240,-444 240,-420 294,-420 294,-444"/>
+<text text-anchor="middle" x="267" y="-429.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhvnrm</text>
+</a>
+</g>
+</g>
+<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
+<g id="call~~graph~~CallGraph_edge6" class="edge">
+<title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
+<path fill="none" stroke="#000000" d="M123.83,-432C152.27,-432 197.78,-432 229.62,-432"/>
+<polygon fill="#000000" stroke="#000000" points="229.86,-435.5 239.86,-432 229.86,-428.5 229.86,-435.5"/>
+</g>
+<!-- proc~dsteps -->
+<g id="call~~graph~~CallGraph_node11" class="node">
+<title>proc~dsteps</title>
+<g id="a_call~~graph~~CallGraph_node11"><a xlink:href=".././proc/dsteps.html" xlink:title="dsteps">
+<polygon fill="#d9534f" stroke="#d9534f" points="123.5,-486 69.5,-486 69.5,-462 123.5,-462 123.5,-486"/>
+<text text-anchor="middle" x="96.5" y="-471.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dsteps</text>
+</a>
+</g>
+</g>
+<!-- proc~destroy_ddeabm -->
+<g id="call~~graph~~CallGraph_node12" class="node">
+<title>proc~destroy_ddeabm</title>
+<g id="a_call~~graph~~CallGraph_node12"><a xlink:href=".././proc/destroy_ddeabm.html" xlink:title="destroy_ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="147,-528 46,-528 46,-504 147,-504 147,-528"/>
+<text text-anchor="middle" x="96.5" y="-513.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">destroy_ddeabm</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_wrapper -->
+<g id="call~~graph~~CallGraph_node13" class="node">
+<title>proc~ddeabm_wrapper</title>
+<g id="a_call~~graph~~CallGraph_node13"><a xlink:href=".././proc/ddeabm_wrapper.html" xlink:title="ddeabm_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="149.5,-234 43.5,-234 43.5,-210 149.5,-210 149.5,-234"/>
+<text text-anchor="middle" x="96.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_wrapper</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_wrapper&#45;&gt;proc~report_error -->
+<g id="call~~graph~~CallGraph_edge7" class="edge">
+<title>proc~ddeabm_wrapper&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M149.89,-222C171.89,-222 197.29,-222 218.72,-222"/>
+<polygon fill="#000000" stroke="#000000" points="218.88,-225.5 228.88,-222 218.88,-218.5 218.88,-225.5"/>
+</g>
+<!-- proc~ddeabm_with_event_wrapper -->
+<g id="call~~graph~~CallGraph_node14" class="node">
+<title>proc~ddeabm_with_event_wrapper</title>
+<g id="a_call~~graph~~CallGraph_node14"><a xlink:href=".././proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="181,-192 12,-192 12,-168 181,-168 181,-192"/>
+<text text-anchor="middle" x="96.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_wrapper</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
+<g id="call~~graph~~CallGraph_edge8" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
+<path fill="none" stroke="#000000" d="M181.26,-180C198.24,-180 215.25,-180 229.52,-180"/>
+<polygon fill="#000000" stroke="#000000" points="229.86,-183.5 239.86,-180 229.86,-176.5 229.86,-183.5"/>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error -->
+<g id="call~~graph~~CallGraph_edge9" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M154.96,-192.01C167.53,-194.81 180.74,-197.89 193,-201 201.54,-203.17 210.6,-205.63 219.33,-208.1"/>
+<polygon fill="#000000" stroke="#000000" points="218.41,-211.47 228.99,-210.86 220.33,-204.74 218.41,-211.47"/>
+</g>
+<!-- proc~ddeabm_with_event_initialize_vec -->
+<g id="call~~graph~~CallGraph_node15" class="node">
+<title>proc~ddeabm_with_event_initialize_vec</title>
+<g id="a_call~~graph~~CallGraph_node15"><a xlink:href=".././proc/ddeabm_with_event_initialize_vec.html" xlink:title="ddeabm_with_event_initialize_vec">
+<polygon fill="#d9534f" stroke="#d9534f" points="193,-570 0,-570 0,-546 193,-546 193,-570"/>
+<text text-anchor="middle" x="96.5" y="-555.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_initialize_vec</text>
+</a>
+</g>
 </g>
 </g>
 </svg>
-</div>
-                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
-                      </div>
-                      <div class="modal-body">
-                        
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
     <p>Nodes of different colours represent the following: </p>
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="559pt" height="32pt"
- viewBox="0.00 0.00 559.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="597pt" height="32pt"
+ viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-28 555,-28 555,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
 <!-- Subroutine -->
-<g id="node1" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
-<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node2" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
-<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
-<g id="node3" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="209.25,-24 154.75,-24 154.75,-0 209.25,-0 209.25,-24"/>
-<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
-<g id="node4" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
-<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
+<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
-<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
+<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="551.25,-24 454.75,-24 454.75,-0 551.25,-0 551.25,-24"/>
-<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
+<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -449,12 +466,7 @@ All Procedures &ndash; ddeabm
     This could include the module procedures in a generic interface or the
     implementation in a submodule of an interface in a parent module.
     </p>
-    
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
+    </div></div></div></div>
         </div>
       </div>
 
@@ -463,7 +475,8 @@ All Procedures &ndash; ddeabm
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -494,12 +507,17 @@ All Procedures &ndash; ddeabm
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>

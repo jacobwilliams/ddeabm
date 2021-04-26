@@ -834,8 +834,10 @@
                                                               !! See [[ddeabm]] for other values.
     real(wp),intent(out)                           :: gval    !! value of the event function `g(t,x)` at the final time `t`
     integer,intent(in),optional :: integration_mode           !! Step mode:
-                                                              !! *1* - normal integration from `t` to `tout`, no reporting [default].
-                                                              !! *2* - normal integration from `t` to `tout`, report each step.
+                                                              !! *1* - normal integration from `t` to `tout`, 
+                                                              !!  no reporting [default].
+                                                              !! *2* - normal integration from `t` to `tout`, 
+                                                              !!  report each step.
     real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
                                              !! evaluation of event function. If not present,
                                              !! then default integrator steps are used.
@@ -1160,8 +1162,10 @@
                                                               !! See [[ddeabm]] for other values.
     real(wp),dimension(:),intent(out)              :: gval    !! value of the event functions `g(t,x)` at the final time `t`
     integer,intent(in),optional :: integration_mode           !! Step mode:
-                                                              !! *1* - normal integration from `t` to `tout`, no reporting [default].
-                                                              !! *2* - normal integration from `t` to `tout`, report each step.
+                                                              !! *1* - normal integration from `t` to `tout`, 
+                                                              !!  no reporting [default].
+                                                              !! *2* - normal integration from `t` to `tout`, 
+                                                              !!  report each step.
     real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
                                              !! evaluation of event function. If not present,
                                              !! then default integrator steps are used.

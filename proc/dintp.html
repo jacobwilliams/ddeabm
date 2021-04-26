@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	 
-	 <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+   
+   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
@@ -17,6 +17,9 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
     
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,13 +29,6 @@
     
     <script src="../js/jquery-2.1.3.min.js"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
 
   </head>
 
@@ -52,33 +48,37 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-				
+        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
-		 aria-expanded="false">Contents <span class="caret"></span></a>
-	      <ul class="dropdown-menu">
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
               
             <li><a href="../lists/files.html">Source Files</a></li>
-				
-				
+        
+        
+        
             <li><a href="../lists/modules.html">Modules</a></li>
-				
+        
             
                                 
             <li><a href="../lists/procedures.html">Procedures</a></li>
-				
-				
+        
+        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-								
+               
             <li><a href="../lists/types.html">Derived Types</a></li>
-				
-				
+        
+        
             </ul>
             </li>
 
+
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
 
 
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
@@ -129,19 +129,23 @@
     
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
-	  data-placement="bottom" data-html="true"
-	  title=" 5.5% of total for procedures.">87 statements</a>
+    data-placement="bottom" data-html="true"
+    title=" 5.5% of total for procedures.">87 statements</a>
      </li> 
+     
      
      
     <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
      
+     
   </ul>
   <ol class="breadcrumb in-well text-right">
   
+    
      <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-  
+    
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+    
   
      <li class="active">dintp</li>
   </ol>
@@ -161,6 +165,9 @@
     
 <div id="sidebar">
   
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -189,56 +196,8 @@
 </div>
 
 
-  <hr>
-  
 
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-0">All Procedures</a></h3></div>
-  <div id="allprocs-0" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
 </div>
-
-
-</div>  
 
     </div>
     
@@ -247,7 +206,7 @@
 private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi, gi, alpha, og, ow, ox, oy)
     
     
-	 
+   
 </h2>
     
   
@@ -298,7 +257,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-x%7E7"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x~7"></span>real(kind=wp),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -313,7 +272,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-y%7E7"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-y~7"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -358,7 +317,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-ypout%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-ypout~3"></span>real(kind=wp),</td>
   <td>intent(out),</td>
   <td></td>
   
@@ -388,7 +347,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-kold%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-kold~3"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -403,7 +362,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-phi%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-phi~3"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -418,7 +377,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-ivc%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-ivc~3"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -433,7 +392,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-iv%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-iv~3"></span>integer,</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -448,7 +407,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-kgi%7E3"></span>integer,</td>
+  <td><span class="anchor" id="variable-kgi~3"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -463,7 +422,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-gi%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-gi~3"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -478,7 +437,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
   
 <tr>
   
-  <td><span class="anchor" id="variable-alpha%7E3"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-alpha~3"></span>real(kind=wp),</td>
   <td>intent(in),</td>
   <td></td>
   
@@ -553,105 +512,112 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
     
     
     
+    <br>
+    
+    
      
-     <h3>Called By</h3>
-     
-                <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~dintp~~CalledByGraph Pages: 1 -->
-<svg id="procdintpCalledByGraph" width="184pt" height="74pt"
- viewBox="0.00 0.00 184.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="procdintpCalledByGraph" width="192pt" height="74pt"
+ viewBox="0.00 0.00 192.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="proc~~dintp~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
 <title>proc~~dintp~~CalledByGraph</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-70 180,-70 180,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 188,-70 188,4 -4,4"/>
 <!-- proc~dintp -->
-<g id="proc~~dintp~~CalledByGraph_node1" class="node"><title>proc~dintp</title>
-<polygon fill="none" stroke="black" points="176,-45 122,-45 122,-21 176,-21 176,-45"/>
-<text text-anchor="middle" x="149" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">dintp</text>
-</g>
-<!-- proc~ddeabm_interp -->
-<g id="proc~~dintp~~CalledByGraph_node2" class="node"><title>proc~ddeabm_interp</title>
-<g id="a_proc~~dintp~~CalledByGraph_node2"><a xlink:href="../proc/ddeabm_interp.html" xlink:title="ddeabm_interp">
-<polygon fill="#d9534f" stroke="#d9534f" points="85.5,-66 0.5,-66 0.5,-42 85.5,-42 85.5,-66"/>
-<text text-anchor="middle" x="43" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_interp</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_interp&#45;&gt;proc~dintp -->
-<g id="proc~~dintp~~CalledByGraph_edge1" class="edge"><title>proc~ddeabm_interp&#45;&gt;proc~dintp</title>
-<path fill="none" stroke="#000000" d="M85.7015,-45.5795C94.3795,-43.8272 103.456,-41.9944 111.912,-40.2871"/>
-<polygon fill="#000000" stroke="#000000" points="112.739,-43.6907 121.849,-38.2805 111.354,-36.8292 112.739,-43.6907"/>
+<g id="proc~~dintp~~CalledByGraph_node1" class="node">
+<title>proc~dintp</title>
+<polygon fill="none" stroke="black" points="184,-45 130,-45 130,-21 184,-21 184,-45"/>
+<text text-anchor="middle" x="157" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">dintp</text>
 </g>
 <!-- proc~ddes -->
-<g id="proc~~dintp~~CalledByGraph_node3" class="node"><title>proc~ddes</title>
-<g id="a_proc~~dintp~~CalledByGraph_node3"><a xlink:href="../proc/ddes.html" xlink:title="ddes">
-<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 16,-24 16,-0 70,-0 70,-24"/>
-<text text-anchor="middle" x="43" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
+<g id="proc~~dintp~~CalledByGraph_node2" class="node">
+<title>proc~ddes</title>
+<g id="a_proc~~dintp~~CalledByGraph_node2"><a xlink:href=".././proc/ddes.html" xlink:title="ddes">
+<polygon fill="#d9534f" stroke="#d9534f" points="74,-66 20,-66 20,-42 74,-42 74,-66"/>
+<text text-anchor="middle" x="47" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddes</text>
 </a>
 </g>
 </g>
 <!-- proc~ddes&#45;&gt;proc~dintp -->
-<g id="proc~~dintp~~CalledByGraph_edge2" class="edge"><title>proc~ddes&#45;&gt;proc~dintp</title>
-<path fill="none" stroke="#000000" d="M70.2436,-17.2992C82.8068,-19.836 98.0535,-22.9147 111.706,-25.6714"/>
-<polygon fill="#000000" stroke="#000000" points="111.27,-29.1539 121.765,-27.7025 112.655,-22.2924 111.27,-29.1539"/>
+<g id="proc~~dintp~~CalledByGraph_edge1" class="edge">
+<title>proc~ddes&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M74.14,-48.92C87.84,-46.25 104.83,-42.95 119.77,-40.04"/>
+<polygon fill="#000000" stroke="#000000" points="120.57,-43.45 129.72,-38.11 119.24,-36.58 120.57,-43.45"/>
+</g>
+<!-- proc~ddeabm_interp -->
+<g id="proc~~dintp~~CalledByGraph_node3" class="node">
+<title>proc~ddeabm_interp</title>
+<g id="a_proc~~dintp~~CalledByGraph_node3"><a xlink:href=".././proc/ddeabm_interp.html" xlink:title="ddeabm_interp">
+<polygon fill="#d9534f" stroke="#d9534f" points="94,-24 0,-24 0,0 94,0 94,-24"/>
+<text text-anchor="middle" x="47" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_interp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_interp&#45;&gt;proc~dintp -->
+<g id="proc~~dintp~~CalledByGraph_edge2" class="edge">
+<title>proc~ddeabm_interp&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M94.11,-20.97C102.74,-22.64 111.64,-24.37 119.91,-25.98"/>
+<polygon fill="#000000" stroke="#000000" points="119.5,-29.47 129.98,-27.94 120.83,-22.6 119.5,-29.47"/>
 </g>
 </g>
 </svg>
-</div>
-                <div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div>
-                <div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
-                      </div>
-                      <div class="modal-body">
-                        
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
     <p>Nodes of different colours represent the following: </p>
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.36.0 (20140111.2315)
+<!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="559pt" height="32pt"
- viewBox="0.00 0.00 559.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="597pt" height="32pt"
+ viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-28 555,-28 555,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
 <!-- Subroutine -->
-<g id="node1" class="node"><title>Subroutine</title>
-<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,-0 64,-0 64,-24"/>
-<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
 </g>
 <!-- Function -->
-<g id="node2" class="node"><title>Function</title>
-<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,-0 136,-0 136,-24"/>
-<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
 </g>
 <!-- Interface -->
-<g id="node3" class="node"><title>Interface</title>
-<polygon fill="#a7506f" stroke="#a7506f" points="209.25,-24 154.75,-24 154.75,-0 209.25,-0 209.25,-24"/>
-<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
 <!-- Unknown Procedure Type -->
-<g id="node4" class="node"><title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,-0 364,-0 364,-24"/>
-<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
+<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node"><title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,-0 436,-0 436,-24"/>
-<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
+<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node"><title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="551.25,-24 454.75,-24 454.75,-0 551.25,-0 551.25,-24"/>
-<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
+<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
@@ -662,17 +628,17 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
     This could include the module procedures in a generic interface or the
     implementation in a submodule of an interface in a parent module.
     </p>
-    
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
+    </div></div></div></div>
+      </div>
+    </div>
      
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
       
+<h3>Contents</h3>
+ 
+
 
 
 
@@ -699,6 +665,7 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
     <a class="list-group-item" href="../proc/dintp.html#src">dintp</a>
   </div>
 </div>
+
 
 
     </section>
@@ -841,64 +808,14 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
     </div>
   </div>
 
-  <section class="visible-xs visible-sm hidden-md">
-    <hr>
-    
-
-<div class="panel panel-default">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#allprocs-1">All Procedures</a></h3></div>
-  <div id="allprocs-1" class="panel-collapse collapse">
-    <div class="list-group">
-      
-      <a class="list-group-item" href="../proc/ddeabm.html">ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html">ddeabm_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_interp.html">ddeabm_interp</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_new_problem.html">ddeabm_new_problem</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_stop_integration.html">ddeabm_stop_integration</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html">ddeabm_with_event_initialize_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a>
-      
-      <a class="list-group-item" href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
-      
-      <a class="list-group-item" href="../proc/ddes.html">ddes</a>
-      
-      <a class="list-group-item" href="../proc/destroy_ddeabm.html">destroy_ddeabm</a>
-      
-      <a class="list-group-item" href="../proc/dhstrt.html">dhstrt</a>
-      
-      <a class="list-group-item" href="../proc/dhvnrm.html">dhvnrm</a>
-      
-      <a class="list-group-item" href="../proc/dintp.html">dintp</a>
-      
-      <a class="list-group-item" href="../proc/dsteps.html">dsteps</a>
-      
-      <a class="list-group-item" href="../proc/report_error.html">report_error</a>
-      
-      <a class="list-group-item" href="../proc/zeroin.html">zeroin</a>
-      
-    </div>
-  </div>
-</div>
-
-
-  </section>
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2019 </p></div>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
+                                          </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
             Documentation generated by 
@@ -929,12 +846,17 @@ private subroutine dintp(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi,
       MathJax.Hub.Config({
         TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
-        'HTML-CSS': { 
-           styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '#000000 ! important'} }
-        }
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
   </body>
 </html>
