@@ -24,6 +24,7 @@ exclude: pyplot_module.f90
          ddeabm_stepsize_test.f90
          ddeabm_example.f90
          ddeabm_fixed_step_test.f90
+exclude_dir: ./src/tests
 extra_mods: pyplot_module:https://github.com/jacobwilliams/pyplot-fortran
             iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
 

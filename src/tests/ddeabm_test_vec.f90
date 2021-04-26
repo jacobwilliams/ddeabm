@@ -88,7 +88,9 @@
     write(*,'(A/,*(F15.6/))') 'Max final time   :',tf
     write(*,'(A/,*(F15.6/))') 'Initial state    :',x
     !call s%first_call()  ! instead of restarting, we use the "continue" argument, for efficiency
-    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,integration_mode=2,tstep=25.0_wp,continue=.true.) ! test fixed output step here
+    ! test fixed output step here:
+    call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,&
+                                integration_mode=2,tstep=25.0_wp,continue=.true.) 
     xf = x
     write(*,*) ''
     write(*,'(A/,*(I5/))')    'idid: ',idid
