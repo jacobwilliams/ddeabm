@@ -51,13 +51,13 @@ jobs:
 
     - name: Run tests
       run: |
-        ./bin/ddeabm_example.f90
-        ./bin/ddeabm_fixed_step_test.f90
-        ./bin/ddeabm_stepsize_test.f90
-        ./bin/ddeabm_test.f90
-        ./bin/ddeabm_test_vec.f90
-        ./bin/performance_test.f90
-        ./bin/zeroin_test.f90
+        ./bin/ddeabm_example
+        ./bin/ddeabm_fixed_step_test
+        ./bin/ddeabm_stepsize_test
+        ./bin/ddeabm_test
+        ./bin/ddeabm_test_vec
+        ./bin/performance_test
+        ./bin/zeroin_test
 
     - name: Build documentation
       run: ford ./ddeabm.md
