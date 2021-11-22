@@ -176,6 +176,7 @@
         integer,intent(in),optional          :: ig  !! the event function to compute
 
         logical,dimension(ng) :: compute
+        integer :: i !! counter
 
         if (.not. present(ig)) then
             compute = .true. ! compute them all
@@ -184,7 +185,10 @@
             compute(ig) = .true. ! only compute this one
         end if
 
-        where (compute) g = r_target - x
+        !where (compute) g = r_target - x   ! gfortran 11.1 is crashing here.
+        do i = 1, ng 
+            if (compute(i)) g(i) = r_target(i) - x(i)
+        end do
 
         end subroutine twobody_event
     !*********************************************************

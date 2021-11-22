@@ -239,6 +239,15 @@
 
         subroutine deriv_func(me,t,x,xdot)
             !! Interface to the [[ddeabm_class]] derivative function.
+            !!
+            !! Known as `df` in the documentation. provided by the user 
+            !! to define the system of first order differential equations
+            !! which is to be solved.  for the given values of t and the
+            !! vector x(*)=(x(1),x(2),...,x(neq)), the subroutine must
+            !! evaluate the neq components of the system of differential
+            !! equations dx/dt=df(t,x) and store the derivatives in the
+            !! array xdot(*), that is, xdot(i) = dx(i)/dt for
+            !! equations i=1,...,neq.
             import :: wp,ddeabm_class
             implicit none
             class(ddeabm_class),intent(inout) :: me
@@ -1525,9 +1534,6 @@
 !
 !   the parameters are
 !
-!      df -- this is the name of a subroutine which you provide to
-!             define the differential equations.
-!
 !      neq -- this is the number of (first order) differential
 !             equations to be integrated.
 !
@@ -1563,20 +1569,6 @@
 !   provide sufficient storage space for designated arrays, set
 !   appropriate variables for the initialization of the problem, and
 !   give information about how you want the problem to be solved.
-!
-!      df -- provide a subroutine of the form
-!                               df(x,u,uprime)
-!             to define the system of first order differential equations
-!             which is to be solved.  for the given values of x and the
-!             vector u(*)=(u(1),u(2),...,u(neq)), the subroutine must
-!             evaluate the neq components of the system of differential
-!             equations du/dx=df(x,u) and store the derivatives in the
-!             array uprime(*), that is, uprime(i) = du(i)/dx for
-!             equations i=1,...,neq.
-!
-!             subroutine df must not alter x or u(*).  you must declare
-!             the name df in an external statement in your program that
-!             calls ddeabm.  you must dimension u and uprime in df.
 !
 !      neq -- set it to the number of differential equations.
 !             (neq >= 1)
@@ -1914,8 +1906,13 @@
     implicit none
 
     class(ddeabm_class),intent(inout)     :: me
-    integer,intent(in)                    :: neq
-    real(wp),intent(inout)                :: t
+    integer,intent(in)                    :: neq    !! the number of (first order) differential
+                                                    !! equations to be integrated. (neq >= 1)
+    real(wp),intent(inout)                :: t      !! value of the independent variable. 
+                                                    !! on input, set it to the initial point of 
+                                                    !! the integration. the code changes its value.
+                                                    !! on output, the solution was successfully 
+                                                    !! advanced to the output value of t.
     real(wp),dimension(neq),intent(inout) :: y
     real(wp),intent(in)                   :: tout
     integer,dimension(4),intent(inout)    :: info
