@@ -72,8 +72,11 @@
                
             <li><a href="../lists/types.html">Derived Types</a></li>
         
+               
+        
         
             </ul>
+        
             </li>
 
 
@@ -91,6 +94,8 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
 
 
           </ul>
@@ -121,6 +126,7 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
      
      
      
@@ -250,9 +256,9 @@
     </div>
     
     <div class="col-md-9" id='text'>
-      <h2>type, public, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: ddeabm_with_event_class_vec</h2>
+      <h2>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: ddeabm_with_event_class_vec</h2>
     <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding)
- of a vector function (it will stop on the first root it encounters)</p>
+of a vector function (it will stop on the first root it encounters)</p>
 <p>Call <em>initialize_event</em> to set up the integration.</p>
 <p>See also: <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a></p>
     <br>
@@ -460,7 +466,7 @@
   <td>private,</td>
   <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>tol</strong></td><td></td><td></td><td><p>tolerance for root finding (see <a href="../proc/zeroin.html">zeroin</a>)
- this is a vector (size <code>n_g_eqns</code>)</p></td>
+this is a vector (size <code>n_g_eqns</code>)</p></td>
   
 </tr>
 
@@ -475,7 +481,7 @@
   <td>private</td>
   <td></td><td>::</td>
   <td><strong>t_saved</strong></td><td> =</td><td>0.0_wp</td><td><p>time of last successful step
- (used to continue after a root finding)</p></td>
+(used to continue after a root finding)</p></td>
   
 </tr>
 
@@ -490,7 +496,7 @@
   <td>private,</td>
   <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>x_saved</strong></td><td></td><td></td><td><p>state of last successful step.  size <code>(neq)</code>.
- (used to continue after a root finding)</p></td>
+(used to continue after a root finding)</p></td>
   
 </tr>
 
@@ -519,8 +525,8 @@
   <td>private,</td>
   <td>pointer</td><td>::</td>
   <td><strong>bracket</strong></td><td>=> </td><td>null()</td><td><p>a function for determining if the root is bracketed.
- the default just checks for a sign change in the event function.
- the user can specify this to use other conditions.</p></td>
+the default just checks for a sign change in the event function.
+the user can specify this to use other conditions.</p></td>
   
 </tr>
 
@@ -572,12 +578,13 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
     
     
     
+    
   </dl>
 
 
 
 <p>Initialize the <a href="../type/ddeabm_class.html">ddeabm_class</a>, and set the variables that
-  cannot be changed during a problem.</p>
+ cannot be changed during a problem.</p>
     
     <h4>Arguments</h4>
     
@@ -708,7 +715,12 @@ private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a
   <td>optional</td>
   
   <td></td><td>::</td>
-  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p>
+<ol>
+<li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
+<li>Use the older (quicker) algorithm.</li>
+<li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
+</ol></td>
   
 </tr>
 
@@ -770,6 +782,7 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   <dl class="dl-horizontal">
     
     <dt>Author</dt><dd>Jacob Williams</dd>
+    
     
     
     
@@ -866,12 +879,12 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   
   <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
- past a point <code>tstop</code> because a discontinuity occurs there
- or the solution or its derivative is not defined beyond
- <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
- you have told the code not to integrate past <code>tstop</code>.
- in this case any <code>tout</code> beyond <code>tstop</code> is invalid input.
- [not used if not present]</p></td>
+past a point <code>tstop</code> because a discontinuity occurs there
+or the solution or its derivative is not defined beyond
+<code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+you have told the code not to integrate past <code>tstop</code>.
+in this case any <code>tout</code> beyond <code>tstop</code> is invalid input.
+[not used if not present]</p></td>
   
 </tr>
 
@@ -887,8 +900,8 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   
   <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
- you must monitor this integer variable to
- decide what action to take next.</p></td>
+you must monitor this integer variable to
+decide what action to take next.</p></td>
   
 </tr>
 
@@ -904,8 +917,8 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   
   <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
- <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
- <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
+<em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
+<em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
   
 </tr>
 
@@ -921,8 +934,8 @@ private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, 
   
   <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for <code>integration_mode=2</code>.
- If not present, then default integrator steps are used.
- If <code>integration_mode=1</code>, then this is ignored.</p></td>
+If not present, then default integrator steps are used.
+If <code>integration_mode=1</code>, then this is ignored.</p></td>
   
 </tr>
 
@@ -969,6 +982,7 @@ private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)
   <dl class="dl-horizontal">
     
     <dt>Author</dt><dd>Jacob Williams</dd>
+    
     
     
     
@@ -1056,12 +1070,13 @@ private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem<
     
     
     
+    
   </dl>
 
 
 
 <p>Call this to indicate that a new problem is being solved.
-  It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
+ It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
     
     <h4>Arguments</h4>
     
@@ -1141,7 +1156,7 @@ private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, tc
 
 
 <p>Interpolation function. Can be used for dense output after a step.
-  It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
+It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
     
     <h4>Arguments</h4>
     
@@ -1256,6 +1271,7 @@ private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_in
     
     
     
+    
   </dl>
 
 
@@ -1335,6 +1351,7 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
   <dl class="dl-horizontal">
     
     <dt>Author</dt><dd>Jacob Williams</dd>
+    
     
     
     
@@ -1478,10 +1495,10 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
   
   <td></td><td>::</td>
   <td><strong>g</strong></td><td><p>Event function <script type="math/tex"> g(t,x) </script>. This should be a smooth function
- than can have values <script type="math/tex"> <0 </script> and <script type="math/tex"> \ge 0 </script>.
- When <script type="math/tex"> g=0 </script> (within the tolerance),
- then a root has been located and
- the integration will stop.</p></td>
+than can have values <script type="math/tex"> <0 </script> and <script type="math/tex"> \ge 0 </script>.
+When <script type="math/tex"> g=0 </script> (within the tolerance),
+then a root has been located and
+the integration will stop.</p></td>
   
 </tr>
 
@@ -1497,8 +1514,8 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
   
   <td>dimension(:)</td><td>::</td>
   <td><strong>root_tol</strong></td><td><p>tolerance for the root finding (see <a href="../proc/zeroin.html">zeroin</a>).
- This should be sized <code>ng</code> or <code>1</code> (in which
- case the value is used for all elements)</p></td>
+This should be sized <code>ng</code> or <code>1</code> (in which
+case the value is used for all elements)</p></td>
   
 </tr>
 
@@ -1529,7 +1546,7 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
   
   <td></td><td>::</td>
   <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
- the default is used.</p></td>
+the default is used.</p></td>
   
 </tr>
 
@@ -1544,7 +1561,12 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
   <td>optional</td>
   
   <td></td><td>::</td>
-  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p><a href="None" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+  <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p>
+<ol>
+<li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
+<li>Use the older (quicker) algorithm.</li>
+<li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
+</ol></td>
   
 </tr>
 
@@ -1589,7 +1611,7 @@ private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeab
 
 
     <p>main routine for integration to an event
- (note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p>
+(note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p>
   </div>
   
   <ul class="list-group">
@@ -1614,6 +1636,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   <dl class="dl-horizontal">
     
     <dt>Author</dt><dd>Jacob Williams</dd>
+    
     
     
     
@@ -1698,7 +1721,7 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
   <td></td><td>::</td>
   <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
- (if root not located, it will integrate to <code>tmax</code>)</p></td>
+(if root not located, it will integrate to <code>tmax</code>)</p></td>
   
 </tr>
 
@@ -1714,12 +1737,12 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
   <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
- past a point <code>tstop</code> because a discontinuity occurs there
- or the solution or its derivative is not defined beyond
- <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
- you have told the code not to integrate past <code>tstop</code>.
- in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
- [not used if not present]</p></td>
+past a point <code>tstop</code> because a discontinuity occurs there
+or the solution or its derivative is not defined beyond
+<code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+you have told the code not to integrate past <code>tstop</code>.
+in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
+[not used if not present]</p></td>
   
 </tr>
 
@@ -1735,11 +1758,11 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
   <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
- you must monitor this integer variable to
- decide what action to take next.
- <code>idid&gt;1000</code> means a root was found for the
- (<code>idid-1000</code>)th <code>g</code> function.
- See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
+you must monitor this integer variable to
+decide what action to take next.
+<code>idid&gt;1000</code> means a root was found for the
+(<code>idid-1000</code>)th <code>g</code> function.
+See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
   
 </tr>
 
@@ -1770,10 +1793,10 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
   <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
- <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
-  no reporting [default].
- <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
-  report each step.</p></td>
+<em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
+ no reporting [default].
+<em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
+ report each step.</p></td>
   
 </tr>
 
@@ -1789,8 +1812,8 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
   <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for reporting and
- evaluation of event function. If not present,
- then default integrator steps are used.</p></td>
+evaluation of event function. If not present,
+then default integrator steps are used.</p></td>
   
 </tr>
 
@@ -1806,11 +1829,11 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
   
   <td></td><td>::</td>
   <td><strong>continue</strong></td><td><p>to continue after a previous event location.
- This option can be used after a previous call to this routine
- has found an event, to continue integration to the next event
- without having to restart the integration. It will not report
- the initial point (which would have been reported as the last
- point of the previous call).</p></td>
+This option can be used after a previous call to this routine
+has found an event, to continue integration to the next event
+without having to restart the integration. It will not report
+the initial point (which would have been reported as the last
+point of the previous call).</p></td>
   
 </tr>
 
@@ -1887,16 +1910,17 @@ private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_w
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

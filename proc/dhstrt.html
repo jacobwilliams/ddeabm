@@ -72,8 +72,11 @@
                
             <li><a href="../lists/types.html">Derived Types</a></li>
         
+               
+        
         
             </ul>
+        
             </li>
 
 
@@ -91,6 +94,8 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
 
 
           </ul>
@@ -121,6 +126,7 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
      
      
      
@@ -309,15 +315,15 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td></td><td>::</td>
   <td><strong>b</strong></td><td><p>a value of the independent variable used to define
- the direction of integration. a reasonable choice is to
- set <code>b</code> to the first point at which a solution is desired.
- you can also use <code>b</code>, if necessary, to restrict the length
- of the first integration step because the algorithm will
- not compute a starting step length which is bigger than
- <code>abs(b-a)</code>, unless <code>b</code> has been chosen too close to <code>a</code>.
- (it is presumed that dhstrt has been called with <code>b</code>
- different from <code>a</code> on the machine being used. also see the
- discussion about the parameter <code>small</code>.)</p></td>
+the direction of integration. a reasonable choice is to
+set <code>b</code> to the first point at which a solution is desired.
+you can also use <code>b</code>, if necessary, to restrict the length
+of the first integration step because the algorithm will
+not compute a starting step length which is bigger than
+<code>abs(b-a)</code>, unless <code>b</code> has been chosen too close to <code>a</code>.
+(it is presumed that dhstrt has been called with <code>b</code>
+different from <code>a</code> on the machine being used. also see the
+discussion about the parameter <code>small</code>.)</p></td>
   
 </tr>
 
@@ -333,7 +339,7 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td>dimension(neq)</td><td>::</td>
   <td><strong>y</strong></td><td><p>the vector of initial values of the <code>neq</code> solution
- components at the initial point <code>a</code>.</p></td>
+components at the initial point <code>a</code>.</p></td>
   
 </tr>
 
@@ -349,8 +355,8 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td>dimension(neq)</td><td>::</td>
   <td><strong>yprime</strong></td><td><p>the vector of derivatives of the <code>neq</code>
- solution components at the initial point <code>a</code>.
- (defined by the differential equations in subroutine <code>me%df</code>)</p></td>
+solution components at the initial point <code>a</code>.
+(defined by the differential equations in subroutine <code>me%df</code>)</p></td>
   
 </tr>
 
@@ -366,11 +372,11 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td>dimension(neq)</td><td>::</td>
   <td><strong>etol</strong></td><td><p>the vector of error tolerances corresponding to
- the <code>neq</code> solution components. it is assumed that all
- elements are positive. following the first integration
- step, the tolerances are expected to be used by the
- integrator in an error test which roughly requires that
- <code>abs(local error) &lt;= etol</code> for each vector component.</p></td>
+the <code>neq</code> solution components. it is assumed that all
+elements are positive. following the first integration
+step, the tolerances are expected to be used by the
+integrator in an error test which roughly requires that
+<code>abs(local error) &lt;= etol</code> for each vector component.</p></td>
   
 </tr>
 
@@ -386,8 +392,8 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td></td><td>::</td>
   <td><strong>morder</strong></td><td><p>the order of the formula which will be used by
- the initial value method for taking the first integration
- step.</p></td>
+the initial value method for taking the first integration
+step.</p></td>
   
 </tr>
 
@@ -403,16 +409,16 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td></td><td>::</td>
   <td><strong>small</strong></td><td><p>a small positive machine dependent constant
- which is used for protecting against computations with
- numbers which are too small relative to the precision of
- floating point arithmetic.  <code>small</code> should be set to
- (approximately) the smallest positive double precision
- number such that <code>(1.0_wp+small) &gt; 1.0_wp</code>.  on the machine being
- used. the quantity <code>small**(3.0_wp/8.0_wp)</code> is used in computing
- increments of variables for approximating derivatives by
- differences.  also the algorithm will not compute a
- starting step length which is smaller than
- <code>100.0_wp*small*abs(a)</code>.</p></td>
+which is used for protecting against computations with
+numbers which are too small relative to the precision of
+floating point arithmetic.  <code>small</code> should be set to
+(approximately) the smallest positive double precision
+number such that <code>(1.0_wp+small) &gt; 1.0_wp</code>.  on the machine being
+used. the quantity <code>small**(3.0_wp/8.0_wp)</code> is used in computing
+increments of variables for approximating derivatives by
+differences.  also the algorithm will not compute a
+starting step length which is smaller than
+<code>100.0_wp*small*abs(a)</code>.</p></td>
   
 </tr>
 
@@ -428,10 +434,10 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td></td><td>::</td>
   <td><strong>big</strong></td><td><p>a large positive machine dependent constant which
- is used for preventing machine overflows. a reasonable
- choice is to set big to (approximately) the square root of
- the largest double precision number which can be held in
- the machine.</p></td>
+is used for preventing machine overflows. a reasonable
+choice is to set big to (approximately) the square root of
+the largest double precision number which can be held in
+the machine.</p></td>
   
 </tr>
 
@@ -507,7 +513,7 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
   
   <td></td><td>::</td>
   <td><strong>h</strong></td><td><p>appropriate starting step size to be attempted by the
- differential equation method.</p></td>
+differential equation method.</p></td>
   
 </tr>
 
@@ -918,16 +924,17 @@ private subroutine dhstrt(me, neq, a, b, y, yprime, etol, morder, small, big, sp
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

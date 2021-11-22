@@ -72,8 +72,11 @@
                
             <li><a href="./lists/types.html">Derived Types</a></li>
         
+               
+        
         
             </ul>
+        
             </li>
 
 
@@ -91,6 +94,8 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/absint.html">Abstract Interfaces</a></li>
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
+
+
 
 
           </ul>
@@ -116,8 +121,9 @@
         	 
 	<p> Find us on&hellip;</p>
         <p>
-        	 
+			 
           <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams/ddeabm" role="button">GitHub</a>
+			 
 			 
 			 
 			 
@@ -290,22 +296,19 @@ if the equations are integrated using the <code>integration_mode=2</code> option
 </code></pre></div>
 
 <h2>Building DDEABM</h2>
-<p>DDEABM and the test programs will build with any modern Fortran compiler. A <a href="https://github.com/szaghi/FoBiS">FoBiS</a> configuration file (<code>ddeabm.fobis</code>) is provided that can build the library and/or the example programs. Use the <code>mode</code> flag to indicate what to build. For example:</p>
-<ul>
-<li>To build all the examples using gfortran: <code>FoBiS.py build -f ddeabm.fobis -mode tests-gnu</code></li>
-<li>To build all the examples using ifort:    <code>FoBiS.py build -f ddeabm.fobis -mode tests-intel</code></li>
-<li>To build a static library using gfortran: <code>FoBiS.py build -f ddeabm.fobis -mode static-gnu</code></li>
-<li>To build a static library using ifort:    <code>FoBiS.py build -f ddeabm.fobis -mode static-intel</code></li>
-</ul>
-<p>The full set of modes are: <code>static-gnu</code>, <code>static-gnu-debug</code>, <code>static-intel</code>, <code>static-intel-debug</code>, <code>shared-gnu</code>, <code>shared-gnu-debug</code>, <code>shared-intel</code>, <code>shared-intel-debug</code>, <code>tests-gnu</code>, <code>tests-gnu-debug</code>, <code>tests-intel</code>, <code>tests-intel-debug</code></p>
-<p>To generate the documentation using <a href="https://github.com/cmacmackin/ford">ford</a>, run:</p>
-<div class="codehilite"><pre><span></span><code>  FoBis.py rule --execute makedoc -f ddeabm.fobis
+<p>DDEABM and the test programs will build with any modern Fortran compiler. A <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> manifest file (<code>fmp.toml</code>) is included, so that the library and tests cases can be compiled with FPM. For example:</p>
+<div class="codehilite"><pre><span></span><code>fpm build --profile release
+fpm test --profile release
+</code></pre></div>
+
+<p>To generate the documentation using <a href="https://github.com/Fortran-FOSS-Programmers/ford">ford</a>, run:</p>
+<div class="codehilite"><pre><span></span><code>  ford ddeabm.md
 </code></pre></div>
 
 <h2>Documentation</h2>
-<p>The latest API documentation can be found <a href="http://jacobwilliams.github.io/ddeabm/">here</a>. This was generated from the source code using <a href="https://github.com/cmacmackin/ford">FORD</a> (note that the included <code>build.sh</code> script will also generate these files).</p>
+<p>The latest API documentation can be found <a href="http://jacobwilliams.github.io/ddeabm/">here</a>. This was generated from the source code using <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>.</p>
 <h2>License</h2>
-<p>The ddeabm source code and related files and documentation are distributed under a permissive free software <a href="https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE">license</a> (BSD-style).  The original DDEABM Fortran 77 code is <a href="http://www.netlib.org/slatec/guide">public domain</a>.</p>
+<p>The DDEABM source code and related files and documentation are distributed under a permissive free software <a href="https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE">license</a> (BSD-style).  The original DDEABM Fortran 77 code is <a href="http://www.netlib.org/slatec/guide">public domain</a>.</p>
 <h2>Keywords</h2>
 <p>Adams-Bashforth-Moulton Method, DEPAC, Initial Value Problems, ODE, Ordinary Differential Equations, Predictor-Corrector, SLATEC, Modern Fortran</p>
 <h2>References</h2>
@@ -331,7 +334,8 @@ if the equations are integrated using the <code>integration_mode=2</code> option
               
               
               <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams"><i class="fa fa-github fa-lg"></i></a>
-				  
+              
+              
 				  
               
               
@@ -347,149 +351,92 @@ if the equations are integrated using the <code>integration_mode=2</code> option
       
       
       
+      
+      
 		
+        
       <div class="row">
+        
         <div class="col-xs-6 col-sm-3">
               <h3>Source Files</h3>
               <ul>
-                
-                  
                     <li><a href='./sourcefile/ddeabm_kinds.f90.html'>ddeabm_kinds.f90</a></li>
-                  
-                
                   
                     <li><a href='./sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
                   
-                
-                  
                     <li><a href='./sourcefile/root_module.f90.html'>root_module.f90</a></li>
-                  
-                
-              </ul>
+                  </ul>
           </div>
+        
           
 		  <div class="col-xs-6 col-sm-3">
               <h3>Modules</h3>
               <ul>
-                
-                  
                     <li><a href='./module/ddeabm_kinds.html'>ddeabm_kinds</a></li>
-                  
-                
                   
                     <li><a href='./module/ddeabm_module.html'>ddeabm_module</a></li>
                   
-                
-                  
                     <li><a href='./module/root_module.html'>root_module</a></li>
-                  
-                
-              </ul>
+                  </ul>
           </div>
           
           
 		  <div class="col-xs-6 col-sm-3">
               <h3>Procedures</h3>
               <ul>
-                
-                  
                     <li><a href='./proc/ddeabm.html'>ddeabm</a></li>
-                  
-                
                   
                     <li><a href='./proc/ddeabm_initialize.html'>ddeabm_initialize</a></li>
                   
-                
-                  
                     <li><a href='./proc/ddeabm_interp.html'>ddeabm_interp</a></li>
-                  
-                
                   
                     <li><a href='./proc/ddeabm_new_problem.html'>ddeabm_new_problem</a></li>
                   
-                
-                  
                     <li><a href='./proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a></li>
-                  
-                
                   
                     <li><a href='./proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a></li>
                   
-                
-                  
                     <li><a href='./proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a></li>
-                  
-                
                   
                     <li><a href='./proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a></li>
                   
-                
-                  
                     <li><a href='./proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a></li>
                   
-                
-                  
                     <li><a href='./proc/ddeabm_wrapper.html'>ddeabm_wrapper</a></li>
-                  
-                
-                  
-                    <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-              </ul>
+                  </ul>
           </div>
           
           
 		  <div class="col-xs-6 col-sm-3">
               <h3>Derived Types</h3>
               <ul>
-                
-                  
                     <li><a href='./type/ddeabm_class.html'>ddeabm_class</a></li>
-                  
-                
                   
                     <li><a href='./type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a></li>
                   
-                
-                  
                     <li><a href='./type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a></li>
-                  
-                
-              </ul>
+                  </ul>
           </div>
           
       </div>
+      
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

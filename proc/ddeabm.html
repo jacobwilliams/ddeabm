@@ -72,8 +72,11 @@
                
             <li><a href="../lists/types.html">Derived Types</a></li>
         
+               
+        
         
             </ul>
+        
             </li>
 
 
@@ -91,6 +94,8 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
 
 
           </ul>
@@ -121,6 +126,7 @@
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
      
      
      
@@ -236,10 +242,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <code>t, y(*), info(1), rtol, atol, idid</code></p>
 <h3>Description of the arguments to ddeabm (an overview)</h3>
 <p>the parameters are</p>
-<div class="codehilite"><pre><span></span><code>  <span class="n">df</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">subroutine</span> <span class="n">which</span> <span class="n">you</span> <span class="n">provide</span> <span class="n">to</span>
-         <span class="n">define</span> <span class="n">the</span> <span class="n">differential</span> <span class="n">equations</span><span class="o">.</span>
-
-  <span class="n">neq</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="p">(</span><span class="n">first</span> <span class="n">order</span><span class="p">)</span> <span class="n">differential</span>
+<div class="codehilite"><pre><span></span><code>  <span class="n">neq</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="p">(</span><span class="n">first</span> <span class="n">order</span><span class="p">)</span> <span class="n">differential</span>
          <span class="n">equations</span> <span class="n">to</span> <span class="n">be</span> <span class="n">integrated</span><span class="o">.</span>
 
   <span class="n">t</span> <span class="o">--</span> <span class="n">this</span> <span class="k">is</span> <span class="n">a</span> <span class="n">double</span> <span class="n">precision</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">independent</span>
@@ -274,21 +277,7 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
    provide sufficient storage space for designated arrays, set
    appropriate variables for the initialization of the problem, and
    give information about how you want the problem to be solved.</p>
-<div class="codehilite"><pre><span></span><code>  <span class="n">df</span> <span class="o">--</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">subroutine</span> <span class="n">of</span> <span class="n">the</span> <span class="n">form</span>
-                           <span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">uprime</span><span class="p">)</span>
-         <span class="n">to</span> <span class="n">define</span> <span class="n">the</span> <span class="n">system</span> <span class="n">of</span> <span class="n">first</span> <span class="n">order</span> <span class="n">differential</span> <span class="n">equations</span>
-         <span class="n">which</span> <span class="k">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">solved</span><span class="o">.</span>  <span class="k">for</span> <span class="n">the</span> <span class="n">given</span> <span class="n">values</span> <span class="n">of</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">the</span>
-         <span class="n">vector</span> <span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">u</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="o">...</span><span class="p">,</span><span class="n">u</span><span class="p">(</span><span class="n">neq</span><span class="p">)),</span> <span class="n">the</span> <span class="n">subroutine</span> <span class="n">must</span>
-         <span class="n">evaluate</span> <span class="n">the</span> <span class="n">neq</span> <span class="n">components</span> <span class="n">of</span> <span class="n">the</span> <span class="n">system</span> <span class="n">of</span> <span class="n">differential</span>
-         <span class="n">equations</span> <span class="n">du</span><span class="o">/</span><span class="n">dx</span><span class="o">=</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">u</span><span class="p">)</span> <span class="ow">and</span> <span class="n">store</span> <span class="n">the</span> <span class="n">derivatives</span> <span class="ow">in</span> <span class="n">the</span>
-         <span class="n">array</span> <span class="n">uprime</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="n">that</span> <span class="k">is</span><span class="p">,</span> <span class="n">uprime</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">du</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">dx</span> <span class="k">for</span>
-         <span class="n">equations</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">neq</span><span class="o">.</span>
-
-         <span class="n">subroutine</span> <span class="n">df</span> <span class="n">must</span> <span class="ow">not</span> <span class="n">alter</span> <span class="n">x</span> <span class="ow">or</span> <span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">declare</span>
-         <span class="n">the</span> <span class="n">name</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">external</span> <span class="n">statement</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">program</span> <span class="n">that</span>
-         <span class="n">calls</span> <span class="n">ddeabm</span><span class="o">.</span>  <span class="n">you</span> <span class="n">must</span> <span class="n">dimension</span> <span class="n">u</span> <span class="ow">and</span> <span class="n">uprime</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span>
-
-  <span class="n">neq</span> <span class="o">--</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">differential</span> <span class="n">equations</span><span class="o">.</span>
+<div class="codehilite"><pre><span></span><code>  <span class="n">neq</span> <span class="o">--</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">differential</span> <span class="n">equations</span><span class="o">.</span>
          <span class="p">(</span><span class="n">neq</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
 
   <span class="n">t</span> <span class="o">--</span> <span class="n">set</span> <span class="n">it</span> <span class="n">to</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">point</span> <span class="n">of</span> <span class="n">the</span> <span class="n">integration</span><span class="o">.</span>
@@ -655,7 +644,8 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>neq</strong></td><td></td>
+  <td><strong>neq</strong></td><td><p>the number of (first order) differential
+equations to be integrated. (neq &gt;= 1)</p></td>
   
 </tr>
 
@@ -670,7 +660,11 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>t</strong></td><td></td>
+  <td><strong>t</strong></td><td><p>value of the independent variable. 
+on input, set it to the initial point of 
+the integration. the code changes its value.
+on output, the solution was successfully 
+advanced to the output value of t.</p></td>
   
 </tr>
 
@@ -939,8 +933,13 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <span class="k">implicit none</span>
 
 <span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">neq</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">t</span>
+    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                    <span class="kd">::</span> <span class="n">neq</span>    <span class="c">!! the number of (first order) differential</span>
+                                                    <span class="c">!! equations to be integrated. (neq &gt;= 1)</span>
+    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">t</span>      <span class="c">!! value of the independent variable. </span>
+                                                    <span class="c">!! on input, set it to the initial point of </span>
+                                                    <span class="c">!! the integration. the code changes its value.</span>
+                                                    <span class="c">!! on output, the solution was successfully </span>
+                                                    <span class="c">!! advanced to the output value of t.</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">y</span>
     <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">tout</span>
     <span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">info</span>
@@ -1010,16 +1009,17 @@ private subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
       </div> <!-- /container -->    

@@ -72,8 +72,11 @@
                
             <li><a href="../lists/types.html">Derived Types</a></li>
         
+               
+        
         
             </ul>
+        
             </li>
 
 
@@ -91,6 +94,8 @@
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
                              
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
 
 
           </ul>
@@ -123,6 +128,7 @@
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
      
      <li><i class="fa fa-pencil"></i> Jacob Williams</li>
+     
      
      
      
@@ -298,7 +304,7 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
   
   <td></td><td>::</td>
   <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
- (if root not located, it will integrate to <code>tmax</code>)</p></td>
+(if root not located, it will integrate to <code>tmax</code>)</p></td>
   
 </tr>
 
@@ -314,12 +320,12 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
   
   <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
- past a point <code>tstop</code> because a discontinuity occurs there
- or the solution or its derivative is not defined beyond
- <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
- you have told the code not to integrate past <code>tstop</code>.
- in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
- [not used if not present]</p></td>
+past a point <code>tstop</code> because a discontinuity occurs there
+or the solution or its derivative is not defined beyond
+<code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+you have told the code not to integrate past <code>tstop</code>.
+in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
+[not used if not present]</p></td>
   
 </tr>
 
@@ -335,10 +341,10 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
   
   <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
- you must monitor this integer variable to
- decide what action to take next.
- <code>idid=1000</code> means a root was found.
- See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
+you must monitor this integer variable to
+decide what action to take next.
+<code>idid=1000</code> means a root was found.
+See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
   
 </tr>
 
@@ -369,10 +375,10 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
   
   <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
- <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
-  no reporting [default].
- <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
-  report each step.</p></td>
+<em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
+ no reporting [default].
+<em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
+ report each step.</p></td>
   
 </tr>
 
@@ -388,8 +394,8 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
   
   <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for reporting and
- evaluation of event function. If not present,
- then default integrator steps are used.</p></td>
+evaluation of event function. If not present,
+then default integrator steps are used.</p></td>
   
 </tr>
 
@@ -405,11 +411,11 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
   
   <td></td><td>::</td>
   <td><strong>continue</strong></td><td><p>to continue after a previous event location.
- This option can be used after a previous call to this routine
- has found an event, to continue integration to the next event
- without having to restart the integration. It will not report
- the initial point (which would have been reported as the last
- point of the previous call).</p></td>
+This option can be used after a previous call to this routine
+has found an event, to continue integration to the next event
+without having to restart the integration. It will not report
+the initial point (which would have been reported as the last
+point of the previous call).</p></td>
   
 </tr>
 
@@ -444,35 +450,35 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
 <polygon fill="none" stroke="black" points="169,-45 0,-45 0,-21 169,-21 169,-45"/>
 <text text-anchor="middle" x="84.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_with_event_wrapper</text>
 </g>
-<!-- proc~zeroin -->
-<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node2" class="node">
-<title>proc~zeroin</title>
-<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node2"><a xlink:href=".././proc/zeroin.html" xlink:title="zeroin">
-<polygon fill="#d9534f" stroke="#d9534f" points="270,-66 216,-66 216,-42 270,-42 270,-66"/>
-<text text-anchor="middle" x="243" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
-</a>
-</g>
-</g>
-<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
-<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge1" class="edge">
-<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
-<path fill="none" stroke="#000000" d="M169.25,-44.24C182.14,-45.97 194.82,-47.67 205.9,-49.16"/>
-<polygon fill="#000000" stroke="#000000" points="205.61,-52.65 215.99,-50.51 206.54,-45.71 205.61,-52.65"/>
-</g>
 <!-- proc~report_error -->
-<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node3" class="node">
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node2" class="node">
 <title>proc~report_error</title>
-<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node3"><a xlink:href=".././proc/report_error.html" xlink:title="report_error">
-<polygon fill="#d9534f" stroke="#d9534f" points="281,-24 205,-24 205,0 281,0 281,-24"/>
-<text text-anchor="middle" x="243" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node2"><a xlink:href=".././proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="281,-66 205,-66 205,-42 281,-42 281,-66"/>
+<text text-anchor="middle" x="243" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
 </a>
 </g>
 </g>
 <!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error -->
-<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge2" class="edge">
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge1" class="edge">
 <title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M169.25,-21.76C178.04,-20.58 186.73,-19.42 194.89,-18.32"/>
-<polygon fill="#000000" stroke="#000000" points="195.45,-21.78 204.9,-16.98 194.52,-14.84 195.45,-21.78"/>
+<path fill="none" stroke="#000000" d="M169.25,-44.24C178.04,-45.42 186.73,-46.58 194.89,-47.68"/>
+<polygon fill="#000000" stroke="#000000" points="194.52,-51.16 204.9,-49.02 195.45,-44.22 194.52,-51.16"/>
+</g>
+<!-- proc~zeroin -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node3" class="node">
+<title>proc~zeroin</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node3"><a xlink:href=".././proc/zeroin.html" xlink:title="zeroin">
+<polygon fill="#d9534f" stroke="#d9534f" points="270,-24 216,-24 216,0 270,0 270,-24"/>
+<text text-anchor="middle" x="243" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">zeroin</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge2" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~zeroin</title>
+<path fill="none" stroke="#000000" d="M169.25,-21.76C182.14,-20.03 194.82,-18.33 205.9,-16.84"/>
+<polygon fill="#000000" stroke="#000000" points="206.54,-20.29 215.99,-15.49 205.61,-13.35 206.54,-20.29"/>
 </g>
 </g>
 </svg>
@@ -901,16 +907,17 @@ private subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, 
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 
-                                          </p></div>
-        <div class="col-xs-6 col-md-4 col-md-push-4">
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
+                                          </p>
+        </div>
+        <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
-            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> ddeabm was developed by Jacob Williams</p></div>
       </div>
       <br>
       </div> <!-- /container -->    
