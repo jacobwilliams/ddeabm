@@ -183,16 +183,14 @@ call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,tstep=100.0_wp)
 
 ## Building DDEABM
 
-DDEABM and the test programs will build with any modern Fortran compiler. A [FoBiS](https://github.com/szaghi/FoBiS) configuration file (`ddeabm.fobis`) is provided that can build the library and/or the example programs. Use the `mode` flag to indicate what to build. For example:
+DDEABM and the test programs will build with any modern Fortran compiler. A [Fortran Package Manager](https://github.com/fortran-lang/fpm) manifest file (`fmp.toml`) is included, so that the library and tests cases can be compiled with FPM. For example:
 
-  * To build all the examples using gfortran: `FoBiS.py build -f ddeabm.fobis -mode tests-gnu`
-  * To build all the examples using ifort:    `FoBiS.py build -f ddeabm.fobis -mode tests-intel`
-  * To build a static library using gfortran: `FoBiS.py build -f ddeabm.fobis -mode static-gnu`
-  * To build a static library using ifort:    `FoBiS.py build -f ddeabm.fobis -mode static-intel`
+```
+fpm build --profile release
+fpm test --profile release
+```
 
-The full set of modes are: `static-gnu`, `static-gnu-debug`, `static-intel`, `static-intel-debug`, `shared-gnu`, `shared-gnu-debug`, `shared-intel`, `shared-intel-debug`, `tests-gnu`, `tests-gnu-debug`, `tests-intel`, `tests-intel-debug`
-
-To generate the documentation using [ford](https://github.com/cmacmackin/ford), run:
+To generate the documentation using [ford](https://github.com/Fortran-FOSS-Programmers/ford), run:
 
 ```
   FoBis.py rule --execute makedoc -f ddeabm.fobis
@@ -200,7 +198,7 @@ To generate the documentation using [ford](https://github.com/cmacmackin/ford), 
 
 ## Documentation
 
-The latest API documentation can be found [here](http://jacobwilliams.github.io/ddeabm/). This was generated from the source code using [FORD](https://github.com/cmacmackin/ford) (note that the included `build.sh` script will also generate these files).
+The latest API documentation can be found [here](http://jacobwilliams.github.io/ddeabm/). This was generated from the source code using [FORD](https://github.com/Fortran-FOSS-Programmers/ford) (note that the included `build.sh` script will also generate these files).
 
 ## License
 

@@ -1,6 +1,7 @@
 project: ddeabm
 project_dir: ./src
 output_dir: ./doc
+media_dir: media
 project_github: https://github.com/jacobwilliams/ddeabm
 summary: Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver
 author: Jacob Williams
@@ -14,7 +15,6 @@ display: public
          protected
 source: true
 graph: true
-media_dir: media
 exclude: pyplot_module.f90
          test.f90
          zeroin_test.f90
@@ -24,7 +24,7 @@ exclude: pyplot_module.f90
          ddeabm_stepsize_test.f90
          ddeabm_example.f90
          ddeabm_fixed_step_test.f90
-exclude_dir: ./src/tests
+exclude_dir: ./tests
 extra_mods: pyplot_module:https://github.com/jacobwilliams/pyplot-fortran
             iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
 

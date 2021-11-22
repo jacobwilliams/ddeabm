@@ -1,0 +1,56 @@
+name = "ddeabm"
+author = "Jacob Williams"
+copyright  = "Copyright (c) 2014-2021, Jacob Williams"
+license = "BSD-3"
+description = "Modern Fortran Implementation of the DDEABM Adams-Bashforth Algorithm"
+homepage = "https://github.com/jacobwilliams/ddeabm"
+keywords = ["ODE", "Ordinary Differential Equations", "ODE solver", "Adams-Bashforth-Moulton", "root finding", "DEPAC", "SLATEC"]
+
+[dev-dependencies]
+pyplot-fortran= { git = "https://github.com/jacobwilliams/pyplot-fortran", rev = "3.1.0" }
+
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+[[test]]
+name = "ddeabm_example"
+source-dir = "tests"
+main = "ddeabm_example.f90"
+
+[[test]]
+name = "ddeabm_fixed_step_test"
+source-dir = "tests"
+main = "ddeabm_fixed_step_test.f90"
+
+[[test]]
+name = "ddeabm_stepsize_test"
+source-dir = "tests"
+main = "ddeabm_stepsize_test.f90"
+
+[[test]]
+name = "ddeabm_test"
+source-dir = "tests"
+main = "ddeabm_test.f90"
+
+[[test]]
+name = "ddeabm_test_vec"
+source-dir = "tests"
+main = "ddeabm_test_vec.f90"
+
+[[test]]
+name = "performance_test"
+source-dir = "tests"
+main = "performance_test.f90"
+
+[[test]]
+name = "zeroin_test"
+source-dir = "tests"
+main = "zeroin_test.f90"
