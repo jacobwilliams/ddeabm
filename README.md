@@ -202,7 +202,7 @@ ford ddeabm.md
 To use `ddeabm` within your fpm project, add the following to your `fpm.toml` file:
 ```toml
 [dependencies]
-fmin = { git="https://github.com/jacobwilliams/ddeabm.git" }
+ddeabm = { git="https://github.com/jacobwilliams/ddeabm.git" }
 ```
 
 ## Documentation
