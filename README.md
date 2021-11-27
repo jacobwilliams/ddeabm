@@ -1,3 +1,6 @@
+![ddeabm](media/logo.png)
+============
+
 # Status
 
 ![Build Status](https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg)
@@ -193,7 +196,13 @@ fpm test --profile release
 To generate the documentation using [ford](https://github.com/Fortran-FOSS-Programmers/ford), run:
 
 ```
-  ford ddeabm.md
+ford ddeabm.md
+```
+
+To use `ddeabm` within your fpm project, add the following to your `fpm.toml` file:
+```toml
+[dependencies]
+fmin = { git="https://github.com/jacobwilliams/ddeabm.git" }
 ```
 
 ## Documentation

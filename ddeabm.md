@@ -1,7 +1,7 @@
 project: ddeabm
 project_dir: ./src
 output_dir: ./doc
-media_dir: media
+media_dir: ./media
 project_github: https://github.com/jacobwilliams/ddeabm
 summary: Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver
 author: Jacob Williams
