@@ -138,7 +138,8 @@
         <div class="col-md-8">
 		  
           <h1>ddeabm</h1>
-          <h1>Status</h1>
+          <h1><img alt="ddeabm" src="media/logo.png"></h1>
+<h1>Status</h1>
 <p><img alt="Build Status" src="https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg"></p>
 <h2>Description</h2>
 <p>This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the <a href="http://www.netlib.org/slatec/src/">SLATEC library</a>. It has been extensively refactored.</p>
@@ -302,7 +303,12 @@ fpm test --profile release
 </code></pre></div>
 
 <p>To generate the documentation using <a href="https://github.com/Fortran-FOSS-Programmers/ford">ford</a>, run:</p>
-<div class="codehilite"><pre><span></span><code>  ford ddeabm.md
+<div class="codehilite"><pre><span></span><code>ford ddeabm.md
+</code></pre></div>
+
+<p>To use <code>ddeabm</code> within your fpm project, add the following to your <code>fpm.toml</code> file:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span>
+<span class="n">fmin</span> <span class="o">=</span> <span class="p">{</span> <span class="n">git</span><span class="o">=</span><span class="s">&quot;https://github.com/jacobwilliams/ddeabm.git&quot;</span> <span class="p">}</span>
 </code></pre></div>
 
 <h2>Documentation</h2>
