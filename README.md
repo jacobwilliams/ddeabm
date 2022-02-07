@@ -204,6 +204,13 @@ To use `ddeabm` within your fpm project, add the following to your `fpm.toml` fi
 ddeabm = { git="https://github.com/jacobwilliams/ddeabm.git" }
 ```
 
+A specific version can also be specified:
+
+```toml
+[dependencies]
+ddeabm = { git="https://github.com/jacobwilliams/ddeabm.git", rev = "2.1.0" }
+```
+
 By default, the library is built with double precision (`real64`) real values. Explicitly specifying the real kind can be done using the following processor flags:
 
 Preprocessor flag | Kind  | Number of bytes
