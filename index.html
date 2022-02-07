@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
    <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
-    
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="./favicon.png">
 
@@ -16,10 +14,7 @@
     <link href="./css/pygments.css" rel="stylesheet">
     <link href="./css/font-awesome.min.css" rel="stylesheet">
     <link href="./css/local.css" rel="stylesheet">
-    
     <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
-    
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -48,58 +43,27 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
      aria-expanded="false">Contents <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          
-              
-            <li><a href="./lists/files.html">Source Files</a></li>
-        
-        
-        
+            <li><a href="./sourcefile/ddeabm_module.f90.html">Source File</a></li>
             <li><a href="./lists/modules.html">Modules</a></li>
-        
-            
-                                
             <li><a href="./lists/procedures.html">Procedures</a></li>
-        
-        
             <li><a href="./lists/absint.html">Abstract Interfaces</a></li>
-               
-            <li><a href="./lists/types.html">Derived Types</a></li>
-        
-               
-        
-        
+                   <li><a href="./lists/types.html">Derived Types</a></li>
+       
             </ul>
         
             </li>
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
-
-
-
+<li class="visible-xs hidden-sm visible-lg"><a href="./sourcefile/ddeabm_module.f90.html">Source File</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
-
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="./lists/absint.html">Abstract Interfaces</a></li>
-                             
-<li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
-
-
-
-
+                             <li class="visible-xs hidden-sm visible-lg"><a href="./lists/types.html">Derived Types</a></li>
           </ul>
-        
         <form action="./search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
@@ -108,35 +72,22 @@
         <button type="submit" class="btn btn-default">Submit</button>
 -->
         </form>
-        
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
-    
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <p>Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver</p>
-        	 
 	<p> Find us on&hellip;</p>
         <p>
-			 
           <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams/ddeabm" role="button">GitHub</a>
-			 
-			 
-			 
-			 
-			 
-	         
-			 
         </p>
       </div>
 
       <div class="row" id='text'>
-		  
         <div class="col-md-8">
-		  
           <h1>ddeabm</h1>
           <h1><img alt="ddeabm" src="media/logo.png"></h1>
 <h1>Status</h1>
@@ -149,64 +100,63 @@
 <p>The <code>ddeabm_module</code> provides a thread-safe and object-oriented interface to the DDEABM method. Some example use cases are presented below:</p>
 <h3>Basic integration</h3>
 <p>This example shows how to integrate a conic orbit (6 state equations) around the Earth from an initial time <code>t0</code> to a final time <code>tf</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">ddeabm_example</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">ddeabm_example</span><span class="w"></span>
 
-<span class="k">use </span><span class="n">ddeabm_module</span>
-<span class="k">use </span><span class="n">ddeabm_kinds</span>
+<span class="k">use </span><span class="n">ddeabm_module</span><span class="p">,</span><span class="w"> </span><span class="n">wp</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_rk</span><span class="w"></span>
 
 <span class="k">implicit none</span>
 
-<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">39860</span><span class="mf">0.436233_wp</span> <span class="c">!! Earth gravitational parameter (km^3/s^2)</span>
-<span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span>  <span class="kd">::</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>                 <span class="c">!! number of state variables</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">39860</span><span class="mf">0.436233_wp</span><span class="w"> </span><span class="c">!! Earth gravitational parameter (km^3/s^2)</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w">                 </span><span class="c">!! number of state variables</span>
 
-<span class="k">type</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="kd">::</span> <span class="n">x0</span><span class="p">,</span><span class="n">x</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">t</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">idid</span>
+<span class="k">type</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="n">x</span><span class="w"></span>
+<span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">t</span><span class="w"></span>
+<span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">idid</span><span class="w"></span>
 
-<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">])</span>
+<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">])</span><span class="w"></span>
 
 <span class="c">!initial conditions:</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,&amp;</span>   <span class="c">!initial state [r,v] (km,km/s)</span>
-        <span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span>
-<span class="n">t0</span> <span class="o">=</span> <span class="mf">0.0_wp</span>       <span class="c">!initial time (sec)</span>
-<span class="n">tf</span> <span class="o">=</span> <span class="mi">100</span><span class="mf">0.0_wp</span>    <span class="c">!final time (sec)</span>
+<span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,</span><span class="mi">1000</span><span class="mf">0.0_wp</span><span class="p">,&amp;</span><span class="w">   </span><span class="c">!initial state [r,v] (km,km/s)</span>
+<span class="w">        </span><span class="mf">1.0_wp</span><span class="p">,</span><span class="mf">2.0_wp</span><span class="p">,</span><span class="mf">3.0_wp</span><span class="p">]</span><span class="w"></span>
+<span class="n">t0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">       </span><span class="c">!initial time (sec)</span>
+<span class="n">tf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="mf">0.0_wp</span><span class="w">    </span><span class="c">!final time (sec)</span>
 
-<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial time: &#39;</span><span class="p">,</span><span class="n">t0</span>
-<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x0</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
-<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>
-<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final time: &#39;</span><span class="p">,</span><span class="n">t</span>
-<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span> <span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">x</span>
+<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Initial time: &#39;</span><span class="p">,</span><span class="n">t0</span><span class="w"></span>
+<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Initial state:&#39;</span><span class="p">,</span><span class="n">x0</span><span class="w"></span>
+<span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t0</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="w"></span>
+<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span><span class="w"></span>
+<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Final time: &#39;</span><span class="p">,</span><span class="n">t</span><span class="w"></span>
+<span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(A/,*(F15.6/))&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Final state:&#39;</span><span class="p">,</span><span class="n">x</span><span class="w"></span>
 
 <span class="k">contains</span>
 
-<span class="k">    subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span>
+<span class="k">    subroutine </span><span class="n">twobody</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">xdot</span><span class="p">)</span><span class="w"></span>
 
-        <span class="c">!! derivative routine for two-body orbit propagation</span>
+<span class="w">        </span><span class="c">!! derivative routine for two-body orbit propagation</span>
 
-        <span class="k">implicit none</span>
+<span class="w">        </span><span class="k">implicit none</span>
 
-<span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>               <span class="kd">::</span> <span class="n">t</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">x</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">xdot</span>
+<span class="k">        class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xdot</span><span class="w"></span>
 
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span>
-        <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rmag</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a_grav</span><span class="w"></span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">rmag</span><span class="w"></span>
 
-        <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span>
-        <span class="n">rmag</span> <span class="o">=</span> <span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-        <span class="n">a_grav</span> <span class="o">=</span> <span class="o">-</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="c">! acceleration due to gravity</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">rmag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">norm2</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">a_grav</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">mu</span><span class="o">/</span><span class="n">rmag</span><span class="o">**</span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="c">! acceleration due to gravity</span>
 
-        <span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
-        <span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">a_grav</span>
+<span class="w">        </span><span class="n">xdot</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="w"></span>
+<span class="w">        </span><span class="n">xdot</span><span class="p">(</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a_grav</span><span class="w"></span>
 
-    <span class="k">end subroutine </span><span class="n">twobody</span>
+<span class="w">    </span><span class="k">end subroutine </span><span class="n">twobody</span><span class="w"></span>
 
-<span class="k">end program </span><span class="n">ddeabm_example</span>
+<span class="k">end program </span><span class="n">ddeabm_example</span><span class="w"></span>
 </code></pre></div>
 
 <p>It produces the following output:</p>
@@ -235,69 +185,69 @@ Initial time:
 
 <h3>Reporting of intermediate points</h3>
 <p>The intermediate integration points can also be reported to a user-defined procedure.  For the above example, the following subroutine could be defined:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">subroutine </span><span class="n">twobody_report</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">subroutine </span><span class="n">twobody_report</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 
-    <span class="c">!! report function - write time,state to console</span>
+<span class="w">    </span><span class="c">!! report function - write time,state to console</span>
 
-    <span class="k">implicit none</span>
+<span class="w">    </span><span class="k">implicit none</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                  <span class="kd">::</span> <span class="n">t</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>     <span class="kd">::</span> <span class="n">x</span>
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                  </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
 
-    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(F15.6,1X))&#39;</span><span class="p">)</span> <span class="n">t</span><span class="p">,</span><span class="n">x</span>
+<span class="w">    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(F15.6,1X))&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="w"></span>
 
-<span class="k">end subroutine </span><span class="n">twobody_report</span>
+<span class="k">end subroutine </span><span class="n">twobody_report</span><span class="w"></span>
 </code></pre></div>
 
 <p>Which can be added to the class on initialization:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span>
-                  <span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
-                  <span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                  </span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span><span class="w"></span>
+<span class="w">                  </span><span class="n">report</span><span class="o">=</span><span class="n">twobody_report</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <p>This function is then called at each time step
 if the equations are integrated using the <code>integration_mode=2</code> option like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <h3>Event location</h3>
 <p>A user-defined event function <code>g(t,x)</code> can also be defined in order to stop the integration at a specified event (i.e., when <code>g(t,x)=0</code>). In the above example, say it is desired that the integration stop when <code>z = x(3) = 12,000 km</code>.  The event function for this would be:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">subroutine </span><span class="n">twobody_event</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">subroutine </span><span class="n">twobody_event</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="w"></span>
 
-    <span class="c">!! event function for z = 12,000 km</span>
+<span class="w">    </span><span class="c">!! event function for z = 12,000 km</span>
 
-    <span class="k">implicit none</span>
+<span class="w">    </span><span class="k">implicit none</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                          <span class="kd">::</span> <span class="n">t</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>             <span class="kd">::</span> <span class="n">x</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>                         <span class="kd">::</span> <span class="n">g</span>
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w"></span>
 
-    <span class="n">g</span> <span class="o">=</span> <span class="mi">1200</span><span class="mf">0.0_wp</span> <span class="o">-</span> <span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1200</span><span class="mf">0.0_wp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
 
-<span class="k">end subroutine </span><span class="n">twobody_event</span>
+<span class="k">end subroutine </span><span class="n">twobody_event</span><span class="w"></span>
 </code></pre></div>
 
 <p>For event finding, the <code>ddeabm_with_event_class</code> type is used (which is an extension of the main <code>ddeabm_class</code>).  For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span> <span class="kd">::</span> <span class="n">s</span>
-<span class="p">...</span>
-<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize_event</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span>
-                        <span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span>
-                        <span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">)</span>
-<span class="p">...</span>
-<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">initialize_event</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">maxnum</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">twobody</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                        </span><span class="n">rtol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],</span><span class="n">atol</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0e-12_wp</span><span class="p">],&amp;</span><span class="w"></span>
+<span class="w">                        </span><span class="n">g</span><span class="o">=</span><span class="n">twobody_event</span><span class="p">,</span><span class="n">root_tol</span><span class="o">=</span><span class="mf">1.0e-12_wp</span><span class="p">)</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <p>In this case, <code>root_tol</code> is the tolerance for the event location, and <code>gval</code> is the value of the event function at the final time (note that the integration will stop when <code>g(t,x)=0</code> or at <code>t=tf</code>, whichever occurs first).</p>
 <p>A vector event function is also supported (in which case, the integration stops if <em>any</em> of the roots are found). This is done using the <code>ddeabm_with_event_class_vec</code> type.</p>
 <h3>Fixed time step</h3>
 <p>All of the integration methods have an optional argument (<code>tstep</code>) to enable a fixed time step, which can be used for dense output, or to specify a fixed step used for event finding (since the default step may be too large). For example, for performing a root-finding integration with the event function evaluated every 100 seconds:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">tstep</span><span class="o">=</span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">call </span><span class="n">s</span><span class="p">%</span><span class="n">integrate_to_event</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="o">=</span><span class="n">gval</span><span class="p">,</span><span class="n">tstep</span><span class="o">=</span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <h2>Building DDEABM</h2>
-<p>DDEABM and the test programs will build with any modern Fortran compiler. A <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> manifest file (<code>fmp.toml</code>) is included, so that the library and tests cases can be compiled with FPM. For example:</p>
+<p>DDEABM and the test programs will build with any modern Fortran compiler. A <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> (FPM) manifest file (<code>fmp.toml</code>) is included, so that the library and tests cases can be compiled with FPM. For example:</p>
 <div class="codehilite"><pre><span></span><code>fpm build --profile release
 fpm test --profile release
 </code></pre></div>
@@ -307,10 +257,48 @@ fpm test --profile release
 </code></pre></div>
 
 <p>To use <code>ddeabm</code> within your fpm project, add the following to your <code>fpm.toml</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span>
-<span class="n">ddeabm</span> <span class="o">=</span> <span class="p">{</span> <span class="n">git</span><span class="o">=</span><span class="s">&quot;https://github.com/jacobwilliams/ddeabm.git&quot;</span> <span class="p">}</span>
+<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span><span class="w"></span>
+<span class="n">ddeabm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="o">=</span><span class="s">&quot;https://github.com/jacobwilliams/ddeabm.git&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 
+<p>A specific version can also be specified:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span><span class="w"></span>
+<span class="n">ddeabm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="o">=</span><span class="s">&quot;https://github.com/jacobwilliams/ddeabm.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2.1.0&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<p>By default, the library is built with double precision (<code>real64</code>) real values. Explicitly specifying the real kind can be done using the following processor flags:</p>
+<table>
+<thead>
+<tr>
+<th>Preprocessor flag</th>
+<th>Kind</th>
+<th>Number of bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REAL32</code></td>
+<td><code>real(kind=real32)</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>REAL64</code></td>
+<td><code>real(kind=real64)</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>REAL128</code></td>
+<td><code>real(kind=real128)</code></td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>For example, to build a single precision version of the library, use:</p>
+<div class="codehilite"><pre><span></span><code>fpm build --profile release --flag &quot;-DREAL32&quot;
+</code></pre></div>
+
+<h3>Dependencies</h3>
+<p>Building the library requires the <a href="https://github.com/jacobwilliams/roots-fortran">roots-fortran</a> module. Building the tests requires the <a href="https://github.com/jacobwilliams/pyplot-fortran">pyplot-fortran</a> module. FPM will automatically download the correct versions of both (see <code>fpm.toml</code>). </p>
 <h2>Documentation</h2>
 <p>The latest API documentation can be found <a href="http://jacobwilliams.github.io/ddeabm/">here</a>. This was generated from the source code using <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>.</p>
 <h2>License</h2>
@@ -327,120 +315,62 @@ fpm test --profile release
 <li>R. P. Brent, "<a href="http://maths-people.anu.edu.au/~brent/pub/pub011.html">Algorithms for minimization without derivatives</a>", Prentice-Hall, Inc., 1973.</li>
 </ol>
         </div>
-		  
         <div class="col-md-4">
 	  <div class="well">
           <h2>Developer Info</h2>
           <h4>Jacob Williams</h4>
           
-          
-			   
             <div class="text-center"><div class="btn-group" role="group">
-              
-              
-              
               <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams"><i class="fa fa-github fa-lg"></i></a>
-              
-              
-				  
-              
-              
-              
-              
             </div></div>
-            
        </div>
        </div>
-       
       </div>
-      
-      
-      
-      
-      
-      
-		
-        
       <div class="row">
-        
         <div class="col-xs-6 col-sm-3">
               <h3>Source Files</h3>
-              <ul>
-                    <li><a href='./sourcefile/ddeabm_kinds.f90.html'>ddeabm_kinds.f90</a></li>
-                  
-                    <li><a href='./sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-                  
-                    <li><a href='./sourcefile/root_module.f90.html'>root_module.f90</a></li>
-                  </ul>
+              <ul>                    <li><a href='./sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
+</ul>
           </div>
-        
-          
 		  <div class="col-xs-6 col-sm-3">
               <h3>Modules</h3>
-              <ul>
-                    <li><a href='./module/ddeabm_kinds.html'>ddeabm_kinds</a></li>
-                  
-                    <li><a href='./module/ddeabm_module.html'>ddeabm_module</a></li>
-                  
-                    <li><a href='./module/root_module.html'>root_module</a></li>
-                  </ul>
+              <ul>                    <li><a href='./module/ddeabm_module.html'>ddeabm_module</a></li>
+</ul>
           </div>
-          
-          
 		  <div class="col-xs-6 col-sm-3">
               <h3>Procedures</h3>
-              <ul>
-                    <li><a href='./proc/ddeabm.html'>ddeabm</a></li>
-                  
+              <ul>                    <li><a href='./proc/ddeabm.html'>ddeabm</a></li>
                     <li><a href='./proc/ddeabm_initialize.html'>ddeabm_initialize</a></li>
-                  
                     <li><a href='./proc/ddeabm_interp.html'>ddeabm_interp</a></li>
-                  
                     <li><a href='./proc/ddeabm_new_problem.html'>ddeabm_new_problem</a></li>
-                  
                     <li><a href='./proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a></li>
-                  
                     <li><a href='./proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a></li>
-                  
                     <li><a href='./proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a></li>
-                  
                     <li><a href='./proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a></li>
-                  
                     <li><a href='./proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a></li>
-                  
                     <li><a href='./proc/ddeabm_wrapper.html'>ddeabm_wrapper</a></li>
-                  </ul>
+</ul>
           </div>
-          
-          
 		  <div class="col-xs-6 col-sm-3">
               <h3>Derived Types</h3>
-              <ul>
-                    <li><a href='./type/ddeabm_class.html'>ddeabm_class</a></li>
-                  
+              <ul>                    <li><a href='./type/ddeabm_class.html'>ddeabm_class</a></li>
                     <li><a href='./type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a></li>
-                  
                     <li><a href='./type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a></li>
-                  </ul>
+</ul>
           </div>
-          
       </div>
-      
-
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
-                                          </p>
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2022 
+</p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-            
-            
           </p>
         </div>
       </div>
@@ -468,14 +398,11 @@ fpm test --profile release
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
     
     <script src="./tipuesearch/tipuesearch_content.js"></script>
     <script src="./tipuesearch/tipuesearch_set.js"></script>
     <script src="./tipuesearch/tipuesearch.js"></script>
-    
     
   </body>
 </html>

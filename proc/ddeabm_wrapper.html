@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
    <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
-    
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
@@ -16,10 +14,7 @@
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-    
     <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -48,58 +43,27 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
      aria-expanded="false">Contents <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          
-              
-            <li><a href="../lists/files.html">Source Files</a></li>
-        
-        
-        
+            <li><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
             <li><a href="../lists/modules.html">Modules</a></li>
-        
-            
-                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
-        
-        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-               
-            <li><a href="../lists/types.html">Derived Types</a></li>
-        
-               
-        
-        
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
             </ul>
         
             </li>
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
-
-
-
+<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
-
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                             
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-
-
-
-
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
           </ul>
-        
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
@@ -108,53 +72,30 @@
         <button type="submit" class="btn btn-default">Submit</button>
 -->
         </form>
-        
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
-    
-  
   <div class="row">
     <h1>ddeabm_wrapper
       <small>Subroutine</small>
-    
     </h1>
-    
-<div class="row">
+    <div class="row">
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     
      <li><i class="fa fa-pencil"></i> Jacob Williams</li>
-     
-     
-     
-     
-     
-    
-    
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 5.4% of total for procedures.">85 statements</a>
+    title=" 5.8% of total for procedures.">85 statements</a>
      </li> 
-     
-     
-     
-    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
-     
-     
+    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.F90"> Source File</a></li>
   </ul>
   <ol class="breadcrumb in-well text-right">
-  
-    
-     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-    
+     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
      <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
-    
-  
      <li class="active">ddeabm_wrapper</li>
   </ol>
 </div>
@@ -170,145 +111,67 @@
   
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-    
-<div id="sidebar">
-  
-<h3>Contents</h3>
+    <div id="sidebar">
+  <h3>Contents</h3>
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/ddeabm_wrapper.html#src">ddeabm_wrapper</a>
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-mode">mode</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-fixed_output_step">fixed_output_step</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-t2~3">t2</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-last">last</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-dt">dt</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-direction">direction</a>
+    </div>
   </div>
 </div>
-
-
 
 </div>
 
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>
-private subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode, tstep)
+    <h2>private subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode, tstep)</h2>
     
-    
-   
-</h2>
-    
-  
 
-
-    
     <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p>
 <p>If starting a new problem, must first call <code>me%first_call()</code>.</p>
 <p></p><div class="alert alert-info" role="alert"><h4>Note</h4><p>Currently not using the recommended tols if <code>idid=-2</code>.</p></div>
-    
 
     <h3>Arguments</h3>
-    
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-me~13"></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
-  <td><span class="anchor" id="variable-t~6"></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+  <td><span class="anchor" id="variable-t~5"></span>real(kind=wp),</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-y"></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(me%neq)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tout"></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tout</strong></td><td><p>time at which a solution is desired.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tstop~2"></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
 past a point <code>tstop</code> because a discontinuity occurs there
 or the solution or its derivative is not defined beyond
@@ -316,69 +179,35 @@ or the solution or its derivative is not defined beyond
 you have told the code not to integrate past <code>tstop</code>.
 in this case any <code>tout</code> beyond <code>tstop</code> is invalid input.
 [not used if not present]</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-idid"></span>integer,</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
 you must monitor this integer variable to
 decide what action to take next.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-integration_mode"></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
 <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
 <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tstep"></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for <code>integration_mode=2</code>.
 If not present, then default integrator steps are used.
 If <code>integration_mode=1</code>, then this is ignored.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-    
-    
-    
     <br>
-    
-    
     <div class="panel panel-default">
       <div class="panel-heading">
   <h3 class="panel-title">Calls</h3>
@@ -479,243 +308,94 @@ If <code>integration_mode=1</code>, then this is ignored.</p></td>
     </div></div></div></div>
       </div>
     </div>
-     
-     
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
-      
-<h3>Contents</h3>
+      <h3>Contents</h3>
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/ddeabm_wrapper.html#src">ddeabm_wrapper</a>
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-mode">mode</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-fixed_output_step">fixed_output_step</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-t2~3">t2</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-last">last</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-dt">dt</a>
+      <a class="list-group-item" href="../proc/ddeabm_wrapper.html#variable-direction">direction</a>
+    </div>
   </div>
 </div>
-
-
 
     </section>
     <br class="visible-xs visible-sm hidden-md">
 
-    
 
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>    <span class="k">subroutine </span><span class="n">ddeabm_wrapper</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tout</span><span class="p">,</span><span class="n">tstop</span><span class="p">,</span><span class="n">idid</span><span class="p">,</span><span class="n">integration_mode</span><span class="p">,</span><span class="n">tstep</span><span class="p">)</span>
-
-    <span class="k">implicit none</span>
-
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>        <span class="kd">::</span> <span class="n">me</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span>                   <span class="kd">::</span> <span class="n">t</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">y</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>                      <span class="kd">::</span> <span class="n">tout</span>    <span class="c">!! time at which a solution is desired.</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span>             <span class="kd">::</span> <span class="n">tstop</span>   <span class="c">!! for some problems it may not be permissible to integrate</span>
-                                                        <span class="c">!! past a point `tstop` because a discontinuity occurs there</span>
-                                                        <span class="c">!! or the solution or its derivative is not defined beyond</span>
-                                                        <span class="c">!! `tstop`.  when you have declared a `tstop` point (see `info(4)`),</span>
-                                                        <span class="c">!! you have told the code not to integrate past `tstop`.</span>
-                                                        <span class="c">!! in this case any `tout` beyond `tstop` is invalid input.</span>
-                                                        <span class="c">!! [not used if not present]</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>                      <span class="kd">::</span> <span class="n">idid</span>    <span class="c">!! indicator reporting what the code did.</span>
-                                                        <span class="c">!! you must monitor this integer variable to</span>
-                                                        <span class="c">!! decide what action to take next.</span>
-    <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span> <span class="kd">::</span> <span class="n">integration_mode</span>     <span class="c">!! Step mode:</span>
-                                                        <span class="c">!! *1* - normal integration from `t` to `tout`, no reporting [default].</span>
-                                                        <span class="c">!! *2* - normal integration from `t` to `tout`, report each step.</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span> <span class="kd">::</span> <span class="n">tstep</span>    <span class="c">!! Fixed time step to use for `integration_mode=2`.</span>
-                                             <span class="c">!! If not present, then default integrator steps are used.</span>
-                                             <span class="c">!! If `integration_mode=1`, then this is ignored.</span>
-
-    <span class="kt">integer</span> <span class="kd">::</span> <span class="n">mode</span>                 <span class="c">!! local copy of `integration_mode`</span>
-    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">fixed_output_step</span>    <span class="c">!! if reporting output at a fixed step size</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">t2</span>                  <span class="c">!! for fixed step size: an intermediate step</span>
-    <span class="kt">logical</span> <span class="kd">::</span> <span class="n">last</span>                 <span class="c">!! for fixed step size: the last step</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dt</span>                  <span class="c">!! for fixed step size: actual signed time step</span>
-    <span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">direction</span>           <span class="c">!! direction of integration for</span>
-                                    <span class="c">!! fixed step size: `+1: dt&gt;=0`, `-1: dt&lt;0`</span>
-
-    <span class="c">!optional input:</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">integration_mode</span><span class="p">))</span> <span class="k">then</span>
-<span class="k">        </span><span class="n">mode</span> <span class="o">=</span> <span class="n">integration_mode</span>
-    <span class="k">else</span>
-<span class="k">        </span><span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c">!default</span>
-    <span class="k">end if</span>
-
-    <span class="c">! if we are reporting the output at a fixed step size:</span>
-    <span class="n">fixed_output_step</span> <span class="o">=</span> <span class="nb">present</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="n">mode</span><span class="o">==</span><span class="mi">2</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">fixed_output_step</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">        </span><span class="n">direction</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">tout</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>
-        <span class="n">dt</span> <span class="o">=</span> <span class="n">direction</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span>
-        <span class="n">last</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
-    <span class="k">end if</span>
-
-    <span class="c">!check for invalid inputs:</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">mode</span><span class="o">/=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="n">mode</span><span class="o">/=</span><span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_wrapper&#39;</span><span class="p">,</span> <span class="s1">&#39;integration_mode must be 1 or 2.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">33</span>
-        <span class="k">return</span>
-<span class="k">    end if</span>
-<span class="k">    if</span> <span class="p">((</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">(.</span><span class="nb">not</span><span class="p">.</span> <span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">)))</span> <span class="k">then</span>
-<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_wrapper&#39;</span><span class="p">,</span> <span class="s1">&#39;REPORT procedure must be associated for integration_mode=2.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">33</span>
-        <span class="k">return</span>
-<span class="k">    end if</span>
-
-    <span class="c">!set info array:</span>
-
-    <span class="c">!info(1) is set when ddeabm_new_problem is called</span>
-
-    <span class="c">!info(2)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">scalar_tols</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">else</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">end if</span>
-
-    <span class="c">!info(3)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="p">.</span><span class="nb">not</span><span class="p">.</span> <span class="n">fixed_output_step</span><span class="p">)</span> <span class="k">then</span>  <span class="c">!requires the intermediate steps</span>
-        <span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">else</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">end if</span>
-
-    <span class="c">!info(4)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tstop</span><span class="p">))</span> <span class="k">then</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">me</span><span class="p">%</span><span class="n">tstop</span> <span class="o">=</span> <span class="n">tstop</span>
-    <span class="k">else</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">me</span><span class="p">%</span><span class="n">tstop</span> <span class="o">=</span> <span class="mf">0.0_wp</span> <span class="c">!not used</span>
-    <span class="k">end if</span>
-
-    <span class="c">!make a copy of the tols, since the routine might change them:</span>
-    <span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">rtol</span>
-    <span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span> <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">atol</span>
-
-    <span class="k">select case</span> <span class="p">(</span><span class="n">mode</span><span class="p">)</span>
-    <span class="k">case</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c">!normal integration with no reporting</span>
-
-        <span class="c">!call the lower-level routine:</span>
-        <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">ddeabm</span><span class="p">(</span> <span class="n">neq</span>   <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,&amp;</span>
-                        <span class="n">t</span>     <span class="o">=</span> <span class="n">t</span><span class="p">,&amp;</span>
-                        <span class="n">y</span>     <span class="o">=</span> <span class="n">y</span><span class="p">,&amp;</span>
-                        <span class="n">tout</span>  <span class="o">=</span> <span class="n">tout</span><span class="p">,&amp;</span>
-                        <span class="n">info</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">,&amp;</span>
-                        <span class="n">rtol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">,&amp;</span>
-                        <span class="n">atol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,&amp;</span>
-                        <span class="n">idid</span>  <span class="o">=</span> <span class="n">idid</span><span class="p">)</span>
-
-        <span class="c">!if there was a user-triggered error:</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="n">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
-
-    <span class="k">case</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c">!normal integration, reporting the default intermediate points</span>
-
-        <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>  <span class="c">!initial point</span>
-
-        <span class="k">do</span>
-
-<span class="k">            if</span> <span class="p">(</span><span class="n">fixed_output_step</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">                </span><span class="n">t2</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">dt</span>  <span class="c">! take one step to t2 and return</span>
-                <span class="n">last</span> <span class="o">=</span> <span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tout</span><span class="o">-</span><span class="n">t2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.0_wp</span>  <span class="c">! if last point</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">last</span><span class="p">)</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">tout</span>  <span class="c">! adjust last time step if necessary</span>
-            <span class="k">else</span>
-<span class="k">                </span><span class="n">t2</span> <span class="o">=</span> <span class="n">tout</span>  <span class="c">! take a step in the direction of tout and return</span>
-            <span class="k">end if</span>
-
-            <span class="c">!take one step (note: info(3)=1 for this case):</span>
-            <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">ddeabm</span><span class="p">(</span> <span class="n">neq</span>   <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,&amp;</span>
-                            <span class="n">t</span>     <span class="o">=</span> <span class="n">t</span><span class="p">,&amp;</span>
-                            <span class="n">y</span>     <span class="o">=</span> <span class="n">y</span><span class="p">,&amp;</span>
-                            <span class="n">tout</span>  <span class="o">=</span> <span class="n">t2</span><span class="p">,&amp;</span>
-                            <span class="n">info</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">,&amp;</span>
-                            <span class="n">rtol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">,&amp;</span>
-                            <span class="n">atol</span>  <span class="o">=</span> <span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,&amp;</span>
-                            <span class="n">idid</span>  <span class="o">=</span> <span class="n">idid</span><span class="p">)</span>
-
-            <span class="c">!if there was a user-triggered error:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">                </span><span class="n">idid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
-                <span class="k">exit</span>
-<span class="k">            end if</span>
-
-            <span class="c">!check status (see ddeabm or idid codes):</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">idid</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>  <span class="c">! report a successful intermediate or final step</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">fixed_output_step</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">                if</span> <span class="p">(</span><span class="n">last</span><span class="p">)</span> <span class="k">exit</span>  <span class="c">! exit if finished</span>
-                <span class="k">if</span> <span class="p">(.</span><span class="nb">not</span><span class="p">.</span> <span class="p">(</span><span class="n">idid</span><span class="o">==</span><span class="mi">2</span> <span class="p">.</span><span class="nb">or</span><span class="p">.</span> <span class="n">idid</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span> <span class="p">)</span> <span class="k">exit</span>  <span class="c">! exit on error</span>
-            <span class="k">else</span>
-<span class="k">                if</span> <span class="p">(</span><span class="n">idid</span><span class="o">/=</span><span class="mi">1</span><span class="p">)</span> <span class="k">exit</span>      <span class="c">! exit if finished, or if there was an error</span>
-            <span class="k">end if</span>
-
-<span class="k">        end do</span>
-
-<span class="k">    end select</span>
-
-<span class="k">    end subroutine </span><span class="n">ddeabm_wrapper</span>
-</pre></div>
+    <section>    
+      <h2>Variables</h2>
+    <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+<tbody>
+<tr>
+  <td><span class="anchor" id="variable-mode"></span>integer,</td>
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>mode</strong></td><td></td><td></td><td><p>local copy of <code>integration_mode</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-fixed_output_step"></span>logical,</td>
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>fixed_output_step</strong></td><td></td><td></td><td><p>if reporting output at a fixed step size</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-t2~3"></span>real(kind=wp),</td>
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>t2</strong></td><td></td><td></td><td><p>for fixed step size: an intermediate step</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-last"></span>logical,</td>
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>last</strong></td><td></td><td></td><td><p>for fixed step size: the last step</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-dt"></span>real(kind=wp),</td>
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>dt</strong></td><td></td><td></td><td><p>for fixed step size: actual signed time step</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-direction"></span>real(kind=wp),</td>
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>direction</strong></td><td></td><td></td><td><p>direction of integration for
+fixed step size: <code>+1: dt&gt;=0</code>, <code>-1: dt&lt;0</code></p></td>
+</tr>
+</tbody>
+</table>
 
     </section>
     <br>
     
     
+
+    
+    
+
+
+    
+    
     </div>
   </div>
-
 
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
-                                          </p>
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2022 
+</p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-            
-            
           </p>
         </div>
       </div>
@@ -743,14 +423,11 @@ If <code>integration_mode=1</code>, then this is ignored.</p></td>
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
     
     <script src="../tipuesearch/tipuesearch_content.js"></script>
     <script src="../tipuesearch/tipuesearch_set.js"></script>
     <script src="../tipuesearch/tipuesearch.js"></script>
-    
     
   </body>
 </html>

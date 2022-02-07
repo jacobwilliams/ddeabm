@@ -4,24 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
    <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
-    
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
-    <title>
-All Abstract Interfaces &ndash; ddeabm
+    <title>All Abstract Interfaces &ndash; ddeabm
 </title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-    
     <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,58 +44,27 @@ All Abstract Interfaces &ndash; ddeabm
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
      aria-expanded="false">Contents <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          
-              
-            <li><a href="../lists/files.html">Source Files</a></li>
-        
-        
-        
+            <li><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
             <li><a href="../lists/modules.html">Modules</a></li>
-        
-            
-                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
-        
-        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-               
-            <li><a href="../lists/types.html">Derived Types</a></li>
-        
-               
-        
-        
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
             </ul>
         
             </li>
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
-
-
-
+<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
-
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                             
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-
-
-
-
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
           </ul>
-        
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
@@ -110,13 +73,11 @@ All Abstract Interfaces &ndash; ddeabm
         <button type="submit" class="btn btn-default">Submit</button>
 -->
         </form>
-        
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
-    
       <div class="row">
         <div class="col-lg-12" id='text'>
 			 <h1>Abstract Interfaces</h1>
@@ -124,39 +85,27 @@ All Abstract Interfaces &ndash; ddeabm
 			 <thead>
 			 <tr><th>Abstract Interface</th><th>Location</th><th>Description</th></tr>
 			 </thead><tbody>
-			 
 			   <tr><td><a href='../interface/bracket_func.html'>bracket_func</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><p>function to determine if a root is bracketed</p></td></tr>
-			 
 			   <tr><td><a href='../interface/bracket_func_vec.html'>bracket_func_vec</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><p>function to determine if a root is bracketed (vector event version)</p></td></tr>
-			 
 			   <tr><td><a href='../interface/deriv_func.html'>deriv_func</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><p>Interface to the <a href="../type/ddeabm_class.html">ddeabm_class</a> derivative function.</p><a href="../interface/deriv_func.html" class="pull-right"><emph>Read more&hellip;</emph></a></td></tr>
-			 
 			   <tr><td><a href='../interface/event_func.html'>event_func</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><p>Interface to the <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> scalar event function.</p></td></tr>
-			 
 			   <tr><td><a href='../interface/event_func_vec.html'>event_func_vec</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><p>Interface to the <a href="../type/ddeabm_with_event_class_vec.html">ddeabm_with_event_class_vec</a> scalar event function.</p></td></tr>
-			 
-			   <tr><td><a href='../interface/func.html'>func</a></td><td><a href='../module/root_module.html'>root_module</a></td><td><p>interface to the <a href="../proc/zeroin.html">zeroin</a> input function</p></td></tr>
-			 
 			   <tr><td><a href='../interface/report_func.html'>report_func</a></td><td><a href='../module/ddeabm_module.html'>ddeabm_module</a></td><td><p>Interface to the step reporting function.</p></td></tr>
-			 
 			 </tbody></table>
         </div>
       </div>
-
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
-                                          </p>
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2022 
+</p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-            
-            
           </p>
         </div>
       </div>
@@ -184,14 +133,11 @@ All Abstract Interfaces &ndash; ddeabm
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
     
     <script src="../tipuesearch/tipuesearch_content.js"></script>
     <script src="../tipuesearch/tipuesearch_set.js"></script>
     <script src="../tipuesearch/tipuesearch.js"></script>
-    
     
   </body>
 </html>

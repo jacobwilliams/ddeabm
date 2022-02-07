@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
    <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
-    
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
@@ -16,10 +14,7 @@
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-    
     <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
-    
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -48,58 +43,27 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-        
             <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
               <a href="#" class="dropdown-toggle"
               data-toggle="dropdown" role="button"
               aria-haspopup="true"
      aria-expanded="false">Contents <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          
-              
-            <li><a href="../lists/files.html">Source Files</a></li>
-        
-        
-        
+            <li><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
             <li><a href="../lists/modules.html">Modules</a></li>
-        
-            
-                                
             <li><a href="../lists/procedures.html">Procedures</a></li>
-        
-        
             <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-               
-            <li><a href="../lists/types.html">Derived Types</a></li>
-        
-               
-        
-        
+                   <li><a href="../lists/types.html">Derived Types</a></li>
+       
             </ul>
         
             </li>
-
-
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
-
-
-
+<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
-
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
-
-
 <li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                             
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-
-
-
-
+                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
           </ul>
-        
         <form action="../search.html" class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
@@ -108,53 +72,30 @@
         <button type="submit" class="btn btn-default">Submit</button>
 -->
         </form>
-        
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
-    
-  
   <div class="row">
     <h1>ddeabm_module 
     <small>Module</small>
-    
     </h1>
-    
-<div class="row">
+    <div class="row">
   <div class="col-lg-12">
 <div class="well well-sm">
   <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     
      <li><i class="fa fa-pencil"></i> Jacob Williams</li>
-     
-     
-     
     <li><i class="fa fa-legal"></i> BSD</li>
-     
-     
-     
-    
-    
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="92.5% of total for modules and submodules.">1636 statements</a>
+    title="100.0% of total for modules and submodules.">1637 statements</a>
      </li> 
-     
-     
-     
-    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.f90"> Source File</a></li>
-     
-     
+    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.F90"> Source File</a></li>
   </ul>
   <ol class="breadcrumb in-well text-right">
-  
-    
-     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.f90</a></li>
-    
-  
+     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
      <li class="active">ddeabm_module</li>
   </ol>
 </div>
@@ -170,138 +111,74 @@
   
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-    
-<div id="sidebar">
-  
-<h3>Contents</h3>
+    <div id="sidebar">
+  <h3>Contents</h3>
  
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
-      
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-ddeabm_rk">ddeabm_rk</a>
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-wp">wp</a>
       <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach2">d1mach2</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach4">d1mach4</a>
-      
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints-0">Abstract Interfaces</a></h3></div>
   <div id="absints-0" class="panel-collapse collapse">
     <div class="list-group">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-bracket_func">bracket_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-bracket_func_vec">bracket_func_vec</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-deriv_func">deriv_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-report_func">report_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func">event_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func_vec">event_func_vec</a>
-      
     </div>
   </div>
 </div>
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-0">Derived Types</a></h3></div>
   <div id="types-0" class="panel-collapse collapse">
     <div class="list-group">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_class">ddeabm_class</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class">ddeabm_with_event_class</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class_vec">ddeabm_with_event_class_vec</a>
-      
     </div>
   </div>
 </div>
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#funcs-0">Functions</a></h3></div>
   <div id="funcs-0" class="panel-collapse collapse">
     <div class="list-group">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhvnrm">dhvnrm</a>
-      
     </div>
   </div>
 </div>
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-0">Subroutines</a></h3></div>
   <div class="list-group">
     <div id="subs-0" class="panel-collapse collapse">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_stop_integration">ddeabm_stop_integration</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_new_problem">ddeabm_new_problem</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_initialize">ddeabm_initialize</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize">ddeabm_with_event_initialize</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize_vec">ddeabm_with_event_initialize_vec</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-destroy_ddeabm">destroy_ddeabm</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_wrapper">ddeabm_wrapper</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper">ddeabm_with_event_wrapper</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_interp">ddeabm_interp</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper_vec">ddeabm_with_event_wrapper_vec</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm">ddeabm</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddes">ddes</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhstrt">dhstrt</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dintp">dintp</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dsteps">dsteps</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-report_error">report_error</a>
-      
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 </div>
 
@@ -322,27 +199,23 @@
 <p>The original SLATEC code is a public domain work of the US Government.
   The modifications are
   <a href="https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE">Copyright (c) 2014-2018, Jacob Williams</a>.</p>
-      <br>
-    
-  
-    <div class="panel panel-default">
+<p></p><div class="alert alert-info" role="alert"><h4>Note</h4><p>This module depends on <a href="https://github.com/jacobwilliams/roots-fortran">roots-fortran</a>.
+      When compiled with FPM, this will automatically be downloaded (see <code>fpm.toml</code>)</p></div>
+<p></p><div class="alert alert-info" role="alert"><h4>Note</h4><p>The default real kind (<code>wp</code>) can be
+      changed using optional preprocessor flags.
+      This library was built with real kind:
+      <code>real(kind=real64)</code> [8 bytes]</p></div>
+<br>        <div class="panel panel-default">
       <div class="panel-heading">
   <h3 class="panel-title">Uses</h3>
       </div>
       <ul class="list-group">
-      
       <li class="list-group-item">
   <ul class="list-inline">
-    
-    <li><a href='../module/ddeabm_kinds.html'>ddeabm_kinds</a></li>
-    
-    <li><a href='../module/root_module.html'>root_module</a></li>
-    
+    <li>root_module</li>
+    <li><a href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html">iso_fortran_env</a></li>
   </ul>
       </li>
-      
-      
-      
       <li class="list-group-item">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
@@ -350,67 +223,43 @@
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: module~~ddeabm_module~~UsesGraph Pages: 1 -->
-<svg id="moduleddeabm_moduleUsesGraph" width="482pt" height="52pt"
- viewBox="0.00 0.00 482.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="module~~ddeabm_module~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 48)">
+<svg id="moduleddeabm_moduleUsesGraph" width="241pt" height="74pt"
+ viewBox="0.00 0.00 241.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ddeabm_module~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
 <title>module~~ddeabm_module~~UsesGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-48 478,-48 478,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 237,-70 237,4 -4,4"/>
 <!-- module~ddeabm_module -->
 <g id="module~~ddeabm_module~~UsesGraph_node1" class="node">
 <title>module~ddeabm_module</title>
-<polygon fill="none" stroke="black" points="474,-44 371,-44 371,-20 474,-20 474,-44"/>
-<text text-anchor="middle" x="422.5" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_module</text>
+<polygon fill="none" stroke="black" points="233,-45 130,-45 130,-21 233,-21 233,-45"/>
+<text text-anchor="middle" x="181.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_module</text>
 </g>
-<!-- module~ddeabm_kinds -->
+<!-- root_module -->
 <g id="module~~ddeabm_module~~UsesGraph_node2" class="node">
-<title>module~ddeabm_kinds</title>
-<g id="a_module~~ddeabm_module~~UsesGraph_node2"><a xlink:href=".././module/ddeabm_kinds.html" xlink:title="ddeabm_kinds">
-<polygon fill="#337ab7" stroke="#337ab7" points="220,-44 130,-44 130,-20 220,-20 220,-44"/>
-<text text-anchor="middle" x="175" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_kinds</text>
-</a>
+<title>root_module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="86.5,-66 7.5,-66 7.5,-42 86.5,-42 86.5,-66"/>
+<text text-anchor="middle" x="47" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">root_module</text>
 </g>
-</g>
-<!-- module~ddeabm_module&#45;&gt;module~ddeabm_kinds -->
+<!-- module~ddeabm_module&#45;&gt;root_module -->
 <g id="module~~ddeabm_module~~UsesGraph_edge1" class="edge">
-<title>module~ddeabm_module&#45;&gt;module~ddeabm_kinds</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M370.73,-32.68C359,-32.82 346.56,-32.93 335,-33 299.89,-33.2 291.11,-33.22 256,-33 247.61,-32.95 238.73,-32.86 230.06,-32.77"/>
-<polygon fill="#000000" stroke="#000000" points="230.05,-29.27 220.01,-32.65 229.97,-36.27 230.05,-29.27"/>
-</g>
-<!-- module~root_module -->
-<g id="module~~ddeabm_module~~UsesGraph_node3" class="node">
-<title>module~root_module</title>
-<g id="a_module~~ddeabm_module~~UsesGraph_node3"><a xlink:href=".././module/root_module.html" xlink:title="root_module">
-<polygon fill="#337ab7" stroke="#337ab7" points="335,-24 256,-24 256,0 335,0 335,-24"/>
-<text text-anchor="middle" x="295.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">root_module</text>
-</a>
-</g>
-</g>
-<!-- module~ddeabm_module&#45;&gt;module~root_module -->
-<g id="module~~ddeabm_module~~UsesGraph_edge2" class="edge">
-<title>module~ddeabm_module&#45;&gt;module~root_module</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M370.66,-23.87C362.2,-22.51 353.45,-21.11 345.05,-19.77"/>
-<polygon fill="#000000" stroke="#000000" points="345.45,-16.29 335.02,-18.16 344.35,-23.2 345.45,-16.29"/>
+<title>module~ddeabm_module&#45;&gt;root_module</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M129.65,-41.06C118.81,-42.78 107.39,-44.59 96.63,-46.29"/>
+<polygon fill="#000000" stroke="#000000" points="95.9,-42.86 86.57,-47.89 96.99,-49.78 95.9,-42.86"/>
 </g>
 <!-- iso_fortran_env -->
-<g id="module~~ddeabm_module~~UsesGraph_node4" class="node">
+<g id="module~~ddeabm_module~~UsesGraph_node3" class="node">
 <title>iso_fortran_env</title>
-<g id="a_module~~ddeabm_module~~UsesGraph_node4"><a xlink:href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html" xlink:title="iso_fortran_env">
-<polygon fill="#337ab7" stroke="#337ab7" points="94,-44 0,-44 0,-20 94,-20 94,-44"/>
-<text text-anchor="middle" x="47" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+<g id="a_module~~ddeabm_module~~UsesGraph_node3"><a xlink:href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="94,-24 0,-24 0,0 94,0 94,-24"/>
+<text text-anchor="middle" x="47" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
 </a>
 </g>
 </g>
-<!-- module~ddeabm_kinds&#45;&gt;iso_fortran_env -->
-<g id="module~~ddeabm_module~~UsesGraph_edge3" class="edge">
-<title>module~ddeabm_kinds&#45;&gt;iso_fortran_env</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M129.93,-32C121.76,-32 113.12,-32 104.63,-32"/>
-<polygon fill="#000000" stroke="#000000" points="104.4,-28.5 94.4,-32 104.4,-35.5 104.4,-28.5"/>
-</g>
-<!-- module~root_module&#45;&gt;module~ddeabm_kinds -->
-<g id="module~~ddeabm_module~~UsesGraph_edge4" class="edge">
-<title>module~root_module&#45;&gt;module~ddeabm_kinds</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M255.7,-18.55C247.55,-19.92 238.81,-21.4 230.21,-22.85"/>
-<polygon fill="#000000" stroke="#000000" points="229.51,-19.42 220.23,-24.53 230.67,-26.32 229.51,-19.42"/>
+<!-- module~ddeabm_module&#45;&gt;iso_fortran_env -->
+<g id="module~~ddeabm_module~~UsesGraph_edge2" class="edge">
+<title>module~ddeabm_module&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M129.65,-24.94C121.35,-23.63 112.71,-22.26 104.28,-20.92"/>
+<polygon fill="#000000" stroke="#000000" points="104.58,-17.42 94.16,-19.32 103.48,-24.34 104.58,-17.42"/>
 </g>
 </g>
 </svg>
@@ -473,194 +322,110 @@
     </p>
     </div></div></div></div>
       </li>
-      
       </ul>
     </div>
-    
 
     
-    
-
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
-      
-<h3>Contents</h3>
+      <h3>Contents</h3>
  
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
-      
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-ddeabm_rk">ddeabm_rk</a>
+      <a class="list-group-item" href="../module/ddeabm_module.html#variable-wp">wp</a>
       <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach2">d1mach2</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#variable-d1mach4">d1mach4</a>
-      
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#absints-1">Abstract Interfaces</a></h3></div>
   <div id="absints-1" class="panel-collapse collapse">
     <div class="list-group">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-bracket_func">bracket_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-bracket_func_vec">bracket_func_vec</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-deriv_func">deriv_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-report_func">report_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func">event_func</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#interface-event_func_vec">event_func_vec</a>
-      
     </div>
   </div>
 </div>
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#types-1">Derived Types</a></h3></div>
   <div id="types-1" class="panel-collapse collapse">
     <div class="list-group">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_class">ddeabm_class</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class">ddeabm_with_event_class</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#type-ddeabm_with_event_class_vec">ddeabm_with_event_class_vec</a>
-      
     </div>
   </div>
 </div>
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#funcs-1">Functions</a></h3></div>
   <div id="funcs-1" class="panel-collapse collapse">
     <div class="list-group">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhvnrm">dhvnrm</a>
-      
     </div>
   </div>
 </div>
-
-
-
 <div class="panel panel-primary">
   <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#subs-1">Subroutines</a></h3></div>
   <div class="list-group">
     <div id="subs-1" class="panel-collapse collapse">
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_stop_integration">ddeabm_stop_integration</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_new_problem">ddeabm_new_problem</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_initialize">ddeabm_initialize</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize">ddeabm_with_event_initialize</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_initialize_vec">ddeabm_with_event_initialize_vec</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-destroy_ddeabm">destroy_ddeabm</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_wrapper">ddeabm_wrapper</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper">ddeabm_with_event_wrapper</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_interp">ddeabm_interp</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm_with_event_wrapper_vec">ddeabm_with_event_wrapper_vec</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddeabm">ddeabm</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-ddes">ddes</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dhstrt">dhstrt</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dintp">dintp</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-dsteps">dsteps</a>
-      
       <a class="list-group-item" href="../module/ddeabm_module.html#proc-report_error">report_error</a>
-      
     </div>
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
     </section>
     <br class="visible-xs visible-sm hidden-md">
 
-    
 
-    
     <section>
     <h2>Variables</h2>
-    
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th>
-
-<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-
-
-
+    <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
+  <td><span class="anchor" id="variable-ddeabm_rk"></span>integer,</td>
+<td>public,</td>  <td>parameter</td><td>::</td>
+  <td><strong>ddeabm_rk</strong></td><td> =</td><td>real64</td><td><p>real kind used by this module [8 bytes]</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-wp"></span>integer,</td>
+<td>private,</td>  <td>parameter</td><td>::</td>
+  <td><strong>wp</strong></td><td> =</td><td>ddeabm_rk</td><td><p>local copy of <code>ddeabm_rk</code> with a shorter name</p></td>
+</tr>
+<tr>
   <td><span class="anchor" id="variable-d1mach2"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>parameter</td><td>::</td>
+<td>private,</td>  <td>parameter</td><td>::</td>
   <td><strong>d1mach2</strong></td><td> =</td><td>huge(1.0_wp)</td><td><p>the largest magnitude</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-d1mach4"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>parameter</td><td>::</td>
+<td>private,</td>  <td>parameter</td><td>::</td>
   <td><strong>d1mach4</strong></td><td> =</td><td>epsilon(1.0_wp)</td><td><p>the largest relative spacing</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
@@ -668,765 +433,297 @@
     <br>
     
     
-    
-    
-    
 
-    
     <section>
      <h2>Abstract Interfaces</h2>
-   
-     
-<div class="panel panel-default">
+     <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-bracket_func"></span><h3>abstract interface
-    
   </h3></div>
-  
   <ul class="list-group">
     <li class="list-group-item">
+    <h3>private function bracket_func(me, t1, t2, x1, x2, g1, g2) result(bracketed)</h3><p>function to determine if a root is bracketed</p>
     
-    
-    <h3>
-private function bracket_func(me, t1, t2, x1, x2, g1, g2) result(bracketed)
-    
-    
-   
-</h3>
-    
-
-
-
-<p>function to determine if a root is bracketed</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t1</strong></td><td><p>first time point</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t2</strong></td><td><p>second time point</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x1</strong></td><td><p>state at t1</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x2</strong></td><td><p>state at t1</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g1</strong></td><td><p>event function value at t1</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g2</strong></td><td><p>event function value at t2</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
-
-  
-  
-  
-  
-     <h4>Return Value <small>logical
-  </small></h4>
-  <p>if the root is bracketed</p>
-    
+<h4>Return Value <small>logical</small></h4>  <p>if the root is bracketed</p>
 
     </li>
   </ul>
 </div>
 
-    
-     
-<div class="panel panel-default">
+     <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-bracket_func_vec"></span><h3>abstract interface
-    
   </h3></div>
-  
   <ul class="list-group">
     <li class="list-group-item">
+    <h3>private function bracket_func_vec(me, ig, t1, t2, x1, x2, g1, g2) result(bracketed)</h3><p>function to determine if a root is bracketed (vector event version)</p>
     
-    
-    <h3>
-private function bracket_func_vec(me, ig, t1, t2, x1, x2, g1, g2) result(bracketed)
-    
-    
-   
-</h3>
-    
-
-
-
-<p>function to determine if a root is bracketed (vector event version)</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>ig</strong></td><td><p>the event function number</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t1</strong></td><td><p>first time point</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t2</strong></td><td><p>second time point</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x1</strong></td><td><p>state at t1</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x2</strong></td><td><p>state at t1</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g1</strong></td><td><p>event function ig value at t1</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g2</strong></td><td><p>event function ig value at t2</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
-
-  
-  
-  
-  
-     <h4>Return Value <small>logical
-  </small></h4>
-  <p>if the root is bracketed</p>
-    
+<h4>Return Value <small>logical</small></h4>  <p>if the root is bracketed</p>
 
     </li>
   </ul>
 </div>
 
-    
-     
-<div class="panel panel-default">
+     <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-deriv_func"></span><h3>abstract interface
-    
   </h3></div>
-  
   <ul class="list-group">
     <li class="list-group-item">
+    <h3>private subroutine deriv_func(me, t, x, xdot)</h3><p>Interface to the <a href="../type/ddeabm_class.html">ddeabm_class</a> derivative function.</p><a href="../interface/deriv_func.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    
-    <h3>
-private subroutine deriv_func(me, t, x, xdot)
-    
-    
-   
-</h3>
-    
-
-
-
-<p>Interface to the <a href="../type/ddeabm_class.html">ddeabm_class</a> derivative function.</p><a href="../interface/deriv_func.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td><p>time</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x</strong></td><td><p>state</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(out),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>xdot</strong></td><td><p>derivative of state (<script type="math/tex"> dx/dt </script>)</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
     </li>
   </ul>
 </div>
 
-    
-     
-<div class="panel panel-default">
+     <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-report_func"></span><h3>abstract interface
-    
   </h3></div>
-  
   <ul class="list-group">
     <li class="list-group-item">
+    <h3>private subroutine report_func(me, t, x)</h3><p>Interface to the step reporting function.</p>
     
-    
-    <h3>
-private subroutine report_func(me, t, x)
-    
-    
-   
-</h3>
-    
-
-
-
-<p>Interface to the step reporting function.</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td><p>time</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x</strong></td><td><p>state</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
     </li>
   </ul>
 </div>
 
-    
-     
-<div class="panel panel-default">
+     <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-event_func"></span><h3>abstract interface
-    
   </h3></div>
-  
   <ul class="list-group">
     <li class="list-group-item">
+    <h3>private subroutine event_func(me, t, x, g)</h3><p>Interface to the <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> scalar event function.</p>
     
-    
-    <h3>
-private subroutine event_func(me, t, x, g)
-    
-    
-   
-</h3>
-    
-
-
-
-<p>Interface to the <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> scalar event function.</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td><p>time</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x</strong></td><td><p>state</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g</strong></td><td><p>event function: <script type="math/tex"> g(t,x) </script>.
 The event is located when <script type="math/tex"> g(t,x)=0 </script>.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
     </li>
   </ul>
 </div>
 
-    
-     
-<div class="panel panel-default">
+     <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="interface-event_func_vec"></span><h3>abstract interface
-    
   </h3></div>
-  
   <ul class="list-group">
     <li class="list-group-item">
+    <h3>private subroutine event_func_vec(me, t, x, g, ig)</h3><p>Interface to the <a href="../type/ddeabm_with_event_class_vec.html">ddeabm_with_event_class_vec</a> scalar event function.</p>
     
-    
-    <h3>
-private subroutine event_func_vec(me, t, x, g, ig)
-    
-    
-   
-</h3>
-    
-
-
-
-<p>Interface to the <a href="../type/ddeabm_with_event_class_vec.html">ddeabm_with_event_class_vec</a> scalar event function.</p>
-    
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td><p>time</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>x</strong></td><td><p>state</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(out),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>g</strong></td><td><p>vector event function: <script type="math/tex"> g(t,x) </script>.
 The event is located when any <script type="math/tex"> g(t,x)=0 </script>.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>ig</strong></td><td><p>the event function to compute:</p>
 <ul>
 <li>if not present, then they are all computed.</li>
@@ -1434,92 +731,44 @@ The event is located when any <script type="math/tex"> g(t,x)=0 </script>.</p></
   the other elements are ignored.</li>
 </ul>
 <p>If <code>i&lt;=0</code> or <code>i&gt;ng</code>, then this is a fatal error.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
     </li>
   </ul>
 </div>
 
-    
     </section>
   <br>
     
-    
-    
     <section>
      <h2>Derived Types</h2>
-   
-     
-<div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_class"></span><h3>type, private :: <a href='../type/ddeabm_class.html'>ddeabm_class</a>
-    
-  </h3></div>
+     <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_class"></span><h3>type, private :: <a href='../type/ddeabm_class.html'>ddeabm_class</a>  </h3></div>
   <div class="panel-body">
-    
-    
     <p>The main DDEABM integration class.</p>
-    
-     
      <h4>Components</h4>
-    
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th>
-
-<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-
-
-
+    <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-neq"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td> =</td><td>0</td><td><p>the number of (first order) differential equations to be integrated (&gt;=0)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-maxnum"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>maxnum</strong></td><td> =</td><td>500</td><td><p>the expense of solving the problem is monitored by counting the
 number of steps attempted. when this exceeds <code>maxnum</code>, the counter
 is reset to zero and the user is informed about possible excessive
 work.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-df"></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>),</td>
-  
-  <td>private,</td>
-  <td>pointer</td><td>::</td>
+<td>private,</td>  <td>pointer</td><td>::</td>
   <td><strong>df</strong></td><td>=> </td><td>null()</td><td><p>to define the system of first order differential equations
 which is to be solved.  for the given values of <code>x</code> and the
 vector <code>u(*)=(u(1),u(2),...,u(neq))</code>, the subroutine must
@@ -1527,2274 +776,923 @@ evaluate the <code>neq</code> components of the system of differential
 equations <code>du/dx=df(x,u)</code> and store the derivatives in the
 array <code>uprime(*)</code>, that is, <code>uprime(i) = du(i)/dx</code> for
 equations <code>i=1,...,neq</code>.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-report"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
-  
-  <td>private,</td>
-  <td>pointer</td><td>::</td>
+<td>private,</td>  <td>pointer</td><td>::</td>
   <td><strong>report</strong></td><td>=> </td><td>null()</td><td><p>a function for reporting the integration steps (optional).
 this can be associated in <a href="../proc/ddeabm_initialize.html">ddeabm_initialize</a> or
 <a href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>, and is enabled
 using the <code>mode</code> argument in <a href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
 or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-scalar_tols"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>scalar_tols</strong></td><td> =</td><td>.true.</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-rtol"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td></td><td></td><td><p>the user input rel tol</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-atol"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td></td><td></td><td><p>the user input abs tol</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-rtol_tmp"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>rtol_tmp</strong></td><td></td><td></td><td><p>rel tol used internally</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-atol_tmp"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>atol_tmp</strong></td><td></td><td></td><td><p>abs tol used internally</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-info"></span>integer,</td>
-  
-  <td>private,</td>
-  <td>dimension(4)</td><td>::</td>
+<td>private,</td>  <td>dimension(4)</td><td>::</td>
   <td><strong>info</strong></td><td> =</td><td>0</td><td><p>info array</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-initial_step_mode"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>initial_step_mode</strong></td><td> =</td><td>1</td><td><p>how to choose the initial step <code>h</code>:</p><a href="../type/ddeabm_class.html#variable-initial_step_mode" class="pull-right"><emph>Read more&hellip;</emph></a></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-initial_step_size"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>initial_step_size</strong></td><td> =</td><td>0.0_wp</td><td><p>when <code>initial_step_mode=3</code>, the <code>h</code> value to use.
 (for the other modes, this will also contain the value used)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-icount"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>icount</strong></td><td> =</td><td>0</td><td><p>replaced <code>iwork(liw)</code> in original code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tprev"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>tprev</strong></td><td> =</td><td>0.0_wp</td><td><p>replaced <code>rwork(itstar)</code> in original code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-two"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(:), allocatable</td><td>::</td>
+<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>two</strong></td><td></td><td></td><td><p>
 <script type="math/tex"> 2^i </script> array</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-gstr"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(:), allocatable</td><td>::</td>
+<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>gstr</strong></td><td></td><td></td><td><p>
 <script type="math/tex"> | \gamma^{*}_i | </script> array</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-ypout"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>ypout</strong></td><td></td><td></td><td><p><code>(neq)</code> contains the approximate derivative
 of the solution component <code>y(i)</code>.  in <a href="../proc/ddeabm.html">ddeabm</a>, it
 is obtained by calling subroutine <code>df</code> to
 evaluate the differential equation using <code>t</code> and
 <code>y(*)</code> when <code>idid=1</code> or <code>2</code>, and by interpolation
 when <code>idid=3</code>.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-yp"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>yp</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-yy"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>yy</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-wt"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>wt</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-p"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>p</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-phi"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>allocatable, dimension(:,:)</td><td>::</td>
+<td>private,</td>  <td>allocatable, dimension(:,:)</td><td>::</td>
   <td><strong>phi</strong></td><td></td><td></td><td><p><code>(neq,16)</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-alpha"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(12)</td><td>::</td>
+<td>private,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>alpha</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-beta"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(12)</td><td>::</td>
+<td>private,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>beta</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-psi"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(12)</td><td>::</td>
+<td>private,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>psi</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-v"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(12)</td><td>::</td>
+<td>private,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>v</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-w"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(12)</td><td>::</td>
+<td>private,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>w</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-sig"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(13)</td><td>::</td>
+<td>private,</td>  <td>dimension(13)</td><td>::</td>
   <td><strong>sig</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-g"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(13)</td><td>::</td>
+<td>private,</td>  <td>dimension(13)</td><td>::</td>
   <td><strong>g</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-gi"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(11)</td><td>::</td>
+<td>private,</td>  <td>dimension(11)</td><td>::</td>
   <td><strong>gi</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-h"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>h</strong></td><td> =</td><td>0.0_wp</td><td><p>the step size <code>h</code> to be attempted on the next step.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-eps"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>eps</strong></td><td> =</td><td>0.0_wp</td><td><p>if the tolerances have been increased by the
 code (<code>idid=-2</code>), they were multiplied by <code>eps</code>.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-x"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>x</strong></td><td> =</td><td>0.0_wp</td><td><p>contains the current value of the
 independent variable, i.e. the farthest point
 integration has reached. this will be different
 from <code>t</code> only when interpolation has been
 performed (<code>idid=3</code>).</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-xold"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>xold</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-hold"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>hold</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-told"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>told</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-delsgn"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>delsgn</strong></td><td> =</td><td>0.0_wp</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tstop"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td> =</td><td>0.0_wp</td><td><p>(see <code>info(4)</code>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-twou"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>twou</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-fouru"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>fouru</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-start"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>start</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-phase1"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>phase1</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-nornd"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>nornd</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-stiff"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>stiff</strong></td><td> =</td><td>.false.</td><td><p>indicator for stiffness detection</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-intout"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>intout</strong></td><td> =</td><td>.false.</td><td><p>indicator for intermediate-output</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-ns"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>ns</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-kord"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>kord</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-kold"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>kold</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-init"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>init</strong></td><td> =</td><td>0</td><td><p>initialization indicator</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-ksteps"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>ksteps</strong></td><td> =</td><td>0</td><td><p>counter for attempted steps</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-kle4"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>kle4</strong></td><td> =</td><td>0</td><td><p>step counter for stiffness detection</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-iquit"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>iquit</strong></td><td> =</td><td>0</td><td><p>termination flag</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-kprev"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>kprev</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-ivc"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>ivc</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-iv"></span>integer,</td>
-  
-  <td>private,</td>
-  <td>dimension(10)</td><td>::</td>
+<td>private,</td>  <td>dimension(10)</td><td>::</td>
   <td><strong>iv</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-kgi"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>kgi</strong></td><td> =</td><td>0</td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-error"></span>logical,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>error</strong></td><td> =</td><td>.false.</td><td><p>will be set in <code>stop_integration</code>.
 indicates an error and to
 abort the integration</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
      
-     
-          
-     
      <h4>Type-Bound Procedures</h4>
       <table class="table table-striped varlist">
       <tbody>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-initialize'>initialize</a></strong>  => ddeabm_initialize </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-integrate'>integrate</a></strong>  => ddeabm_wrapper </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-destroy'>destroy</a></strong>  => destroy_ddeabm </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-first_call'>first_call</a></strong>  => ddeabm_new_problem </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-interpolate'>interpolate</a></strong>  => ddeabm_interp </td>
        <td><p>state interpolation function</p></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
-      
        <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddeabm'>ddeabm</a></strong>  </td>
        <td></td></tr>
-      
        <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddes'>ddes</a></strong>  </td>
        <td></td></tr>
-      
        <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dhstrt'>dhstrt</a></strong>  </td>
        <td></td></tr>
-      
        <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dsteps'>dsteps</a></strong>  </td>
        <td></td></tr>
-      
        </tbody>
        </table>
-     
   </div>
 </div>
 
-     
-     
-<div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class"></span><h3>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>
-    
-  </h3></div>
+     <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class"></span><h3>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>  </h3></div>
   <div class="panel-body">
-    
-    
     <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p><a href="../type/ddeabm_with_event_class.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-    
-     
      <h4>Components</h4>
-    
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th>
-
-<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-
-
-
+    <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tol"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
-  <td><strong>tol</strong></td><td> =</td><td>0.0_wp</td><td><p>tolerance for root finding (see <a href="../proc/zeroin.html">zeroin</a>)</p></td>
-  
+<td>private</td>  <td></td><td>::</td>
+  <td><strong>tol</strong></td><td> =</td><td>0.0_wp</td><td><p>tolerance for root finding </p></td>
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-t_saved"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>t_saved</strong></td><td> =</td><td>0.0_wp</td><td><p>time of last successful step
 (used to continue after a root finding)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-x_saved"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(:), allocatable</td><td>::</td>
+<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>x_saved</strong></td><td></td><td></td><td><p>state of last successful step.  size <code>(neq)</code>.
 (used to continue after a root finding)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-gfunc"></span>procedure(<a href='../interface/event_func.html'>event_func</a>),</td>
-  
-  <td>private,</td>
-  <td>pointer</td><td>::</td>
+<td>private,</td>  <td>pointer</td><td>::</td>
   <td><strong>gfunc</strong></td><td>=> </td><td>null()</td><td><p>event function: g(t,x)=0 at event</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-bracket"></span>procedure(<a href='../interface/bracket_func.html'>bracket_func</a>),</td>
-  
-  <td>private,</td>
-  <td>pointer</td><td>::</td>
+<td>private,</td>  <td>pointer</td><td>::</td>
   <td><strong>bracket</strong></td><td>=> </td><td>null()</td><td><p>a function for determining if the root is bracketed.
 the default just checks for a sign change in the event function.
 the user can specify this to use other conditions.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
      
-     
-          
-     
      <h4>Type-Bound Procedures</h4>
       <table class="table table-striped varlist">
       <tbody>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-initialize'>initialize</a></strong>  => ddeabm_initialize </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-integrate'>integrate</a></strong>  => ddeabm_wrapper </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-destroy'>destroy</a></strong>  => destroy_ddeabm </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-first_call'>first_call</a></strong>  => ddeabm_new_problem </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-interpolate'>interpolate</a></strong>  => ddeabm_interp </td>
        <td><p>state interpolation function</p></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-initialize_event'>initialize_event</a></strong>  => ddeabm_with_event_initialize </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-integrate_to_event'>integrate_to_event</a></strong>  => ddeabm_with_event_wrapper </td>
        <td><p>main routine for integration to an event
 (note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p></td></tr>
-      
        </tbody>
        </table>
-     
   </div>
 </div>
 
-     
-     
-<div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class_vec"></span><h3>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>
-    
-  </h3></div>
+     <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class_vec"></span><h3>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>  </h3></div>
   <div class="panel-body">
-    
-    
     <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding)
 of a vector function (it will stop on the first root it encounters)</p><a href="../type/ddeabm_with_event_class_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
-    
-     
      <h4>Components</h4>
-    
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th>
-
-<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-
-
-
+    <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-n_g_eqns"></span>integer,</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>n_g_eqns</strong></td><td> =</td><td>0</td><td><p>number of <code>gfunc</code> event equations</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-tol~2"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(:), allocatable</td><td>::</td>
-  <td><strong>tol</strong></td><td></td><td></td><td><p>tolerance for root finding (see <a href="../proc/zeroin.html">zeroin</a>)
+<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
+  <td><strong>tol</strong></td><td></td><td></td><td><p>tolerance for root finding.
 this is a vector (size <code>n_g_eqns</code>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-t_saved~2"></span>real(kind=wp),</td>
-  
-  <td>private</td>
-  <td></td><td>::</td>
+<td>private</td>  <td></td><td>::</td>
   <td><strong>t_saved</strong></td><td> =</td><td>0.0_wp</td><td><p>time of last successful step
 (used to continue after a root finding)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-x_saved~2"></span>real(kind=wp),</td>
-  
-  <td>private,</td>
-  <td>dimension(:), allocatable</td><td>::</td>
+<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>x_saved</strong></td><td></td><td></td><td><p>state of last successful step.  size <code>(neq)</code>.
 (used to continue after a root finding)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-gfunc~2"></span>procedure(<a href='../interface/event_func_vec.html'>event_func_vec</a>),</td>
-  
-  <td>private,</td>
-  <td>pointer</td><td>::</td>
+<td>private,</td>  <td>pointer</td><td>::</td>
   <td><strong>gfunc</strong></td><td>=> </td><td>null()</td><td><p>event function: g(t,x)=0 at event</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" id="variable-bracket~2"></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
-  
-  <td>private,</td>
-  <td>pointer</td><td>::</td>
+<td>private,</td>  <td>pointer</td><td>::</td>
   <td><strong>bracket</strong></td><td>=> </td><td>null()</td><td><p>a function for determining if the root is bracketed.
 the default just checks for a sign change in the event function.
 the user can specify this to use other conditions.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
      
-     
-          
-     
      <h4>Type-Bound Procedures</h4>
       <table class="table table-striped varlist">
       <tbody>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-initialize'>initialize</a></strong>  => ddeabm_initialize </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-integrate'>integrate</a></strong>  => ddeabm_wrapper </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-destroy'>destroy</a></strong>  => destroy_ddeabm </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-first_call'>first_call</a></strong>  => ddeabm_new_problem </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-interpolate'>interpolate</a></strong>  => ddeabm_interp </td>
        <td><p>state interpolation function</p></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class_vec.html#boundprocedure-initialize_event~2'>initialize_event</a></strong>  => ddeabm_with_event_initialize_vec </td>
        <td></td></tr>
-      
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class_vec.html#boundprocedure-integrate_to_event~2'>integrate_to_event</a></strong>  => ddeabm_with_event_wrapper_vec </td>
        <td><p>main routine for integration to an event
 (note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p></td></tr>
-      
        </tbody>
        </table>
-     
   </div>
 </div>
 
-     
     </section>
   <br>
     
-    
-     
+ 
     <section>
     <h2>Functions</h2>
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-dhvnrm"></span><h3>
-private function <a href='../proc/dhvnrm.html'>dhvnrm</a>(v, n) result(m)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-dhvnrm"></span><h3>private function <a href='../proc/dhvnrm.html'>dhvnrm</a>(v, n) result(m)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
     <dt>Date</dt><dd>7/1/2014</dd>
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Compute the maximum norm of the first <code>n</code> elements of vector <code>v</code>.
  Replacement for the original <a href="http://www.netlib.org/slatec/src/dhvnrm.f">SLATEC</a> routine.</p>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>v</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>n</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
-
-  
-  
-  
-  
-     <h4>Return Value <small>real(kind=wp)
-  </small></h4>
-  
-    
+<h4>Return Value <small>real(kind=wp)</small></h4>  
 
   </div>
   </div>
 
-    
     </section>
     <br>
-    
 
-    
     <section>
     <h2>Subroutines</h2>
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_stop_integration"></span><h3>
-private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a>(me)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_stop_integration"></span><h3>private subroutine <a href='../proc/ddeabm_stop_integration.html'>ddeabm_stop_integration</a>(me)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Call this to abort the integration if there is an error.
   (Can be called in <code>df</code> by the user.) The step
   will be considered invalid and not returned.</p><a href="../proc/ddeabm_stop_integration.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_new_problem"></span><h3>
-private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem</a>(me)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_new_problem"></span><h3>private subroutine <a href='../proc/ddeabm_new_problem.html'>ddeabm_new_problem</a>(me)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Call this to indicate that a new problem is being solved.
  It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_initialize"></span><h3>
-private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a>(me, neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_initialize"></span><h3>private subroutine <a href='../proc/ddeabm_initialize.html'>ddeabm_initialize</a>(me, neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Initialize the <a href="../type/ddeabm_class.html">ddeabm_class</a>, and set the variables that
  cannot be changed during a problem.</p>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td><p>number of equations to be integrated</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>maxnum</strong></td><td><p>maximum number of integration steps allowed</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>df</strong></td><td><p>derivative function dx/dt</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td><p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td><p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>report</strong></td><td><p>reporting function</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p>
 <ol>
 <li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
 <li>Use the older (quicker) algorithm.</li>
 <li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
 </ol></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>initial_step_size</strong></td><td><p>for <code>initial_step_mode=3</code></p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_initialize"></span><h3>
-private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report, bracket, initial_step_mode, initial_step_size)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_initialize"></span><h3>private subroutine <a href='../proc/ddeabm_with_event_initialize.html'>ddeabm_with_event_initialize</a>(me, neq, maxnum, df, rtol, atol, g, root_tol, report, bracket, initial_step_mode, initial_step_size)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Initialize <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> class,
   and set the variables that cannot be changed during a problem.</p><a href="../proc/ddeabm_with_event_initialize.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td><p>number of equations to be integrated</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>maxnum</strong></td><td><p>maximum number of integration steps allowed</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>df</strong></td><td><p>derivative function <script type="math/tex"> dx/dt </script>
 </p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td><p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td><p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/event_func.html'>event_func</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g</strong></td><td><p>Event function <script type="math/tex"> g(t,x) </script>. This should be a smooth function
 than can have values <script type="math/tex"> <0 </script> and <script type="math/tex"> \ge 0 </script>.
 When <script type="math/tex"> g=0 </script> (within the tolerance),
 then a root has been located and
 the integration will stop.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>root_tol</strong></td><td><p>tolerance for the root finding (see <a href="../proc/zeroin.html">zeroin</a>)</p></td>
-  
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
+  <td><strong>root_tol</strong></td><td><p>tolerance for the root finding </p></td>
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>report</strong></td><td><p>reporting function</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/bracket_func.html'>bracket_func</a>),</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
 the default is used.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p>
 <ol>
 <li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
 <li>Use the older (quicker) algorithm.</li>
 <li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
 </ol></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>initial_step_size</strong></td><td><p>for <code>initial_step_mode=3</code></p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_initialize_vec"></span><h3>
-private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a>(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report, bracket, initial_step_mode, initial_step_size)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_initialize_vec"></span><h3>private subroutine <a href='../proc/ddeabm_with_event_initialize_vec.html'>ddeabm_with_event_initialize_vec</a>(me, neq, maxnum, df, rtol, atol, ng, g, root_tol, report, bracket, initial_step_mode, initial_step_size)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Initialize <a href="../type/ddeabm_with_event_class_vec.html">ddeabm_with_event_class_vec</a> class,
   and set the variables that cannot be changed during a problem.</p><a href="../proc/ddeabm_with_event_initialize_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td><p>number of equations to be integrated</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>maxnum</strong></td><td><p>maximum number of integration steps allowed</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>df</strong></td><td><p>derivative function <script type="math/tex"> dx/dt </script>
 </p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td><p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td><p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ng</strong></td><td><p>number of event functions in <code>g</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/event_func_vec.html'>event_func_vec</a>)</td>
-  <td></td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>g</strong></td><td><p>Event function <script type="math/tex"> g(t,x) </script>. This should be a smooth function
 than can have values <script type="math/tex"> <0 </script> and <script type="math/tex"> \ge 0 </script>.
 When <script type="math/tex"> g=0 </script> (within the tolerance),
 then a root has been located and
 the integration will stop.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
-  <td><strong>root_tol</strong></td><td><p>tolerance for the root finding (see <a href="../proc/zeroin.html">zeroin</a>).
+<td>intent(in),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
+  <td><strong>root_tol</strong></td><td><p>tolerance for the root finding.
 This should be sized <code>ng</code> or <code>1</code> (in which
 case the value is used for all elements)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>report</strong></td><td><p>reporting function</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
-  <td></td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td></td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>bracket</strong></td><td><p>root bracketing function. if not present,
 the default is used.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>initial_step_mode</strong></td><td><p>how to choose the initial step <code>h</code>:</p>
 <ol>
 <li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
 <li>Use the older (quicker) algorithm.</li>
 <li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
 </ol></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>initial_step_size</strong></td><td><p>for <code>initial_step_mode=3</code></p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-destroy_ddeabm"></span><h3>
-private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-destroy_ddeabm"></span><h3>private subroutine <a href='../proc/destroy_ddeabm.html'>destroy_ddeabm</a>(me)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Destructor for <a href="../type/ddeabm_class.html">ddeabm_class</a>.</p>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_wrapper"></span><h3>
-private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, t, y, tout, tstop, idid, integration_mode, tstep)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_wrapper"></span><h3>private subroutine <a href='../proc/ddeabm_wrapper.html'>ddeabm_wrapper</a>(me, t, y, tout, tstop, idid, integration_mode, tstep)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(me%neq)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tout</strong></td><td><p>time at which a solution is desired.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
 past a point <code>tstop</code> because a discontinuity occurs there
 or the solution or its derivative is not defined beyond
@@ -3802,190 +1700,82 @@ or the solution or its derivative is not defined beyond
 you have told the code not to integrate past <code>tstop</code>.
 in this case any <code>tout</code> beyond <code>tstop</code> is invalid input.
 [not used if not present]</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
 you must monitor this integer variable to
 decide what action to take next.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
 <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, no reporting [default].
 <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, report each step.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for <code>integration_mode=2</code>.
 If not present, then default integrator steps are used.
 If <code>integration_mode=1</code>, then this is ignored.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_wrapper"></span><h3>
-private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_wrapper"></span><h3>private subroutine <a href='../proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a>(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding.
   It will integrate until <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
   this manually)</p><a href="../proc/ddeabm_with_event_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(me%neq)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
 (if root not located, it will integrate to <code>tmax</code>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
 past a point <code>tstop</code> because a discontinuity occurs there
 or the solution or its derivative is not defined beyond
@@ -3993,319 +1783,138 @@ or the solution or its derivative is not defined beyond
 you have told the code not to integrate past <code>tstop</code>.
 in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
 [not used if not present]</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
 you must monitor this integer variable to
 decide what action to take next.
 <code>idid=1000</code> means a root was found.
 See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>gval</strong></td><td><p>value of the event function <code>g(t,x)</code> at the final time <code>t</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
 <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
  no reporting [default].
 <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
  report each step.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for reporting and
 evaluation of event function. If not present,
 then default integrator steps are used.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>continue</strong></td><td><p>to continue after a previous event location.
 This option can be used after a previous call to this routine
 has found an event, to continue integration to the next event
 without having to restart the integration. It will not report
 the initial point (which would have been reported as the last
 point of the previous call).</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_interp"></span><h3>
-private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, tc, yc)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_interp"></span><h3>private subroutine <a href='../proc/ddeabm_interp.html'>ddeabm_interp</a>(me, tc, yc)</h3></div>
   <div class="panel-body">
        
-    
-
-
-
-
-
-
-
 <p>Interpolation function. Can be used for dense output after a step.
 It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tc</strong></td><td><p>point at which solution is desired</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
+<td>intent(out),</td>
+  <td></td>  <td>dimension(me%neq)</td><td>::</td>
   <td><strong>yc</strong></td><td><p>interpolated state at <code>tc</code></p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_wrapper_vec"></span><h3>
-private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a>(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm_with_event_wrapper_vec"></span><h3>private subroutine <a href='../proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a>(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding for multiple functions.
   It will integrate until any <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
   this manually)</p><a href="../proc/ddeabm_with_event_wrapper_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(me%neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(me%neq)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
 (if root not located, it will integrate to <code>tmax</code>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
 past a point <code>tstop</code> because a discontinuity occurs there
 or the solution or its derivative is not defined beyond
@@ -4313,1167 +1922,480 @@ or the solution or its derivative is not defined beyond
 you have told the code not to integrate past <code>tstop</code>.
 in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
 [not used if not present]</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
 you must monitor this integer variable to
 decide what action to take next.
 <code>idid&gt;1000</code> means a root was found for the
 (<code>idid-1000</code>)th <code>g</code> function.
 See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(out),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>gval</strong></td><td><p>value of the event functions <code>g(t,x)</code> at the final time <code>t</code></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>integration_mode</strong></td><td><p>Step mode:
 <em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
  no reporting [default].
 <em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
  report each step.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>tstep</strong></td><td><p>Fixed time step to use for reporting and
 evaluation of event function. If not present,
 then default integrator steps are used.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
+<td>intent(in),</td>
+  <td>optional</td>  <td></td><td>::</td>
   <td><strong>continue</strong></td><td><p>to continue after a previous event location.
 This option can be used after a previous call to this routine
 has found an event, to continue integration to the next event
 without having to restart the integration. It will not report
 the initial point (which would have been reported as the last
 point of the previous call).</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm"></span><h3>
-private subroutine <a href='../proc/ddeabm.html'>ddeabm</a>(me, neq, t, y, tout, info, rtol, atol, idid)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddeabm"></span><h3>private subroutine <a href='../proc/ddeabm.html'>ddeabm</a>(me, neq, t, y, tout, info, rtol, atol, idid)</h3></div>
   <div class="panel-body">
        
-    
-
-
-
-
-
-
-
 <p>solve an initial value problem in ordinary differential
   equations using an adams-bashforth method.</p><a href="../proc/ddeabm.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td><p>the number of (first order) differential
 equations to be integrated. (neq &gt;= 1)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td><p>value of the independent variable. 
 on input, set it to the initial point of 
 the integration. the code changes its value.
 on output, the solution was successfully 
 advanced to the output value of t.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tout</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(4)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(4)</td><td>::</td>
   <td><strong>info</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>idid</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-ddes"></span><h3>
-private subroutine <a href='../proc/ddes.html'>ddes</a>(me, neq, t, y, tout, info, rtol, atol, idid, ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi, h, eps, x, xold, hold, told, delsgn, tstop, twou, fouru, start, phase1, nornd, stiff, intout, ns, kord, kold, init, ksteps, kle4, iquit, kprev, ivc, iv, kgi)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-ddes"></span><h3>private subroutine <a href='../proc/ddes.html'>ddes</a>(me, neq, t, y, tout, info, rtol, atol, idid, ypout, yp, yy, wt, p, phi, alpha, beta, psi, v, w, sig, g, gi, h, eps, x, xold, hold, told, delsgn, tstop, twou, fouru, start, phase1, nornd, stiff, intout, ns, kord, kold, init, ksteps, kle4, iquit, kprev, ivc, iv, kgi)</h3></div>
   <div class="panel-body">
        
-    
-
-
-
-
-
-
-
 <p><a href="../proc/ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
   inconvenience of a long call list.  consequently ddes is used as
   described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddes.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>t</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tout</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(4)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(4)</td><td>::</td>
   <td><strong>info</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(:)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>idid</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>ypout</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>yp</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>yy</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>wt</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>p</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq,16)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq,16)</td><td>::</td>
   <td><strong>phi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>alpha</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>beta</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>psi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>v</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>w</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(13)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(13)</td><td>::</td>
   <td><strong>sig</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(13)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(13)</td><td>::</td>
   <td><strong>g</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(11)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(11)</td><td>::</td>
   <td><strong>gi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>h</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>eps</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>x</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>xold</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>hold</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>told</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>delsgn</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>twou</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>fouru</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>start</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>phase1</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>nornd</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>stiff</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>intout</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ns</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kord</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kold</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>init</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ksteps</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kle4</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>iquit</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kprev</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ivc</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(10)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(10)</td><td>::</td>
   <td><strong>iv</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kgi</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-dhstrt"></span><h3>
-private subroutine <a href='../proc/dhstrt.html'>dhstrt</a>(me, neq, a, b, y, yprime, etol, morder, small, big, spy, pv, yp, sf, h)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-dhstrt"></span><h3>private subroutine <a href='../proc/dhstrt.html'>dhstrt</a>(me, neq, a, b, y, yprime, etol, morder, small, big, spy, pv, yp, sf, h)</h3></div>
   <div class="panel-body">
        
-    
-
-
-
-
-
-
-
 <p>Computes a starting step size to be used in solving initial
   value problems in ordinary differential equations.</p><a href="../proc/dhstrt.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td><p>the number of (first order) differential equations to be integrated.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>a</strong></td><td><p>the initial point of integration.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>b</strong></td><td><p>a value of the independent variable used to define
 the direction of integration. a reasonable choice is to
 set <code>b</code> to the first point at which a solution is desired.
@@ -5484,90 +2406,45 @@ not compute a starting step length which is bigger than
 (it is presumed that dhstrt has been called with <code>b</code>
 different from <code>a</code> on the machine being used. also see the
 discussion about the parameter <code>small</code>.)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>y</strong></td><td><p>the vector of initial values of the <code>neq</code> solution
 components at the initial point <code>a</code>.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>yprime</strong></td><td><p>the vector of derivatives of the <code>neq</code>
 solution components at the initial point <code>a</code>.
 (defined by the differential equations in subroutine <code>me%df</code>)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>etol</strong></td><td><p>the vector of error tolerances corresponding to
 the <code>neq</code> solution components. it is assumed that all
 elements are positive. following the first integration
 step, the tolerances are expected to be used by the
 integrator in an error test which roughly requires that
 <code>abs(local error) &lt;= etol</code> for each vector component.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>morder</strong></td><td><p>the order of the formula which will be used by
 the initial value method for taking the first integration
 step.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>small</strong></td><td><p>a small positive machine dependent constant
 which is used for protecting against computations with
 numbers which are too small relative to the precision of
@@ -5579,1112 +2456,460 @@ increments of variables for approximating derivatives by
 differences.  also the algorithm will not compute a
 starting step length which is smaller than
 <code>100.0_wp*small*abs(a)</code>.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>big</strong></td><td><p>a large positive machine dependent constant which
 is used for preventing machine overflows. a reasonable
 choice is to set big to (approximately) the square root of
 the largest double precision number which can be held in
 the machine.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>spy</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>pv</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>yp</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neq)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neq)</td><td>::</td>
   <td><strong>sf</strong></td><td><p>work array of length <code>neq</code> which provide the routine with needed storage space.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(out)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>h</strong></td><td><p>appropriate starting step size to be attempted by the
 differential equation method.</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-dintp"></span><h3>
-private subroutine <a href='../proc/dintp.html'>dintp</a>(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi, gi, alpha, og, ow, ox, oy)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-dintp"></span><h3>private subroutine <a href='../proc/dintp.html'>dintp</a>(x, y, xout, yout, ypout, neqn, kold, phi, ivc, iv, kgi, gi, alpha, og, ow, ox, oy)</h3></div>
   <div class="panel-body">
        
-    
-
-
-
-
-
-
-
 <p>approximate the solution at <code>xout</code> by evaluating the
   polynomial computed in <a href="../proc/dsteps.html">dsteps</a> at <code>xout</code>.  must be used in
   conjunction with <a href="../proc/dsteps.html">dsteps</a>.</p><a href="../proc/dintp.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>x</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>y</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>xout</strong></td><td><p>point at which solution is desired</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(out),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>yout</strong></td><td><p>solution at xout</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(out),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(out),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>ypout</strong></td><td><p>derivative of solution at xout</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neqn</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kold</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(neqn,16)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(neqn,16)</td><td>::</td>
   <td><strong>phi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ivc</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(10)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(10)</td><td>::</td>
   <td><strong>iv</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kgi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(11)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(11)</td><td>::</td>
   <td><strong>gi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>alpha</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(13)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(13)</td><td>::</td>
   <td><strong>og</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>ow</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ox</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(in),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(in),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>oy</strong></td><td></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-dsteps"></span><h3>
-private subroutine <a href='../proc/dsteps.html'>dsteps</a>(me, neqn, y, x, h, eps, wt, start, hold, k, kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g, phase1, ns, nornd, ksteps, twou, fouru, xold, kprev, ivc, iv, kgi, gi)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-dsteps"></span><h3>private subroutine <a href='../proc/dsteps.html'>dsteps</a>(me, neqn, y, x, h, eps, wt, start, hold, k, kold, crash, phi, p, yp, psi, alpha, beta, sig, v, w, g, phase1, ns, nornd, ksteps, twou, fouru, xold, kprev, ivc, iv, kgi, gi)</h3></div>
   <div class="panel-body">
        
-    
-
-
-
-
-
-
-
 <p>integrate a system of first order ordinary differential equations one step.</p><a href="../proc/dsteps.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>me</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>neqn</strong></td><td><p>number of equations to be integrated</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>y</strong></td><td><p>solution vector at x</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>x</strong></td><td><p>independent variable</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>h</strong></td><td><p>appropriate step size for next step.  normally determined by code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>eps</strong></td><td><p>local error tolerance</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>wt</strong></td><td><p>vector of weights for error criterion</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>start</strong></td><td><p>logical variable set .true. for first step, .false. otherwise</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>hold</strong></td><td><p>step size used for last successful step</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>k</strong></td><td><p>appropriate order for next step (determined by code)</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kold</strong></td><td><p>order used for last successful step</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>crash</strong></td><td><p>logical variable set .true. when no step can be taken, .false. otherwise.</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neqn,16)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neqn,16)</td><td>::</td>
   <td><strong>phi</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>p</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(neqn)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(neqn)</td><td>::</td>
   <td><strong>yp</strong></td><td><p>derivative of solution vector at x after successful step</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>psi</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>alpha</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>beta</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(13)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(13)</td><td>::</td>
   <td><strong>sig</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>v</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(12)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>w</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(13)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(13)</td><td>::</td>
   <td><strong>g</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>phase1</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ns</strong></td><td><p>number of dsteps taken with size h</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>logical,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>nornd</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ksteps</strong></td><td><p>counter on attempted steps</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>twou</strong></td><td><p>2.*u where u is machine unit roundoff quantity</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>fouru</strong></td><td><p>4.*u where u is machine unit roundoff quantity</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>xold</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kprev</strong></td><td></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>ivc</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(10)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(10)</td><td>::</td>
   <td><strong>iv</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(inout)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(inout)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>kgi</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>real(kind=wp),</td>
-  <td>intent(inout),</td>
-  <td></td>
-  
-  <td>dimension(11)</td><td>::</td>
+<td>intent(inout),</td>
+  <td></td>  <td>dimension(11)</td><td>::</td>
   <td><strong>gi</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
-    
-  <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-report_error"></span><h3>
-private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, messg, nerr, level)
-    
-    
-   
-</h3></div>
+      <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-report_error"></span><h3>private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, messg, nerr, level)</h3></div>
   <div class="panel-body">
-       
-    
-
-
-
-
-
-  <dl class="dl-horizontal">
-    
+         <dl class="dl-horizontal">
     <dt>Author</dt><dd>Jacob Williams</dd>
-    
-    
-    
-    
-    
-    
   </dl>
-
-
 
 <p>Report an error message.</p><a href="../proc/report_error.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
-    <h4>Arguments</h4>
-    
-      
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
+<h4>Arguments</h4>      <table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>character(len=*),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>subrou</strong></td><td><p>subroutine where error occurred</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>character(len=*),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>messg</strong></td><td><p>error message</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>nerr</strong></td><td><p>error code</p></td>
-  
 </tr>
-
-  
-  
-  
-  
 <tr>
-  
   <td><span class="anchor" ></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
+<td>intent(in)</td>
+  <td></td>  <td></td><td>::</td>
   <td><strong>level</strong></td><td><p>[Not used here]
  -1: warning message (once),
  0: warning message,
  1: recoverable error,
  2: fatal error</p></td>
-  
 </tr>
-
 </tbody>
 </table>
 
-      
-    
-    
 
   </div>
   </div>
 
-    
     </section>    
     <br>
-    
-    
     
     </div>
   </div>
 
-  
     <hr>    
     </div> <!-- /container -->
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2021 
-                                          </p>
+        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2022 
+</p>
         </div>
         <div class="col-xs-6 col-md-6">
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-            
-            
           </p>
         </div>
       </div>
@@ -6712,14 +2937,11 @@ private subroutine <a href='../proc/report_error.html'>report_error</a>(subrou, 
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
       });
     </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
     
     <script src="../tipuesearch/tipuesearch_content.js"></script>
     <script src="../tipuesearch/tipuesearch_set.js"></script>
     <script src="../tipuesearch/tipuesearch.js"></script>
-    
     
   </body>
 </html>
