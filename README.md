@@ -24,8 +24,7 @@ This example shows how to integrate a conic orbit (6 state equations) around the
 ```Fortran
 program ddeabm_example
 
-use ddeabm_module
-use ddeabm_kinds
+use ddeabm_module, wp => ddeabm_rk
 
 implicit none
 
@@ -186,7 +185,7 @@ call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,tstep=100.0_wp)
 
 ## Building DDEABM
 
-DDEABM and the test programs will build with any modern Fortran compiler. A [Fortran Package Manager](https://github.com/fortran-lang/fpm) manifest file (`fmp.toml`) is included, so that the library and tests cases can be compiled with FPM. For example:
+DDEABM and the test programs will build with any modern Fortran compiler. A [Fortran Package Manager](https://github.com/fortran-lang/fpm) (FPM) manifest file (`fmp.toml`) is included, so that the library and tests cases can be compiled with FPM. For example:
 
 ```
 fpm build --profile release
@@ -204,6 +203,31 @@ To use `ddeabm` within your fpm project, add the following to your `fpm.toml` fi
 [dependencies]
 ddeabm = { git="https://github.com/jacobwilliams/ddeabm.git" }
 ```
+
+A specific version can also be specified:
+
+```toml
+[dependencies]
+ddeabm = { git="https://github.com/jacobwilliams/ddeabm.git", rev = "2.1.0" }
+```
+
+By default, the library is built with double precision (`real64`) real values. Explicitly specifying the real kind can be done using the following processor flags:
+
+Preprocessor flag | Kind  | Number of bytes
+----------------- | ----- | ---------------
+`REAL32`  | `real(kind=real32)`  | 4
+`REAL64`  | `real(kind=real64)`  | 8
+`REAL128` | `real(kind=real128)` | 16
+
+For example, to build a single precision version of the library, use:
+
+```
+fpm build --profile release --flag "-DREAL32"
+```
+
+### Dependencies
+
+Building the library requires the [roots-fortran](https://github.com/jacobwilliams/roots-fortran) module. Building the tests requires the [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) module. FPM will automatically download the correct versions of both (see `fpm.toml`). 
 
 ## Documentation
 
