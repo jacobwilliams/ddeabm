@@ -6,8 +6,11 @@ description = "Modern Fortran Implementation of the DDEABM Adams-Bashforth Algor
 homepage = "https://github.com/jacobwilliams/ddeabm"
 keywords = ["ODE", "Ordinary Differential Equations", "ODE solver", "Adams-Bashforth-Moulton", "root finding", "DEPAC", "SLATEC"]
 
+[dependencies]
+roots-fortran = { git = "https://github.com/jacobwilliams/roots-fortran", rev = "1.1.0" }
+
 [dev-dependencies]
-pyplot-fortran= { git = "https://github.com/jacobwilliams/pyplot-fortran", rev = "3.1.0" }
+pyplot-fortran = { git = "https://github.com/jacobwilliams/pyplot-fortran", rev = "3.2.0" }
 
 [build]
 auto-executables = false
@@ -49,8 +52,3 @@ main = "ddeabm_test_vec.f90"
 name = "performance_test"
 source-dir = "tests"
 main = "performance_test.f90"
-
-[[test]]
-name = "zeroin_test"
-source-dir = "tests"
-main = "zeroin_test.f90"

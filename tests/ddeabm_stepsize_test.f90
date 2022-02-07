@@ -7,8 +7,7 @@
 
     program ddeabm_stepsize_test
 
-    use ddeabm_kinds
-    use ddeabm_module
+    use ddeabm_module, wp => ddeabm_rk
 
     implicit none
 

@@ -24,8 +24,7 @@ This example shows how to integrate a conic orbit (6 state equations) around the
 ```Fortran
 program ddeabm_example
 
-use ddeabm_module
-use ddeabm_kinds
+use ddeabm_module, wp => ddeabm_rk
 
 implicit none
 

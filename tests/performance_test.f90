@@ -4,14 +4,14 @@
 !  Generates a speed/accuracy plot.
 !
 !@note Requires [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran).
+!      When compiled with FPM, this will automatically be downloaded (see `fpm.toml`)
 !
 !### Results
 !  ![Plot of results](|media|/ddeabm_performance_test.png)
 
     program ddeabm_performance_test
 
-    use ddeabm_module
-    use ddeabm_kinds
+    use ddeabm_module, wp => ddeabm_rk
     use pyplot_module
     use iso_fortran_env
 
@@ -85,22 +85,22 @@
         end do
 
         !generate the plot:
-        call plt%add_plot(dble(err_vec_x),dble(fevals_vec),label='Test '//trim(adjustl(istr))//' r',&
+        call plt%add_plot(err_vec_x,fevals_vec,label='Test '//trim(adjustl(istr))//' r',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
                             markersize=5,linewidth=2,istat=istat)
-        call plt%add_plot(dble(err_vec_y),dble(fevals_vec),label='',&
+        call plt%add_plot(err_vec_y,fevals_vec,label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
                             markersize=5,linewidth=2,istat=istat)
-        call plt%add_plot(dble(err_vec_z),dble(fevals_vec),label='',&
+        call plt%add_plot(err_vec_z,fevals_vec,label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o-',&
                             markersize=5,linewidth=2,istat=istat)
-        call plt%add_plot(dble(err_vec_vx),dble(fevals_vec),label='Test '//trim(adjustl(istr))//' v',&
+        call plt%add_plot(err_vec_vx,fevals_vec,label='Test '//trim(adjustl(istr))//' v',&
                             linestyle=colors(1+mod(j,size(colors)))//'o--',&
                             markersize=5,linewidth=2,istat=istat)
-        call plt%add_plot(dble(err_vec_vy),dble(fevals_vec),label='',&
+        call plt%add_plot(err_vec_vy,fevals_vec,label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o--',&
                             markersize=5,linewidth=2,istat=istat)
-        call plt%add_plot(dble(err_vec_vz),dble(fevals_vec),label='',&
+        call plt%add_plot(err_vec_vz,fevals_vec,label='',&
                             linestyle=colors(1+mod(j,size(colors)))//'o--',&
                             markersize=5,linewidth=2,istat=istat)
 

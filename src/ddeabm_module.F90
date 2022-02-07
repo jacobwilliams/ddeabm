@@ -15,15 +15,43 @@
 !  The original SLATEC code is a public domain work of the US Government.
 !  The modifications are
 !  [Copyright (c) 2014-2018, Jacob Williams](https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE).
+!
+!@note This module depends on [roots-fortran](https://github.com/jacobwilliams/roots-fortran).
+!      When compiled with FPM, this will automatically be downloaded (see `fpm.toml`)
+!
+!@note The default real kind (`wp`) can be
+!      changed using optional preprocessor flags.
+!      This library was built with real kind:
+#ifdef REAL32
+!      `real(kind=real32)` [4 bytes]
+#elif REAL64
+!      `real(kind=real64)` [8 bytes]
+#elif REAL128
+!      `real(kind=real128)` [16 bytes]
+#else
+!      `real(kind=real64)` [8 bytes]
+#endif
 
     module ddeabm_module
 
-    use ddeabm_kinds
-    use root_module, only: zeroin
+    use root_module, only: root_scalar, root_method_brent
+    use iso_fortran_env 
 
     implicit none
 
     private
+
+#ifdef REAL32
+    integer,parameter,public :: ddeabm_rk = real32   !! real kind used by this module [4 bytes]
+#elif REAL64
+    integer,parameter,public :: ddeabm_rk = real64   !! real kind used by this module [8 bytes]
+#elif REAL128
+    integer,parameter,public :: ddeabm_rk = real128  !! real kind used by this module [16 bytes]
+#else
+    integer,parameter,public :: ddeabm_rk = real64   !! real kind used by this module [8 bytes]
+#endif
+
+    integer,parameter :: wp = ddeabm_rk  !! local copy of `ddeabm_rk` with a shorter name
 
     !parameters:
     real(wp),parameter :: d1mach2 = huge(1.0_wp)        !! the largest magnitude
@@ -171,7 +199,7 @@
 
         private
 
-        real(wp) :: tol = 0.0_wp  !! tolerance for root finding (see [[zeroin]])
+        real(wp) :: tol = 0.0_wp  !! tolerance for root finding 
 
         real(wp) :: t_saved = 0.0_wp            !! time of last successful step
                                                 !! (used to continue after a root finding)
@@ -209,7 +237,7 @@
 
         integer :: n_g_eqns = 0 !! number of `gfunc` event equations
 
-        real(wp),dimension(:),allocatable :: tol   !! tolerance for root finding (see [[zeroin]])
+        real(wp),dimension(:),allocatable :: tol   !! tolerance for root finding.
                                                    !! this is a vector (size `n_g_eqns`)
 
         real(wp) :: t_saved = 0.0_wp            !! time of last successful step
@@ -433,7 +461,7 @@
     allocate(me%phi  (neq,16))
 
     !tolerances:
-    ! [for now, we are considering these unchangeable, although they don't have to be]
+    ! [for now, we are considering these unchangeable, although they do not have to be]
 
     vector_tols = size(rtol)==neq .and. size(atol)==neq .and. neq>1
     me%scalar_tols = .not. vector_tols
@@ -526,7 +554,7 @@
                                                               !! When \( g=0 \) (within the tolerance),
                                                               !! then a root has been located and
                                                               !! the integration will stop.
-    real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding (see [[zeroin]])
+    real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding 
     procedure(report_func),optional              :: report    !! reporting function
     procedure(bracket_func),optional             :: bracket   !! root bracketing function. if not present,
                                                               !! the default is used.
@@ -585,7 +613,7 @@
                                                               !! When \( g=0 \) (within the tolerance),
                                                               !! then a root has been located and
                                                               !! the integration will stop.
-    real(wp),dimension(:),intent(in)             :: root_tol  !! tolerance for the root finding (see [[zeroin]]).
+    real(wp),dimension(:),intent(in)             :: root_tol  !! tolerance for the root finding.
                                                               !! This should be sized `ng` or `1` (in which
                                                               !! case the value is used for all elements)
     procedure(report_func),optional              :: report    !! reporting function
@@ -866,7 +894,7 @@
     real(wp) :: t1          !! initial time of an interval
     real(wp) :: t2          !! final time of an interval
     real(wp) :: tzero       !! time where an event occurs in `[t1,t2]`
-    integer :: iflag        !! [[zeroin]] status flag
+    integer :: iflag        !! root finder status flag
     logical :: first        !! flag for the first step
     integer :: mode         !! local copy of integration_mode
     logical :: fixed_step   !! if using the fixed step size `tstep`
@@ -887,7 +915,7 @@
         mode = 1  !default
     end if
     if (present(continue)) then
-        ! if there hasn't yet been a successful
+        ! if there has not yet been a successful
         ! step yet, then proceed as normal without
         ! continuing. Otherwise, enable continue mode.
         continuing = (continue .and. allocated(me%x_saved))
@@ -908,7 +936,7 @@
         ! if continuing, then we reset the t,y inputs
         ! to the values from the last successful step
         ! (note than an event may have been found in the
-        ! last call, so the input values aren't correct)
+        ! last call, so the input values are not correct)
         if (fixed_step) then
             ! we need the first step to be from the
             ! last reported point, not the last
@@ -919,7 +947,7 @@
         end if
         t = me%t_saved
         y = me%x_saved
-        me%info(1) = 1   ! necessary? (doesn't seem to matter)
+        me%info(1) = 1   ! necessary? (does not seem to matter)
     end if
 
     !check for invalid inputs:
@@ -1038,7 +1066,7 @@
 
             root_found = .true.
 
-            ! the users's bracket function can impose
+            ! the user bracket function can impose
             ! additional constraints on the root, so
             ! we check that now if it was associated:
             if (associated(me%bracket)) then
@@ -1048,7 +1076,17 @@
             if (root_found) then
                 ! root somewhere on [t1,t2]
                 ! call the root finder:
-                call zeroin(zeroin_func,t1,t2,me%tol,tzero,gval,iflag,g1,g2)
+                call root_scalar(root_method_brent,&
+                                    fun   = zeroin_func,&
+                                    ax    = t1,&
+                                    bx    = t2,&
+                                    rtol  = me%tol,&
+                                    ftol  = me%tol,&
+                                    xzero = tzero,&
+                                    fzero = gval,&
+                                    iflag = iflag,&
+                                    fax   = g1,&
+                                    fbx   = g2)
                 if (iflag==0) then ! root found at tzero
                     idid = 1000 ! root found
                     !evaluate again to get the final state for output:
@@ -1223,7 +1261,7 @@
         mode = 1  !default
     end if
     if (present(continue)) then
-        ! if there hasn't yet been a successful
+        ! if there has not yet been a successful
         ! step yet, then proceed as normal without
         ! continuing. Otherwise, enable continue mode.
         continuing = (continue .and. allocated(me%x_saved))
@@ -1247,7 +1285,7 @@
         ! if continuing, then we reset the t,y inputs
         ! to the values from the last successful step
         ! (note than an event may have been found in the
-        ! last call, so the input values aren't correct)
+        ! last call, so the input values are not correct)
         if (fixed_step) then
             ! we need the first step to be from the
             ! last reported point, not the last
@@ -1259,17 +1297,17 @@
             !
             ! WARNING: this can happen if the previous step was
             ! larger than t+dt.... in that case, first_dt will be
-            ! the wrong sign (we can't change the direction of integration)...
+            ! the wrong sign (we cannot change the direction of integration)...
             ! what needs to be done is the interp
             ! routine should be called to fill in the rest of the
             ! points until we get past the last step.  TDB !
             !
-            !... we'd also need to check those points for roots...
+            !... we would also need to check those points for roots...
             !
         end if
         t = me%t_saved
         y = me%x_saved
-        me%info(1) = 1   ! necessary? (doesn't seem to matter)
+        me%info(1) = 1   ! necessary? (does not seem to matter)
     end if
 
     !check for invalid inputs:
@@ -1390,7 +1428,7 @@
             do i = 1, me%n_g_eqns
                 root_found(i) = g1(i)*g2(i)<=0.0_wp
             end do
-            ! the users's bracket function can impose
+            ! the user bracket function can impose
             ! additional constraints on the root, so
             ! we check that now if it was associated:
             if (associated(me%bracket)) then
@@ -1425,7 +1463,17 @@
                             ! the ith function
 
                     ! call the root finder:
-                    call zeroin(zeroin_func,t1,t2,me%tol(i),tzero,gval(i),iflag,g1(i),g2(i))
+                    call root_scalar(root_method_brent,&
+                                        fun   = zeroin_func,&
+                                        ax    = t1,&
+                                        bx    = t2,&
+                                        rtol  = me%tol(i),&
+                                        ftol  = me%tol(i),&
+                                        xzero = tzero,&
+                                        fzero = gval(i),&
+                                        iflag = iflag,&
+                                        fax   = g1(i),&
+                                        fbx   = g2(i))
                     if (iflag==0) then !root found at tzero
                         if ((forward .and. tzero<tprev) .or. (.not. forward .and. tzero>tprev) ) then
                             ! this is an earlier root so use it
@@ -1441,7 +1489,7 @@
                         call report_error('ddeabm_with_event_wrapper_vec',&
                                           'Error locating root for function '//&
                                           trim(adjustl(istr)),0,0)
-                        ! don't reset idid in case another root was found
+                        ! do not reset idid in case another root was found
                     end if
                 end do
                 ! if no errors, report the root if necessary, then return:
@@ -1885,8 +1933,8 @@
 !   * M. K. Gordon
 !
 !### Reference
-!   * L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented
-!     package of ode solvers", Report SAND79-2374, Sandia Laboratories, 1979.
+!  * L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented package of ode solvers", 
+!    Report SAND79-2374, Sandia Laboratories, 1979.
 !
 !### History
 !   * 820301  date written
@@ -1945,7 +1993,7 @@
     !make sure the deriv function was set:
     if (.not. associated(me%df)) then
         call report_error('ddeabm', 'the derivative function DF '//&
-                        ' has not been associated.', 0, 0)
+                          ' has not been associated.', 0, 0)
         idid=-33
         return
     end if
@@ -2670,8 +2718,7 @@
 !  polynomial is passed from [[dsteps]] so [[dintp]] cannot be used alone.
 !
 !### References
-!   * L. F. Shampine, M. K. Gordon, "Computer solution of ordinary
-!     differential equations, the initial value problem",
+!   * L. F. Shampine, M. K. Gordon, "Computer solution of ordinary differential equations, the initial value problem",
 !     W. H. Freeman and Company, 1975.
 !   * H. A. Watts, "A smoother interpolant for DE/STEP, INTRP and DEABM: II",
 !     Report SAND84-0293, Sandia Laboratories, 1984.
@@ -2903,11 +2950,10 @@
 !   desirable.
 !
 !### References
-!   * L. F. Shampine, M. K. Gordon, "Solving ordinary differential
-!     equations with ODE, STEP, and INTERP", Report SLA-73-1060,
+!   * L. F. Shampine, M. K. Gordon, "Solving ordinary differential equations with ODE, STEP, and INTERP", 
+!     Report SLA-73-1060,
 !     Sandia Laboratories, 1973.
-!   * L. F. Shampine, M. K. Gordon, "Computer solution of ordinary
-!     differential equations, the initial value problem",
+!   * L. F. Shampine, M. K. Gordon, "Computer solution of ordinary differential equations, the initial value problem",
 !     W. H. Freeman and Company, 1975.
 !
 !### History
@@ -3433,8 +3479,6 @@
 !  error message printing routine. This one just prints the message to the console.
 
     subroutine report_error(subrou, messg, nerr, level)
-
-    use iso_fortran_env, only: error_unit
 
     implicit none
 
