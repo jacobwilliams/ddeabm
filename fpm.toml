@@ -15,7 +15,7 @@ pyplot-fortran = { git = "https://github.com/jacobwilliams/pyplot-fortran", rev 
 [build]
 auto-executables = false
 auto-examples = false
-auto-tests = false
+auto-tests = true
 
 [library]
 source-dir = "src"
@@ -23,32 +23,3 @@ source-dir = "src"
 [install]
 library = true
 
-[[test]]
-name = "ddeabm_example"
-source-dir = "tests"
-main = "ddeabm_example.f90"
-
-[[test]]
-name = "ddeabm_fixed_step_test"
-source-dir = "tests"
-main = "ddeabm_fixed_step_test.f90"
-
-[[test]]
-name = "ddeabm_stepsize_test"
-source-dir = "tests"
-main = "ddeabm_stepsize_test.f90"
-
-[[test]]
-name = "ddeabm_test"
-source-dir = "tests"
-main = "ddeabm_test.f90"
-
-[[test]]
-name = "ddeabm_test_vec"
-source-dir = "tests"
-main = "ddeabm_test_vec.f90"
-
-[[test]]
-name = "performance_test"
-source-dir = "tests"
-main = "performance_test.f90"
