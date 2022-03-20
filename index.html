@@ -91,7 +91,9 @@
           <h1>ddeabm</h1>
           <h1><img alt="ddeabm" src="media/logo.png"></h1>
 <h1>Status</h1>
-<p><img alt="Build Status" src="https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg"></p>
+<p><a href="https://github.com/jacobwilliams/ddeabm/releases/latest"><img alt="GitHub release" src="https://img.shields.io/github/release/jacobwilliams/ddeabm.svg?style=plastic"></a>
+<img alt="Build Status" src="https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg">
+<a href="https://codecov.io/gh/jacobwilliams/ddeabm"><img alt="codecov" src="https://codecov.io/gh/jacobwilliams/ddeabm/branch/master/graph/badge.svg?token=43HK33CSMY"></a></p>
 <h2>Description</h2>
 <p>This is a modern object-oriented Fortran implementation of the DDEABM Adams-Bashforth-Moulton ODE solver. The original Fortran 77 code was obtained from the <a href="http://www.netlib.org/slatec/src/">SLATEC library</a>. It has been extensively refactored.</p>
 <p>DDEABM uses the Adams-Bashforth-Moulton predictor-corrector formulas of orders 1 through 12 to integrate a system of first order ordinary differential equations of the form <code>dx/dt = f(t,x)</code>. Also included is an event-location capability, where the equations can be integrated until a specified function <code>g(t,x) = 0</code>. Dense output is also supported.</p>
@@ -298,7 +300,7 @@ fpm test --profile release
 </code></pre></div>
 
 <h3>Dependencies</h3>
-<p>Building the library requires the <a href="https://github.com/jacobwilliams/roots-fortran">roots-fortran</a> module. Building the tests requires the <a href="https://github.com/jacobwilliams/pyplot-fortran">pyplot-fortran</a> module. FPM will automatically download the correct versions of both (see <code>fpm.toml</code>). </p>
+<p>Building the library requires the <a href="https://github.com/jacobwilliams/roots-fortran">roots-fortran</a> module. Building the tests requires the <a href="https://github.com/jacobwilliams/pyplot-fortran">pyplot-fortran</a> module. FPM will automatically download the correct versions of both (see <code>fpm.toml</code>).</p>
 <h2>Documentation</h2>
 <p>The latest API documentation can be found <a href="http://jacobwilliams.github.io/ddeabm/">here</a>. This was generated from the source code using <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>.</p>
 <h2>License</h2>
