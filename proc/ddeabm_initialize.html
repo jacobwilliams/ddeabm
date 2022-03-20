@@ -115,15 +115,9 @@
   <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
-  <div id="vars-0" class="panel-collapse collapse">
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-vector_tols">vector_tols</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-i">i</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-j">j</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-k">k</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-max_order">max_order</a>
-    </div>
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/ddeabm_initialize.html#src">ddeabm_initialize</a>
   </div>
 </div>
 
@@ -210,15 +204,9 @@
       <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
-  <div id="vars-1" class="panel-collapse collapse">
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-vector_tols">vector_tols</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-i">i</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-j">j</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-k">k</a>
-      <a class="list-group-item" href="../proc/ddeabm_initialize.html#variable-max_order">max_order</a>
-    </div>
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/ddeabm_initialize.html#src">ddeabm_initialize</a>
   </div>
 </div>
 
@@ -226,51 +214,139 @@
     <br class="visible-xs visible-sm hidden-md">
 
 
-    <section>    
-      <h2>Variables</h2>
-    <table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-<tbody>
-<tr>
-  <td><span class="anchor" id="variable-vector_tols"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>vector_tols</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-i"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>i</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-j"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>j</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-k"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>k</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-max_order"></span>integer,</td>
-<td>private,</td>  <td>parameter</td><td>::</td>
-  <td><strong>max_order</strong></td><td> =</td><td>12</td><td><p>This value is hard-coded in several places (array dimensions, etc.)
-Eventually, may want to make this a user-selectable value.
-For now, it is fixed.</p></td>
-</tr>
-</tbody>
-</table>
+    
+    
+
+    
+    
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">ddeabm_initialize</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">report</span><span class="p">,</span><span class="n">initial_step_mode</span><span class="p">,</span><span class="n">initial_step_size</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">implicit none</span>
+
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                  </span><span class="kd">::</span><span class="w"> </span><span class="n">neq</span><span class="w">     </span><span class="c">!! number of equations to be integrated</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                  </span><span class="kd">::</span><span class="w"> </span><span class="n">maxnum</span><span class="w">  </span><span class="c">!! maximum number of integration steps allowed</span>
+<span class="w">    </span><span class="k">procedure</span><span class="p">(</span><span class="n">deriv_func</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">df</span><span class="w">      </span><span class="c">!! derivative function dx/dt</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol</span><span class="w">    </span><span class="c">!! relative tolerance for integration (see [[ddeabm]])</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">atol</span><span class="w">    </span><span class="c">!! absolution tolerance for integration (see [[ddeabm]])</span>
+<span class="w">    </span><span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="k">optional</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">report</span><span class="w">  </span><span class="c">!! reporting function</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="w"> </span><span class="c">!! how to choose the initial step `h`:</span>
+<span class="w">                                                             </span><span class="c">!!</span>
+<span class="w">                                                             </span><span class="c">!! 1. Use [[dhstrt]].</span>
+<span class="w">                                                             </span><span class="c">!! 2. Use the older (quicker) algorithm.</span>
+<span class="w">                                                             </span><span class="c">!! 3. Use the user-specified value `initial_step_size` (&gt;0).</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_size</span><span class="w"> </span><span class="c">!! for `initial_step_mode=3`</span>
+
+<span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">vector_tols</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">max_order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="c">!! NOTE: the max order of this code is 12.</span>
+<span class="w">                                        </span><span class="c">!! This value is hard-coded in several places (array dimensions, etc.)</span>
+<span class="w">                                        </span><span class="c">!! Eventually, may want to make this a user-selectable value.</span>
+<span class="w">                                        </span><span class="c">!! For now, it is fixed.</span>
+
+<span class="w">    </span><span class="c">!initialize the class:</span>
+<span class="w">    </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">destroy</span><span class="p">()</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!number of equations:</span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">neq</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!maximum number of steps:</span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">maxnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxnum</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!set the derivative routine pointer:</span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!set the report function (optional):</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">report</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">report</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">        nullify</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!allocate the work arrays:</span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">ypout</span><span class="p">(</span><span class="n">neq</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">yp</span><span class="w">   </span><span class="p">(</span><span class="n">neq</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">yy</span><span class="w">   </span><span class="p">(</span><span class="n">neq</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">wt</span><span class="w">   </span><span class="p">(</span><span class="n">neq</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">p</span><span class="w">    </span><span class="p">(</span><span class="n">neq</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">phi</span><span class="w">  </span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="mi">16</span><span class="p">))</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!tolerances:</span>
+<span class="w">    </span><span class="c">! [for now, we are considering these unchangeable, although they do not have to be]</span>
+
+<span class="w">    </span><span class="n">vector_tols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">rtol</span><span class="p">)</span><span class="o">==</span><span class="n">neq</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">atol</span><span class="p">)</span><span class="o">==</span><span class="n">neq</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">neq</span><span class="o">&gt;</span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">scalar_tols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">vector_tols</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">scalar_tols</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">rtol</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">atol</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">rtol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rtol</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">atol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atol</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">        allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">rtol</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">rtol</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">rtol</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">atol</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">atol</span><span class="p">)))</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">atol</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">rtol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rtol</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">atol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atol</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!Compute the two and gstr arrays:</span>
+<span class="w">    </span><span class="c">!  Note: this is a modification of the original dsteps code.</span>
+<span class="w">    </span><span class="c">!  The full-precision coefficients are used here, instead</span>
+<span class="w">    </span><span class="c">!  of the less precise ones in the original.</span>
+<span class="w">    </span><span class="c">!  These are computed recursively using the equation on p. 159 of</span>
+<span class="w">    </span><span class="c">!  Shampine/Gordon, &quot;Computer Solution of Ordinary Differential Equations&quot;, 1975.</span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">two</span><span class="p">(</span><span class="n">max_order</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">max_order</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">max_order</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">two</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0_wp</span><span class="o">**</span><span class="n">i</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span>
+<span class="k">    </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"></span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">max_order</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="o">/</span><span class="kt">real</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span>
+<span class="k">    </span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">! initial step size (can have initial_step_mode 1, 2, or 3):</span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="c">! dummy value (only used if initial_step_mode is 3)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">initial_step_mode</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        select case</span><span class="p">(</span><span class="n">initial_step_mode</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">initial_step_size</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    if</span><span class="w"> </span><span class="p">(</span><span class="n">initial_step_size</span><span class="o">&gt;</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                        </span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initial_step_size</span><span class="w"></span>
+<span class="w">                    </span><span class="k">else</span>
+<span class="k">                        error stop</span><span class="w"> </span><span class="s1">&#39;Error in ddeabm_initialize: initial_step_size must be &gt; 0&#39;</span><span class="w"></span>
+<span class="w">                    </span><span class="k">end if</span>
+<span class="k">                else</span>
+<span class="k">                    error stop</span><span class="w"> </span><span class="s1">&#39;Error in ddeabm_initialize: initial_step_size must be input when initial_step_mode=3&#39;</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            end if</span>
+<span class="k">        case </span><span class="n">default</span><span class="w"></span>
+<span class="w">            </span><span class="k">error stop</span><span class="w"> </span><span class="s1">&#39;Error in ddeabm_initialize: invalid input for initial_step_mode&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="k">end select</span>
+<span class="k">    else</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c">! original method (dhstrt) if none is specified</span>
+<span class="w">    </span><span class="k">end if</span>
+
+<span class="k">    end subroutine </span><span class="n">ddeabm_initialize</span><span class="w"></span>
+</pre></div>
 
     </section>
     <br>
-    
-    
-
-    
-    
-
-
-    
     
     </div>
   </div>

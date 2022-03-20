@@ -114,51 +114,9 @@
   <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
-  <div id="vars-0" class="panel-collapse collapse">
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/dsteps.html#variable-i~4">i</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-ifail">ifail</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-im1">im1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-ip1">ip1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-iq~2">iq</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-j~4">j</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-km1">km1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-km2">km2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-knew">knew</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-kp1~2">kp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-kp2~2">kp2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-l~3">l</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-limit1">limit1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-limit2">limit2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-nsm2">nsm2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-nsp1">nsp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-nsp2">nsp2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-jv">jv</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-absh">absh</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-big~2">big</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erk">erk</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erkm1">erkm1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erkm2">erkm2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erkp1">erkp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-err">err</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-hnew">hnew</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-p5eps">p5eps</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-r">r</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-reali">reali</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-realns">realns</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-rho">rho</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-round">round</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-sum">sum</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-tau">tau</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp1~2">temp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp2~2">temp2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp3~2">temp3</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp4">temp4</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp5">temp5</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp6">temp6</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-u~2">u</a>
-    </div>
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/dsteps.html#src">dsteps</a>
   </div>
 </div>
 
@@ -313,7 +271,7 @@
   <td><strong>x</strong></td><td><p>independent variable</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-h~5"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-h~4"></span>real(kind=wp),</td>
 <td>intent(inout)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>h</strong></td><td><p>appropriate step size for next step.  normally determined by code</p></td>
@@ -343,7 +301,7 @@
   <td><strong>hold</strong></td><td><p>step size used for last successful step</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-k~4"></span>integer,</td>
+  <td><span class="anchor" id="variable-k"></span>integer,</td>
 <td>intent(inout)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>k</strong></td><td><p>appropriate order for next step (determined by code)</p></td>
@@ -355,7 +313,7 @@
   <td><strong>kold</strong></td><td><p>order used for last successful step</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-crash~2"></span>logical,</td>
+  <td><span class="anchor" id="variable-crash"></span>logical,</td>
 <td>intent(inout)</td>
   <td></td>  <td></td><td>::</td>
   <td><strong>crash</strong></td><td><p>logical variable set .true. when no step can be taken, .false. otherwise.</p></td>
@@ -409,13 +367,13 @@
   <td><strong>v</strong></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-w~4"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-w~3"></span>real(kind=wp),</td>
 <td>intent(inout),</td>
   <td></td>  <td>dimension(12)</td><td>::</td>
   <td><strong>w</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-g~8"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-g~7"></span>real(kind=wp),</td>
 <td>intent(inout),</td>
   <td></td>  <td>dimension(13)</td><td>::</td>
   <td><strong>g</strong></td><td><p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p></td>
@@ -501,51 +459,9 @@
       <h3>Contents</h3>
  
 <div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
-  <div id="vars-1" class="panel-collapse collapse">
-    <div class="list-group">
-      <a class="list-group-item" href="../proc/dsteps.html#variable-i~4">i</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-ifail">ifail</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-im1">im1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-ip1">ip1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-iq~2">iq</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-j~4">j</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-km1">km1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-km2">km2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-knew">knew</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-kp1~2">kp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-kp2~2">kp2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-l~3">l</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-limit1">limit1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-limit2">limit2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-nsm2">nsm2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-nsp1">nsp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-nsp2">nsp2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-jv">jv</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-absh">absh</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-big~2">big</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erk">erk</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erkm1">erkm1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erkm2">erkm2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-erkp1">erkp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-err">err</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-hnew">hnew</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-p5eps">p5eps</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-r">r</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-reali">reali</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-realns">realns</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-rho">rho</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-round">round</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-sum">sum</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-tau">tau</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp1~2">temp1</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp2~2">temp2</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp3~2">temp3</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp4">temp4</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp5">temp5</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-temp6">temp6</a>
-      <a class="list-group-item" href="../proc/dsteps.html#variable-u~2">u</a>
-    </div>
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/dsteps.html#src">dsteps</a>
   </div>
 </div>
 
@@ -553,229 +469,519 @@
     <br class="visible-xs visible-sm hidden-md">
 
 
-    <section>    
-      <h2>Variables</h2>
-    <table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
-<tbody>
-<tr>
-  <td><span class="anchor" id="variable-i~4"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>i</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-ifail"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>ifail</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-im1"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>im1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-ip1"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>ip1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-iq~2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>iq</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-j~4"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>j</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-km1"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>km1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-km2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>km2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-knew"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>knew</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-kp1~2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>kp1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-kp2~2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>kp2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-l~3"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>l</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-limit1"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>limit1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-limit2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>limit2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-nsm2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>nsm2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-nsp1"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>nsp1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-nsp2"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>nsp2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-jv"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>jv</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-absh"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>absh</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-big~2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>big</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-erk"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>erk</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-erkm1"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>erkm1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-erkm2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>erkm2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-erkp1"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>erkp1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-err"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>err</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-hnew"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>hnew</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-p5eps"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>p5eps</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-r"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>r</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-reali"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>reali</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-realns"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>realns</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-rho"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>rho</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-round"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>round</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-sum"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>sum</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-tau"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>tau</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-temp1~2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>temp1</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-temp2~2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>temp2</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-temp3~2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>temp3</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-temp4"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>temp4</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-temp5"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>temp5</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-temp6"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>temp6</strong></td><td></td><td></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-u~2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
-  <td><strong>u</strong></td><td></td><td></td><td></td>
-</tr>
-</tbody>
-</table>
+    
+    
+
+    
+    
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">dsteps</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="w"> </span><span class="n">neqn</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">hold</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                       </span><span class="n">kold</span><span class="p">,</span><span class="w"> </span><span class="n">crash</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">yp</span><span class="p">,</span><span class="w"> </span><span class="n">psi</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">beta</span><span class="p">,</span><span class="w"> </span><span class="n">sig</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                       </span><span class="n">phase1</span><span class="p">,</span><span class="w"> </span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">nornd</span><span class="p">,</span><span class="w"> </span><span class="n">ksteps</span><span class="p">,</span><span class="w"> </span><span class="n">twou</span><span class="p">,</span><span class="w"> </span><span class="n">fouru</span><span class="p">,</span><span class="w"> </span><span class="n">xold</span><span class="p">,</span><span class="w"> </span><span class="n">kprev</span><span class="p">,</span><span class="w"> </span><span class="n">ivc</span><span class="p">,</span><span class="w"> </span><span class="n">iv</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                       </span><span class="n">kgi</span><span class="p">,</span><span class="w"> </span><span class="n">gi</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">implicit none</span>
+
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w">      </span><span class="c">!! independent variable</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">h</span><span class="w">      </span><span class="c">!! appropriate step size for next step.  normally determined by code</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">eps</span><span class="w">    </span><span class="c">!! local error tolerance</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">hold</span><span class="w">   </span><span class="c">!! step size used for last successful step</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w">      </span><span class="c">!! appropriate order for next step (determined by code)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">kold</span><span class="w">   </span><span class="c">!! order used for last successful step</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">ns</span><span class="w">     </span><span class="c">!! number of dsteps taken with size h</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">ksteps</span><span class="w"> </span><span class="c">!! counter on attempted steps</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">twou</span><span class="w">   </span><span class="c">!! 2.*u where u is machine unit roundoff quantity</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fouru</span><span class="w">  </span><span class="c">!! 4.*u where u is machine unit roundoff quantity</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xold</span><span class="w">   </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">kprev</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">ivc</span><span class="w">    </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">kgi</span><span class="w">    </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">neqn</span><span class="w">   </span><span class="c">!! number of equations to be integrated</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">start</span><span class="w">  </span><span class="c">!! logical variable set .true. for first step, .false. otherwise</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">crash</span><span class="w">  </span><span class="c">!! logical variable set .true. when no step can be taken, .false. otherwise.</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">phase1</span><span class="w"></span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">nornd</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neqn</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">y</span><span class="w">      </span><span class="c">!! solution vector at x</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neqn</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">wt</span><span class="w">     </span><span class="c">!! vector of weights for error criterion</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neqn</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neqn</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="w">      </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">neqn</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yp</span><span class="w">     </span><span class="c">!! derivative of solution vector at x after successful step</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">psi</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">alpha</span><span class="w">    </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">beta</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sig</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">w</span><span class="w">        </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w">        </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gi</span><span class="w">       </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">iv</span><span class="w">      </span><span class="c">!! required for the interpolation subroutine [[dintp]]</span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">ifail</span><span class="p">,</span><span class="w"> </span><span class="n">im1</span><span class="p">,</span><span class="w"> </span><span class="n">ip1</span><span class="p">,</span><span class="w"> </span><span class="n">iq</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">km1</span><span class="p">,</span><span class="w"> </span><span class="n">km2</span><span class="p">,</span><span class="w"> </span><span class="n">knew</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">kp1</span><span class="p">,</span><span class="w"> </span><span class="n">kp2</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">limit1</span><span class="p">,</span><span class="w"> </span><span class="n">limit2</span><span class="p">,</span><span class="w"> </span><span class="n">nsm2</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">nsp1</span><span class="p">,</span><span class="w"> </span><span class="n">nsp2</span><span class="p">,</span><span class="w"> </span><span class="n">jv</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">absh</span><span class="p">,</span><span class="w"> </span><span class="n">big</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">erk</span><span class="p">,</span><span class="w"> </span><span class="n">erkm1</span><span class="p">,</span><span class="w"> </span><span class="n">erkm2</span><span class="p">,</span><span class="w"> </span><span class="n">erkp1</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">hnew</span><span class="p">,</span><span class="w"> </span><span class="n">p5eps</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">reali</span><span class="p">,</span><span class="w"> </span><span class="n">realns</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="n">round</span><span class="p">,</span><span class="w"> </span><span class="nb">sum</span><span class="p">,</span><span class="w"> </span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="n">temp1</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">temp2</span><span class="p">,</span><span class="w"> </span><span class="n">temp3</span><span class="p">,</span><span class="w"> </span><span class="n">temp4</span><span class="p">,</span><span class="w"> </span><span class="n">temp5</span><span class="p">,</span><span class="w"> </span><span class="n">temp6</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="c">!user-triggered error</span>
+
+<span class="c">!       ***     begin block 0     ***</span>
+<span class="c">!   check if step size or error tolerance is too small for machine</span>
+<span class="c">!   precision.  if first step, initialize phi array and estimate a</span>
+<span class="c">!   starting step size.</span>
+<span class="c">!                   ***</span>
+
+<span class="c">!   if step size is too small, determine an acceptable one</span>
+<span class="w">      </span><span class="n">crash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="k">return</span>
+<span class="k">      end if</span>
+
+<span class="k">      </span><span class="n">p5eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">eps</span><span class="w"></span>
+
+<span class="c">!   if error tolerance is too small, increase it to an acceptable value</span>
+<span class="w">      </span><span class="n">round</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">        </span><span class="n">round</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">round</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">/</span><span class="n">wt</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
+<span class="w">      </span><span class="k">end do</span>
+<span class="k">      </span><span class="n">round</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">twou</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">round</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p5eps</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">round</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0_wp</span><span class="o">*</span><span class="n">round</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fouru</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="k">return</span>
+<span class="k">      end if</span>
+
+<span class="k">      </span><span class="n">crash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">      </span><span class="n">g</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="n">g</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5_wp</span><span class="w"></span>
+<span class="w">      </span><span class="n">sig</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!   initialize.  compute appropriate step size for first step</span>
+<span class="w">    </span><span class="c">!   [There are three modes]</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="c">! user-triggered error</span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">        </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d1mach4</span><span class="w"></span>
+<span class="w">        </span><span class="n">big</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">d1mach2</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">            </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">/</span><span class="n">wt</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">        select case</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_mode</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">dhstrt</span><span class="p">(</span><span class="n">neqn</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">wt</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">big</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                           </span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">phi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="c">!user-triggered error</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="c">! save it</span>
+<span class="w">        </span><span class="k">case</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="nb">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">absh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">eps</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="mf">6.0_wp</span><span class="o">*</span><span class="nb">sum</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="n">absh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25_wp</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">eps</span><span class="o">/</span><span class="nb">sum</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">absh</span><span class="p">,</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="c">! save it</span>
+<span class="w">        </span><span class="k">case</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">initial_step_size</span><span class="p">),</span><span class="n">h</span><span class="p">)</span><span class="w">   </span><span class="c">! user specified</span>
+<span class="w">        </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
+<span class="w">            </span><span class="k">error stop</span><span class="w"> </span><span class="s1">&#39;invalid value for initial_step_mode&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="k">end select</span>
+
+<span class="k">        </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">kold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">kprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="n">phase1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="n">nornd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p5eps</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">10</span><span class="mf">0.0_wp</span><span class="o">*</span><span class="n">round</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">nornd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">            </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">              </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">        end if</span>
+
+<span class="k">      end if</span>
+
+<span class="k">      </span><span class="n">ifail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="c">!       ***     end block 0     ***</span>
+
+<span class="c">!       ***     begin block 1     ***</span>
+<span class="c">!   compute coefficients of formulas for this step.  avoid computing</span>
+<span class="c">!   those quantities not changed when step size is not changed.</span>
+<span class="c">!                   ***</span>
+
+<span class="w"> </span><span class="mi">100</span><span class="w">  </span><span class="n">kp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">kp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="w"></span>
+<span class="w">      </span><span class="n">km1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">km2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="mi">2</span><span class="w"></span>
+
+<span class="w">      </span><span class="c">! ns is the number of dsteps taken with size h, including the current</span>
+<span class="w">      </span><span class="c">! one.  when k&lt;ns, no coefficients change</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">hold</span><span class="p">)</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ns</span><span class="o">&lt;=</span><span class="n">kold</span><span class="p">)</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">nsp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">ns</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">          </span><span class="c">! compute those components of alpha(*),beta(*),psi(*),sig(*) which</span>
+<span class="w">          </span><span class="c">! are changed</span>
+
+<span class="w">          </span><span class="n">beta</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"></span>
+<span class="w">          </span><span class="n">realns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="w"></span>
+<span class="w">          </span><span class="n">alpha</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">realns</span><span class="w"></span>
+<span class="w">          </span><span class="n">temp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">realns</span><span class="w"></span>
+<span class="w">          </span><span class="n">sig</span><span class="p">(</span><span class="n">nsp1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">nsp1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">              do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nsp1</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">                </span><span class="n">im1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">temp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp1</span><span class="w"></span>
+<span class="w">                </span><span class="n">beta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">beta</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="o">*</span><span class="n">psi</span><span class="p">(</span><span class="n">im1</span><span class="p">)</span><span class="o">/</span><span class="n">temp2</span><span class="w"></span>
+<span class="w">                </span><span class="n">temp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">                </span><span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">/</span><span class="n">temp1</span><span class="w"></span>
+<span class="w">                </span><span class="n">reali</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="n">sig</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reali</span><span class="o">*</span><span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">sig</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end do</span>
+<span class="k">          end if</span>
+<span class="k">          </span><span class="n">psi</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp1</span><span class="w"></span>
+
+<span class="w">          </span><span class="c">! compute coefficients g(*)</span>
+<span class="w">          </span><span class="c">!</span>
+<span class="w">          </span><span class="c">! initialize v(*) and set w(*).</span>
+
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ns</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">              </span><span class="c">! if order was raised, update diagonal part of v(*)</span>
+
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">kprev</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                   if</span><span class="w"> </span><span class="p">(</span><span class="n">ivc</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                      </span><span class="n">jv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">iv</span><span class="p">(</span><span class="n">ivc</span><span class="p">)</span><span class="w"></span>
+<span class="w">                      </span><span class="n">ivc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ivc</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                   </span><span class="k">else</span>
+<span class="k">                      </span><span class="n">jv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                      </span><span class="n">temp4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">kp1</span><span class="w"></span>
+<span class="w">                      </span><span class="n">v</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp4</span><span class="w"></span>
+<span class="w">                      </span><span class="n">w</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">                      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                          </span><span class="n">kgi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                          </span><span class="n">gi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">                      </span><span class="k">end if</span>
+<span class="k">                   end if</span>
+<span class="k">                   </span><span class="n">nsm2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="o">-</span><span class="mi">2</span><span class="w"></span>
+<span class="w">                   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nsm2</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">jv</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                       do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jv</span><span class="p">,</span><span class="n">nsm2</span><span class="w"></span>
+<span class="w">                         </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">-</span><span class="n">j</span><span class="w"></span>
+<span class="w">                         </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">alpha</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                         </span><span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                       </span><span class="k">end do</span>
+<span class="k">                       if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                           </span><span class="n">kgi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                           </span><span class="n">gi</span><span class="p">(</span><span class="n">kgi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">                       </span><span class="k">end if</span>
+<span class="k">                  end if</span>
+<span class="k">              end if</span><span class="w"></span>
+
+<span class="w">              </span><span class="c">!update v(*) and set w(*)</span>
+
+<span class="w">              </span><span class="n">limit1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ns</span><span class="w"></span>
+<span class="w">              </span><span class="n">temp5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">do </span><span class="n">iq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">limit1</span><span class="w"></span>
+<span class="w">                </span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">temp5</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end do</span>
+<span class="k">              </span><span class="n">g</span><span class="p">(</span><span class="n">nsp1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">limit1</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                  </span><span class="n">kgi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="w"></span>
+<span class="w">                  </span><span class="n">gi</span><span class="p">(</span><span class="n">kgi</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end if</span>
+<span class="k">              </span><span class="n">w</span><span class="p">(</span><span class="n">limit1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">limit1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">kold</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                  </span><span class="n">ivc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ivc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                  </span><span class="n">iv</span><span class="p">(</span><span class="n">ivc</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">limit1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">              </span><span class="k">end if</span>
+
+<span class="k">          else</span>
+
+<span class="k">              do </span><span class="n">iq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">                </span><span class="n">temp3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iq</span><span class="o">*</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp3</span><span class="w"></span>
+<span class="w">                </span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end do</span>
+<span class="k">              </span><span class="n">ivc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">              </span><span class="n">kgi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                  </span><span class="n">kgi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                  </span><span class="n">gi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end if</span>
+
+<span class="k">          end if</span><span class="w"></span>
+
+<span class="w">          </span><span class="c">! compute the g(*) in the work vector w(*)</span>
+
+<span class="w">          </span><span class="n">nsp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">          </span><span class="n">kprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">kp1</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">nsp2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">              do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nsp2</span><span class="p">,</span><span class="n">kp1</span><span class="w"></span>
+<span class="w">                </span><span class="n">limit2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="n">temp6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">do </span><span class="n">iq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">limit2</span><span class="w"></span>
+<span class="w">                  </span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">temp6</span><span class="o">*</span><span class="n">w</span><span class="p">(</span><span class="n">iq</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end do</span>
+<span class="k">                </span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end do</span>
+<span class="k">          end if</span>
+
+<span class="k">      end if</span><span class="w"></span>
+
+<span class="c">!       ***     end block 1     ***</span>
+
+<span class="c">!       ***     begin block 2     ***</span>
+<span class="c">!   predict a solution p(*), evaluate derivatives using predicted</span>
+<span class="c">!   solution, estimate local error at order k and errors at orders k,</span>
+<span class="c">!   k-1, k-2 as if constant step size were used.</span>
+<span class="c">!                   ***</span>
+<span class="c">!</span>
+<span class="c">!   increment counter on attempted dsteps</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="n">ksteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ksteps</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!   change phi to phi star</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">nsp1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nsp1</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">            </span><span class="n">temp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">beta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">              </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp1</span><span class="o">*</span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">          end do</span>
+<span class="k">      end if</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!   predict solution and differences</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">        </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">        </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="k">end do</span>
+<span class="k">      do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+<span class="w">        </span><span class="n">ip1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">temp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">          </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">temp2</span><span class="o">*</span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ip1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">      end do</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="n">nornd</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">p</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">          do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">            </span><span class="n">tau</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tau</span><span class="w"></span>
+<span class="w">            </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau</span><span class="w"></span>
+<span class="w">          </span><span class="k">end do</span>
+<span class="k">      end if</span>
+<span class="k">      </span><span class="n">xold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">      </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">      </span><span class="n">absh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="c">! user-triggered error</span>
+<span class="c">!</span>
+<span class="c">!   estimate errors at orders k,k-1,k-2</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="n">erkm2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="n">erkm1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="n">erk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">        </span><span class="n">temp3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">wt</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">temp4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">km2</span><span class="o">&gt;=</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">km2</span><span class="o">&gt;</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="n">erkm2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erkm2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">km1</span><span class="p">)</span><span class="o">+</span><span class="n">temp4</span><span class="p">)</span><span class="o">*</span><span class="n">temp3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
+<span class="w">            </span><span class="n">erkm1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erkm1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">temp4</span><span class="p">)</span><span class="o">*</span><span class="n">temp3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">        </span><span class="n">erk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">temp4</span><span class="o">*</span><span class="n">temp3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
+<span class="w">      </span><span class="k">end do</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="n">km2</span><span class="o">&gt;=</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="n">km2</span><span class="o">&gt;</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="n">erkm2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">absh</span><span class="o">*</span><span class="n">sig</span><span class="p">(</span><span class="n">km1</span><span class="p">)</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">km2</span><span class="p">)</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">erkm2</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">erkm1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">absh</span><span class="o">*</span><span class="n">sig</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">km1</span><span class="p">)</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">erkm1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">end if</span>
+<span class="k">      </span><span class="n">temp5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">absh</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">erk</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp5</span><span class="o">*</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">-</span><span class="n">g</span><span class="p">(</span><span class="n">kp1</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="n">erk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp5</span><span class="o">*</span><span class="n">sig</span><span class="p">(</span><span class="n">kp1</span><span class="p">)</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">knew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+
+<span class="w">      </span><span class="c">!   test if order should be lowered</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">km2</span><span class="o">&gt;</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">erkm1</span><span class="p">,</span><span class="n">erkm2</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">erk</span><span class="p">)</span><span class="w"> </span><span class="n">knew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">km1</span><span class="w"></span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">km2</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="n">erkm1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span><span class="w"> </span><span class="n">knew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">km1</span><span class="w"></span>
+<span class="w">      </span><span class="k">end if</span><span class="w"></span>
+<span class="w">      </span><span class="c">!       ***     end block 2     ***</span>
+
+<span class="w">    </span><span class="c">!test if step successful</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">eps</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="c">!       ***     begin block 3     ***</span>
+<span class="c">!   the step is unsuccessful.  restore  x, phi(*,*), psi(*) .</span>
+<span class="c">!   if third consecutive failure, set order to one.  if step fails more</span>
+<span class="c">!   than three times, consider an optimal step size.  double error</span>
+<span class="c">!   tolerance and return if estimated step size is too small for machine</span>
+<span class="c">!   precision.</span>
+
+<span class="c">!   restore x, phi(*,*) and psi(*)</span>
+
+<span class="w">      </span><span class="n">phase1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">      </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xold</span><span class="w"></span>
+<span class="w">      </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="n">temp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">beta</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">ip1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">          </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp1</span><span class="o">*</span><span class="p">(</span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ip1</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">      end do</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">            </span><span class="n">psi</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">          </span><span class="k">end do</span>
+<span class="k">      end if</span><span class="w"></span>
+
+<span class="c">!   on third failure, set order to one.  thereafter, use optimal step</span>
+<span class="c">!   size</span>
+
+<span class="w">      </span><span class="n">ifail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifail</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">temp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5_wp</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ifail</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="n">ifail</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">p5eps</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.25_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">           </span><span class="n">temp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">p5eps</span><span class="o">/</span><span class="n">erk</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">knew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="k">end if</span>
+<span class="k">      </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp2</span><span class="o">*</span><span class="n">h</span><span class="w"></span>
+<span class="w">      </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">knew</span><span class="w"></span>
+<span class="w">      </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
+<span class="w">      </span><span class="n">crash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">      </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">eps</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span>
+
+<span class="k">    end if</span><span class="w"></span>
+<span class="w">    </span><span class="c">!       ***     end block 3     ***</span>
+
+<span class="c">!       ***     begin block 4     ***</span>
+<span class="c">!   the step is successful.  correct the predicted solution, evaluate</span>
+<span class="c">!   the derivatives using the corrected solution and update the</span>
+<span class="c">!   differences.  determine best order and step size for next step.</span>
+
+<span class="w">      </span><span class="n">kold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">      </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+
+<span class="c">!   correct and evaluate</span>
+
+<span class="w">      </span><span class="n">temp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">g</span><span class="p">(</span><span class="n">kp1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nornd</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">            </span><span class="n">temp3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">temp1</span><span class="o">*</span><span class="p">(</span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp3</span><span class="w"></span>
+<span class="w">          </span><span class="k">end do</span>
+<span class="k">      else</span>
+<span class="k">          do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">            </span><span class="n">temp3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">rho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp1</span><span class="o">*</span><span class="p">(</span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rho</span><span class="w"></span>
+<span class="w">            </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rho</span><span class="w"></span>
+<span class="w">            </span><span class="n">p</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp3</span><span class="w"></span>
+<span class="w">          </span><span class="k">end do</span>
+<span class="k">      end if</span>
+<span class="k">     call </span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yp</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="c">! user-triggered error</span>
+
+<span class="c">!   update differences for next step</span>
+
+<span class="w">      </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">        </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yp</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp2</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">end do</span>
+<span class="k">      do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">          </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">      end do</span><span class="w"></span>
+
+<span class="c">!   estimate error at order k+1 unless:</span>
+<span class="c">!     in first phase when always raise order,</span>
+<span class="c">!     already decided to lower order,</span>
+<span class="c">!     step size not constant so estimate unreliable</span>
+
+<span class="w">      </span><span class="n">erkp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">knew</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">km1</span><span class="w">  </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="n">phase1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">phase1</span><span class="p">)</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">450</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">knew</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">km1</span><span class="p">)</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">455</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">kp1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ns</span><span class="p">)</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">460</span><span class="w"></span>
+<span class="w">      </span><span class="k">do </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">neqn</span><span class="w"></span>
+<span class="w">        </span><span class="n">erkp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erkp1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">phi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">kp2</span><span class="p">)</span><span class="o">/</span><span class="n">wt</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="w"></span>
+<span class="w">      </span><span class="k">end do</span>
+<span class="k">      </span><span class="n">erkp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">absh</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">gstr</span><span class="p">(</span><span class="n">kp1</span><span class="p">)</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">erkp1</span><span class="p">)</span><span class="w"></span>
+
+<span class="c">!   using estimated error at order k+1, determine appropriate order</span>
+<span class="c">!   for next step</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="n">erkm1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">erk</span><span class="p">,</span><span class="n">erkp1</span><span class="p">))</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">455</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">erkp1</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">erk</span><span class="w">  </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">460</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="n">erkp1</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.5_wp</span><span class="o">*</span><span class="n">erk</span><span class="p">)</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">460</span><span class="w"></span>
+<span class="w">      </span><span class="k">end if</span><span class="w"></span>
+
+<span class="c">!   here erkp1 &lt; erk &lt; max(erkm1,erkm2) else order would have</span>
+<span class="c">!   been lowered in block 2.  thus order is to be raised</span>
+
+<span class="c">!   raise order</span>
+
+<span class="w"> </span><span class="mi">450</span><span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kp1</span><span class="w"></span>
+<span class="w">      </span><span class="n">erk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erkp1</span><span class="w"></span>
+<span class="w">      </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">460</span><span class="w"></span>
+
+<span class="c">!   lower order</span>
+
+<span class="w"> </span><span class="mi">455</span><span class="w">  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">km1</span><span class="w"></span>
+<span class="w">      </span><span class="n">erk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">erkm1</span><span class="w"></span>
+
+<span class="w">      </span><span class="c">! with new order determine appropriate step size for next step</span>
+<span class="w"> </span><span class="mi">460</span><span class="w">  </span><span class="n">hnew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">phase1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">          if</span><span class="w"> </span><span class="p">(</span><span class="n">p5eps</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">erk</span><span class="o">*</span><span class="n">me</span><span class="p">%</span><span class="n">two</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">              </span><span class="n">hnew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p5eps</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">erk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                  </span><span class="n">temp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="w"></span>
+<span class="w">                  </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">p5eps</span><span class="o">/</span><span class="n">erk</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="o">/</span><span class="n">temp2</span><span class="p">)</span><span class="w"></span>
+<span class="w">                  </span><span class="n">hnew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">absh</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="p">,</span><span class="nb">min</span><span class="p">(</span><span class="mf">0.9_wp</span><span class="p">,</span><span class="n">r</span><span class="p">))</span><span class="w"></span>
+<span class="w">                  </span><span class="n">hnew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">hnew</span><span class="p">,</span><span class="n">fouru</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">end if</span>
+<span class="k">          end if</span>
+<span class="k">      end if</span>
+<span class="k">      </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hnew</span><span class="w"></span>
+<span class="c">!       ***     end block 4     ***</span>
+
+<span class="w">    </span><span class="k">end subroutine </span><span class="n">dsteps</span><span class="w"></span>
+</pre></div>
 
     </section>
     <br>
-    
-    
-
-    
-    
-
-
-    
     
     </div>
   </div>

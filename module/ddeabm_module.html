@@ -212,8 +212,8 @@
       <ul class="list-group">
       <li class="list-group-item">
   <ul class="list-inline">
-    <li>root_module</li>
     <li><a href="https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html">iso_fortran_env</a></li>
+    <li>root_module</li>
   </ul>
       </li>
       <li class="list-group-item">
@@ -746,7 +746,7 @@ The event is located when any <script type="math/tex"> g(t,x)=0 </script>.</p></
     <section>
      <h2>Derived Types</h2>
      <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_class"></span><h3>type, private :: <a href='../type/ddeabm_class.html'>ddeabm_class</a>  </h3></div>
+  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_class"></span><h3>type, public :: <a href='../type/ddeabm_class.html'>ddeabm_class</a>  </h3></div>
   <div class="panel-body">
     <p>The main DDEABM integration class.</p>
      <h4>Components</h4>
@@ -755,12 +755,12 @@ The event is located when any <script type="math/tex"> g(t,x)=0 </script>.</p></
 <tbody>
 <tr>
   <td><span class="anchor" id="variable-neq"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>neq</strong></td><td> =</td><td>0</td><td><p>the number of (first order) differential equations to be integrated (&gt;=0)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-maxnum"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>maxnum</strong></td><td> =</td><td>500</td><td><p>the expense of solving the problem is monitored by counting the
 number of steps attempted. when this exceeds <code>maxnum</code>, the counter
 is reset to zero and the user is informed about possible excessive
@@ -768,7 +768,7 @@ work.</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-df"></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>),</td>
-<td>private,</td>  <td>pointer</td><td>::</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
   <td><strong>df</strong></td><td>=> </td><td>null()</td><td><p>to define the system of first order differential equations
 which is to be solved.  for the given values of <code>x</code> and the
 vector <code>u(*)=(u(1),u(2),...,u(neq))</code>, the subroutine must
@@ -779,7 +779,7 @@ equations <code>i=1,...,neq</code>.</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-report"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
-<td>private,</td>  <td>pointer</td><td>::</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
   <td><strong>report</strong></td><td>=> </td><td>null()</td><td><p>a function for reporting the integration steps (optional).
 this can be associated in <a href="../proc/ddeabm_initialize.html">ddeabm_initialize</a> or
 <a href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>, and is enabled
@@ -788,70 +788,70 @@ or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a
 </tr>
 <tr>
   <td><span class="anchor" id="variable-scalar_tols"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>scalar_tols</strong></td><td> =</td><td>.true.</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-rtol"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>rtol</strong></td><td></td><td></td><td><p>the user input rel tol</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-atol"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>atol</strong></td><td></td><td></td><td><p>the user input abs tol</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-rtol_tmp"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>rtol_tmp</strong></td><td></td><td></td><td><p>rel tol used internally</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-atol_tmp"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>atol_tmp</strong></td><td></td><td></td><td><p>abs tol used internally</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-info"></span>integer,</td>
-<td>private,</td>  <td>dimension(4)</td><td>::</td>
+<td>public,</td>  <td>dimension(4)</td><td>::</td>
   <td><strong>info</strong></td><td> =</td><td>0</td><td><p>info array</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-initial_step_mode"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>initial_step_mode</strong></td><td> =</td><td>1</td><td><p>how to choose the initial step <code>h</code>:</p><a href="../type/ddeabm_class.html#variable-initial_step_mode" class="pull-right"><emph>Read more&hellip;</emph></a></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-initial_step_size"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>initial_step_size</strong></td><td> =</td><td>0.0_wp</td><td><p>when <code>initial_step_mode=3</code>, the <code>h</code> value to use.
 (for the other modes, this will also contain the value used)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-icount"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>icount</strong></td><td> =</td><td>0</td><td><p>replaced <code>iwork(liw)</code> in original code</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-tprev"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>tprev</strong></td><td> =</td><td>0.0_wp</td><td><p>replaced <code>rwork(itstar)</code> in original code</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-two"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>two</strong></td><td></td><td></td><td><p>
 <script type="math/tex"> 2^i </script> array</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-gstr"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>gstr</strong></td><td></td><td></td><td><p>
 <script type="math/tex"> | \gamma^{*}_i | </script> array</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-ypout"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>ypout</strong></td><td></td><td></td><td><p><code>(neq)</code> contains the approximate derivative
 of the solution component <code>y(i)</code>.  in <a href="../proc/ddeabm.html">ddeabm</a>, it
 is obtained by calling subroutine <code>df</code> to
@@ -861,83 +861,83 @@ when <code>idid=3</code>.</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-yp"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>yp</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-yy"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>yy</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-wt"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>wt</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-p"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
   <td><strong>p</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-phi"></span>real(kind=wp),</td>
-<td>private,</td>  <td>allocatable, dimension(:,:)</td><td>::</td>
+<td>public,</td>  <td>allocatable, dimension(:,:)</td><td>::</td>
   <td><strong>phi</strong></td><td></td><td></td><td><p><code>(neq,16)</code></p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-alpha"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(12)</td><td>::</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>alpha</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-beta"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(12)</td><td>::</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>beta</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-psi"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(12)</td><td>::</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>psi</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-v"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(12)</td><td>::</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>v</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-w"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(12)</td><td>::</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
   <td><strong>w</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-sig"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(13)</td><td>::</td>
+<td>public,</td>  <td>dimension(13)</td><td>::</td>
   <td><strong>sig</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-g"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(13)</td><td>::</td>
+<td>public,</td>  <td>dimension(13)</td><td>::</td>
   <td><strong>g</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-gi"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(11)</td><td>::</td>
+<td>public,</td>  <td>dimension(11)</td><td>::</td>
   <td><strong>gi</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-h"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>h</strong></td><td> =</td><td>0.0_wp</td><td><p>the step size <code>h</code> to be attempted on the next step.</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-eps"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>eps</strong></td><td> =</td><td>0.0_wp</td><td><p>if the tolerances have been increased by the
 code (<code>idid=-2</code>), they were multiplied by <code>eps</code>.</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-x"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>x</strong></td><td> =</td><td>0.0_wp</td><td><p>contains the current value of the
 independent variable, i.e. the farthest point
 integration has reached. this will be different
@@ -946,122 +946,122 @@ performed (<code>idid=3</code>).</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-xold"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>xold</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-hold"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>hold</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-told"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>told</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-delsgn"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>delsgn</strong></td><td> =</td><td>0.0_wp</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-tstop"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>tstop</strong></td><td> =</td><td>0.0_wp</td><td><p>(see <code>info(4)</code>)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-twou"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>twou</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-fouru"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>fouru</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-start"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>start</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-phase1"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>phase1</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-nornd"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>nornd</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-stiff"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>stiff</strong></td><td> =</td><td>.false.</td><td><p>indicator for stiffness detection</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-intout"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>intout</strong></td><td> =</td><td>.false.</td><td><p>indicator for intermediate-output</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-ns"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>ns</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-kord"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>kord</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-kold"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>kold</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-init"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>init</strong></td><td> =</td><td>0</td><td><p>initialization indicator</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-ksteps"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>ksteps</strong></td><td> =</td><td>0</td><td><p>counter for attempted steps</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-kle4"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>kle4</strong></td><td> =</td><td>0</td><td><p>step counter for stiffness detection</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-iquit"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>iquit</strong></td><td> =</td><td>0</td><td><p>termination flag</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-kprev"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>kprev</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-ivc"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>ivc</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-iv"></span>integer,</td>
-<td>private,</td>  <td>dimension(10)</td><td>::</td>
+<td>public,</td>  <td>dimension(10)</td><td>::</td>
   <td><strong>iv</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-kgi"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>kgi</strong></td><td> =</td><td>0</td><td></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-error"></span>logical,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>error</strong></td><td> =</td><td>.false.</td><td><p>will be set in <code>stop_integration</code>.
 indicates an error and to
 abort the integration</p></td>
@@ -1085,13 +1085,13 @@ abort the integration</p></td>
        <td><p>state interpolation function</p></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
-       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddeabm'>ddeabm</a></strong>  </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddeabm'>ddeabm</a></strong>  </td>
        <td></td></tr>
-       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddes'>ddes</a></strong>  </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddes'>ddes</a></strong>  </td>
        <td></td></tr>
-       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dhstrt'>dhstrt</a></strong>  </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dhstrt'>dhstrt</a></strong>  </td>
        <td></td></tr>
-       <tr><td>procedure, private, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dsteps'>dsteps</a></strong>  </td>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dsteps'>dsteps</a></strong>  </td>
        <td></td></tr>
        </tbody>
        </table>
@@ -1099,7 +1099,7 @@ abort the integration</p></td>
 </div>
 
      <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class"></span><h3>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>  </h3></div>
+  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class"></span><h3>type, public, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>  </h3></div>
   <div class="panel-body">
     <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p><a href="../type/ddeabm_with_event_class.html" class="pull-right"><emph>Read more&hellip;</emph></a>
      <h4>Components</h4>
@@ -1107,30 +1107,343 @@ abort the integration</p></td>
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
 <tr>
+  <td><span class="anchor" id="variable-neq"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>neq</strong></td><td> =</td><td>0</td><td><p>the number of (first order) differential equations to be integrated (&gt;=0)</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-maxnum"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>maxnum</strong></td><td> =</td><td>500</td><td><p>the expense of solving the problem is monitored by counting the
+number of steps attempted. when this exceeds <code>maxnum</code>, the counter
+is reset to zero and the user is informed about possible excessive
+work.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-df"></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>),</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
+  <td><strong>df</strong></td><td>=> </td><td>null()</td><td><p>to define the system of first order differential equations
+which is to be solved.  for the given values of <code>x</code> and the
+vector <code>u(*)=(u(1),u(2),...,u(neq))</code>, the subroutine must
+evaluate the <code>neq</code> components of the system of differential
+equations <code>du/dx=df(x,u)</code> and store the derivatives in the
+array <code>uprime(*)</code>, that is, <code>uprime(i) = du(i)/dx</code> for
+equations <code>i=1,...,neq</code>.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-report"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
+  <td><strong>report</strong></td><td>=> </td><td>null()</td><td><p>a function for reporting the integration steps (optional).
+this can be associated in <a href="../proc/ddeabm_initialize.html">ddeabm_initialize</a> or
+<a href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>, and is enabled
+using the <code>mode</code> argument in <a href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-scalar_tols"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>scalar_tols</strong></td><td> =</td><td>.true.</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-rtol"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>rtol</strong></td><td></td><td></td><td><p>the user input rel tol</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-atol"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>atol</strong></td><td></td><td></td><td><p>the user input abs tol</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-rtol_tmp"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>rtol_tmp</strong></td><td></td><td></td><td><p>rel tol used internally</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-atol_tmp"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>atol_tmp</strong></td><td></td><td></td><td><p>abs tol used internally</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-info"></span>integer,</td>
+<td>public,</td>  <td>dimension(4)</td><td>::</td>
+  <td><strong>info</strong></td><td> =</td><td>0</td><td><p>info array</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-initial_step_mode"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>initial_step_mode</strong></td><td> =</td><td>1</td><td><p>how to choose the initial step <code>h</code>:</p><a href="../type/ddeabm_class.html#variable-initial_step_mode" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-initial_step_size"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>initial_step_size</strong></td><td> =</td><td>0.0_wp</td><td><p>when <code>initial_step_mode=3</code>, the <code>h</code> value to use.
+(for the other modes, this will also contain the value used)</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-icount"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>icount</strong></td><td> =</td><td>0</td><td><p>replaced <code>iwork(liw)</code> in original code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-tprev"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>tprev</strong></td><td> =</td><td>0.0_wp</td><td><p>replaced <code>rwork(itstar)</code> in original code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-two"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
+  <td><strong>two</strong></td><td></td><td></td><td><p>
+<script type="math/tex"> 2^i </script> array</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-gstr"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
+  <td><strong>gstr</strong></td><td></td><td></td><td><p>
+<script type="math/tex"> | \gamma^{*}_i | </script> array</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ypout"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>ypout</strong></td><td></td><td></td><td><p><code>(neq)</code> contains the approximate derivative
+of the solution component <code>y(i)</code>.  in <a href="../proc/ddeabm.html">ddeabm</a>, it
+is obtained by calling subroutine <code>df</code> to
+evaluate the differential equation using <code>t</code> and
+<code>y(*)</code> when <code>idid=1</code> or <code>2</code>, and by interpolation
+when <code>idid=3</code>.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-yp"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>yp</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-yy"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>yy</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-wt"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>wt</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-p"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>p</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-phi"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:,:)</td><td>::</td>
+  <td><strong>phi</strong></td><td></td><td></td><td><p><code>(neq,16)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-alpha"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>alpha</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-beta"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>beta</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-psi"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>psi</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-v"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>v</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-w"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>w</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-sig"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(13)</td><td>::</td>
+  <td><strong>sig</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-g"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(13)</td><td>::</td>
+  <td><strong>g</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-gi"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(11)</td><td>::</td>
+  <td><strong>gi</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-h"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>h</strong></td><td> =</td><td>0.0_wp</td><td><p>the step size <code>h</code> to be attempted on the next step.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-eps"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>eps</strong></td><td> =</td><td>0.0_wp</td><td><p>if the tolerances have been increased by the
+code (<code>idid=-2</code>), they were multiplied by <code>eps</code>.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-x"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>x</strong></td><td> =</td><td>0.0_wp</td><td><p>contains the current value of the
+independent variable, i.e. the farthest point
+integration has reached. this will be different
+from <code>t</code> only when interpolation has been
+performed (<code>idid=3</code>).</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-xold"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>xold</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-hold"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>hold</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-told"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>told</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-delsgn"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>delsgn</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-tstop"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>tstop</strong></td><td> =</td><td>0.0_wp</td><td><p>(see <code>info(4)</code>)</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-twou"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>twou</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-fouru"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>fouru</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-start"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>start</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-phase1"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>phase1</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-nornd"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>nornd</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-stiff"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>stiff</strong></td><td> =</td><td>.false.</td><td><p>indicator for stiffness detection</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-intout"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>intout</strong></td><td> =</td><td>.false.</td><td><p>indicator for intermediate-output</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ns"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>ns</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kord"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kord</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kold"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kold</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-init"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>init</strong></td><td> =</td><td>0</td><td><p>initialization indicator</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ksteps"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>ksteps</strong></td><td> =</td><td>0</td><td><p>counter for attempted steps</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kle4"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kle4</strong></td><td> =</td><td>0</td><td><p>step counter for stiffness detection</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-iquit"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>iquit</strong></td><td> =</td><td>0</td><td><p>termination flag</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kprev"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kprev</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ivc"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>ivc</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-iv"></span>integer,</td>
+<td>public,</td>  <td>dimension(10)</td><td>::</td>
+  <td><strong>iv</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kgi"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kgi</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-error"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>error</strong></td><td> =</td><td>.false.</td><td><p>will be set in <code>stop_integration</code>.
+indicates an error and to
+abort the integration</p></td>
+</tr>
+<tr>
   <td><span class="anchor" id="variable-tol"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>tol</strong></td><td> =</td><td>0.0_wp</td><td><p>tolerance for root finding </p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-t_saved"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>t_saved</strong></td><td> =</td><td>0.0_wp</td><td><p>time of last successful step
 (used to continue after a root finding)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-x_saved"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>x_saved</strong></td><td></td><td></td><td><p>state of last successful step.  size <code>(neq)</code>.
 (used to continue after a root finding)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-gfunc"></span>procedure(<a href='../interface/event_func.html'>event_func</a>),</td>
-<td>private,</td>  <td>pointer</td><td>::</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
   <td><strong>gfunc</strong></td><td>=> </td><td>null()</td><td><p>event function: g(t,x)=0 at event</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-bracket"></span>procedure(<a href='../interface/bracket_func.html'>bracket_func</a>),</td>
-<td>private,</td>  <td>pointer</td><td>::</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
   <td><strong>bracket</strong></td><td>=> </td><td>null()</td><td><p>a function for determining if the root is bracketed.
 the default just checks for a sign change in the event function.
 the user can specify this to use other conditions.</p></td>
@@ -1154,6 +1467,14 @@ the user can specify this to use other conditions.</p></td>
        <td><p>state interpolation function</p></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddeabm'>ddeabm</a></strong>  </td>
+       <td></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddes'>ddes</a></strong>  </td>
+       <td></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dhstrt'>dhstrt</a></strong>  </td>
+       <td></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dsteps'>dsteps</a></strong>  </td>
+       <td></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-initialize_event'>initialize_event</a></strong>  => ddeabm_with_event_initialize </td>
        <td></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-integrate_to_event'>integrate_to_event</a></strong>  => ddeabm_with_event_wrapper </td>
@@ -1165,7 +1486,7 @@ the user can specify this to use other conditions.</p></td>
 </div>
 
      <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class_vec"></span><h3>type, private, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>  </h3></div>
+  <div class="panel-heading codesum"><span class="anchor" id="type-ddeabm_with_event_class_vec"></span><h3>type, public, extends(<a href='../type/ddeabm_class.html'>ddeabm_class</a>) :: <a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>  </h3></div>
   <div class="panel-body">
     <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding)
 of a vector function (it will stop on the first root it encounters)</p><a href="../type/ddeabm_with_event_class_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
@@ -1174,36 +1495,349 @@ of a vector function (it will stop on the first root it encounters)</p><a href="
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
 <tbody>
 <tr>
+  <td><span class="anchor" id="variable-neq"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>neq</strong></td><td> =</td><td>0</td><td><p>the number of (first order) differential equations to be integrated (&gt;=0)</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-maxnum"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>maxnum</strong></td><td> =</td><td>500</td><td><p>the expense of solving the problem is monitored by counting the
+number of steps attempted. when this exceeds <code>maxnum</code>, the counter
+is reset to zero and the user is informed about possible excessive
+work.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-df"></span>procedure(<a href='../interface/deriv_func.html'>deriv_func</a>),</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
+  <td><strong>df</strong></td><td>=> </td><td>null()</td><td><p>to define the system of first order differential equations
+which is to be solved.  for the given values of <code>x</code> and the
+vector <code>u(*)=(u(1),u(2),...,u(neq))</code>, the subroutine must
+evaluate the <code>neq</code> components of the system of differential
+equations <code>du/dx=df(x,u)</code> and store the derivatives in the
+array <code>uprime(*)</code>, that is, <code>uprime(i) = du(i)/dx</code> for
+equations <code>i=1,...,neq</code>.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-report"></span>procedure(<a href='../interface/report_func.html'>report_func</a>),</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
+  <td><strong>report</strong></td><td>=> </td><td>null()</td><td><p>a function for reporting the integration steps (optional).
+this can be associated in <a href="../proc/ddeabm_initialize.html">ddeabm_initialize</a> or
+<a href="../proc/ddeabm_with_event_initialize.html">ddeabm_with_event_initialize</a>, and is enabled
+using the <code>mode</code> argument in <a href="../proc/ddeabm_wrapper.html">ddeabm_wrapper</a>
+or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-scalar_tols"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>scalar_tols</strong></td><td> =</td><td>.true.</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-rtol"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>rtol</strong></td><td></td><td></td><td><p>the user input rel tol</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-atol"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>atol</strong></td><td></td><td></td><td><p>the user input abs tol</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-rtol_tmp"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>rtol_tmp</strong></td><td></td><td></td><td><p>rel tol used internally</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-atol_tmp"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>atol_tmp</strong></td><td></td><td></td><td><p>abs tol used internally</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-info"></span>integer,</td>
+<td>public,</td>  <td>dimension(4)</td><td>::</td>
+  <td><strong>info</strong></td><td> =</td><td>0</td><td><p>info array</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-initial_step_mode"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>initial_step_mode</strong></td><td> =</td><td>1</td><td><p>how to choose the initial step <code>h</code>:</p><a href="../type/ddeabm_class.html#variable-initial_step_mode" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-initial_step_size"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>initial_step_size</strong></td><td> =</td><td>0.0_wp</td><td><p>when <code>initial_step_mode=3</code>, the <code>h</code> value to use.
+(for the other modes, this will also contain the value used)</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-icount"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>icount</strong></td><td> =</td><td>0</td><td><p>replaced <code>iwork(liw)</code> in original code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-tprev"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>tprev</strong></td><td> =</td><td>0.0_wp</td><td><p>replaced <code>rwork(itstar)</code> in original code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-two"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
+  <td><strong>two</strong></td><td></td><td></td><td><p>
+<script type="math/tex"> 2^i </script> array</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-gstr"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
+  <td><strong>gstr</strong></td><td></td><td></td><td><p>
+<script type="math/tex"> | \gamma^{*}_i | </script> array</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ypout"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>ypout</strong></td><td></td><td></td><td><p><code>(neq)</code> contains the approximate derivative
+of the solution component <code>y(i)</code>.  in <a href="../proc/ddeabm.html">ddeabm</a>, it
+is obtained by calling subroutine <code>df</code> to
+evaluate the differential equation using <code>t</code> and
+<code>y(*)</code> when <code>idid=1</code> or <code>2</code>, and by interpolation
+when <code>idid=3</code>.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-yp"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>yp</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-yy"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>yy</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-wt"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>wt</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-p"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:)</td><td>::</td>
+  <td><strong>p</strong></td><td></td><td></td><td><p><code>(neq)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-phi"></span>real(kind=wp),</td>
+<td>public,</td>  <td>allocatable, dimension(:,:)</td><td>::</td>
+  <td><strong>phi</strong></td><td></td><td></td><td><p><code>(neq,16)</code></p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-alpha"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>alpha</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-beta"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>beta</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-psi"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>psi</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-v"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>v</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-w"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(12)</td><td>::</td>
+  <td><strong>w</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-sig"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(13)</td><td>::</td>
+  <td><strong>sig</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-g"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(13)</td><td>::</td>
+  <td><strong>g</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-gi"></span>real(kind=wp),</td>
+<td>public,</td>  <td>dimension(11)</td><td>::</td>
+  <td><strong>gi</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-h"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>h</strong></td><td> =</td><td>0.0_wp</td><td><p>the step size <code>h</code> to be attempted on the next step.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-eps"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>eps</strong></td><td> =</td><td>0.0_wp</td><td><p>if the tolerances have been increased by the
+code (<code>idid=-2</code>), they were multiplied by <code>eps</code>.</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-x"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>x</strong></td><td> =</td><td>0.0_wp</td><td><p>contains the current value of the
+independent variable, i.e. the farthest point
+integration has reached. this will be different
+from <code>t</code> only when interpolation has been
+performed (<code>idid=3</code>).</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-xold"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>xold</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-hold"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>hold</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-told"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>told</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-delsgn"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>delsgn</strong></td><td> =</td><td>0.0_wp</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-tstop"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>tstop</strong></td><td> =</td><td>0.0_wp</td><td><p>(see <code>info(4)</code>)</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-twou"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>twou</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-fouru"></span>real(kind=wp),</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>fouru</strong></td><td> =</td><td>0.0_wp</td><td><p>machine dependent parameter</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-start"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>start</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-phase1"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>phase1</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-nornd"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>nornd</strong></td><td> =</td><td>.false.</td><td><p>indicator for <a href="../proc/dsteps.html">dsteps</a> code</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-stiff"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>stiff</strong></td><td> =</td><td>.false.</td><td><p>indicator for stiffness detection</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-intout"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>intout</strong></td><td> =</td><td>.false.</td><td><p>indicator for intermediate-output</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ns"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>ns</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kord"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kord</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kold"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kold</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-init"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>init</strong></td><td> =</td><td>0</td><td><p>initialization indicator</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ksteps"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>ksteps</strong></td><td> =</td><td>0</td><td><p>counter for attempted steps</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kle4"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kle4</strong></td><td> =</td><td>0</td><td><p>step counter for stiffness detection</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-iquit"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>iquit</strong></td><td> =</td><td>0</td><td><p>termination flag</p></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kprev"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kprev</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-ivc"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>ivc</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-iv"></span>integer,</td>
+<td>public,</td>  <td>dimension(10)</td><td>::</td>
+  <td><strong>iv</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-kgi"></span>integer,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>kgi</strong></td><td> =</td><td>0</td><td></td>
+</tr>
+<tr>
+  <td><span class="anchor" id="variable-error"></span>logical,</td>
+<td>public</td>  <td></td><td>::</td>
+  <td><strong>error</strong></td><td> =</td><td>.false.</td><td><p>will be set in <code>stop_integration</code>.
+indicates an error and to
+abort the integration</p></td>
+</tr>
+<tr>
   <td><span class="anchor" id="variable-n_g_eqns"></span>integer,</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>n_g_eqns</strong></td><td> =</td><td>0</td><td><p>number of <code>gfunc</code> event equations</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-tol~2"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>tol</strong></td><td></td><td></td><td><p>tolerance for root finding.
 this is a vector (size <code>n_g_eqns</code>)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-t_saved~2"></span>real(kind=wp),</td>
-<td>private</td>  <td></td><td>::</td>
+<td>public</td>  <td></td><td>::</td>
   <td><strong>t_saved</strong></td><td> =</td><td>0.0_wp</td><td><p>time of last successful step
 (used to continue after a root finding)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-x_saved~2"></span>real(kind=wp),</td>
-<td>private,</td>  <td>dimension(:), allocatable</td><td>::</td>
+<td>public,</td>  <td>dimension(:), allocatable</td><td>::</td>
   <td><strong>x_saved</strong></td><td></td><td></td><td><p>state of last successful step.  size <code>(neq)</code>.
 (used to continue after a root finding)</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-gfunc~2"></span>procedure(<a href='../interface/event_func_vec.html'>event_func_vec</a>),</td>
-<td>private,</td>  <td>pointer</td><td>::</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
   <td><strong>gfunc</strong></td><td>=> </td><td>null()</td><td><p>event function: g(t,x)=0 at event</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-bracket~2"></span>procedure(<a href='../interface/bracket_func_vec.html'>bracket_func_vec</a>),</td>
-<td>private,</td>  <td>pointer</td><td>::</td>
+<td>public,</td>  <td>pointer</td><td>::</td>
   <td><strong>bracket</strong></td><td>=> </td><td>null()</td><td><p>a function for determining if the root is bracketed.
 the default just checks for a sign change in the event function.
 the user can specify this to use other conditions.</p></td>
@@ -1227,6 +1861,14 @@ the user can specify this to use other conditions.</p></td>
        <td><p>state interpolation function</p></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-stop_integration'>stop_integration</a></strong>  => ddeabm_stop_integration </td>
        <td><p>user can call this in <code>df</code> routine to stop the integration</p></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddeabm'>ddeabm</a></strong>  </td>
+       <td></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-ddes'>ddes</a></strong>  </td>
+       <td></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dhstrt'>dhstrt</a></strong>  </td>
+       <td></td></tr>
+       <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_class.html#boundprocedure-dsteps'>dsteps</a></strong>  </td>
+       <td></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class_vec.html#boundprocedure-initialize_event~2'>initialize_event</a></strong>  => ddeabm_with_event_initialize_vec </td>
        <td></td></tr>
        <tr><td>procedure, public, non_overridable :: <strong><a href='../type/ddeabm_with_event_class_vec.html#boundprocedure-integrate_to_event~2'>integrate_to_event</a></strong>  => ddeabm_with_event_wrapper_vec </td>

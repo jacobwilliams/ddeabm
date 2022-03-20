@@ -114,7 +114,12 @@
     <div id="sidebar">
   <h3>Contents</h3>
  
-<em>None</em>
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html#src">ddeabm_with_event_initialize_vec</a>
+  </div>
+</div>
 
 </div>
 
@@ -234,7 +239,12 @@ the default is used.</p></td>
     <section class="visible-xs visible-sm hidden-md">
       <h3>Contents</h3>
  
-<em>None</em>
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/ddeabm_with_event_initialize_vec.html#src">ddeabm_with_event_initialize_vec</a>
+  </div>
+</div>
 
     </section>
     <br class="visible-xs visible-sm hidden-md">
@@ -248,6 +258,69 @@ the default is used.</p></td>
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize_vec</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                                                </span><span class="n">ng</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">root_tol</span><span class="p">,</span><span class="n">report</span><span class="p">,</span><span class="n">bracket</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                                                </span><span class="n">initial_step_mode</span><span class="p">,</span><span class="n">initial_step_size</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">implicit none</span>
+
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class_vec</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">neq</span><span class="w">       </span><span class="c">!! number of equations to be integrated</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">maxnum</span><span class="w">    </span><span class="c">!! maximum number of integration steps allowed</span>
+<span class="w">    </span><span class="k">procedure</span><span class="p">(</span><span class="n">deriv_func</span><span class="p">)</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">df</span><span class="w">        </span><span class="c">!! derivative function \( dx/dt \)</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol</span><span class="w">      </span><span class="c">!! relative tolerance for integration (see [[ddeabm]])</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">atol</span><span class="w">      </span><span class="c">!! absolution tolerance for integration (see [[ddeabm]])</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">ng</span><span class="w">        </span><span class="c">!! number of event functions in `g`</span>
+<span class="w">    </span><span class="k">procedure</span><span class="p">(</span><span class="n">event_func_vec</span><span class="p">)</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w">         </span><span class="c">!! Event function \( g(t,x) \). This should be a smooth function</span>
+<span class="w">                                                              </span><span class="c">!! than can have values \( &lt;0 \) and \( \ge 0 \).</span>
+<span class="w">                                                              </span><span class="c">!! When \( g=0 \) (within the tolerance),</span>
+<span class="w">                                                              </span><span class="c">!! then a root has been located and</span>
+<span class="w">                                                              </span><span class="c">!! the integration will stop.</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">root_tol</span><span class="w">  </span><span class="c">!! tolerance for the root finding.</span>
+<span class="w">                                                              </span><span class="c">!! This should be sized `ng` or `1` (in which</span>
+<span class="w">                                                              </span><span class="c">!! case the value is used for all elements)</span>
+<span class="w">    </span><span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="k">optional</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">report</span><span class="w">    </span><span class="c">!! reporting function</span>
+<span class="w">    </span><span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func_vec</span><span class="p">),</span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">bracket</span><span class="w">   </span><span class="c">!! root bracketing function. if not present,</span>
+<span class="w">                                                              </span><span class="c">!! the default is used.</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="w"> </span><span class="c">!! how to choose the initial step `h`:</span>
+<span class="w">                                                             </span><span class="c">!!</span>
+<span class="w">                                                             </span><span class="c">!! 1. Use [[dhstrt]].</span>
+<span class="w">                                                             </span><span class="c">!! 2. Use the older (quicker) algorithm.</span>
+<span class="w">                                                             </span><span class="c">!! 3. Use the user-specified value `initial_step_size` (&gt;0).</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_size</span><span class="w"> </span><span class="c">!! for `initial_step_mode=3`</span>
+
+<span class="w">    </span><span class="c">!base class initialization:</span>
+<span class="w">    </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="n">maxnum</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">rtol</span><span class="p">,</span><span class="n">atol</span><span class="p">,</span><span class="n">report</span><span class="p">,</span><span class="n">initial_step_mode</span><span class="p">,</span><span class="n">initial_step_size</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!event finding variables:</span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ng</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">(</span><span class="n">ng</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">root_tol</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root_tol</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="c">! use this one for all of them</span>
+<span class="w">    </span><span class="n">elseif</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">root_tol</span><span class="p">)</span><span class="o">==</span><span class="n">ng</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root_tol</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">        write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;Error in ddeabm_with_event_initialize_vec: &#39;</span><span class="o">//</span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                   </span><span class="s1">&#39;incorrect size for root_tol input. Using first element only.&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root_tol</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="k">    </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">g</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">! bracketing function</span>
+<span class="w">    </span><span class="c">! (if not specified, use the default):</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">bracket</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">bracket</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span>
+
+<span class="k">    end subroutine </span><span class="n">ddeabm_with_event_initialize_vec</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>

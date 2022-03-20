@@ -113,7 +113,12 @@
     <div id="sidebar">
   <h3>Contents</h3>
  
-<em>None</em>
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/ddeabm_interp.html#src">ddeabm_interp</a>
+  </div>
+</div>
 
 </div>
 
@@ -143,7 +148,7 @@ It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
   <td><strong>tc</strong></td><td><p>point at which solution is desired</p></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-yc~2"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-yc"></span>real(kind=wp),</td>
 <td>intent(out),</td>
   <td></td>  <td>dimension(me%neq)</td><td>::</td>
   <td><strong>yc</strong></td><td><p>interpolated state at <code>tc</code></p></td>
@@ -257,7 +262,12 @@ It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
     <section class="visible-xs visible-sm hidden-md">
       <h3>Contents</h3>
  
-<em>None</em>
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/ddeabm_interp.html#src">ddeabm_interp</a>
+  </div>
+</div>
 
     </section>
     <br class="visible-xs visible-sm hidden-md">
@@ -271,6 +281,27 @@ It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
 
 
     
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">ddeabm_interp</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">implicit none</span>
+
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                     </span><span class="kd">::</span><span class="w"> </span><span class="n">tc</span><span class="w">  </span><span class="c">!! point at which solution is desired</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">yc</span><span class="w">  </span><span class="c">!! interpolated state at `tc`</span>
+
+<span class="w">    </span><span class="c">! interpolate to get the state at tc:</span>
+<span class="w">    </span><span class="k">call </span><span class="n">dintp</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">yy</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">me</span><span class="p">%</span><span class="n">ypout</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">kold</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">phi</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">me</span><span class="p">%</span><span class="n">ivc</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">iv</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">kgi</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">gi</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">alpha</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">me</span><span class="p">%</span><span class="n">g</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">w</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">xold</span><span class="p">,</span><span class="n">me</span><span class="p">%</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">end subroutine </span><span class="n">ddeabm_interp</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
     
     </div>
   </div>
