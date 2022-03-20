@@ -8,8 +8,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        gcc_v: [9] # Version of GFortran we want to use.
-        python-version: [3.7]
+        gcc_v: [10] # Version of GFortran we want to use.
+        python-version: [3.9]
     env:
       FC: gfortran-${{ matrix.gcc_v }}
       GCC_V: ${{ matrix.gcc_v }}
@@ -24,12 +24,12 @@ jobs:
       uses: actions/setup-python@v1 # Use pip to install latest CMake, & FORD/Jin2For, etc.
       with:
         python-version: ${{ matrix.python-version }}
-        
+
     - name: Setup Graphviz
       uses: ts-graphviz/setup-graphviz@v1
 
     - name: Setup Fortran Package Manager
-      uses: fortran-lang/setup-fpm@v3
+      uses: fortran-lang/setup-fpm@v4
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -60,7 +60,7 @@ jobs:
       run: ford ./ddeabm.md
 
     - name: Deploy Documentation
-      if: github.ref == 'refs/heads/master' 
+      if: github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@4.1.0
       with:
         branch: gh-pages # The branch the action should deploy to.
