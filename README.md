@@ -3,7 +3,9 @@
 
 # Status
 
+[![GitHub release](https://img.shields.io/github/release/jacobwilliams/ddeabm.svg?style=plastic)](https://github.com/jacobwilliams/ddeabm/releases/latest)
 ![Build Status](https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg)
+[![codecov](https://codecov.io/gh/jacobwilliams/ddeabm/branch/master/graph/badge.svg?token=43HK33CSMY)](https://codecov.io/gh/jacobwilliams/ddeabm)
 
 ## Description
 
@@ -227,7 +229,7 @@ fpm build --profile release --flag "-DREAL32"
 
 ### Dependencies
 
-Building the library requires the [roots-fortran](https://github.com/jacobwilliams/roots-fortran) module. Building the tests requires the [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) module. FPM will automatically download the correct versions of both (see `fpm.toml`). 
+Building the library requires the [roots-fortran](https://github.com/jacobwilliams/roots-fortran) module. Building the tests requires the [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) module. FPM will automatically download the correct versions of both (see `fpm.toml`).
 
 ## Documentation
 
