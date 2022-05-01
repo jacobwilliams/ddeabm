@@ -3,9 +3,10 @@
 
 # Status
 
-[![GitHub release](https://img.shields.io/github/release/jacobwilliams/ddeabm.svg?style=plastic)](https://github.com/jacobwilliams/ddeabm/releases/latest)
-![Build Status](https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg)
-[![codecov](https://codecov.io/gh/jacobwilliams/ddeabm/branch/master/graph/badge.svg?token=43HK33CSMY)](https://codecov.io/gh/jacobwilliams/ddeabm)
+[![GitHub release](https://img.shields.io/github/release/jacobwilliams/ddeabm.svg)](https://github.com/jacobwilliams/ddeabm/releases/latest)
+[![Build Status](https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/ddeabm/actions)
+[![codecov](https://codecov.io/gh/jacobwilliams/ddeabm/branch/master/graph/badge.svg)](https://codecov.io/gh/jacobwilliams/ddeabm)
+[![last-commit](https://img.shields.io/github/last-commit/jacobwilliams/ddeabm)](https://github.com/jacobwilliams/ddeabm/commits/master)
 
 ## Description
 
