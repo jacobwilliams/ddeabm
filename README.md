@@ -3,6 +3,7 @@
 
 # Status
 
+[![Language](https://img.shields.io/badge/-Fortran-734f96?logo=fortran&logoColor=white)](https://github.com/topics/fortran)
 [![GitHub release](https://img.shields.io/github/release/jacobwilliams/ddeabm.svg)](https://github.com/jacobwilliams/ddeabm/releases/latest)
 [![Build Status](https://github.com/jacobwilliams/ddeabm/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/ddeabm/actions)
 [![codecov](https://codecov.io/gh/jacobwilliams/ddeabm/branch/master/graph/badge.svg)](https://codecov.io/gh/jacobwilliams/ddeabm)
@@ -188,7 +189,7 @@ call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,tstep=100.0_wp)
 
 ## Building DDEABM
 
-DDEABM and the test programs will build with any modern Fortran compiler. A [Fortran Package Manager](https://github.com/fortran-lang/fpm) (FPM) manifest file (`fmp.toml`) is included, so that the library and tests cases can be compiled with FPM. For example:
+DDEABM and the test programs will build with any modern Fortran compiler. A [Fortran Package Manager](https://github.com/fortran-lang/fpm) (FPM) manifest file (`fpm.toml`) is included, so that the library and tests cases can be compiled with FPM. For example:
 
 ```
 fpm build --profile release
@@ -198,7 +199,7 @@ fpm test --profile release
 To generate the documentation using [ford](https://github.com/Fortran-FOSS-Programmers/ford), run:
 
 ```
-ford ddeabm.md
+ford ford.md
 ```
 
 To use `ddeabm` within your fpm project, add the following to your `fpm.toml` file:
