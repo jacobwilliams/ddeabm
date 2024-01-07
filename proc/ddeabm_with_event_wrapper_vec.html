@@ -1,300 +1,561 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+      <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
     <meta name="author" content="Jacob Williams" >
     <link rel="icon" href="../favicon.png">
 
     <title>ddeabm_with_event_wrapper_vec &ndash; ddeabm</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
-    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="../js/svg-pan-zoom.min.js"></script>
-
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">ddeabm </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-              data-toggle="dropdown" role="button"
-              aria-haspopup="true"
-     aria-expanded="false">Contents <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
-            <li><a href="../lists/modules.html">Modules</a></li>
-            <li><a href="../lists/procedures.html">Procedures</a></li>
-            <li><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                   <li><a href="../lists/types.html">Derived Types</a></li>
-       
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="sourcefile/ddeabm_module.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
             </ul>
-        
-            </li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/ddeabm_module.f90.html">Source File</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
-<li class="visible-xs hidden-sm visible-lg"><a href="../lists/absint.html">Abstract Interfaces</a></li>
-                             <li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
-          </ul>
-        <form action="../search.html" class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
         </div>
-<!--
-        <button type="submit" class="btn btn-default">Submit</button>
--->
-        </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
     <h1>ddeabm_with_event_wrapper_vec
       <small>Subroutine</small>
+      
     </h1>
-    <div class="row">
-  <div class="col-lg-12">
-<div class="well well-sm">
-  <ul class="list-inline" style="margin-bottom:0px;display:inline">
-     <li><i class="fa fa-pencil"></i> Jacob Williams</li>
-     <li><i class="fa fa-list-ol"></i>
-       <a data-toggle="tooltip"
-    data-placement="bottom" data-html="true"
-    title="13.0% of total for procedures.">191 statements</a>
-     </li> 
-    <li><i class="fa fa-code"></i><a href="../src/ddeabm_module.F90"> Source File</a></li>
-  </ul>
-  <ol class="breadcrumb in-well text-right">
-     <li><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
-     <li><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
-     <li class="active">ddeabm_with_event_wrapper_vec</li>
-  </ol>
-</div>
-</div>
-</div>
-<script>
-  $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-  })
-</script>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-author"><i class="fa fa-pencil"></i> Jacob Williams</li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title="12.7% of total for procedures.">192 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ddeabm_module.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ddeabm_with_event_wrapper_vec</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
 
   </div>
   
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-    <div id="sidebar">
-  <h3>Contents</h3>
- 
-<div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html#src">ddeabm_with_event_wrapper_vec</a>
-  </div>
-</div>
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html#src">ddeabm_with_event_wrapper_vec</a>
+      </div>
+    </div>
 
-</div>
+
+  </div>
 
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>private subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)</h2>
+    <h2>private  subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)  
+</h2>
     
 
-    <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding for multiple functions.
+    <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>, with event finding for multiple functions.
   It will integrate until any <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
   this manually)</p>
 <p>If starting a new problem, must first call <code>me%first_call()</code>.</p>
 <h3>See also</h3>
 <ul>
-<li><a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a> -- for scalar <code>g</code> function</li>
+<li><a href="ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a> -- for scalar <code>g</code> function</li>
 </ul>
-<p></p><div class="alert alert-info" role="alert"><h4>Note</h4><p>Currently not using the recommended tols if <code>idid=-2</code>.</p></div>
+<div class="alert alert-info">
+<p class="alert-title h4">Note</p>
+<p>Currently not using the recommended tols if <code>idid=-2</code>.</p>
+</div>
+
+    <h3>Type Bound</h3>
+    <p><a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a></p>
 
     <h3>Arguments</h3>
-      <table class="table table-striped varlist">
-<thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
-<tbody>
-<tr>
-  <td><span class="anchor" id="variable-me~16"></span>class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),</td>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~16"></span>
+              class(<a href='../type/ddeabm_with_event_class_vec.html'>ddeabm_with_event_class_vec</a>),
+            </td>
 <td>intent(inout)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>me</strong></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-t~7"></span>real(kind=wp),</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~7"></span>
+              real(kind=wp),
+            </td>
 <td>intent(inout)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>t</strong></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-y~3"></span>real(kind=wp),</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>t</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-y~3"></span>
+              real(kind=wp),
+            </td>
 <td>intent(inout),</td>
-  <td></td>  <td>dimension(me%neq)</td><td>::</td>
-  <td><strong>y</strong></td><td></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-tmax~2"></span>real(kind=wp),</td>
+              <td></td>            <td>
+              dimension(me%neq)
+            </td>
+            <td>::</td>
+            <td><strong>y</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tmax~2"></span>
+              real(kind=wp),
+            </td>
 <td>intent(in)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>tmax</strong></td><td><p>max time at which a solution is desired.
-(if root not located, it will integrate to <code>tmax</code>)</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-tstop~4"></span>real(kind=wp),</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tmax</strong></td>
+            <td>
+                <p>max time at which a solution is desired.
+(if root not located, it will integrate to <code>tmax</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tstop~4"></span>
+              real(kind=wp),
+            </td>
 <td>intent(in),</td>
-  <td>optional</td>  <td></td><td>::</td>
-  <td><strong>tstop</strong></td><td><p>for some problems it may not be permissible to integrate
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tstop</strong></td>
+            <td>
+                <p>for some problems it may not be permissible to integrate
 past a point <code>tstop</code> because a discontinuity occurs there
 or the solution or its derivative is not defined beyond
 <code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
 you have told the code not to integrate past <code>tstop</code>.
 in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
-[not used if not present]</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-idid~3"></span>integer,</td>
+[not used if not present]</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-idid~3"></span>
+              integer,
+            </td>
 <td>intent(out)</td>
-  <td></td>  <td></td><td>::</td>
-  <td><strong>idid</strong></td><td><p>indicator reporting what the code did.
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>idid</strong></td>
+            <td>
+                <p>indicator reporting what the code did.
 you must monitor this integer variable to
 decide what action to take next.
 <code>idid&gt;1000</code> means a root was found for the
 (<code>idid-1000</code>)th <code>g</code> function.
-See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-gval~2"></span>real(kind=wp),</td>
+See <a href="ddeabm.html">ddeabm</a> for other values.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-gval~2"></span>
+              real(kind=wp),
+            </td>
 <td>intent(out),</td>
-  <td></td>  <td>dimension(:)</td><td>::</td>
-  <td><strong>gval</strong></td><td><p>value of the event functions <code>g(t,x)</code> at the final time <code>t</code></p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-integration_mode~3"></span>integer,</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>gval</strong></td>
+            <td>
+                <p>value of the event functions <code>g(t,x)</code> at the final time <code>t</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-integration_mode~3"></span>
+              integer,
+            </td>
 <td>intent(in),</td>
-  <td>optional</td>  <td></td><td>::</td>
-  <td><strong>integration_mode</strong></td><td><p>Step mode:
-<em>1</em> - normal integration from <code>t</code> to <code>tout</code>, 
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>integration_mode</strong></td>
+            <td>
+                <p>Step mode:
+<em>1</em> - normal integration from <code>t</code> to <code>tout</code>,
  no reporting [default].
-<em>2</em> - normal integration from <code>t</code> to <code>tout</code>, 
- report each step.</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-tstep~3"></span>real(kind=wp),</td>
+<em>2</em> - normal integration from <code>t</code> to <code>tout</code>,
+ report each step.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tstep~3"></span>
+              real(kind=wp),
+            </td>
 <td>intent(in),</td>
-  <td>optional</td>  <td></td><td>::</td>
-  <td><strong>tstep</strong></td><td><p>Fixed time step to use for reporting and
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tstep</strong></td>
+            <td>
+                <p>Fixed time step to use for reporting and
 evaluation of event function. If not present,
-then default integrator steps are used.</p></td>
-</tr>
-<tr>
-  <td><span class="anchor" id="variable-continue~2"></span>logical,</td>
+then default integrator steps are used.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-continue~2"></span>
+              logical,
+            </td>
 <td>intent(in),</td>
-  <td>optional</td>  <td></td><td>::</td>
-  <td><strong>continue</strong></td><td><p>to continue after a previous event location.
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>continue</strong></td>
+            <td>
+                <p>to continue after a previous event location.
 This option can be used after a previous call to this routine
 has found an event, to continue integration to the next event
 without having to restart the integration. It will not report
 the initial point (which would have been reported as the last
-point of the previous call).</p></td>
-</tr>
-</tbody>
-</table>
+point of the previous call).</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
 
     <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-  <h3 class="panel-title">Calls</h3>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
   <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: proc~~ddeabm_with_event_wrapper_vec~~CallsGraph Pages: 1 -->
-<svg id="procddeabm_with_event_wrapper_vecCallsGraph" width="313pt" height="74pt"
- viewBox="0.00 0.00 313.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<svg id="procddeabm_with_event_wrapper_vecCallsGraph" width="641pt" height="87pt"
+ viewBox="0.00 0.00 641.00 87.31" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph" class="graph" transform="scale(2.68 2.68) rotate(0) translate(4 230)">
 <title>proc~~ddeabm_with_event_wrapper_vec~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 309,-70 309,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-230 1714,-230 1714,4 -4,4"/>
 <!-- proc~ddeabm_with_event_wrapper_vec -->
 <g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node1" class="node">
 <title>proc~ddeabm_with_event_wrapper_vec</title>
-<polygon fill="none" stroke="black" points="193,-45 0,-45 0,-21 193,-21 193,-45"/>
-<text text-anchor="middle" x="96.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_with_event_wrapper_vec</text>
+<polygon fill="none" stroke="black" points="462,-106 0,-106 0,-82 462,-82 462,-106"/>
+<text text-anchor="middle" x="231" y="-91.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_module::ddeabm_with_event_class_vec%ddeabm_with_event_wrapper_vec</text>
+</g>
+<!-- info -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2" class="node">
+<title>info</title>
+<polygon fill="#777777" stroke="#777777" points="645,-188 591,-188 591,-164 645,-164 645,-188"/>
+<text text-anchor="middle" x="618" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">info</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;info -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge1" class="edge">
+<title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;info</title>
+<path fill="none" stroke="#000000" d="M281.35,-106.11C334.63,-118.99 422.08,-139.61 498,-155 525.76,-160.63 557.34,-166.16 580.99,-170.13"/>
+<polygon fill="#000000" stroke="#000000" points="580.49,-173.6 590.93,-171.79 581.64,-166.69 580.49,-173.6"/>
+</g>
+<!-- proc~ddeabm -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node3" class="node">
+<title>proc~ddeabm</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node3"><a xlink:href="../proc/ddeabm.html" xlink:title="ddeabm_module::ddeabm_class%ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="738,-146 498,-146 498,-122 738,-122 738,-146"/>
+<text text-anchor="middle" x="618" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::ddeabm_class%ddeabm</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~ddeabm -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge2" class="edge">
+<title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~ddeabm</title>
+<path fill="none" stroke="#000000" d="M347.51,-106C392.81,-110.71 444.91,-116.12 491.16,-120.93"/>
+<polygon fill="#000000" stroke="#000000" points="490.93,-124.42 501.24,-121.97 491.65,-117.46 490.93,-124.42"/>
 </g>
 <!-- proc~report_error -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2" class="node">
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node4" class="node">
 <title>proc~report_error</title>
-<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node2"><a xlink:href=".././proc/report_error.html" xlink:title="report_error">
-<polygon fill="#d9534f" stroke="#d9534f" points="305,-66 229,-66 229,-42 305,-42 305,-66"/>
-<text text-anchor="middle" x="267" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node4"><a xlink:href="../proc/report_error.html" xlink:title="ddeabm_module::report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="1233,-142 1059,-142 1059,-118 1233,-118 1233,-142"/>
+<text text-anchor="middle" x="1146" y="-127.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::report_error</text>
 </a>
 </g>
 </g>
 <!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge1" class="edge">
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge3" class="edge">
 <title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~report_error</title>
-<path fill="none" stroke="#000000" d="M193.07,-44.91C201.95,-46.02 210.66,-47.1 218.79,-48.12"/>
-<polygon fill="#000000" stroke="#000000" points="218.4,-51.59 228.76,-49.36 219.27,-44.65 218.4,-51.59"/>
+<path fill="none" stroke="#000000" d="M462.17,-102.44C548.67,-105.66 647.85,-109.42 738,-113 844.33,-117.22 966.28,-122.35 1048.75,-125.87"/>
+<polygon fill="#000000" stroke="#000000" points="1048.72,-129.37 1058.86,-126.3 1049.02,-122.37 1048.72,-129.37"/>
+</g>
+<!-- report -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node5" class="node">
+<title>report</title>
+<polygon fill="#777777" stroke="#777777" points="645,-66 591,-66 591,-42 645,-42 645,-66"/>
+<text text-anchor="middle" x="618" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;report -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge4" class="edge">
+<title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;report</title>
+<path fill="none" stroke="#000000" d="M347.51,-82C427.08,-73.73 527.67,-63.28 580.6,-57.78"/>
+<polygon fill="#000000" stroke="#000000" points="581.26,-61.23 590.84,-56.72 580.53,-54.27 581.26,-61.23"/>
 </g>
 <!-- root_scalar -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node3" class="node">
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node6" class="node">
 <title>root_scalar</title>
-<polygon fill="#777777" stroke="#777777" points="302.5,-24 231.5,-24 231.5,0 302.5,0 302.5,-24"/>
-<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">root_scalar</text>
+<polygon fill="#777777" stroke="#777777" points="653.5,-24 582.5,-24 582.5,0 653.5,0 653.5,-24"/>
+<text text-anchor="middle" x="618" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">root_scalar</text>
 </g>
 <!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;root_scalar -->
-<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge2" class="edge">
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge5" class="edge">
 <title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;root_scalar</title>
-<path fill="none" stroke="#000000" d="M193.07,-21.09C202.9,-19.86 212.51,-18.67 221.37,-17.56"/>
-<polygon fill="#000000" stroke="#000000" points="221.9,-21.02 231.39,-16.31 221.03,-14.08 221.9,-21.02"/>
+<path fill="none" stroke="#000000" d="M281.35,-81.89C334.63,-69.01 422.08,-48.39 498,-33 522.52,-28.03 550.01,-23.13 572.39,-19.32"/>
+<polygon fill="#000000" stroke="#000000" points="573.01,-22.77 582.28,-17.65 571.84,-15.86 573.01,-22.77"/>
+</g>
+<!-- proc~ddeabm&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge7" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M738.03,-133.09C831.9,-132.38 961.13,-131.4 1048.59,-130.73"/>
+<polygon fill="#000000" stroke="#000000" points="1048.8,-134.23 1058.78,-130.66 1048.75,-127.23 1048.8,-134.23"/>
+</g>
+<!-- proc~ddes -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node7" class="node">
+<title>proc~ddes</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node7"><a xlink:href="../proc/ddes.html" xlink:title="ddeabm_module::ddeabm_class%ddes">
+<polygon fill="#d9534f" stroke="#d9534f" points="995,-184 774,-184 774,-160 995,-160 995,-184"/>
+<text text-anchor="middle" x="884.5" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::ddeabm_class%ddes</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm&#45;&gt;proc~ddes -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge6" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~ddes</title>
+<path fill="none" stroke="#000000" d="M702.69,-146.02C730.44,-150.01 761.51,-154.47 789.96,-158.56"/>
+<polygon fill="#000000" stroke="#000000" points="789.51,-162.03 799.9,-159.99 790.5,-155.1 789.51,-162.03"/>
+</g>
+<!-- proc~ddes&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge10" class="edge">
+<title>proc~ddes&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M959.86,-159.96C991.35,-154.87 1028.2,-148.9 1060.69,-143.65"/>
+<polygon fill="#000000" stroke="#000000" points="1061.31,-147.09 1070.63,-142.04 1060.2,-140.18 1061.31,-147.09"/>
+</g>
+<!-- proc~dintp -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node8" class="node">
+<title>proc~dintp</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node8"><a xlink:href="../proc/dintp.html" xlink:title="ddeabm_module::dintp">
+<polygon fill="#d9534f" stroke="#d9534f" points="1214.5,-184 1077.5,-184 1077.5,-160 1214.5,-160 1214.5,-184"/>
+<text text-anchor="middle" x="1146" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::dintp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dintp -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge8" class="edge">
+<title>proc~ddes&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M995.18,-172C1019.41,-172 1044.59,-172 1067.25,-172"/>
+<polygon fill="#000000" stroke="#000000" points="1067.47,-175.5 1077.47,-172 1067.47,-168.5 1067.47,-175.5"/>
+</g>
+<!-- proc~dsteps -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node9" class="node">
+<title>proc~dsteps</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node9"><a xlink:href="../proc/dsteps.html" xlink:title="ddeabm_module::ddeabm_class%dsteps">
+<polygon fill="#d9534f" stroke="#d9534f" points="1261,-226 1031,-226 1031,-202 1261,-202 1261,-226"/>
+<text text-anchor="middle" x="1146" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::ddeabm_class%dsteps</text>
+</a>
+</g>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dsteps -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge9" class="edge">
+<title>proc~ddes&#45;&gt;proc~dsteps</title>
+<path fill="none" stroke="#000000" d="M959.86,-184.04C991.35,-189.13 1028.2,-195.1 1060.69,-200.35"/>
+<polygon fill="#000000" stroke="#000000" points="1060.2,-203.82 1070.63,-201.96 1061.31,-196.91 1060.2,-203.82"/>
+</g>
+<!-- proc~dhstrt -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node10" class="node">
+<title>proc~dhstrt</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node10"><a xlink:href="../proc/dhstrt.html" xlink:title="ddeabm_module::ddeabm_class%dhstrt">
+<polygon fill="#d9534f" stroke="#d9534f" points="1523,-226 1297,-226 1297,-202 1523,-202 1523,-226"/>
+<text text-anchor="middle" x="1410" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::ddeabm_class%dhstrt</text>
+</a>
+</g>
+</g>
+<!-- proc~dsteps&#45;&gt;proc~dhstrt -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge11" class="edge">
+<title>proc~dsteps&#45;&gt;proc~dhstrt</title>
+<path fill="none" stroke="#000000" d="M1261.15,-214C1269.68,-214 1278.3,-214 1286.87,-214"/>
+<polygon fill="#000000" stroke="#000000" points="1286.9,-217.5 1296.9,-214 1286.9,-210.5 1286.9,-217.5"/>
+</g>
+<!-- proc~dhvnrm -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node11" class="node">
+<title>proc~dhvnrm</title>
+<g id="a_proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_node11"><a xlink:href="../proc/dhvnrm.html" xlink:title="ddeabm_module::dhvnrm">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1710,-226 1559,-226 1559,-202 1710,-202 1710,-226"/>
+<text text-anchor="middle" x="1634.5" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_module::dhvnrm</text>
+</a>
+</g>
+</g>
+<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
+<g id="proc~~ddeabm_with_event_wrapper_vec~~CallsGraph_edge12" class="edge">
+<title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
+<path fill="none" stroke="#000000" d="M1523.23,-214C1531.83,-214 1540.42,-214 1548.8,-214"/>
+<polygon fill="#000000" stroke="#000000" points="1548.9,-217.5 1558.9,-214 1548.9,-210.5 1548.9,-217.5"/>
 </g>
 </g>
 </svg>
-</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
-    <p>Nodes of different colours represent the following: </p>
-    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+</div>                <script>
+                  var panprocddeabm_with_event_wrapper_vecCallsGraph = svgPanZoom('#procddeabm_with_event_wrapper_vecCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
 <!-- Title: Graph Key Pages: 1 -->
-<svg width="597pt" height="32pt"
- viewBox="0.00 0.00 596.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.16 1.16) rotate(0) translate(4 28)">
 <title>Graph Key</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 592.5,-28 592.5,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
 <!-- Subroutine -->
 <g id="node1" class="node">
 <title>Subroutine</title>
@@ -313,69 +574,65 @@ point of the previous call).</p></td>
 <polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
 <text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
 </g>
-<!-- Unknown Procedure Type -->
+<!-- Type Bound Procedure -->
 <g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
 <title>Unknown Procedure Type</title>
-<polygon fill="#777777" stroke="#777777" points="388.5,-24 243.5,-24 243.5,0 388.5,0 388.5,-24"/>
-<text text-anchor="middle" x="316" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
 </g>
 <!-- Program -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>Program</title>
-<polygon fill="#f0ad4e" stroke="#f0ad4e" points="465,-24 407,-24 407,0 465,0 465,-24"/>
-<text text-anchor="middle" x="436" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
 </g>
 <!-- This Page&#39;s Entity -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>This Page&#39;s Entity</title>
-<polygon fill="none" stroke="black" points="588.5,-24 483.5,-24 483.5,0 588.5,0 588.5,-24"/>
-<text text-anchor="middle" x="536" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
 </g>
 </g>
 </svg>
 
-    
-    <p>Solid arrows point from a procedure to one which it calls. Dashed 
-    arrows point from an interface to procedures which implement that interface.
-    This could include the module procedures in a generic interface or the
-    implementation in a submodule of an interface in a parent module.
-    </p>
-    </div></div></div></div>
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <br>
 
-    <section class="visible-xs visible-sm hidden-md">
-      <h3>Contents</h3>
- 
-<div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper_vec.html#src">ddeabm_with_event_wrapper_vec</a>
-  </div>
-</div>
-
-    </section>
-    <br class="visible-xs visible-sm hidden-md">
-
 
     
     
 
     
     
+
 
 
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">ddeabm_with_event_wrapper_vec</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tmax</span><span class="p">,</span><span class="n">tstop</span><span class="p">,</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="p">,</span><span class="n">tstep</span><span class="p">,</span><span class="k">continue</span><span class="p">)</span><span class="w"></span>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">ddeabm_with_event_wrapper_vec</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tmax</span><span class="p">,</span><span class="n">tstop</span><span class="p">,</span><span class="n">idid</span><span class="p">,</span><span class="n">gval</span><span class="p">,</span><span class="n">integration_mode</span><span class="p">,</span><span class="n">tstep</span><span class="p">,</span><span class="k">continue</span><span class="p">)</span>
 
 <span class="w">    </span><span class="k">implicit none</span>
 
-<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class_vec</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
-<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="k">    class</span><span class="p">(</span><span class="n">ddeabm_with_event_class_vec</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">y</span>
 <span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                            </span><span class="kd">::</span><span class="w"> </span><span class="n">tmax</span><span class="w">    </span><span class="c">!! max time at which a solution is desired.</span>
 <span class="w">                                                              </span><span class="c">!! (if root not located, it will integrate to `tmax`)</span>
 <span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">tstop</span><span class="w">   </span><span class="c">!! for some problems it may not be permissible to integrate</span>
@@ -440,44 +697,44 @@ point of the previous call).</p></td>
 
 <span class="w">    </span><span class="c">! optional inputs:</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">integration_mode</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integration_mode</span><span class="w"></span>
+<span class="k">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integration_mode</span>
 <span class="w">    </span><span class="k">else</span>
 <span class="k">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c">!default</span>
 <span class="w">    </span><span class="k">end if</span>
-<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="k">continue</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="k">continue</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="c">! if there has not yet been a successful</span>
 <span class="w">        </span><span class="c">! step yet, then proceed as normal without</span>
 <span class="w">        </span><span class="c">! continuing. Otherwise, enable continue mode.</span>
-<span class="w">        </span><span class="n">continuing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">continue</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">continuing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">continue</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="k">        </span><span class="n">continuing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
-<span class="w">    </span><span class="k">end if</span><span class="w"></span>
-
-<span class="w">    </span><span class="c">!if this is a &quot;forward&quot; (dt&gt;=0) integration</span>
-<span class="w">    </span><span class="n">forward</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span><span class="o">&gt;=</span><span class="n">t</span><span class="w"></span>
-
-<span class="w">    </span><span class="c">! if we are reporting the output at a fixed step size:</span>
-<span class="w">    </span><span class="n">fixed_step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">present</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">tmax</span><span class="o">-</span><span class="n">t</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">first_dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span><span class="w"></span>
-<span class="w">        </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="k">        </span><span class="n">continuing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
 <span class="w">    </span><span class="k">end if</span>
 
-<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="c">!if this is a &quot;forward&quot; (dt&gt;=0) integration</span>
+<span class="w">    </span><span class="n">forward</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span><span class="o">&gt;=</span><span class="n">t</span>
+
+<span class="w">    </span><span class="c">! if we are reporting the output at a fixed step size:</span>
+<span class="w">    </span><span class="n">fixed_step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">present</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">tmax</span><span class="o">-</span><span class="n">t</span><span class="p">)</span>
+<span class="w">        </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span>
+<span class="w">        </span><span class="n">first_dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span>
+<span class="w">        </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">    </span><span class="k">end if</span>
+
+<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="c">! if continuing, then we reset the t,y inputs</span>
 <span class="w">        </span><span class="c">! to the values from the last successful step</span>
 <span class="w">        </span><span class="c">! (note than an event may have been found in the</span>
 <span class="w">        </span><span class="c">! last call, so the input values are not correct)</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="w">            </span><span class="c">! we need the first step to be from the</span>
 <span class="w">            </span><span class="c">! last reported point, not the last</span>
 <span class="w">            </span><span class="c">! successful step:</span>
-<span class="w">            </span><span class="n">first_dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"></span>
+<span class="w">            </span><span class="n">first_dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span>
 
 <span class="w">            </span><span class="c">! make sure not a 0 dt or in the wrong direction:</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">first_dt</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">first_dt</span><span class="p">)</span><span class="o">/=</span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">dt</span><span class="p">))</span><span class="w"> </span><span class="n">first_dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">first_dt</span><span class="o">==</span><span class="mf">0.0_wp</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">first_dt</span><span class="p">)</span><span class="o">/=</span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="n">dt</span><span class="p">))</span><span class="w"> </span><span class="n">first_dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span>
 <span class="w">            </span><span class="c">!</span>
 <span class="w">            </span><span class="c">! WARNING: this can happen if the previous step was</span>
 <span class="w">            </span><span class="c">! larger than t+dt.... in that case, first_dt will be</span>
@@ -489,32 +746,32 @@ point of the previous call).</p></td>
 <span class="w">            </span><span class="c">!... we would also need to check those points for roots...</span>
 <span class="w">            </span><span class="c">!</span>
 <span class="w">        </span><span class="k">end if</span>
-<span class="k">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="w"></span>
+<span class="k">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span>
 <span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">   </span><span class="c">! necessary? (does not seem to matter)</span>
-<span class="w">    </span><span class="k">end if</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span>
 
 <span class="w">    </span><span class="c">!check for invalid inputs:</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="o">/=</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">mode</span><span class="o">/=</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                            </span><span class="s1">&#39;integration_mode must be 1 or 2.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span><span class="w"></span>
+<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                            </span><span class="s1">&#39;integration_mode must be 1 or 2.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
 <span class="w">        </span><span class="k">return</span>
 <span class="k">    end if</span>
 <span class="k">    if</span><span class="w"> </span><span class="p">((</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                            </span><span class="s1">&#39;REPORT procedure must be associated for integration_mode=2.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span><span class="w"></span>
+<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                            </span><span class="s1">&#39;REPORT procedure must be associated for integration_mode=2.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
 <span class="w">        </span><span class="k">return</span>
-<span class="k">    end if</span><span class="w"></span>
+<span class="k">    end if</span>
 
 <span class="w">    </span><span class="c">!make sure the event function was set:</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                            </span><span class="s1">&#39;the event function GFUNC has not been associated.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">idid</span><span class="o">=-</span><span class="mi">33</span><span class="w"></span>
+<span class="k">        call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                            </span><span class="s1">&#39;the event function GFUNC has not been associated.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="n">idid</span><span class="o">=-</span><span class="mi">33</span>
 <span class="w">        </span><span class="k">return</span>
-<span class="k">    end if</span><span class="w"></span>
+<span class="k">    end if</span>
 
 <span class="w">    </span><span class="c">!set info array:</span>
 
@@ -522,82 +779,82 @@ point of the previous call).</p></td>
 
 <span class="w">    </span><span class="c">!info(2)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">scalar_tols</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="k">end if</span><span class="w"></span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">end if</span>
 
 <span class="w">    </span><span class="c">!info(3)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!return after integrating to the specified (fixed step) time</span>
 <span class="w">    </span><span class="k">else</span>
 <span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c">!intermediate output mode: return after each default step</span>
-<span class="w">    </span><span class="k">end if</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span>
 
 <span class="w">    </span><span class="c">!info(4)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tstop</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">tstop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tstop</span><span class="w"></span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">tstop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tstop</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="k">        </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">tstop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="c">!not used</span>
-<span class="w">    </span><span class="k">end if</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span>
 
 <span class="w">    </span><span class="c">!make a copy of the tols, since the routine might change them:</span>
-<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">rtol</span><span class="w"></span>
-<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">atol</span><span class="w"></span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">rtol</span>
+<span class="w">    </span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">atol</span>
 
 <span class="w">    </span><span class="c">!evaluate the event function at the initial point:</span>
 <span class="w">    </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">  </span><span class="c">!to avoid catching a root at the initial time</span>
-<span class="w">    </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="w">    </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="w">    </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">    </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
 <span class="w">    </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">g1</span><span class="p">)</span><span class="w">  </span><span class="c">! compute all the g functions</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c">!initial point</span>
 
 <span class="w">    </span><span class="k">do</span>
 
-<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="w">            </span><span class="c">! take one step to t2 and return</span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">first_dt</span><span class="w"></span>
+<span class="k">                </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">first_dt</span>
 <span class="w">            </span><span class="k">else</span>
-<span class="k">                </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="w"></span>
+<span class="k">                </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span>
 <span class="w">            </span><span class="k">end if</span>
 <span class="k">            </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tmax</span><span class="o">-</span><span class="n">t2</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">! if last point</span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">last</span><span class="p">)</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span><span class="w">  </span><span class="c">! adjust last time step if necessary</span>
 <span class="w">        </span><span class="k">else</span>
 <span class="k">            </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span><span class="w">  </span><span class="c">! take a step in the direction of tmax and return</span>
-<span class="w">        </span><span class="k">end if</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
 
 <span class="w">        </span><span class="c">!call the lower-level routine:</span>
-<span class="w">        </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">ddeabm</span><span class="p">(</span><span class="w"> </span><span class="n">neq</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">t</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">y</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">tout</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">info</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">rtol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">atol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                          </span><span class="n">idid</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">idid</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">ddeabm</span><span class="p">(</span><span class="w"> </span><span class="n">neq</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">t</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">y</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">tout</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">info</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">rtol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">atol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,&amp;</span>
+<span class="w">                          </span><span class="n">idid</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">idid</span><span class="p">)</span>
 
 <span class="w">        </span><span class="c">! if there was an integration error (see ddeabm or idid codes):</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
 
 <span class="w">        </span><span class="c">!if there was a user-triggered error:</span>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1000</span><span class="w"></span>
+<span class="k">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1000</span>
 <span class="w">            </span><span class="k">exit</span>
-<span class="k">        end if</span><span class="w"></span>
+<span class="k">        end if</span>
 
 <span class="w">        </span><span class="c">!save the last successful step in the class:</span>
-<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">        </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
 
 <span class="w">        </span><span class="c">!evaluate all event functions at new point:</span>
-<span class="w">        </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="w">        </span><span class="n">y2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
-<span class="w">        </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">g2</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">        </span><span class="n">y2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+<span class="w">        </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">g2</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">any</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">any</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
 
 <span class="w">            </span><span class="c">! ignore a root at the initial time (first point)</span>
 <span class="w">            </span><span class="c">! (or if continuing integration from a previous root)</span>
@@ -609,21 +866,21 @@ point of the previous call).</p></td>
 <span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">g1</span><span class="o">*</span><span class="n">g2</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="c">! change in sign of the event function</span>
 
 <span class="w">            </span><span class="c">! find the one(s) with sign change:</span>
-<span class="w">            </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span><span class="w"></span>
-<span class="w">                </span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g1</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">g2</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span><span class="w"></span>
-<span class="w">            </span><span class="k">end do</span><span class="w"></span>
+<span class="w">            </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span>
+<span class="w">                </span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g1</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">g2</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span>
+<span class="w">            </span><span class="k">end do</span>
 <span class="w">            </span><span class="c">! the user bracket function can impose</span>
 <span class="w">            </span><span class="c">! additional constraints on the root, so</span>
 <span class="w">            </span><span class="c">! we check that now if it was associated:</span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span><span class="w"></span>
+<span class="k">                do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span>
 <span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                        </span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">g1</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">g2</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"></span>
+<span class="k">                        </span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">g1</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">g2</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 <span class="w">                    </span><span class="k">end if</span>
 <span class="k">                end do</span>
 <span class="k">            end if</span>
 
-<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">root_found</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">root_found</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
 <span class="w">                </span><span class="c">! root somewhere on [t1,t2]</span>
 
 <span class="w">                </span><span class="c">! have to check all the functions where this is true,</span>
@@ -632,14 +889,14 @@ point of the previous call).</p></td>
 <span class="w">                </span><span class="c">! initialize. goal is to find the earliest</span>
 <span class="w">                </span><span class="c">! one (in direction of integration):</span>
 <span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">forward</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                    </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">huge</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span><span class="w"></span>
+<span class="k">                    </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">huge</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span>
 <span class="w">                </span><span class="k">else</span>
-<span class="k">                    </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nb">huge</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span><span class="w"></span>
+<span class="k">                    </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nb">huge</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span>
 <span class="w">                </span><span class="k">end if</span>
 <span class="k">                </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">2000</span><span class="w"> </span><span class="c">! if no root is found</span>
 
-<span class="w">                </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span><span class="w"></span>
-<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">cycle</span><span class="w"></span>
+<span class="w">                </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">root_found</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">cycle</span>
 
 <span class="w">                    </span><span class="c">! this func has a root somewhere on [t1,t2]</span>
 
@@ -647,69 +904,69 @@ point of the previous call).</p></td>
 <span class="w">                            </span><span class="c">! the ith function</span>
 
 <span class="w">                    </span><span class="c">! call the root finder:</span>
-<span class="w">                    </span><span class="k">call </span><span class="n">root_scalar</span><span class="p">(</span><span class="n">root_method_brent</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">fun</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">zeroin_func</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">ax</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">t1</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">bx</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">rtol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">ftol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">xzero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tzero</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">fzero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gval</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iflag</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">fax</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">g1</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="n">fbx</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"></span>
+<span class="w">                    </span><span class="k">call </span><span class="n">root_scalar</span><span class="p">(</span><span class="n">root_method_brent</span><span class="p">,&amp;</span>
+<span class="w">                                        </span><span class="n">fun</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">zeroin_func</span><span class="p">,&amp;</span>
+<span class="w">                                        </span><span class="n">ax</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">t1</span><span class="p">,&amp;</span>
+<span class="w">                                        </span><span class="n">bx</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">,&amp;</span>
+<span class="w">                                        </span><span class="n">rtol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span>
+<span class="w">                                        </span><span class="n">ftol</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span>
+<span class="w">                                        </span><span class="n">xzero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tzero</span><span class="p">,&amp;</span>
+<span class="w">                                        </span><span class="n">fzero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gval</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span>
+<span class="w">                                        </span><span class="n">iflag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iflag</span><span class="p">,&amp;</span>
+<span class="w">                                        </span><span class="n">fax</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">g1</span><span class="p">(</span><span class="n">i</span><span class="p">),&amp;</span>
+<span class="w">                                        </span><span class="n">fbx</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 <span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">iflag</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="c">!root found at tzero</span>
-<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">forward</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">tzero</span><span class="o">&lt;</span><span class="n">tprev</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">forward</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">tzero</span><span class="o">&gt;</span><span class="n">tprev</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">forward</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">tzero</span><span class="o">&lt;</span><span class="n">tprev</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">forward</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">tzero</span><span class="o">&gt;</span><span class="n">tprev</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="w">                            </span><span class="c">! this is an earlier root so use it</span>
 <span class="w">                            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ig</span><span class="w">  </span><span class="c">! root found</span>
-<span class="w">                            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tzero</span><span class="w"></span>
-<span class="w">                            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yc</span><span class="w"></span>
-<span class="w">                            </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">                            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tzero</span>
+<span class="w">                            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yc</span>
+<span class="w">                            </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
 <span class="w">                        </span><span class="k">end if</span>
-<span class="k">                    else</span><span class="w"></span>
+<span class="k">                    else</span>
 <span class="w">                        </span><span class="c">! unlikely to occur since zeroin is</span>
 <span class="w">                        </span><span class="c">! &quot;guaranteed&quot; to converge, but just in case:</span>
-<span class="w">                        </span><span class="k">write</span><span class="p">(</span><span class="n">istr</span><span class="p">,</span><span class="s1">&#39;(I10)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">istat</span><span class="p">)</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
-<span class="w">                        </span><span class="k">call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,&amp;</span><span class="w"></span>
-<span class="w">                                          </span><span class="s1">&#39;Error locating root for function &#39;</span><span class="o">//</span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                                          </span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">)),</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="k">write</span><span class="p">(</span><span class="n">istr</span><span class="p">,</span><span class="s1">&#39;(I10)&#39;</span><span class="p">,</span><span class="n">iostat</span><span class="o">=</span><span class="n">istat</span><span class="p">)</span><span class="w"> </span><span class="n">i</span>
+<span class="w">                        </span><span class="k">call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,&amp;</span>
+<span class="w">                                          </span><span class="s1">&#39;Error locating root for function &#39;</span><span class="o">//</span><span class="p">&amp;</span>
+<span class="w">                                          </span><span class="nb">trim</span><span class="p">(</span><span class="nb">adjustl</span><span class="p">(</span><span class="n">istr</span><span class="p">)),</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
 <span class="w">                        </span><span class="c">! do not reset idid in case another root was found</span>
 <span class="w">                    </span><span class="k">end if</span>
-<span class="k">                end do</span><span class="w"></span>
+<span class="k">                end do</span>
 <span class="w">                </span><span class="c">! if no errors, report the root if necessary, then return:</span>
 <span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
-<span class="k">                    if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="k">                    if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="w">                    </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">gval</span><span class="p">)</span><span class="w"> </span><span class="c">! compute all funcs for output</span>
 <span class="w">                </span><span class="k">else</span>
-<span class="k">                    call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
-<span class="w">                                        </span><span class="s1">&#39;Error locating root.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="k">                    call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">&#39;ddeabm_with_event_wrapper_vec&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                                        </span><span class="s1">&#39;Error locating root.&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="w">                </span><span class="k">end if</span>
 <span class="k">                return</span>
 <span class="k">            end if</span>
 
-<span class="k">        end if</span><span class="w"></span>
+<span class="k">        end if</span>
 
 <span class="w">        </span><span class="c">! report this point:</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 
 <span class="w">        </span><span class="c">! integration is finished (see ddeabm or idid codes):</span>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 <span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">last</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
 <span class="k">        else</span>
 <span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="o">==</span><span class="mi">2</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">idid</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
-<span class="k">        end if</span><span class="w"></span>
+<span class="k">        end if</span>
 
 <span class="w">        </span><span class="c">! set up for next step:</span>
-<span class="w">        </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
-<span class="w">        </span><span class="n">g1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span><span class="w"></span>
-<span class="w">        </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="w"></span>
-<span class="w">        </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2</span><span class="w"></span>
+<span class="w">        </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">        </span><span class="n">g1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span>
+<span class="w">        </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span>
+<span class="w">        </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2</span>
 
 <span class="w">    </span><span class="k">end do</span>
 
 <span class="k">    contains</span>
 
-<span class="k">        function </span><span class="n">zeroin_func</span><span class="p">(</span><span class="n">tc</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w"></span>
+<span class="k">        function </span><span class="n">zeroin_func</span><span class="p">(</span><span class="n">tc</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 
 <span class="w">            </span><span class="c">!! evaluate the `ig`th `g` function at `tc`</span>
 <span class="w">            </span><span class="c">!! using interpolation ([[dintp]]).</span>
@@ -719,19 +976,19 @@ point of the previous call).</p></td>
 <span class="k">            </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">tc</span><span class="w">  </span><span class="c">!! current time</span>
 <span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w">   </span><span class="c">!! value of event function</span>
 
-<span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gtmp</span><span class="w"></span>
+<span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">n_g_eqns</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gtmp</span>
 
 <span class="w">            </span><span class="c">! interpolate to get the state at tc:</span>
-<span class="w">            </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span>
 
 <span class="w">            </span><span class="c">! user defined event function:</span>
 <span class="w">            </span><span class="c">! [only compute the one we need]</span>
-<span class="w">            </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">,</span><span class="n">gtmp</span><span class="p">,</span><span class="n">ig</span><span class="p">)</span><span class="w"></span>
-<span class="w">            </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtmp</span><span class="p">(</span><span class="n">ig</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="n">yc</span><span class="p">,</span><span class="n">gtmp</span><span class="p">,</span><span class="n">ig</span><span class="p">)</span>
+<span class="w">            </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtmp</span><span class="p">(</span><span class="n">ig</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">end function </span><span class="n">zeroin_func</span><span class="w"></span>
+<span class="w">        </span><span class="k">end function </span><span class="n">zeroin_func</span>
 
-<span class="w">    </span><span class="k">end subroutine </span><span class="n">ddeabm_with_event_wrapper_vec</span><span class="w"></span>
+<span class="w">    </span><span class="k">end subroutine </span><span class="n">ddeabm_with_event_wrapper_vec</span>
 </pre></div>
 
     </section>
@@ -740,50 +997,45 @@ point of the previous call).</p></td>
     </div>
   </div>
 
-    <hr>    
+      <hr>
     </div> <!-- /container -->
     <footer>
       <div class="container">
-      <div class="row">
-        <div class="col-xs-6 col-md-6"><p>ddeabm was developed by Jacob Williams<br>&copy; 2022 
+        <div class="row justify-content-between">
+          <div class="col"><p>ddeabm was developed by Jacob Williams<br>&copy; 2024 
 </p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
         </div>
-        <div class="col-xs-6 col-md-6">
-          <p class="text-right">
-            Documentation generated by 
-            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
-          </p>
-        </div>
-      </div>
-      <br>
-      </div> <!-- /container -->    
+        <br>
+      </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
+    <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
-<!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
--->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
     <!-- MathJax JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
-        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
-        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
-      });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script src="../tipuesearch/tipuesearch_content.js"></script>
-    <script src="../tipuesearch/tipuesearch_set.js"></script>
-    <script src="../tipuesearch/tipuesearch.js"></script>
-    
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
   </body>
 </html>
