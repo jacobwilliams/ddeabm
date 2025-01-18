@@ -35,7 +35,7 @@
     module ddeabm_module
 
     use root_module, only: root_scalar, root_method_brent
-    use iso_fortran_env 
+    use iso_fortran_env
 
     implicit none
 
@@ -199,7 +199,7 @@
 
         private
 
-        real(wp) :: tol = 0.0_wp  !! tolerance for root finding 
+        real(wp) :: tol = 0.0_wp  !! tolerance for root finding
 
         real(wp) :: t_saved = 0.0_wp            !! time of last successful step
                                                 !! (used to continue after a root finding)
@@ -268,7 +268,7 @@
         subroutine deriv_func(me,t,x,xdot)
             !! Interface to the [[ddeabm_class]] derivative function.
             !!
-            !! Known as `df` in the documentation. provided by the user 
+            !! Known as `df` in the documentation. provided by the user
             !! to define the system of first order differential equations
             !! which is to be solved.  for the given values of t and the
             !! vector x(*)=(x(1),x(2),...,x(neq)), the subroutine must
@@ -554,7 +554,7 @@
                                                               !! When \( g=0 \) (within the tolerance),
                                                               !! then a root has been located and
                                                               !! the integration will stop.
-    real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding 
+    real(wp),intent(in)                          :: root_tol  !! tolerance for the root finding
     procedure(report_func),optional              :: report    !! reporting function
     procedure(bracket_func),optional             :: bracket   !! root bracketing function. if not present,
                                                               !! the default is used.
@@ -871,9 +871,9 @@
                                                               !! See [[ddeabm]] for other values.
     real(wp),intent(out)                           :: gval    !! value of the event function `g(t,x)` at the final time `t`
     integer,intent(in),optional :: integration_mode           !! Step mode:
-                                                              !! *1* - normal integration from `t` to `tout`, 
+                                                              !! *1* - normal integration from `t` to `tout`,
                                                               !!  no reporting [default].
-                                                              !! *2* - normal integration from `t` to `tout`, 
+                                                              !! *2* - normal integration from `t` to `tout`,
                                                               !!  report each step.
     real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
                                              !! evaluation of event function. If not present,
@@ -1209,9 +1209,9 @@
                                                               !! See [[ddeabm]] for other values.
     real(wp),dimension(:),intent(out)              :: gval    !! value of the event functions `g(t,x)` at the final time `t`
     integer,intent(in),optional :: integration_mode           !! Step mode:
-                                                              !! *1* - normal integration from `t` to `tout`, 
+                                                              !! *1* - normal integration from `t` to `tout`,
                                                               !!  no reporting [default].
-                                                              !! *2* - normal integration from `t` to `tout`, 
+                                                              !! *2* - normal integration from `t` to `tout`,
                                                               !!  report each step.
     real(wp),intent(in),optional :: tstep    !! Fixed time step to use for reporting and
                                              !! evaluation of event function. If not present,
@@ -1933,7 +1933,7 @@
 !   * M. K. Gordon
 !
 !### Reference
-!  * L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented package of ode solvers", 
+!  * L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented package of ode solvers",
 !    Report SAND79-2374, Sandia Laboratories, 1979.
 !
 !### History
@@ -1956,10 +1956,10 @@
     class(ddeabm_class),intent(inout)     :: me
     integer,intent(in)                    :: neq    !! the number of (first order) differential
                                                     !! equations to be integrated. (neq >= 1)
-    real(wp),intent(inout)                :: t      !! value of the independent variable. 
-                                                    !! on input, set it to the initial point of 
+    real(wp),intent(inout)                :: t      !! value of the independent variable.
+                                                    !! on input, set it to the initial point of
                                                     !! the integration. the code changes its value.
-                                                    !! on output, the solution was successfully 
+                                                    !! on output, the solution was successfully
                                                     !! advanced to the output value of t.
     real(wp),dimension(neq),intent(inout) :: y
     real(wp),intent(in)                   :: tout
@@ -2950,7 +2950,7 @@
 !   desirable.
 !
 !### References
-!   * L. F. Shampine, M. K. Gordon, "Solving ordinary differential equations with ODE, STEP, and INTERP", 
+!   * L. F. Shampine, M. K. Gordon, "Solving ordinary differential equations with ODE, STEP, and INTERP",
 !     Report SLA-73-1060,
 !     Sandia Laboratories, 1973.
 !   * L. F. Shampine, M. K. Gordon, "Computer solution of ordinary differential equations, the initial value problem",
@@ -3112,6 +3112,7 @@
 !   compute coefficients of formulas for this step.  avoid computing
 !   those quantities not changed when step size is not changed.
 !                   ***
+    main : do
 
  100  kp1 = k+1
       kp2 = k+2
@@ -3362,15 +3363,21 @@
       h = temp2*h
       k = knew
       ns = 0
-      if (abs(h) >= fouru*abs(x)) go to 100
+      if (abs(h) >= fouru*abs(x)) cycle main
       crash = .true.
       h = sign(fouru*abs(x),h)
       eps = eps + eps
       return
 
+    else
+        exit main
     end if
+
+    end do main
+
     !       ***     end block 3     ***
 
+    block4 : block
 !       ***     begin block 4     ***
 !   the step is successful.  correct the predicted solution, evaluate
 !   the derivatives using the corrected solution and update the
@@ -3419,9 +3426,15 @@
 
       erkp1 = 0.0_wp
       if (knew == km1  .or.  k == 12) phase1 = .false.
-      if (phase1) go to 450
-      if (knew == km1) go to 455
-      if (kp1 > ns) go to 460
+      if (phase1) then
+        call raise_order()
+        exit block4
+      end if
+      if (knew == km1) then
+        call lower_order()
+        exit block4
+      end if
+      if (kp1 > ns) exit block4
       do l = 1,neqn
         erkp1 = erkp1 + (phi(l,kp2)/wt(l))**2
       end do
@@ -3431,28 +3444,25 @@
 !   for next step
 
       if (k > 1) then
-          if (erkm1 <= min(erk,erkp1)) go to 455
-          if (erkp1 >= erk  .or.  k == 12) go to 460
+          if (erkm1 <= min(erk,erkp1)) then
+            call lower_order()
+            exit block4
+          end if
+          if (erkp1 >= erk  .or.  k == 12) exit block4
       else
-          if (erkp1 >= 0.5_wp*erk) go to 460
+          if (erkp1 >= 0.5_wp*erk) exit block4
       end if
 
 !   here erkp1 < erk < max(erkm1,erkm2) else order would have
 !   been lowered in block 2.  thus order is to be raised
 
-!   raise order
+      call raise_order()
+      exit block4
 
- 450  k = kp1
-      erk = erkp1
-      go to 460
-
-!   lower order
-
- 455  k = km1
-      erk = erkm1
+    end block block4
 
       ! with new order determine appropriate step size for next step
- 460  hnew = h + h
+      hnew = h + h
       if (.not. phase1) then
           if (p5eps < erk*me%two(k+1)) then
               hnew = h
@@ -3466,6 +3476,20 @@
       end if
       h = hnew
 !       ***     end block 4     ***
+
+    contains
+
+        subroutine raise_order()
+            !! raise order
+            k = kp1
+            erk = erkp1
+        end subroutine raise_order
+
+        subroutine lower_order()
+            !! lower order
+            k = km1
+            erk = erkm1
+        end subroutine lower_order
 
     end subroutine dsteps
 !*****************************************************************************************
