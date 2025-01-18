@@ -886,9 +886,9 @@ contains
                                             !! point of the previous call).
 
       ! local variables:
-      real(wp), dimension(me%neq) :: y1  !! initial state in an interval
-      real(wp), dimension(me%neq) :: y2  !! final state in an interval
-      real(wp), dimension(me%neq) :: yc  !! interpolated state at `tc`
+      real(wp), dimension(:),allocatable :: y1  !! initial state in an interval
+      real(wp), dimension(:),allocatable :: y2  !! final state in an interval
+      real(wp), dimension(:),allocatable :: yc  !! interpolated state at `tc`
       real(wp) :: g1          !! value of event function at `t1`
       real(wp) :: g2          !! value of event function at `t2`
       real(wp) :: t1          !! initial time of an interval
@@ -907,6 +907,11 @@ contains
                             !! first step  (can differ from `dt` if
                             !! continuing from a previous event solve)
       logical :: root_found   !! if a root was found
+
+      ! work arrays:
+      allocate(y1(me%neq))
+      allocate(y2(me%neq))
+      allocate(yc(me%neq))
 
       ! optional inputs:
       if (present(integration_mode)) then
@@ -1192,44 +1197,44 @@ contains
       class(ddeabm_with_event_class_vec), intent(inout) :: me
       real(wp), intent(inout)                         :: t
       real(wp), dimension(me%neq), intent(inout)       :: y
-      real(wp), intent(in)                            :: tmax    !! max time at which a solution is desired.
+      real(wp), intent(in)                            :: tmax !! max time at which a solution is desired.
                                                               !! (if root not located, it will integrate to `tmax`)
-      real(wp), intent(in), optional                   :: tstop   !! for some problems it may not be permissible to integrate
-                                                              !! past a point `tstop` because a discontinuity occurs there
-                                                              !! or the solution or its derivative is not defined beyond
-                                                              !! `tstop`.  when you have declared a `tstop` point (see `info(4)`),
-                                                              !! you have told the code not to integrate past `tstop`.
-                                                              !! in this case any `tmax` beyond `tstop` is invalid input.
-                                                              !! [not used if not present]
-      integer, intent(out)                            :: idid    !! indicator reporting what the code did.
+      real(wp), intent(in), optional                   :: tstop !! for some problems it may not be permissible to integrate
+                                                                !! past a point `tstop` because a discontinuity occurs there
+                                                                !! or the solution or its derivative is not defined beyond
+                                                                !! `tstop`.  when you have declared a `tstop` point (see `info(4)`),
+                                                                !! you have told the code not to integrate past `tstop`.
+                                                                !! in this case any `tmax` beyond `tstop` is invalid input.
+                                                                !! [not used if not present]
+      integer, intent(out)                            :: idid !! indicator reporting what the code did.
                                                               !! you must monitor this integer variable to
                                                               !! decide what action to take next.
                                                               !! `idid>1000` means a root was found for the
                                                               !! (`idid-1000`)th `g` function.
                                                               !! See [[ddeabm]] for other values.
-      real(wp), dimension(:), intent(out)              :: gval    !! value of the event functions `g(t,x)` at the final time `t`
-      integer, intent(in), optional :: integration_mode           !! Step mode:
-                                                              !! *1* - normal integration from `t` to `tout`,
-                                                              !!  no reporting [default].
-                                                              !! *2* - normal integration from `t` to `tout`,
-                                                              !!  report each step.
-      real(wp), intent(in), optional :: tstep    !! Fixed time step to use for reporting and
-                                             !! evaluation of event function. If not present,
-                                             !! then default integrator steps are used.
+      real(wp), dimension(:), intent(out)              :: gval !! value of the event functions `g(t,x)` at the final time `t`
+      integer, intent(in), optional :: integration_mode !! Step mode:
+                                                        !! *1* - normal integration from `t` to `tout`,
+                                                        !!  no reporting [default].
+                                                        !! *2* - normal integration from `t` to `tout`,
+                                                        !!  report each step.
+      real(wp), intent(in), optional :: tstep !! Fixed time step to use for reporting and
+                                              !! evaluation of event function. If not present,
+                                              !! then default integrator steps are used.
       logical, intent(in), optional :: continue !! to continue after a previous event location.
-                                            !! This option can be used after a previous call to this routine
-                                            !! has found an event, to continue integration to the next event
-                                            !! without having to restart the integration. It will not report
-                                            !! the initial point (which would have been reported as the last
-                                            !! point of the previous call).
+                                                !! This option can be used after a previous call to this routine
+                                                !! has found an event, to continue integration to the next event
+                                                !! without having to restart the integration. It will not report
+                                                !! the initial point (which would have been reported as the last
+                                                !! point of the previous call).
 
       ! local variables:
-      real(wp), dimension(me%n_g_eqns) :: g1         !! value of event function at `t1`
-      real(wp), dimension(me%n_g_eqns) :: g2         !! value of event function at `t2`
-      logical, dimension(me%n_g_eqns) :: root_found  !! if a root was found
-      real(wp), dimension(me%neq) :: y1  !! initial state in an interval
-      real(wp), dimension(me%neq) :: y2  !! final state in an interval
-      real(wp), dimension(me%neq) :: yc  !! interpolated state at `tc`
+      real(wp), dimension(:),allocatable :: g1         !! value of event function at `t1`
+      real(wp), dimension(:),allocatable :: g2         !! value of event function at `t2`
+      logical, dimension(:),allocatable :: root_found  !! if a root was found
+      real(wp), dimension(:),allocatable :: y1  !! initial state in an interval
+      real(wp), dimension(:),allocatable :: y2  !! final state in an interval
+      real(wp), dimension(:),allocatable :: yc  !! interpolated state at `tc`
       real(wp) :: t1              !! initial time of an interval
       real(wp) :: t2              !! final time of an interval
       real(wp) :: tzero           !! time where an event occurs in `[t1,t2]`
@@ -1239,20 +1244,28 @@ contains
       integer :: i                !! counter
       integer :: ig               !! `gfunc` to compute
       real(wp) :: tprev           !! earliest time of root when there are
-                                !! multiple roots on the integration
-                                !! step interval
+                                  !! multiple roots on the integration
+                                  !! step interval
       logical :: forward          !! if `tmax>=t`
       logical :: fixed_step       !! if using the fixed step size `tstep`
       logical :: last             !! for fixed step size: the last step
       real(wp) :: dt              !! for fixed step size: actual signed time step
       real(wp) :: direction       !! direction of integration for
-                                !! fixed step size: `+1: dt>=0`, `-1: dt<0`
+                                  !! fixed step size: `+1: dt>=0`, `-1: dt<0`
       logical :: continuing       !! local copy of optional `continue` argument
       real(wp) :: first_dt        !! for fixed step size: the `dt` for the
-                                !! first step  (can differ from `dt` if
-                                !! continuing from a previous event solve)
+                                  !! first step  (can differ from `dt` if
+                                  !! continuing from a previous event solve)
       character(len=10) :: istr   !! for integer to string conversion
       integer :: istat            !! for write statement `iostat`
+
+      ! work arrays:
+      allocate(g1(me%n_g_eqns))
+      allocate(g2(me%n_g_eqns))
+      allocate(root_found(me%n_g_eqns))
+      allocate(y1(me%neq))
+      allocate(y2(me%neq))
+      allocate(yc(me%neq))
 
       ! optional inputs:
       if (present(integration_mode)) then
@@ -1457,6 +1470,11 @@ contains
                do i = 1, me%n_g_eqns
                   if (.not. root_found(i)) cycle
 
+                  ! Note: it's possible that zeroing in on one root
+                  ! will cause another earlier root to be detected?
+                  ! This is not currently handled. Only the ones identified
+                  ! by the normal stepping process are considered.
+
                   ! this func has a root somewhere on [t1,t2]
 
                   ig = i  ! when calling zeroin, we only need to compute
@@ -1532,7 +1550,7 @@ contains
 
          implicit none
 
-         real(wp), intent(in)  :: tc  !! current time
+         real(wp), intent(in) :: tc  !! current time
          real(wp)             :: g   !! value of event function
 
          real(wp), dimension(me%n_g_eqns) :: gtmp

@@ -58,7 +58,7 @@ jobs:
     #   run: fpm build --profile release
 
     - name: Run tests
-      run: fpm test --profile debug --flag -coverage
+      run: fpm test --profile debug --flag "-coverage"
 
     - name: Create coverage report
       run: |
