@@ -38,7 +38,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link" href="sourcefile/ddeabm_module.f90.html">Source File</a>
+                    <a class="nav-link" href="../sourcefile/ddeabm_module.f90.html">Source File</a>
                   </li>
                 <li class="nav-item">
                   <a class="nav-link" href="../lists/modules.html">Modules</a>
@@ -75,9 +75,8 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
-                 title="<p>13.4% of total for derived types.</p>Including implementation: 437 statements, 22.9% of total for derived types.">13 statements</a>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p>13.4% of total for derived types.</p>Including implementation: 441 statements, 23.3% of total for derived types.">13 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -176,12 +175,12 @@
     </div>
     
     <div class="col-md-9" id='text'>
-      <h2>
+      <h2 id="type-def-statement">
         type, public, extends(<a href='ddeabm_class.html'>ddeabm_class</a>) :: ddeabm_with_event_class_vec</h2>
-    <p>A version of <a href="ddeabm_class.html">ddeabm_class</a> with event location (root finding)
+    <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding)
 of a vector function (it will stop on the first root it encounters)</p>
 <p>Call <em>initialize_event</em> to set up the integration.</p>
-<p>See also: <a href="ddeabm_with_event_class.html">ddeabm_with_event_class</a></p>
+<p>See also: <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a></p>
 <br>      <div class="card">
         <div class="card-header">
           <h3 class="card-title">Inherits</h3>
@@ -507,7 +506,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>rtol</strong></td>
             <td>
-<p>relative tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -522,7 +521,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>atol</strong></td>
             <td>
-<p>absolution tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -599,7 +598,7 @@ cannot be changed during a problem.</p>
     </dl>
 
 
-  <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -831,7 +830,7 @@ If <code>integration_mode=1</code>, then this is ignored.</p>
 
 
   <p>Call this to indicate that a new problem is being solved.
-It sets <code>info(1) = 0</code> (see <a href="ddeabm.html">ddeabm</a> documentation).</p>
+It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -890,7 +889,7 @@ It sets <code>info(1) = 0</code> (see <a href="ddeabm.html">ddeabm</a> documenta
     
 
   <p>Interpolation function. Can be used for dense output after a step.
-It calls the low-level routine <a href="dintp.html">dintp</a>.</p>
+It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1127,7 +1126,7 @@ It calls the low-level routine <a href="dintp.html">dintp</a>.</p>
             <td>::</td>
             <td><strong>rtol</strong></td>
             <td>
-<p>relative tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -1142,7 +1141,7 @@ It calls the low-level routine <a href="dintp.html">dintp</a>.</p>
             <td>::</td>
             <td><strong>atol</strong></td>
             <td>
-<p>absolution tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -1279,7 +1278,7 @@ the default is used.</p>
       <div class="card-body">
         
         <p>main routine for integration to an event
-(note that <em>integrate</em> can also still be used from <a href="ddeabm_class.html">ddeabm_class</a>)</p>
+(note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p>
       </div>
     <ul class="list-group">
         <li class="list-group-item">
@@ -1291,7 +1290,7 @@ the default is used.</p>
     </dl>
 
 
-  <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>, with event finding for multiple functions.
+  <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding for multiple functions.
   It will integrate until any <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
   this manually)</p><a href="../proc/ddeabm_with_event_wrapper_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
@@ -1406,7 +1405,7 @@ you must monitor this integer variable to
 decide what action to take next.
 <code>idid&gt;1000</code> means a root was found for the
 (<code>idid-1000</code>)th <code>g</code> function.
-See <a href="ddeabm.html">ddeabm</a> for other values.</p>
+See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p>
             </td>
         </tr>
         <tr>
@@ -1493,7 +1492,7 @@ point of the previous call).</p>
 
     <section>
     <h3><span class="anchor" id="src"></span>Source Code</h3>
-    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">type</span><span class="p">,</span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddeabm_with_event_class_vec</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">extends</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddeabm_with_event_class_vec</span>
 
 <span class="w">        </span><span class="c">!! A version of [[ddeabm_class]] with event location (root finding)</span>
 <span class="w">        </span><span class="c">!! of a vector function (it will stop on the first root it encounters)</span>
@@ -1502,35 +1501,35 @@ point of the previous call).</p>
 <span class="w">        </span><span class="c">!!</span>
 <span class="w">        </span><span class="c">!! See also: [[ddeabm_with_event_class]]</span>
 
-<span class="w">        </span><span class="k">private</span>
+<span class="w">      </span><span class="k">private</span>
 
-<span class="k">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_g_eqns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c">!! number of `gfunc` event equations</span>
+<span class="k">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_g_eqns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c">!! number of `gfunc` event equations</span>
 
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tol</span><span class="w">   </span><span class="c">!! tolerance for root finding.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tol</span><span class="w">   </span><span class="c">!! tolerance for root finding.</span>
 <span class="w">                                                   </span><span class="c">!! this is a vector (size `n_g_eqns`)</span>
 
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">            </span><span class="c">!! time of last successful step</span>
-<span class="w">                                                </span><span class="c">!! (used to continue after a root finding)</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x_saved</span><span class="w"> </span><span class="c">!! state of last successful step.  size `(neq)`.</span>
-<span class="w">                                                    </span><span class="c">!! (used to continue after a root finding)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">            </span><span class="c">!! time of last successful step</span>
+<span class="w">                                              </span><span class="c">!! (used to continue after a root finding)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x_saved</span><span class="w"> </span><span class="c">!! state of last successful step.  size `(neq)`.</span>
+<span class="w">                                                     </span><span class="c">!! (used to continue after a root finding)</span>
 
-<span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">event_func_vec</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gfunc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span><span class="w">  </span><span class="c">!! event function: g(t,x)=0 at event</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">event_func_vec</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gfunc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span><span class="w">  </span><span class="c">!! event function: g(t,x)=0 at event</span>
 
-<span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func_vec</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bracket</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func_vec</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bracket</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
 <span class="w">            </span><span class="c">!! a function for determining if the root is bracketed.</span>
 <span class="w">            </span><span class="c">!! the default just checks for a sign change in the event function.</span>
 <span class="w">            </span><span class="c">!! the user can specify this to use other conditions.</span>
 
-<span class="w">    </span><span class="k">contains</span>
+<span class="w">   </span><span class="k">contains</span>
 
-<span class="k">        private</span>
+<span class="k">      private</span>
 
-<span class="k">        procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initialize_event</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_with_event_initialize_vec</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">integrate_to_event</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_with_event_wrapper_vec</span>
+<span class="k">      procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initialize_event</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_with_event_initialize_vec</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">integrate_to_event</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_with_event_wrapper_vec</span>
 <span class="w">            </span><span class="c">!! main routine for integration to an event</span>
 <span class="w">            </span><span class="c">!! (note that *integrate* can also still be used from [[ddeabm_class]])</span>
 
-<span class="w">    </span><span class="k">end type </span><span class="n">ddeabm_with_event_class_vec</span>
+<span class="w">   </span><span class="k">end type </span><span class="n">ddeabm_with_event_class_vec</span>
 </pre></div>
 
     </section>
@@ -1543,7 +1542,10 @@ point of the previous call).</p>
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>ddeabm was developed by Jacob Williams<br>&copy; 2024 
+          <div class="col">
+            <p>
+              ddeabm
+ was developed by Jacob Williams<br>              &copy; 2025 
 </p>
           </div>
           <div class="col">

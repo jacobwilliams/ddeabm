@@ -38,7 +38,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link" href="sourcefile/ddeabm_module.f90.html">Source File</a>
+                    <a class="nav-link" href="../sourcefile/ddeabm_module.f90.html">Source File</a>
                   </li>
                 <li class="nav-item">
                   <a class="nav-link" href="../lists/modules.html">Modules</a>
@@ -75,9 +75,8 @@
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
-                 title="<p>74.2% of total for derived types.</p>Including implementation: 1077 statements, 56.4% of total for derived types.">72 statements</a>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p>74.2% of total for derived types.</p>Including implementation: 1052 statements, 55.7% of total for derived types.">72 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -229,7 +228,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-      <h2>
+      <h2 id="type-def-statement">
         type, public :: ddeabm_class</h2>
     <p>The main DDEABM integration class.</p>
 <br>      <div class="card">
@@ -548,7 +547,7 @@ or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a
             <td>
                 <p>how to choose the initial step <code>h</code>:</p>
 <ol>
-<li>Use <a href="ddeabm_class.html#boundprocedure-dhstrt">dhstrt</a>.</li>
+<li>Use <a href="../type/ddeabm_class.html#boundprocedure-dhstrt">dhstrt</a>.</li>
 <li>Use the older (quicker) algorithm.</li>
 <li>Use a user-specified value.</li>
 </ol>
@@ -657,7 +656,7 @@ or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a
                 <td></td>
             <td>
                 <p><code>(neq)</code> contains the approximate derivative
-of the solution component <code>y(i)</code>.  in <a href="ddeabm_class.html#boundprocedure-ddeabm">ddeabm</a>, it
+of the solution component <code>y(i)</code>.  in <a href="../type/ddeabm_class.html#boundprocedure-ddeabm">ddeabm</a>, it
 is obtained by calling subroutine <code>df</code> to
 evaluate the differential equation using <code>t</code> and
 <code>y(*)</code> when <code>idid=1</code> or <code>2</code>, and by interpolation
@@ -739,7 +738,7 @@ when <code>idid=3</code>.</p>
             </td>
               <td>private,</td>
             <td>
-              allocatable, dimension(:,:)
+              allocatable, dimension(:, :)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
@@ -1074,7 +1073,7 @@ performed (<code>idid=3</code>).</p>
 <td> =</td>
                 <td>.false.</td>
             <td>
-                <p>indicator for <a href="ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
+                <p>indicator for <a href="../type/ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
             </td>
         </tr>
         <tr>
@@ -1091,7 +1090,7 @@ performed (<code>idid=3</code>).</p>
 <td> =</td>
                 <td>.false.</td>
             <td>
-                <p>indicator for <a href="ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
+                <p>indicator for <a href="../type/ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
             </td>
         </tr>
         <tr>
@@ -1108,7 +1107,7 @@ performed (<code>idid=3</code>).</p>
 <td> =</td>
                 <td>.false.</td>
             <td>
-                <p>indicator for <a href="ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
+                <p>indicator for <a href="../type/ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
             </td>
         </tr>
         <tr>
@@ -1467,7 +1466,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>rtol</strong></td>
             <td>
-<p>relative tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -1482,7 +1481,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>atol</strong></td>
             <td>
-<p>absolution tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -1559,7 +1558,7 @@ cannot be changed during a problem.</p>
     </dl>
 
 
-  <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1791,7 +1790,7 @@ If <code>integration_mode=1</code>, then this is ignored.</p>
 
 
   <p>Call this to indicate that a new problem is being solved.
-It sets <code>info(1) = 0</code> (see <a href="ddeabm.html">ddeabm</a> documentation).</p>
+It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -1850,7 +1849,7 @@ It sets <code>info(1) = 0</code> (see <a href="ddeabm.html">ddeabm</a> documenta
     
 
   <p>Interpolation function. Can be used for dense output after a step.
-It calls the low-level routine <a href="dintp.html">dintp</a>.</p>
+It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2177,9 +2176,9 @@ advanced to the output value of t.</p>
 </h3>
     
 
-  <p><a href="ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
+  <p><a href="../proc/ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
   inconvenience of a long call list.  consequently ddes is used as
-  described in the comments for <a href="ddeabm.html">ddeabm</a>.</p><a href="../proc/ddes.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddes.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2409,7 +2408,7 @@ advanced to the output value of t.</p>
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(neq,16)
+              dimension(neq, 16)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
@@ -3452,12 +3451,12 @@ differential equation method.</p>
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(neqn,16)
+              dimension(neqn, 16)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3472,7 +3471,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>p</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3517,7 +3516,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>alpha</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3577,7 +3576,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>w</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3592,7 +3591,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3697,7 +3696,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>xold</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3727,7 +3726,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>ivc</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3742,7 +3741,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>iv</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3757,7 +3756,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>kgi</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -3772,7 +3771,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>gi</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
     </tbody>
@@ -3788,22 +3787,22 @@ differential equation method.</p>
 
     <section>
     <h3><span class="anchor" id="src"></span>Source Code</h3>
-    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">type</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddeabm_class</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddeabm_class</span>
 
-<span class="w">        </span><span class="c">!! The main DDEABM integration class.</span>
+<span class="w">      </span><span class="c">!! The main DDEABM integration class.</span>
 
-<span class="w">        </span><span class="k">private</span>
+<span class="w">      </span><span class="k">private</span>
 
-<span class="k">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">neq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">neq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">            </span><span class="c">!! the number of (first order) differential equations to be integrated (&gt;=0)</span>
 
-<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">maxnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">maxnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span>
 <span class="w">            </span><span class="c">!!  the expense of solving the problem is monitored by counting the</span>
 <span class="w">            </span><span class="c">!!  number of steps attempted. when this exceeds `maxnum`, the counter</span>
 <span class="w">            </span><span class="c">!!  is reset to zero and the user is informed about possible excessive</span>
 <span class="w">            </span><span class="c">!!  work.</span>
 
-<span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">deriv_func</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">deriv_func</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
 <span class="w">            </span><span class="c">!!  to define the system of first order differential equations</span>
 <span class="w">            </span><span class="c">!!  which is to be solved.  for the given values of `x` and the</span>
 <span class="w">            </span><span class="c">!!  vector `u(*)=(u(1),u(2),...,u(neq))`, the subroutine must</span>
@@ -3812,115 +3811,115 @@ differential equation method.</p>
 <span class="w">            </span><span class="c">!!  array `uprime(*)`, that is, `uprime(i) = du(i)/dx` for</span>
 <span class="w">            </span><span class="c">!!  equations `i=1,...,neq`.</span>
 
-<span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
 <span class="w">            </span><span class="c">!! a function for reporting the integration steps (optional).</span>
 <span class="w">            </span><span class="c">!! this can be associated in [[ddeabm_initialize]] or</span>
 <span class="w">            </span><span class="c">!! [[ddeabm_with_event_initialize]], and is enabled</span>
 <span class="w">            </span><span class="c">!! using the `mode` argument in [[ddeabm_wrapper]]</span>
 <span class="w">            </span><span class="c">!! or [[ddeabm_with_event_wrapper]]</span>
 
-<span class="w">        </span><span class="c">!tolerances</span>
-<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">scalar_tols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol</span><span class="w">        </span><span class="c">!! the user input rel tol</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">atol</span><span class="w">        </span><span class="c">!! the user input abs tol</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol_tmp</span><span class="w">    </span><span class="c">!! rel tol used internally</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">atol_tmp</span><span class="w">    </span><span class="c">!! abs tol used internally</span>
+<span class="w">      </span><span class="c">!tolerances</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">scalar_tols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol</span><span class="w">        </span><span class="c">!! the user input rel tol</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">atol</span><span class="w">        </span><span class="c">!! the user input abs tol</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol_tmp</span><span class="w">    </span><span class="c">!! rel tol used internally</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">atol_tmp</span><span class="w">    </span><span class="c">!! abs tol used internally</span>
 
-<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! info array</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! info array</span>
 
-<span class="w">        </span><span class="c">! initial step mode:</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">    </span><span class="c">!! how to choose the initial step `h`:</span>
-<span class="w">                                            </span><span class="c">!!</span>
-<span class="w">                                            </span><span class="c">!! 1. Use [[dhstrt]].</span>
-<span class="w">                                            </span><span class="c">!! 2. Use the older (quicker) algorithm.</span>
-<span class="w">                                            </span><span class="c">!! 3. Use a user-specified value.</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="c">!! when `initial_step_mode=3`, the `h` value to use.</span>
-<span class="w">                                               </span><span class="c">!! (for the other modes, this will also contain the value used)</span>
+<span class="w">      </span><span class="c">! initial step mode:</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">    </span><span class="c">!! how to choose the initial step `h`:</span>
+<span class="w">                                          </span><span class="c">!!</span>
+<span class="w">                                          </span><span class="c">!! 1. Use [[dhstrt]].</span>
+<span class="w">                                          </span><span class="c">!! 2. Use the older (quicker) algorithm.</span>
+<span class="w">                                          </span><span class="c">!! 3. Use a user-specified value.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="c">!! when `initial_step_mode=3`, the `h` value to use.</span>
+<span class="w">                                             </span><span class="c">!! (for the other modes, this will also contain the value used)</span>
 
-<span class="w">        </span><span class="c">!variables formerly in work arrays:</span>
+<span class="w">      </span><span class="c">!variables formerly in work arrays:</span>
 
-<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">         </span><span class="c">!! replaced `iwork(liw)` in original code</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">    </span><span class="c">!! replaced `rwork(itstar)` in original code</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">         </span><span class="c">!! replaced `iwork(liw)` in original code</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">    </span><span class="c">!! replaced `rwork(itstar)` in original code</span>
 
-<span class="w">        </span><span class="c">!these were fixed in the original code:</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">two</span><span class="w">     </span><span class="c">!! \( 2^i \) array</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gstr</span><span class="w">    </span><span class="c">!! \( | \gamma^{*}_i | \) array</span>
+<span class="w">      </span><span class="c">!these were fixed in the original code:</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">two</span><span class="w">     </span><span class="c">!! \( 2^i \) array</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gstr</span><span class="w">    </span><span class="c">!! \( | \gamma^{*}_i | \) array</span>
 
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">ypout</span><span class="w">    </span><span class="c">!! `(neq)` contains the approximate derivative</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">ypout</span><span class="w">    </span><span class="c">!! `(neq)` contains the approximate derivative</span>
 <span class="w">                                                         </span><span class="c">!! of the solution component `y(i)`.  in [[ddeabm]], it</span>
 <span class="w">                                                         </span><span class="c">!! is obtained by calling subroutine `df` to</span>
 <span class="w">                                                         </span><span class="c">!! evaluate the differential equation using `t` and</span>
 <span class="w">                                                         </span><span class="c">!! `y(*)` when `idid=1` or `2`, and by interpolation</span>
 <span class="w">                                                         </span><span class="c">!! when `idid=3`.</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">yp</span><span class="w">       </span><span class="c">!! `(neq)`</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">yy</span><span class="w">       </span><span class="c">!! `(neq)`</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">wt</span><span class="w">       </span><span class="c">!! `(neq)`</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="w">        </span><span class="c">!! `(neq)`</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">allocatable</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:,:)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">phi</span><span class="w">      </span><span class="c">!! `(neq,16)`</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">alpha</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">beta</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">psi</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">w</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">sig</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">gi</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">h</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! the step size `h` to be attempted on the next step.</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">eps</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! if the tolerances have been increased by the</span>
-<span class="w">                                                                   </span><span class="c">!! code (`idid=-2`), they were multiplied by `eps`.</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! contains the current value of the</span>
-<span class="w">                                                                   </span><span class="c">!! independent variable, i.e. the farthest point</span>
-<span class="w">                                                                   </span><span class="c">!! integration has reached. this will be different</span>
-<span class="w">                                                                   </span><span class="c">!! from `t` only when interpolation has been</span>
-<span class="w">                                                                   </span><span class="c">!! performed (`idid=3`).</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">xold</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">hold</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">told</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">delsgn</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">tstop</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! (see `info(4)`)</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">twou</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! machine dependent parameter</span>
-<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">fouru</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! machine dependent parameter</span>
-<span class="w">        </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">start</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for [[dsteps]] code</span>
-<span class="w">        </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">phase1</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for [[dsteps]] code</span>
-<span class="w">        </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">nornd</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for [[dsteps]] code</span>
-<span class="w">        </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">stiff</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for stiffness detection</span>
-<span class="w">        </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">intout</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for intermediate-output</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ns</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kord</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kold</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">init</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! initialization indicator</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ksteps</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! counter for attempted steps</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kle4</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! step counter for stiffness detection</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">iquit</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! termination flag</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kprev</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ivc</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="k">dimension</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">iv</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kgi</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">yp</span><span class="w">       </span><span class="c">!! `(neq)`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">yy</span><span class="w">       </span><span class="c">!! `(neq)`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">wt</span><span class="w">       </span><span class="c">!! `(neq)`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="w">        </span><span class="c">!! `(neq)`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:,</span><span class="w"> </span><span class="p">:)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">phi</span><span class="w">      </span><span class="c">!! `(neq,16)`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">beta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">psi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">sig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">gi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! the step size `h` to be attempted on the next step.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! if the tolerances have been increased by the</span>
+<span class="w">                                                            </span><span class="c">!! code (`idid=-2`), they were multiplied by `eps`.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! contains the current value of the</span>
+<span class="w">                                                         </span><span class="c">!! independent variable, i.e. the farthest point</span>
+<span class="w">                                                         </span><span class="c">!! integration has reached. this will be different</span>
+<span class="w">                                                         </span><span class="c">!! from `t` only when interpolation has been</span>
+<span class="w">                                                         </span><span class="c">!! performed (`idid=3`).</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">xold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">told</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">delsgn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">tstop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! (see `info(4)`)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">twou</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! machine dependent parameter</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">                             </span><span class="kd">::</span><span class="w"> </span><span class="n">fouru</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">  </span><span class="c">!! machine dependent parameter</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for [[dsteps]] code</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">phase1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for [[dsteps]] code</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">nornd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for [[dsteps]] code</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">stiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for stiffness detection</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">intout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! indicator for intermediate-output</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! initialization indicator</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ksteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! counter for attempted steps</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kle4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! step counter for stiffness detection</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">iquit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! termination flag</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">ivc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">iv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w">                              </span><span class="kd">::</span><span class="w"> </span><span class="n">kgi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 
-<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">  </span><span class="c">!! will be set in `stop_integration`.</span>
-<span class="w">                                    </span><span class="c">!! indicates an error and to</span>
-<span class="w">                                    </span><span class="c">!! abort the integration</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">  </span><span class="c">!! will be set in `stop_integration`.</span>
+<span class="w">                                  </span><span class="c">!! indicates an error and to</span>
+<span class="w">                                  </span><span class="c">!! abort the integration</span>
 
-<span class="w">    </span><span class="k">contains</span>
+<span class="w">   </span><span class="k">contains</span>
 
-<span class="k">        private</span>
+<span class="k">      private</span>
 
-<span class="k">        procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initialize</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_initialize</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">integrate</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_wrapper</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">destroy</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">destroy_ddeabm</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">first_call</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_new_problem</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">interpolate</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_interp</span><span class="w"> </span><span class="c">!! state interpolation function</span>
+<span class="k">      procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">initialize</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_initialize</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">integrate</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_wrapper</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">destroy</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">destroy_ddeabm</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">first_call</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_new_problem</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">interpolate</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_interp</span><span class="w"> </span><span class="c">!! state interpolation function</span>
 
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stop_integration</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_stop_integration</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">stop_integration</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ddeabm_stop_integration</span>
 <span class="w">                </span><span class="c">!! user can call this in `df` routine to stop the integration</span>
 
-<span class="w">        </span><span class="c">!support routines:</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddeabm</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddes</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dhstrt</span>
-<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dsteps</span>
+<span class="w">      </span><span class="c">!support routines:</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddeabm</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ddes</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dhstrt</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">non_overridable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dsteps</span>
 
-<span class="w">    </span><span class="k">end type </span><span class="n">ddeabm_class</span>
+<span class="w">   </span><span class="k">end type </span><span class="n">ddeabm_class</span>
 </pre></div>
 
     </section>
@@ -3933,7 +3932,10 @@ differential equation method.</p>
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>ddeabm was developed by Jacob Williams<br>&copy; 2024 
+          <div class="col">
+            <p>
+              ddeabm
+ was developed by Jacob Williams<br>              &copy; 2025 
 </p>
           </div>
           <div class="col">

@@ -38,7 +38,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link" href="sourcefile/ddeabm_module.f90.html">Source File</a>
+                    <a class="nav-link" href="../sourcefile/ddeabm_module.f90.html">Source File</a>
                   </li>
                 <li class="nav-item">
                   <a class="nav-link" href="../lists/modules.html">Modules</a>
@@ -77,9 +77,8 @@
             <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> BSD</li>
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
-                 title="100.0% of total for modules and submodules.">1684 statements</a>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="100.0% of total for modules and submodules.">1666 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -220,20 +219,20 @@
       <p>Modern Fortran implementation of the DDEABM Adams-Bashforth algorithm.</p>
 <h3>See also</h3>
 <ul>
-<li>[SLATEC](http:</li>
+<li><a href="http://www.netlib.org/slatec/src/">SLATEC</a></li>
 </ul>
 <h3>History</h3>
 <ul>
 <li>Jacob Williams : July 2014 : Created module from the SLATEC Fortran 77 code.</li>
-<li>Development continues at [GitHub](https:</li>
+<li>Development continues at <a href="https://github.com/jacobwilliams/ddeabm">GitHub</a>.</li>
 </ul>
 <h3>License</h3>
 <p>The original SLATEC code is a public domain work of the US Government.
   The modifications are
-  [Copyright (c) 2014-2018, Jacob Williams](https:</p>
+  <a href="https://github.com/jacobwilliams/ddeabm/blob/master/LICENSE">Copyright (c) 2014-2018, Jacob Williams</a>.</p>
 <div class="alert alert-info">
 <p class="alert-title h4">Note</p>
-<p>This module depends on [roots-fortran](https:
+<p>This module depends on <a href="https://github.com/jacobwilliams/roots-fortran">roots-fortran</a>.
       When compiled with FPM, this will automatically be downloaded (see <code>fpm.toml</code>)</p>
 </div>
 <div class="alert alert-info">
@@ -249,8 +248,8 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
                   <li class="list-inline-item">root_module</li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -274,8 +273,11 @@
 <!-- iso_fortran_env -->
 <g id="module~~ddeabm_module~~UsesGraph_node2" class="node">
 <title>iso_fortran_env</title>
+<g id="a_module~~ddeabm_module~~UsesGraph_node2"><a xlink:href="http://fortranwiki.org/fortran/show/iso_fortran_env" xlink:title="iso_fortran_env">
 <polygon fill="#337ab7" stroke="#337ab7" points="94,-66 0,-66 0,-42 94,-42 94,-66"/>
 <text text-anchor="middle" x="47" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
 </g>
 <!-- module~ddeabm_module&#45;&gt;iso_fortran_env -->
 <g id="module~~ddeabm_module~~UsesGraph_edge1" class="edge">
@@ -1474,7 +1476,7 @@ or <a href="../proc/ddeabm_with_event_wrapper.html">ddeabm_with_event_wrapper</a
                 <td></td>
             <td>
 <p><code>(neq)</code> contains the approximate derivative
-of the solution component <code>y(i)</code>.  in <a href="ddeabm_class.html#boundprocedure-ddeabm">ddeabm</a>, it
+of the solution component <code>y(i)</code>.  in <a href="../type/ddeabm_class.html#boundprocedure-ddeabm">ddeabm</a>, it
 is obtained by calling subroutine <code>df</code> to
 evaluate the differential equation using <code>t</code> and
 <code>y(*)</code> when <code>idid=1</code> or <code>2</code>, and by interpolation
@@ -1556,7 +1558,7 @@ when <code>idid=3</code>.</p>
             </td>
               <td>private,</td>
             <td>
-              allocatable, dimension(:,:)
+              allocatable, dimension(:, :)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
@@ -1891,7 +1893,7 @@ performed (<code>idid=3</code>).</p>
 <td> =</td>
                 <td>.false.</td>
             <td>
-<p>indicator for <a href="ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
+<p>indicator for <a href="../type/ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
             </td>
         </tr>
         <tr>
@@ -1908,7 +1910,7 @@ performed (<code>idid=3</code>).</p>
 <td> =</td>
                 <td>.false.</td>
             <td>
-<p>indicator for <a href="ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
+<p>indicator for <a href="../type/ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
             </td>
         </tr>
         <tr>
@@ -1925,7 +1927,7 @@ performed (<code>idid=3</code>).</p>
 <td> =</td>
                 <td>.false.</td>
             <td>
-<p>indicator for <a href="ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
+<p>indicator for <a href="../type/ddeabm_class.html#boundprocedure-dsteps">dsteps</a> code</p>
             </td>
         </tr>
         <tr>
@@ -2242,7 +2244,7 @@ abort the integration</p>
       </h3>
     </div>
     <div class="card-body">
-      <p>A version of <a href="ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p><a href="../type/ddeabm_with_event_class.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+      <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding).</p><a href="../type/ddeabm_with_event_class.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
         <h4>Components</h4>
           <table class="table table-striped varlist">
@@ -2392,7 +2394,7 @@ the user can specify this to use other conditions.</p>
                 <td>  procedure, public, non_overridable ::
   <strong><a href='../type/ddeabm_with_event_class.html#boundprocedure-integrate_to_event'>integrate_to_event</a></strong> => <a href='/home/runner/work/ddeabm/ddeabm/doc/proc/ddeabm_with_event_wrapper.html'>ddeabm_with_event_wrapper</a></td>
                 <td><p>main routine for integration to an event
-(note that <em>integrate</em> can also still be used from <a href="ddeabm_class.html">ddeabm_class</a>)</p></td>
+(note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p></td>
               </tr>
           </tbody>
         </table>
@@ -2409,7 +2411,7 @@ the user can specify this to use other conditions.</p>
       </h3>
     </div>
     <div class="card-body">
-      <p>A version of <a href="ddeabm_class.html">ddeabm_class</a> with event location (root finding)
+      <p>A version of <a href="../type/ddeabm_class.html">ddeabm_class</a> with event location (root finding)
 of a vector function (it will stop on the first root it encounters)</p><a href="../type/ddeabm_with_event_class_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
         <h4>Components</h4>
@@ -2578,7 +2580,7 @@ the user can specify this to use other conditions.</p>
                 <td>  procedure, public, non_overridable ::
   <strong><a href='../type/ddeabm_with_event_class_vec.html#boundprocedure-integrate_to_event~2'>integrate_to_event</a></strong> => <a href='/home/runner/work/ddeabm/ddeabm/doc/proc/ddeabm_with_event_wrapper_vec.html'>ddeabm_with_event_wrapper_vec</a></td>
                 <td><p>main routine for integration to an event
-(note that <em>integrate</em> can also still be used from <a href="ddeabm_class.html">ddeabm_class</a>)</p></td>
+(note that <em>integrate</em> can also still be used from <a href="../type/ddeabm_class.html">ddeabm_class</a>)</p></td>
               </tr>
           </tbody>
         </table>
@@ -2600,7 +2602,7 @@ the user can specify this to use other conditions.</p>
     </dl>
 
   <p>Compute the maximum norm of the first <code>n</code> elements of vector <code>v</code>.
-Replacement for the original [SLATEC](http:</p>
+Replacement for the original <a href="http://www.netlib.org/slatec/src/dhvnrm.f">SLATEC</a> routine.</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2714,7 +2716,7 @@ Replacement for the original [SLATEC](http:</p>
     </dl>
 
   <p>Call this to indicate that a new problem is being solved.
-It sets <code>info(1) = 0</code> (see <a href="ddeabm.html">ddeabm</a> documentation).</p>
+It sets <code>info(1) = 0</code> (see <a href="../proc/ddeabm.html">ddeabm</a> documentation).</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -2843,7 +2845,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>rtol</strong></td>
             <td>
-<p>relative tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -2858,7 +2860,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>atol</strong></td>
             <td>
-<p>absolution tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -3008,7 +3010,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>rtol</strong></td>
             <td>
-<p>relative tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -3023,7 +3025,7 @@ cannot be changed during a problem.</p>
             <td>::</td>
             <td><strong>atol</strong></td>
             <td>
-<p>absolution tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -3223,7 +3225,7 @@ the default is used.</p>
             <td>::</td>
             <td><strong>rtol</strong></td>
             <td>
-<p>relative tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -3238,7 +3240,7 @@ the default is used.</p>
             <td>::</td>
             <td><strong>atol</strong></td>
             <td>
-<p>absolution tolerance for integration (see <a href="ddeabm.html">ddeabm</a>)</p>
+<p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
             </td>
         </tr>
         <tr>
@@ -3411,7 +3413,7 @@ the default is used.</p>
         <dt>Author</dt><dd>Jacob Williams</dd>
     </dl>
 
-  <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddeabm_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -3571,7 +3573,7 @@ If <code>integration_mode=1</code>, then this is ignored.</p>
         <dt>Author</dt><dd>Jacob Williams</dd>
     </dl>
 
-  <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>, with event finding.
+  <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding.
   It will integrate until <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
   this manually)</p><a href="../proc/ddeabm_with_event_wrapper.html" class="pull-right"><emph>Read more&hellip;</emph></a>
@@ -3685,7 +3687,7 @@ in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
 you must monitor this integer variable to
 decide what action to take next.
 <code>idid=1000</code> means a root was found.
-See <a href="ddeabm.html">ddeabm</a> for other values.</p>
+See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p>
             </td>
         </tr>
         <tr>
@@ -3772,7 +3774,7 @@ point of the previous call).</p>
     <div class="card-body">
           
   <p>Interpolation function. Can be used for dense output after a step.
-It calls the low-level routine <a href="dintp.html">dintp</a>.</p>
+It calls the low-level routine <a href="../proc/dintp.html">dintp</a>.</p>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -3845,7 +3847,7 @@ It calls the low-level routine <a href="dintp.html">dintp</a>.</p>
         <dt>Author</dt><dd>Jacob Williams</dd>
     </dl>
 
-  <p>Wrapper routine for <a href="ddeabm.html">ddeabm</a>, with event finding for multiple functions.
+  <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding for multiple functions.
   It will integrate until any <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
   Note that a root at the initial time is ignored (user should check for
   this manually)</p><a href="../proc/ddeabm_with_event_wrapper_vec.html" class="pull-right"><emph>Read more&hellip;</emph></a>
@@ -3960,7 +3962,7 @@ you must monitor this integer variable to
 decide what action to take next.
 <code>idid&gt;1000</code> means a root was found for the
 (<code>idid-1000</code>)th <code>g</code> function.
-See <a href="ddeabm.html">ddeabm</a> for other values.</p>
+See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p>
             </td>
         </tr>
         <tr>
@@ -4212,9 +4214,9 @@ advanced to the output value of t.</p>
 </h3></div>
     <div class="card-body">
           
-  <p><a href="ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
+  <p><a href="../proc/ddeabm.html">ddeabm</a> merely allocates storage for ddes to relieve the user of the
   inconvenience of a long call list.  consequently ddes is used as
-  described in the comments for <a href="ddeabm.html">ddeabm</a>.</p><a href="../proc/ddes.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  described in the comments for <a href="../proc/ddeabm.html">ddeabm</a>.</p><a href="../proc/ddes.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -4444,7 +4446,7 @@ advanced to the output value of t.</p>
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(neq,16)
+              dimension(neq, 16)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
@@ -5260,8 +5262,8 @@ differential equation method.</p>
     <div class="card-body">
           
   <p>approximate the solution at <code>xout</code> by evaluating the
-  polynomial computed in <a href="dsteps.html">dsteps</a> at <code>xout</code>.  must be used in
-  conjunction with <a href="dsteps.html">dsteps</a>.</p><a href="../proc/dintp.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  polynomial computed in <a href="../proc/dsteps.html">dsteps</a> at <code>xout</code>.  must be used in
+  conjunction with <a href="../proc/dsteps.html">dsteps</a>.</p><a href="../proc/dintp.html" class="pull-right"><emph>Read more&hellip;</emph></a>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
@@ -5386,7 +5388,7 @@ differential equation method.</p>
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
-              dimension(neqn,16)
+              dimension(neqn, 16)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
@@ -5741,12 +5743,12 @@ differential equation method.</p>
             </td>
 <td>intent(inout),</td>
               <td></td>            <td>
-              dimension(neqn,16)
+              dimension(neqn, 16)
             </td>
             <td>::</td>
             <td><strong>phi</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -5761,7 +5763,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>p</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -5806,7 +5808,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>alpha</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -5866,7 +5868,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>w</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -5881,7 +5883,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>g</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -5986,7 +5988,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>xold</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -6016,7 +6018,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>ivc</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -6031,7 +6033,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>iv</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -6046,7 +6048,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>kgi</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
         <tr>
@@ -6061,7 +6063,7 @@ differential equation method.</p>
             <td>::</td>
             <td><strong>gi</strong></td>
             <td>
-<p>required for the interpolation subroutine <a href="dintp.html">dintp</a></p>
+<p>required for the interpolation subroutine <a href="../proc/dintp.html">dintp</a></p>
             </td>
         </tr>
     </tbody>
@@ -6150,10 +6152,10 @@ differential equation method.</p>
             <td><strong>level</strong></td>
             <td>
 <p>[Not used here]
- -1: warning message (once),
- 0: warning message,
- 1: recoverable error,
- 2: fatal error</p>
+ * -1: warning message (once),
+ * 0: warning message,
+ * 1: recoverable error,
+ * 2: fatal error</p>
             </td>
         </tr>
     </tbody>
@@ -6176,7 +6178,10 @@ differential equation method.</p>
     <footer>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col"><p>ddeabm was developed by Jacob Williams<br>&copy; 2024 
+          <div class="col">
+            <p>
+              ddeabm
+ was developed by Jacob Williams<br>              &copy; 2025 
 </p>
           </div>
           <div class="col">
