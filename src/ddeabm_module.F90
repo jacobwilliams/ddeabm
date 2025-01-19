@@ -428,10 +428,10 @@ contains
       logical :: vector_tols
       integer :: i, j, k
 
-      integer, parameter :: max_order = 12 !! NOTE: the max order of this code is 12.
-                                        !! This value is hard-coded in several places (array dimensions, etc.)
-                                        !! Eventually, may want to make this a user-selectable value.
-                                        !! For now, it is fixed.
+      integer, parameter :: max_order = 12 !!@Note the max order of this code is 12.
+                                           !! This value is hard-coded in several places (array dimensions, etc.)
+                                           !! Eventually, may want to make this a user-selectable value.
+                                           !! For now, it is fixed.
 
       !initialize the class:
       call me%destroy()
@@ -1238,7 +1238,7 @@ contains
       real(wp) :: t1              !! initial time of an interval
       real(wp) :: t2              !! final time of an interval
       real(wp) :: tzero           !! time where an event occurs in `[t1,t2]`
-      integer :: iflag            !! [[zeroin]] status flag
+      integer :: iflag            !! `root_scalar` status flag
       logical :: first            !! flag for the first step
       integer :: mode             !! local copy of integration_mode
       integer :: i                !! counter

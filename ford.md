@@ -1,5 +1,5 @@
 project: ddeabm
-project_dir: ./src
+src_dir: ./src
 output_dir: ./doc
 media_dir: ./media
 project_github: https://github.com/jacobwilliams/ddeabm
@@ -15,9 +15,8 @@ display: public
          protected
 source: true
 graph: true
-exclude_dir: ./tests
 extra_mods: pyplot_module:https://github.com/jacobwilliams/pyplot-fortran
-            roots-fortran:https://github.com/jacobwilliams/roots-fortran
+            root_module:https://github.com/jacobwilliams/roots-fortran
             iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
 
 {!README.md!}
