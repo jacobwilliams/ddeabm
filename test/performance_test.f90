@@ -48,12 +48,9 @@
     write(*,*) ''
 
     select case(wp)
-    case(real32)
-        kind_str = '(real32)'
-    case(real64)
-        kind_str = '(real64)'
-    case(real128)
-        kind_str = '(real128)'
+    case(real32); kind_str = 'real32'
+    case(real64); kind_str = 'real64'
+    case(real128);kind_str = 'real128'
     case default
         error stop 'error: unknown real kind'
     end select
@@ -61,7 +58,7 @@
     !initialize the plot:
     call plt%initialize(grid=.true.,xlabel='Number of Digits of Accuracy',&
                         ylabel='Number of Function Evaluations',&
-                        title='DDEABM Performance '//kind_str,legend=.true.)
+                        title='DDEABM Performance ('//kind_str//')',legend=.true.)
 
     !5 cases with different initial states
     do j=1,5
@@ -106,7 +103,7 @@
 
     end do
 
-    call plt%savefig('ddeabm_performance_test.png',istat=istat)
+    call plt%savefig('ddeabm_performance_test_'//kind_str//'.png',istat=istat)
 
     contains
 !*****************************************************************************************
