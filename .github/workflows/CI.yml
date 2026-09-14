@@ -59,6 +59,9 @@ jobs:
         find build -name '*.gcda' -o -name '*.gcno' | while read -r f; do
           cp "$f" "${COV_DIR}/"
         done
+        # we want to skip the files that start with 'build_dependencies' because they are not part of the source code
+        find "$COV_DIR" -name "build_dependencies*" -exec rm -rf {} +
+        find "$COV_DIR" -name "test_*" -exec rm -rf {} +
         lcov --capture --initial --base-directory . --directory "${COV_DIR}" --output-file "${COV_DIR}/coverage.base"
         lcov --capture           --base-directory . --directory "${COV_DIR}" --output-file "${COV_DIR}/coverage.capture"
         lcov --add-tracefile "${COV_DIR}/coverage.base" --add-tracefile "${COV_DIR}/coverage.capture" --output-file "${COV_DIR}/coverage.info"
