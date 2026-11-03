@@ -1,7 +1,7 @@
 !*****************************************************************************************
 !>
-!  Regression tests for bugs fixed in [[ddeabm_module]]
-!  (see `BUG_FINDINGS.md`). All tests use the harmonic oscillator
+!  Regression tests for bugs fixed in [[ddeabm_module]].
+!  All tests use the harmonic oscillator
 !  `x'' = -x`, `x(0) = 1`, `x'(0) = 0`, with the solution `x = cos(t)`.
 !
 !  The program stops with a nonzero exit code if any check fails.
