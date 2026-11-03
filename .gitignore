@@ -38,3 +38,8 @@ bin
 
 # tests
 /*.png
+/coverage
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml
