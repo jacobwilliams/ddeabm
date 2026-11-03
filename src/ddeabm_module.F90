@@ -105,6 +105,7 @@ module ddeabm_module
                                           !! 3. Use a user-specified value.
       real(wp) :: initial_step_size = 0.0_wp !! when `initial_step_mode=3`, the `h` value to use.
                                              !! (for the other modes, this will also contain the value used)
+      real(wp) :: max_step_size = 0.0_wp !! maximum step size magnitude. If `<=0`, there is no limit.
 
       !variables formerly in work arrays:
 
@@ -472,7 +473,8 @@ contains
 !  Initialize the [[ddeabm_class]], and set the variables that
 !  cannot be changed during a problem.
 
-   subroutine ddeabm_initialize(me, neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size)
+   subroutine ddeabm_initialize(me, neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size, &
+                                max_step_size)
 
       implicit none
 
@@ -489,6 +491,8 @@ contains
                                                              !! 2. Use the older (quicker) algorithm.
                                                              !! 3. Use the user-specified value `initial_step_size` (>0).
       real(wp), intent(in), optional        :: initial_step_size !! for `initial_step_mode=3`
+      real(wp), intent(in), optional        :: max_step_size !! maximum step size magnitude (>0).
+                                                             !! If not present, the step size is not limited.
 
       logical :: vector_tols
       integer :: i, j, k
@@ -612,6 +616,16 @@ contains
          me%initial_step_mode = 1 ! original method (dhstrt) if none is specified
       end if
 
+      ! maximum step size (optional):
+      me%max_step_size = 0.0_wp ! no limit
+      if (present(max_step_size)) then
+         if (max_step_size > 0.0_wp) then
+            me%max_step_size = max_step_size
+         else
+            error stop 'Error in ddeabm_initialize: max_step_size must be > 0'
+         end if
+      end if
+
    end subroutine ddeabm_initialize
 !*****************************************************************************************
 
@@ -626,7 +640,7 @@ contains
 
    subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, &
                                            g, root_tol, report, bracket, &
-                                           initial_step_mode, initial_step_size)
+                                           initial_step_mode, initial_step_size, max_step_size)
 
       implicit none
 
@@ -651,9 +665,12 @@ contains
                                                              !! 2. Use the older (quicker) algorithm.
                                                              !! 3. Use the user-specified value `initial_step_size` (>0).
       real(wp), intent(in), optional        :: initial_step_size !! for `initial_step_mode=3`
+      real(wp), intent(in), optional        :: max_step_size !! maximum step size magnitude (>0).
+                                                             !! If not present, the step size is not limited.
 
       !base class initialization:
-      call me%initialize(neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size)
+      call me%initialize(neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size, &
+                         max_step_size)
 
       ! saved time and state:
       if (allocated(me%x_saved)) deallocate (me%x_saved)
@@ -684,7 +701,7 @@ contains
 
    subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, atol, &
                                                ng, g, root_tol, report, bracket, &
-                                               initial_step_mode, initial_step_size)
+                                               initial_step_mode, initial_step_size, max_step_size)
 
       implicit none
 
@@ -712,9 +729,12 @@ contains
                                                              !! 2. Use the older (quicker) algorithm.
                                                              !! 3. Use the user-specified value `initial_step_size` (>0).
       real(wp), intent(in), optional        :: initial_step_size !! for `initial_step_mode=3`
+      real(wp), intent(in), optional        :: max_step_size !! maximum step size magnitude (>0).
+                                                             !! If not present, the step size is not limited.
 
       !base class initialization:
-      call me%initialize(neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size)
+      call me%initialize(neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size, &
+                         max_step_size)
 
       !event finding variables:
       me%n_g_eqns = ng
@@ -2911,6 +2931,7 @@ contains
 
          ha = abs(h)
          if (info(4) == 1) ha = min(ha, abs(tstop - x))
+         if (me%max_step_size > 0.0_wp) ha = min(ha, me%max_step_size)
          h = sign(ha, h)
          eps = 1.0_wp
          ltol = 1

@@ -107,6 +107,17 @@ contains
 
 
 
+   subroutine g_pulse(me, t, x, g)
+      !! scalar event with two close roots at `t = 1` and `t = 1.001`
+      !! (negative only between them). It is scaled so the slope at the
+      !! roots is about +/- 1000, for the function value tolerance.
+      class(ddeabm_with_event_class), intent(inout) :: me
+      real(wp), intent(in) :: t
+      real(wp), dimension(:), intent(in) :: x
+      real(wp), intent(out) :: g
+      g = 1.0e6_wp*(t - 1.0_wp)*(t - 1.001_wp)
+   end subroutine g_pulse
+
    logical function bracket_decreasing(me, t1, t2, x1, x2, g1, g2) result(bracketed)
       !! only accept roots where `g` is decreasing
       class(ddeabm_with_event_class), intent(inout) :: me
@@ -171,6 +182,7 @@ program ddeabm_unit_test
    type(ddeabm_with_event_class_vec) :: sv
    real(wp) :: t, y1(1), y(2), yi(2), gval, gv(2), tout, err, t_root, x_ref(2)
    real(wp), dimension(:), allocatable :: t_ref, xr_ref   !! reference reported points
+   real(wp) :: hmax  !! maximum step size
    real(wp), dimension(3) :: errs
    real(wp), dimension(3), parameter :: tols = [1.0e-6_wp**pw, 1.0e-9_wp**pw, 1.0e-12_wp**pw]
    real(wp), dimension(2), parameter :: y0 = [1.0_wp, 0.0_wp]
@@ -439,6 +451,71 @@ program ddeabm_unit_test
    t = 0.0_wp; y = y0
    call s%integrate(t, y, 2.0_wp, tstop=1.0_wp, idid=idid)
    call check('tout beyond tstop: idid=-33', idid == -33)
+
+   !===================================================================
+   write (*, '(/A)') 'Maximum step size'
+   iprob = p_osc
+   hmax = 0.05_wp
+   ! without a maximum (the default), steps are larger than hmax:
+   call s%initialize(2, 10000, deriv, [tol], [tol], report=report)
+   call s%first_call()
+   t = 0.0_wp; y = y0; n_reports = 0
+   call s%integrate(t, y, 5.0_wp, idid=idid, integration_mode=2)
+   call check('no maximum: some steps are larger than hmax', success(idid) .and. &
+              maxval(t_reports(2:n_reports) - t_reports(1:n_reports - 1)) > hmax)
+   ! with a maximum:
+   do k = 1, 3   ! each initial step mode (mode 3 with a too-large initial step)
+      if (k == 3) then
+         call s%initialize(2, 10000, deriv, [tol], [tol], report=report, initial_step_mode=k, &
+                           initial_step_size=1.0_wp, max_step_size=hmax)
+      else
+         call s%initialize(2, 10000, deriv, [tol], [tol], report=report, initial_step_mode=k, &
+                           max_step_size=hmax)
+      end if
+      call s%first_call()
+      t = 0.0_wp; y = y0; n_reports = 0
+      call s%integrate(t, y, 5.0_wp, idid=idid, integration_mode=2)
+      ok = success(idid) .and. n_reports > 1
+      if (ok) ok = maxval(t_reports(2:n_reports) - t_reports(1:n_reports - 1)) <= hmax*(1.0_wp + sc(1.0e-12_wp))
+      call check('initial_step_mode='//achar(iachar('0') + k)//': all steps <= max_step_size', ok)
+      call check('initial_step_mode='//achar(iachar('0') + k)//': x(5) = cos(5)', &
+                 abs(y(1) - cos(5.0_wp)) < etol)
+   end do
+   ! backward:
+   call s%first_call()
+   t = 0.0_wp; y = y0; n_reports = 0
+   call s%integrate(t, y, -5.0_wp, idid=idid, integration_mode=2)
+   ok = success(idid) .and. n_reports > 1
+   if (ok) ok = maxval(t_reports(1:n_reports - 1) - t_reports(2:n_reports)) <= hmax*(1.0_wp + sc(1.0e-12_wp))
+   call check('backward: all steps <= max_step_size, x(-5) = cos(-5)', ok .and. &
+              abs(y(1) - cos(-5.0_wp)) < etol)
+
+   ! events: two close roots within one step are not detected (no sign change),
+   ! unless the step size is limited to less than their separation:
+   call se%initialize_event(2, 100000, deriv, [tol], [tol], g_pulse, sc(1.0e-12_wp))
+   call se%first_call()
+   t = 0.0_wp; y = y0
+   call se%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gval)
+   call check('events, no maximum: close roots are stepped over', success(idid) .and. t == 2.0_wp)
+   call se%initialize_event(2, 100000, deriv, [tol], [tol], g_pulse, sc(1.0e-12_wp), &
+                            max_step_size=4.0e-4_wp)
+   call se%first_call()
+   t = 0.0_wp; y = y0
+   call se%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gval)
+   call check('events, max_step_size < root separation: first root at t=1', &
+              idid == 1000 .and. abs(t - 1.0_wp) < etol)
+   call se%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gval, continue=.true.)
+   call check('events, max_step_size < root separation: second root at t=1.001', &
+              idid == 1000 .and. abs(t - 1.001_wp) < etol)
+
+   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)], &
+                            report=report, max_step_size=hmax)
+   call sv%first_call()
+   t = 0.1_wp; y = [cos(t), -sin(t)]; n_reports = 0
+   call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv, integration_mode=2)
+   ok = idid == 1001 .and. abs(t - pi/2.0_wp) < etol .and. n_reports > 1
+   if (ok) ok = maxval(t_reports(2:n_reports) - t_reports(1:n_reports - 1)) <= hmax*(1.0_wp + sc(1.0e-12_wp))
+   call check('vector events: all steps <= max_step_size, root at pi/2', ok)
 
    !===================================================================
    write (*, '(/A)') 'Dense output (interpolate)'
