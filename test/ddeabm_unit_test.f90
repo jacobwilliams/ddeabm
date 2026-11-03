@@ -183,6 +183,9 @@ program ddeabm_unit_test
    real(wp) :: t, y1(1), y(2), yi(2), gval, gv(2), tout, err, t_root, x_ref(2)
    real(wp), dimension(:), allocatable :: t_ref, xr_ref   !! reference reported points
    real(wp) :: hmax  !! maximum step size
+   integer, dimension(ddeabm_max_order_limit) :: nf  !! number of evaluations for each maximum order
+   integer :: n1
+   real(wp) :: tolk, errk
    real(wp), dimension(3) :: errs
    real(wp), dimension(3), parameter :: tols = [1.0e-6_wp**pw, 1.0e-9_wp**pw, 1.0e-12_wp**pw]
    real(wp), dimension(2), parameter :: y0 = [1.0_wp, 0.0_wp]
@@ -376,6 +379,91 @@ program ddeabm_unit_test
    if (ok) ok = all(t_reports(1:n_reports) == t_ref) .and. &
                 maxval(abs(x_reports(1:n_reports) - xr_ref)) < 1000.0_wp*sc(1.0e-9_wp)
    call check('interpolated output at 2001 points agrees with the reference', success(idid) .and. ok)
+
+   !===================================================================
+   write (*, '(/A)') 'Maximum order'
+   iprob = p_osc
+   ! the default is 12, and it gives identical results to max_order=12:
+   call s%initialize(2, 100000, deriv, [tol], [tol])
+   call s%first_call()
+   t = 0.0_wp; y = y0; n_feval = 0
+   call s%integrate(t, y, 10.0_wp, idid=idid)
+   n1 = n_feval; yi = y
+   call s%initialize(2, 100000, deriv, [tol], [tol], max_order=12)
+   call s%first_call()
+   t = 0.0_wp; y = y0; n_feval = 0
+   call s%integrate(t, y, 10.0_wp, idid=idid)
+   call check('default (12): identical results to max_order=12', ddeabm_default_max_order == 12 .and. &
+              n_feval == n1 .and. all(y == yi))
+
+   ! every allowed maximum order gives an accurate solution:
+   tolk = sc(1.0e-10_wp)
+   ok = .true.
+   do k = 1, ddeabm_max_order_limit
+      call s%initialize(2, 10000000, deriv, [tolk], [tolk], max_order=k)
+      call s%first_call()
+      t = 0.0_wp; y = y0; n_feval = 0
+      call s%integrate(t, y, 1.0_wp, idid=idid)
+      nf(k) = n_feval
+      errk = maxval(abs(y - [cos(1.0_wp), -sin(1.0_wp)]))
+      ok = ok .and. success(idid) .and. errk < 1000.0_wp*tolk
+   end do
+   write (*, '(A,5(1X,I0))') '  evaluations for max_order = 1, 2, 4, 8, 12:', nf([1, 2, 4, 8, 12])
+   call check('max_order = 1 to ddeabm_max_order_limit: accurate solution', ok)
+   ! (on this short interval, orders above 8 are not used)
+   call check('lower maximum orders need more evaluations (1 > 2 > 4 > 8 >= 12)', &
+              nf(1) > nf(2) .and. nf(2) > nf(4) .and. nf(4) > nf(8) .and. nf(8) >= nf(12))
+
+   ! for higher precision and tight tolerances, a maximum order above 12 reduces the work:
+   if (precision(1.0_wp) >= 30) then
+      tolk = 1.0e-30_wp
+      do k = 12, 16, 4
+         call s%initialize(2, 10000000, deriv, [tolk], [tolk], max_order=k)
+         call s%first_call()
+         t = 0.0_wp; y = y0; n_feval = 0
+         call s%integrate(t, y, 20.0_wp, idid=idid)
+         nf(k) = n_feval
+         errk = maxval(abs(y - [cos(20.0_wp), -sin(20.0_wp)]))
+         call check('tol=1e-30, max_order='//achar(iachar('0') + k/10)//achar(iachar('0') + mod(k, 10))// &
+                    ': accurate solution', success(idid) .and. errk < 1.0e-27_wp)
+      end do
+      write (*, '(A,2(1X,I0))') '  evaluations for max_order = 12, 16:', nf(12), nf(16)
+      call check('tol=1e-30: max_order=16 needs fewer evaluations than 12', nf(16) < nf(12))
+   end if
+
+   ! stiffness detection is not done for max_order <= 4:
+   iprob = p_stiff
+   call s%initialize(1, 500, deriv, [sc(1.0e-3_wp)], [sc(1.0e-3_wp)], max_order=4)
+   call s%first_call()
+   t = 0.0_wp; y1 = 1.0_wp
+   ok = .true.
+   do i = 1, 1000
+      call s%integrate(t, y1, 10.0_wp, idid=idid)
+      if (idid == -4) ok = .false.
+      if (idid /= -1 .and. idid /= -4) exit
+      call s%resume_integration()
+   end do
+   call check('max_order=4, stiff problem: stiffness is not reported', ok .and. success(idid) .and. &
+              abs(y1(1) - cos(10.0_wp)) < sc(1.0e-2_wp))
+
+   ! event finding and interpolation with the lowest and highest maximum orders:
+   iprob = p_osc
+   tolk = sc(1.0e-8_wp)
+   call se%initialize_event(2, 10000000, deriv, [tolk], [tolk], g_x1, sc(1.0e-12_wp), max_order=1)
+   call se%first_call()
+   t = 0.0_wp; y = y0
+   call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, tstep=0.3_wp)
+   call check('max_order=1, scalar events: root at pi/2', idid == 1000 .and. &
+              abs(t - pi/2.0_wp) < 1000.0_wp*tolk)
+   call sv%initialize_event(2, 10000000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)], &
+                            max_order=ddeabm_max_order_limit)
+   call sv%first_call()
+   t = 0.1_wp; y = [cos(t), -sin(t)]
+   call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv)
+   call sv%interpolate(t - 0.01_wp, yi, istat)
+   call check('max_order=20, vector events: root at pi/2, interpolation', idid == 1001 .and. &
+              abs(t - pi/2.0_wp) < etol .and. istat == 0 .and. &
+              abs(yi(1) - cos(t - 0.01_wp)) < etol)
 
    !===================================================================
    write (*, '(/A)') 'Stiffness detection and work limit'

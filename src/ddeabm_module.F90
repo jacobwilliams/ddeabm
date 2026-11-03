@@ -54,6 +54,10 @@ module ddeabm_module
    integer, parameter :: wp = ddeabm_rk  !! local copy of `ddeabm_rk` with a shorter name
 
    !parameters:
+   integer, parameter, public :: ddeabm_default_max_order = 12  !! default maximum order of the method
+   integer, parameter, public :: ddeabm_max_order_limit = 20    !! largest allowed value of the maximum order.
+                                                                !! (in testing, orders above about 17 were never
+                                                                !! selected, even for REAL128 at tol=1e-30)
    real(wp), parameter :: d1mach2 = huge(1.0_wp)        !! the largest magnitude
    real(wp), parameter :: d1mach4 = epsilon(1.0_wp)     !! the largest relative spacing
 
@@ -106,6 +110,7 @@ module ddeabm_module
       real(wp) :: initial_step_size = 0.0_wp !! when `initial_step_mode=3`, the `h` value to use.
                                              !! (for the other modes, this will also contain the value used)
       real(wp) :: max_step_size = 0.0_wp !! maximum step size magnitude. If `<=0`, there is no limit.
+      integer :: max_order = ddeabm_default_max_order !! maximum order of the method (`1` to `ddeabm_max_order_limit`)
 
       !variables formerly in work arrays:
 
@@ -126,15 +131,18 @@ module ddeabm_module
       real(wp), allocatable, dimension(:)    :: yy       !! `(neq)`
       real(wp), allocatable, dimension(:)    :: wt       !! `(neq)`
       real(wp), allocatable, dimension(:)    :: p        !! `(neq)`
-      real(wp), allocatable, dimension(:, :)  :: phi      !! `(neq,16)`
-      real(wp), dimension(12)               :: alpha = 0.0_wp
-      real(wp), dimension(12)               :: beta = 0.0_wp
-      real(wp), dimension(12)               :: psi = 0.0_wp
-      real(wp), dimension(12)               :: v = 0.0_wp
-      real(wp), dimension(12)               :: w = 0.0_wp
-      real(wp), dimension(13)               :: sig = 0.0_wp
-      real(wp), dimension(13)               :: g = 0.0_wp
-      real(wp), dimension(11)               :: gi = 0.0_wp
+      real(wp), allocatable, dimension(:, :)  :: phi      !! `(neq,max(max_order+4,6))`. Columns `1:max_order+2`
+                                                         !! are the modified divided differences, and the last
+                                                         !! two are used for roundoff control.
+      ! these are sized using the maximum order `max_order`:
+      real(wp), allocatable, dimension(:)    :: alpha    !! `(max_order)`
+      real(wp), allocatable, dimension(:)    :: beta     !! `(max_order)`
+      real(wp), allocatable, dimension(:)    :: psi      !! `(max_order)`
+      real(wp), allocatable, dimension(:)    :: v        !! `(max_order)`
+      real(wp), allocatable, dimension(:)    :: w        !! `(max_order)`
+      real(wp), allocatable, dimension(:)    :: sig      !! `(max_order+1)`
+      real(wp), allocatable, dimension(:)    :: g        !! `(max_order+1)`
+      real(wp), allocatable, dimension(:)    :: gi       !! `(max_order)`
       real(wp)                             :: h = 0.0_wp  !! the step size `h` to be attempted on the next step.
       real(wp)                             :: eps = 0.0_wp  !! if the tolerances have been increased by the
                                                             !! code (`idid=-2`), they were multiplied by `eps`.
@@ -164,7 +172,7 @@ module ddeabm_module
       integer                              :: iquit = 0  !! termination flag
       integer                              :: kprev = 0
       integer                              :: ivc = 0
-      integer, dimension(10)                :: iv = 0
+      integer, allocatable, dimension(:)     :: iv       !! `(max_order)`
       integer                              :: kgi = 0
 
       logical :: error = .false.  !! will be set in `stop_integration`.
@@ -474,7 +482,7 @@ contains
 !  cannot be changed during a problem.
 
    subroutine ddeabm_initialize(me, neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size, &
-                                max_step_size)
+                                max_step_size, max_order)
 
       implicit none
 
@@ -493,17 +501,28 @@ contains
       real(wp), intent(in), optional        :: initial_step_size !! for `initial_step_mode=3`
       real(wp), intent(in), optional        :: max_step_size !! maximum step size magnitude (>0).
                                                              !! If not present, the step size is not limited.
+      integer, intent(in), optional         :: max_order !! maximum order of the method
+                                                         !! (`1` to `ddeabm_max_order_limit`). If not present,
+                                                         !! `ddeabm_default_max_order` (12) is used.
+                                                         !! A lower value can improve stability on some problems.
+                                                         !! A higher value can reduce the number of steps for very
+                                                         !! tight tolerances when using higher precision (`REAL128`).
 
       logical :: vector_tols
       integer :: i, j, k
-
-      integer, parameter :: max_order = 12 !!@Note the max order of this code is 12.
-                                           !! This value is hard-coded in several places (array dimensions, etc.)
-                                           !! Eventually, may want to make this a user-selectable value.
-                                           !! For now, it is fixed.
+      integer :: kmax !! maximum order of the method
 
       !initialize the class:
       call me%destroy()
+
+      !maximum order of the method:
+      kmax = ddeabm_default_max_order
+      if (present(max_order)) then
+         if (max_order < 1 .or. max_order > ddeabm_max_order_limit) &
+            error stop 'Error in ddeabm_initialize: max_order must be in the range 1 to ddeabm_max_order_limit'
+         kmax = max_order
+      end if
+      me%max_order = kmax
 
       !number of equations:
       me%neq = neq
@@ -527,7 +546,19 @@ contains
       allocate (me%yy(neq))
       allocate (me%wt(neq))
       allocate (me%p(neq))
-      allocate (me%phi(neq, 16))
+      allocate (me%phi(neq, max(kmax + 4, 6)))  ! (dhstrt uses columns 3:6 as work arrays)
+      allocate (me%alpha(kmax), me%beta(kmax), me%psi(kmax), me%v(kmax), me%w(kmax), me%gi(kmax))
+      allocate (me%sig(kmax + 1), me%g(kmax + 1))
+      allocate (me%iv(kmax))
+      me%alpha = 0.0_wp
+      me%beta = 0.0_wp
+      me%psi = 0.0_wp
+      me%v = 0.0_wp
+      me%w = 0.0_wp
+      me%gi = 0.0_wp
+      me%sig = 0.0_wp
+      me%g = 0.0_wp
+      me%iv = 0
       ! so that interpolation before the first step is well defined:
       me%ypout = 0.0_wp
       me%yp = 0.0_wp
@@ -575,14 +606,14 @@ contains
       !  of the less precise ones in the original.
       !  These are computed recursively using the equation on p. 159 of
       !  Shampine/Gordon, "Computer Solution of Ordinary Differential Equations", 1975.
-      allocate (me%two(max_order + 1))
-      allocate (me%gstr(0:max_order + 1))
-      do i = 1, max_order + 1
+      allocate (me%two(kmax + 1))
+      allocate (me%gstr(0:kmax + 1))
+      do i = 1, kmax + 1
          me%two(i) = 2.0_wp**i
       end do
       me%gstr = 0.0_wp
       me%gstr(0) = 1.0_wp
-      do i = 1, max_order + 1
+      do i = 1, kmax + 1
          k = 1
          do j = i - 1, 0, -1
             k = k + 1
@@ -640,7 +671,7 @@ contains
 
    subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, &
                                            g, root_tol, report, bracket, &
-                                           initial_step_mode, initial_step_size, max_step_size)
+                                           initial_step_mode, initial_step_size, max_step_size, max_order)
 
       implicit none
 
@@ -667,10 +698,16 @@ contains
       real(wp), intent(in), optional        :: initial_step_size !! for `initial_step_mode=3`
       real(wp), intent(in), optional        :: max_step_size !! maximum step size magnitude (>0).
                                                              !! If not present, the step size is not limited.
+      integer, intent(in), optional         :: max_order !! maximum order of the method
+                                                         !! (`1` to `ddeabm_max_order_limit`). If not present,
+                                                         !! `ddeabm_default_max_order` (12) is used.
+                                                         !! A lower value can improve stability on some problems.
+                                                         !! A higher value can reduce the number of steps for very
+                                                         !! tight tolerances when using higher precision (`REAL128`).
 
       !base class initialization:
       call me%initialize(neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size, &
-                         max_step_size)
+                         max_step_size, max_order)
 
       ! saved time and state:
       if (allocated(me%x_saved)) deallocate (me%x_saved)
@@ -701,7 +738,7 @@ contains
 
    subroutine ddeabm_with_event_initialize_vec(me, neq, maxnum, df, rtol, atol, &
                                                ng, g, root_tol, report, bracket, &
-                                               initial_step_mode, initial_step_size, max_step_size)
+                                               initial_step_mode, initial_step_size, max_step_size, max_order)
 
       implicit none
 
@@ -731,10 +768,16 @@ contains
       real(wp), intent(in), optional        :: initial_step_size !! for `initial_step_mode=3`
       real(wp), intent(in), optional        :: max_step_size !! maximum step size magnitude (>0).
                                                              !! If not present, the step size is not limited.
+      integer, intent(in), optional         :: max_order !! maximum order of the method
+                                                         !! (`1` to `ddeabm_max_order_limit`). If not present,
+                                                         !! `ddeabm_default_max_order` (12) is used.
+                                                         !! A lower value can improve stability on some problems.
+                                                         !! A higher value can reduce the number of steps for very
+                                                         !! tight tolerances when using higher precision (`REAL128`).
 
       !base class initialization:
       call me%initialize(neq, maxnum, df, rtol, atol, report, initial_step_mode, initial_step_size, &
-                         max_step_size)
+                         max_step_size, max_order)
 
       !event finding variables:
       me%n_g_eqns = ng
@@ -2607,15 +2650,15 @@ contains
       real(wp), dimension(neq), intent(inout)    :: yy
       real(wp), dimension(neq), intent(inout)    :: wt
       real(wp), dimension(neq), intent(inout)    :: p
-      real(wp), dimension(neq, 16), intent(inout) :: phi
-      real(wp), dimension(12), intent(inout)     :: alpha
-      real(wp), dimension(12), intent(inout)     :: beta
-      real(wp), dimension(12), intent(inout)     :: psi
-      real(wp), dimension(12), intent(inout)     :: v
-      real(wp), dimension(12), intent(inout)     :: w
-      real(wp), dimension(13), intent(inout)     :: sig
-      real(wp), dimension(13), intent(inout)     :: g
-      real(wp), dimension(11), intent(inout)     :: gi
+      real(wp), dimension(:, :), intent(inout)   :: phi
+      real(wp), dimension(:), intent(inout)      :: alpha
+      real(wp), dimension(:), intent(inout)      :: beta
+      real(wp), dimension(:), intent(inout)      :: psi
+      real(wp), dimension(:), intent(inout)      :: v
+      real(wp), dimension(:), intent(inout)      :: w
+      real(wp), dimension(:), intent(inout)      :: sig
+      real(wp), dimension(:), intent(inout)      :: g
+      real(wp), dimension(:), intent(inout)      :: gi
       real(wp), intent(inout)                   :: h
       real(wp), intent(inout)                   :: eps
       real(wp), intent(inout)                   :: x
@@ -2640,7 +2683,7 @@ contains
       integer, intent(inout)                    :: iquit
       integer, intent(inout)                    :: kprev
       integer, intent(inout)                    :: ivc
-      integer, dimension(10), intent(inout)      :: iv
+      integer, dimension(:), intent(inout)       :: iv
       integer, intent(inout)                    :: kgi
 
       integer :: k, l, m, ltol, natolp, nrtolp
@@ -2973,8 +3016,9 @@ contains
          ! (stiffness test) count number of consecutive steps taken with the
          ! order of the method being less or equal to four
 
+         ! (not done if the maximum order is <= 4)
          kle4 = kle4 + 1
-         if (kold > 4) kle4 = 0
+         if (kold > 4 .or. me%max_order <= 4) kle4 = 0
          stiff = (kle4 >= 50)
          intout = .true.
 
@@ -3292,20 +3336,20 @@ contains
       real(wp), dimension(neqn), intent(out)   :: yout   !! solution at xout
       real(wp), dimension(neqn), intent(out)   :: ypout  !! derivative of solution at xout
       integer, intent(in)                     :: kold
-      real(wp), dimension(neqn, 16), intent(in) :: phi
+      real(wp), dimension(:, :), intent(in)    :: phi
       integer, intent(in)                     :: ivc
-      integer, dimension(10), intent(in)       :: iv
+      integer, dimension(:), intent(in)        :: iv
       integer, intent(in)                     :: kgi
-      real(wp), dimension(11), intent(in)      :: gi
-      real(wp), dimension(12), intent(in)      :: alpha
-      real(wp), dimension(13), intent(in)      :: og
-      real(wp), dimension(12), intent(in)      :: ow
+      real(wp), dimension(:), intent(in)       :: gi
+      real(wp), dimension(:), intent(in)       :: alpha
+      real(wp), dimension(:), intent(in)       :: og  !! `(max_order+1)`
+      real(wp), dimension(:), intent(in)       :: ow
       real(wp), dimension(neqn), intent(in)    :: oy
       real(wp), intent(in)                    :: ox
 
       !local variables:
       integer  :: i, iq, iw, j, jq, kp1, kp2, l, m
-      real(wp), dimension(13) :: c, g, w
+      real(wp), dimension(size(og)) :: c, g, w
       real(wp) :: alp, gdi, gdif, gamma, h, hi, &
                   hmu, rmu, sigma, temp1, temp2, temp3, &
                   xi, xim1, xiq
@@ -3548,22 +3592,23 @@ contains
       logical, intent(inout)  :: nornd
       real(wp), dimension(neqn), intent(inout) :: y      !! solution vector at x
       real(wp), dimension(neqn), intent(inout) :: wt     !! vector of weights for error criterion
-      real(wp), dimension(neqn, 16), intent(inout) :: phi !! required for the interpolation subroutine [[dintp]]
+      real(wp), dimension(:, :), intent(inout) :: phi !! required for the interpolation subroutine [[dintp]]
       real(wp), dimension(neqn), intent(inout) :: p      !! required for the interpolation subroutine [[dintp]]
       real(wp), dimension(neqn), intent(inout) :: yp     !! derivative of solution vector at x after successful step
-      real(wp), dimension(12), intent(inout) :: psi
-      real(wp), dimension(12), intent(inout) :: alpha    !! required for the interpolation subroutine [[dintp]]
-      real(wp), dimension(12), intent(inout) :: beta
-      real(wp), dimension(13), intent(inout) :: sig
-      real(wp), dimension(12), intent(inout) :: v
-      real(wp), dimension(12), intent(inout) :: w        !! required for the interpolation subroutine [[dintp]]
-      real(wp), dimension(13), intent(inout) :: g        !! required for the interpolation subroutine [[dintp]]
-      real(wp), dimension(11), intent(inout) :: gi       !! required for the interpolation subroutine [[dintp]]
-      integer, dimension(10), intent(inout)  :: iv      !! required for the interpolation subroutine [[dintp]]
+      real(wp), dimension(:), intent(inout) :: psi
+      real(wp), dimension(:), intent(inout) :: alpha    !! required for the interpolation subroutine [[dintp]]
+      real(wp), dimension(:), intent(inout) :: beta
+      real(wp), dimension(:), intent(inout) :: sig
+      real(wp), dimension(:), intent(inout) :: v
+      real(wp), dimension(:), intent(inout) :: w        !! required for the interpolation subroutine [[dintp]]
+      real(wp), dimension(:), intent(inout) :: g        !! required for the interpolation subroutine [[dintp]]
+      real(wp), dimension(:), intent(inout) :: gi       !! required for the interpolation subroutine [[dintp]]
+      integer, dimension(:), intent(inout)  :: iv       !! required for the interpolation subroutine [[dintp]]
 
       integer  :: i, ifail, im1, ip1, iq, j, km1, km2, knew, &
                   kp1, kp2, l, limit1, limit2, nsm2, &
                   nsp1, nsp2, jv
+      integer :: iround1, iround2 !! columns of `phi` used for roundoff control
       real(wp) :: absh, big, &
                   erk, erkm1, erkm2, erkp1, err, &
                   hnew, p5eps, r, &
@@ -3571,6 +3616,11 @@ contains
                   temp2, temp3, temp4, temp5, temp6, u
 
       if (me%error) return !user-triggered error
+
+      ! the last two columns of phi are used for roundoff control
+      ! (columns 15 and 16 in the original code, with a maximum order of 12):
+      iround1 = me%max_order + 3
+      iround2 = me%max_order + 4
 
       !       ***     begin block 0     ***
       !   check if step size or error tolerance is too small for machine
@@ -3623,7 +3673,7 @@ contains
          select case (me%initial_step_mode)
          case (1)
             call me%dhstrt(neqn, x, x + h, y, yp, wt, 1, u, big, &
-                           phi(1, 3), phi(1, 4), phi(1, 5), phi(1, 6), h)
+                           phi(:, 3), phi(:, 4), phi(:, 5), phi(:, 6), h)
             if (me%error) return !user-triggered error
             me%initial_step_size = h ! save it
          case (2)
@@ -3650,7 +3700,7 @@ contains
          if (p5eps <= 100.0_wp*round) then
             nornd = .false.
             do l = 1, neqn
-               phi(l, 15) = 0.0_wp
+               phi(l, iround1) = 0.0_wp
             end do
          end if
 
@@ -3833,9 +3883,9 @@ contains
             p = y + h*p
          else
             do l = 1, neqn
-               tau = h*p(l) - phi(l, 15)
+               tau = h*p(l) - phi(l, iround1)
                p(l) = y(l) + tau
-               phi(l, 16) = (p(l) - y(l)) - tau
+               phi(l, iround2) = (p(l) - y(l)) - tau
             end do
          end if
          xold = x
@@ -3950,9 +4000,9 @@ contains
          else
             do l = 1, neqn
                temp3 = y(l)
-               rho = temp1*(yp(l) - phi(l, 1)) - phi(l, 16)
+               rho = temp1*(yp(l) - phi(l, 1)) - phi(l, iround2)
                y(l) = p(l) + rho
-               phi(l, 15) = (y(l) - p(l)) - rho
+               phi(l, iround1) = (y(l) - p(l)) - rho
                p(l) = temp3
             end do
          end if
@@ -3977,7 +4027,7 @@ contains
          !     step size not constant so estimate unreliable
 
          erkp1 = 0.0_wp
-         if (knew == km1 .or. k == 12) phase1 = .false.
+         if (knew == km1 .or. k == me%max_order) phase1 = .false.
          if (phase1) then
             call raise_order()
             exit block4
@@ -4000,9 +4050,9 @@ contains
                call lower_order()
                exit block4
             end if
-            if (erkp1 >= erk .or. k == 12) exit block4
+            if (erkp1 >= erk .or. k == me%max_order) exit block4
          else
-            if (erkp1 >= 0.5_wp*erk) exit block4
+            if (erkp1 >= 0.5_wp*erk .or. k == me%max_order) exit block4
          end if
 
          !   here erkp1 < erk < max(erkm1,erkm2) else order would have
