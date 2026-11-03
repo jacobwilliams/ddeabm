@@ -1041,29 +1041,56 @@ contains
          idid = -33
          return
       end if
-      if (fixed_step) then
-         if (tstep == 0.0_wp) then
-            call report_error('ddeabm_with_event_wrapper', 'tstep must be nonzero.', 0, 0)
-            idid = -33
-            return
-         end if
-      end if
-
       ! direction of integration (it cannot be changed when continuing):
       if (continuing) then
          direction = me%delsgn
       else
          direction = sign(1.0_wp, tmax - t)
       end if
+
+      ! the fixed step reporting grid starts at the initial point,
+      ! or at the last root found if continuing from one:
       if (resuming) then
+         t_anchor = me%t_resume
+      else if (continuing) then
+         t_anchor = me%t_saved
+      else
+         t_anchor = t
+      end if
+      n_grid = 0
+
+      if (resuming) then
+         ! (the rest of the last step may be processed using interpolation
+         ! only, so these are checked here rather than by ddes)
          if (direction*(tmax - me%t_resume) < 0.0_wp) then
             call report_error('ddeabm_with_event_wrapper', &
                               'cannot change the direction of integration when continuing.', 0, 0)
             idid = -33
             return
          end if
+         if (present(tstop)) then
+            if (direction*(tstop - me%t_resume) < 0.0_wp .or. direction*(tmax - tstop) > 0.0_wp) then
+               call report_error('ddeabm_with_event_wrapper', &
+                                 'tmax is beyond tstop. these instructions conflict.', 0, 0)
+               idid = -33
+               return
+            end if
+         end if
       end if
-      if (fixed_step) dt = direction*abs(tstep)
+
+      if (fixed_step) then
+         ! the step must advance the time everywhere on the interval
+         ! (it is not lost in roundoff), and the number of points
+         ! must not overflow the counter:
+         dt = direction*abs(tstep)
+         if (t_anchor + dt == t_anchor .or. tmax - dt == tmax .or. &
+             abs(tmax - t_anchor) >= abs(dt)*real(huge(n_grid), wp)) then
+            call report_error('ddeabm_with_event_wrapper', &
+                              'tstep is too small (or zero) to advance the time.', 0, 0)
+            idid = -33
+            return
+         end if
+      end if
 
       ! work arrays:
       allocate (y1(me%neq), y2(me%neq), yc(me%neq))
@@ -1078,15 +1105,6 @@ contains
          y = me%x_saved
          me%info(1) = 1   ! continuation call
       end if
-
-      ! the fixed step reporting grid starts at the initial point,
-      ! or at the last root found if continuing from one:
-      if (resuming) then
-         t_anchor = me%t_resume
-      else
-         t_anchor = t
-      end if
-      n_grid = 0
 
       !set info array:
 
@@ -1607,29 +1625,56 @@ contains
          idid = -33
          return
       end if
-      if (fixed_step) then
-         if (tstep == 0.0_wp) then
-            call report_error('ddeabm_with_event_wrapper_vec', 'tstep must be nonzero.', 0, 0)
-            idid = -33
-            return
-         end if
-      end if
-
       ! direction of integration (it cannot be changed when continuing):
       if (continuing) then
          direction = me%delsgn
       else
          direction = sign(1.0_wp, tmax - t)
       end if
+
+      ! the fixed step reporting grid starts at the initial point,
+      ! or at the last root found if continuing from one:
       if (resuming) then
+         t_anchor = me%t_resume
+      else if (continuing) then
+         t_anchor = me%t_saved
+      else
+         t_anchor = t
+      end if
+      n_grid = 0
+
+      if (resuming) then
+         ! (the rest of the last step may be processed using interpolation
+         ! only, so these are checked here rather than by ddes)
          if (direction*(tmax - me%t_resume) < 0.0_wp) then
             call report_error('ddeabm_with_event_wrapper_vec', &
                               'cannot change the direction of integration when continuing.', 0, 0)
             idid = -33
             return
          end if
+         if (present(tstop)) then
+            if (direction*(tstop - me%t_resume) < 0.0_wp .or. direction*(tmax - tstop) > 0.0_wp) then
+               call report_error('ddeabm_with_event_wrapper_vec', &
+                                 'tmax is beyond tstop. these instructions conflict.', 0, 0)
+               idid = -33
+               return
+            end if
+         end if
       end if
-      if (fixed_step) dt = direction*abs(tstep)
+
+      if (fixed_step) then
+         ! the step must advance the time everywhere on the interval
+         ! (it is not lost in roundoff), and the number of points
+         ! must not overflow the counter:
+         dt = direction*abs(tstep)
+         if (t_anchor + dt == t_anchor .or. tmax - dt == tmax .or. &
+             abs(tmax - t_anchor) >= abs(dt)*real(huge(n_grid), wp)) then
+            call report_error('ddeabm_with_event_wrapper_vec', &
+                              'tstep is too small (or zero) to advance the time.', 0, 0)
+            idid = -33
+            return
+         end if
+      end if
 
       ! work arrays:
       allocate (g1(me%n_g_eqns), g2(me%n_g_eqns), mask(me%n_g_eqns))
@@ -1645,15 +1690,6 @@ contains
          y = me%x_saved
          me%info(1) = 1   ! continuation call
       end if
-
-      ! the fixed step reporting grid starts at the initial point,
-      ! or at the last root found if continuing from one:
-      if (resuming) then
-         t_anchor = me%t_resume
-      else
-         t_anchor = t
-      end if
-      n_grid = 0
 
       !set info array:
 

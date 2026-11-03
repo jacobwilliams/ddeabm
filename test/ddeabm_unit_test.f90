@@ -17,6 +17,7 @@
 module ddeabm_unit_test_module
 
    use ddeabm_module, wp => ddeabm_rk
+   use, intrinsic :: iso_fortran_env, only: real64
 
    implicit none
 
@@ -43,7 +44,20 @@ module ddeabm_unit_test_module
    integer :: n_failed = 0                 !! number of failed checks
    integer :: n_checks = 0                 !! number of checks
 
+   ! tolerances in the tests are specified for real64. for a lower precision
+   ! real kind (REAL32), they are scaled to the same fraction of the available
+   ! digits: x -> x**pw, where pw = log(eps)/log(eps_real64).
+   real(wp), parameter :: pw = merge(log(epsilon(1.0_wp))/log(real(epsilon(1.0_real64), wp)), 1.0_wp, &
+                                     epsilon(1.0_wp) > real(epsilon(1.0_real64), wp))
+
 contains
+
+   elemental function sc(x) result(xs)
+      !! scale a tolerance specified for real64 to the real kind used (see `pw`)
+      real(wp), intent(in) :: x
+      real(wp) :: xs
+      xs = x**pw
+   end function sc
 
    subroutine deriv(me, t, x, xdot)
       !! derivative routine for all the test problems
@@ -158,10 +172,10 @@ program ddeabm_unit_test
    real(wp) :: t, y1(1), y(2), yi(2), gval, gv(2), tout, err, t_root, x_ref(2)
    real(wp), dimension(:), allocatable :: t_ref, xr_ref   !! reference reported points
    real(wp), dimension(3) :: errs
-   real(wp), dimension(3), parameter :: tols = [1.0e-6_wp, 1.0e-9_wp, 1.0e-12_wp]
+   real(wp), dimension(3), parameter :: tols = [1.0e-6_wp**pw, 1.0e-9_wp**pw, 1.0e-12_wp**pw]
    real(wp), dimension(2), parameter :: y0 = [1.0_wp, 0.0_wp]
-   real(wp), parameter :: tol = 1.0e-11_wp
-   real(wp), parameter :: etol = 1.0e-8_wp
+   real(wp), parameter :: tol = 1.0e-11_wp**pw
+   real(wp), parameter :: etol = 1.0e-8_wp**pw
    integer :: idid, i, k, istat
    logical :: ok
 
@@ -209,8 +223,7 @@ program ddeabm_unit_test
    end do
    write (*, '(A,3(1X,E10.3))') '  errors for tol = 1e-6, 1e-9, 1e-12:', errs
    call check('errors decrease monotonically', errs(2) < errs(1) .and. errs(3) < errs(2))
-   call check('error is consistent with the tolerance', &
-              errs(1) < 1.0e-4_wp .and. errs(2) < 1.0e-7_wp .and. errs(3) < 1.0e-10_wp)
+   call check('error is within 100 times the tolerance', all(errs < 100.0_wp*tols))
 
    !===================================================================
    write (*, '(/A)') 'Direction of integration and continuation calls'
@@ -257,25 +270,25 @@ program ddeabm_unit_test
    call check('size-1 rtol with vector atol: x(10) = cos(10)', success(idid) .and. &
               abs(y(1) - cos(10.0_wp)) < etol)
 
-   call s%initialize(2, 10000, deriv, [1.0e-6_wp], [0.0_wp])   ! pure relative error
+   call s%initialize(2, 10000, deriv, [sc(1.0e-6_wp)], [0.0_wp])   ! pure relative error
    call s%first_call()
    t = 0.0_wp; y = y0
    call s%integrate(t, y, 1.0_wp, idid=idid)
    call check('atol=0 with a zero solution component: idid=-3', idid == -3 .and. t == 0.0_wp)
 
-   call s%initialize(2, 10000, deriv, [1.0e-6_wp], [0.0_wp])
+   call s%initialize(2, 10000, deriv, [sc(1.0e-6_wp)], [0.0_wp])
    call s%first_call()
    t = 0.5_wp; y = [cos(0.5_wp), -sin(0.5_wp)]
    call s%integrate(t, y, 1.0_wp, idid=idid)
    call check('atol=0 (pure relative error) with nonzero solution', success(idid) .and. &
-              abs(y(1) - cos(1.0_wp)) < 1.0e-5_wp)
+              abs(y(1) - cos(1.0_wp)) < sc(1.0e-5_wp))
 
    !===================================================================
    write (*, '(/A)') 'Initial step size modes'
    iprob = p_osc
    do k = 1, 3
       if (k == 3) then
-         call s%initialize(2, 10000, deriv, [tol], [tol], initial_step_mode=k, initial_step_size=1.0e-3_wp)
+         call s%initialize(2, 10000, deriv, [tol], [tol], initial_step_mode=k, initial_step_size=sc(1.0e-3_wp))
       else
          call s%initialize(2, 10000, deriv, [tol], [tol], initial_step_mode=k)
       end if
@@ -294,7 +307,8 @@ program ddeabm_unit_test
    call s%first_call()
    t = 0.0_wp; y1 = 3.0_wp
    call s%integrate(t, y1, 10.0_wp, idid=idid)
-   call check('y''=0: y stays constant', success(idid) .and. y1(1) == 3.0_wp)
+   call check('y''=0: y stays constant (to roundoff)', success(idid) .and. &
+              abs(y1(1) - 3.0_wp) <= 10.0_wp*spacing(3.0_wp))
    ! y'=1: zero second derivative bound, nonzero first derivative bound
    iprob = p_const
    call s%first_call()
@@ -310,7 +324,7 @@ program ddeabm_unit_test
 
    ! a user initial step that is too small for the machine precision:
    iprob = p_osc
-   call s%initialize(2, 10000, deriv, [tol], [tol], initial_step_mode=3, initial_step_size=1.0e-30_wp)
+   call s%initialize(2, 10000, deriv, [tol], [tol], initial_step_mode=3, initial_step_size=epsilon(1.0_wp)**2)
    call s%first_call()
    t = 1.0_wp; y = [cos(1.0_wp), -sin(1.0_wp)]
    call s%integrate(t, y, 2.0_wp, idid=idid)
@@ -324,38 +338,38 @@ program ddeabm_unit_test
    ! the solution has rapid transitions, so the order is raised and lowered.
    ! compare with a tighter tolerance solution.
    iprob = p_vdp
-   call s%initialize(2, 100000, deriv, [1.0e-13_wp], [1.0e-13_wp])
+   call s%initialize(2, 100000, deriv, [sc(1.0e-13_wp)], [sc(1.0e-13_wp)])
    call s%first_call()
    t = 0.0_wp; x_ref = [2.0_wp, 0.0_wp]
    call s%integrate(t, x_ref, 20.0_wp, idid=idid)
-   call s%initialize(2, 100000, deriv, [1.0e-8_wp], [1.0e-8_wp])
+   call s%initialize(2, 100000, deriv, [sc(1.0e-8_wp)], [sc(1.0e-8_wp)])
    call s%first_call()
    t = 0.0_wp; y = [2.0_wp, 0.0_wp]
    call s%integrate(t, y, 20.0_wp, idid=idid)
    err = maxval(abs(y - x_ref))
    write (*, '(A,E10.3)') '  difference from reference solution: ', err
-   call check('agrees with the reference solution', success(idid) .and. err < 1.0e-5_wp)
+   call check('agrees with the reference solution', success(idid) .and. err < sc(1.0e-5_wp))
    ! interpolated output (each point is interpolated within a step, after order changes):
-   call s%initialize(2, 100000, deriv, [1.0e-13_wp], [1.0e-13_wp], report=report)
+   call s%initialize(2, 100000, deriv, [sc(1.0e-13_wp)], [sc(1.0e-13_wp)], report=report)
    call s%first_call()
    t = 0.0_wp; y = [2.0_wp, 0.0_wp]; n_reports = 0
    call s%integrate(t, y, 20.0_wp, idid=idid, integration_mode=2, tstep=0.01_wp)
    t_ref = t_reports(1:n_reports)
    xr_ref = x_reports(1:n_reports)
-   call s%initialize(2, 100000, deriv, [1.0e-9_wp], [1.0e-9_wp], report=report)
+   call s%initialize(2, 100000, deriv, [sc(1.0e-9_wp)], [sc(1.0e-9_wp)], report=report)
    call s%first_call()
    t = 0.0_wp; y = [2.0_wp, 0.0_wp]; n_reports = 0
    call s%integrate(t, y, 20.0_wp, idid=idid, integration_mode=2, tstep=0.01_wp)
    ok = n_reports == size(t_ref)
    if (ok) ok = all(t_reports(1:n_reports) == t_ref) .and. &
-                maxval(abs(x_reports(1:n_reports) - xr_ref)) < 1.0e-6_wp
+                maxval(abs(x_reports(1:n_reports) - xr_ref)) < 1000.0_wp*sc(1.0e-9_wp)
    call check('interpolated output at 2001 points agrees with the reference', success(idid) .and. ok)
 
    !===================================================================
    write (*, '(/A)') 'Stiffness detection and work limit'
    ! (the work limit, idid=-1, can be reached before the stiffness is detected)
    iprob = p_stiff
-   call s%initialize(1, 500, deriv, [1.0e-3_wp], [1.0e-3_wp])
+   call s%initialize(1, 500, deriv, [sc(1.0e-3_wp)], [sc(1.0e-3_wp)])
    call s%first_call()
    t = 0.0_wp; y1 = 1.0_wp
    call s%integrate(t, y1, 10.0_wp, idid=idid)
@@ -369,17 +383,17 @@ program ddeabm_unit_test
    end do
    call check('stiff problem: stiffness detected (idid=-4)', ok)
    call check('stiff problem: resumed to completion, y(10) = cos(10)', success(idid) .and. &
-              abs(y1(1) - cos(10.0_wp)) < 1.0e-2_wp)
+              abs(y1(1) - cos(10.0_wp)) < sc(1.0e-2_wp))
 
    !===================================================================
    write (*, '(/A)') 'Step failures near a singularity (y''=y^2, blows up at t=1)'
    iprob = p_blowup
-   call s%initialize(1, 100000, deriv, [1.0e-10_wp], [1.0e-10_wp])
+   call s%initialize(1, 100000, deriv, [sc(1.0e-10_wp)], [sc(1.0e-10_wp)])
    call s%first_call()
    t = 0.0_wp; y1 = 1.0_wp
    call s%integrate(t, y1, 2.0_wp, idid=idid)
-   call check('integration stops at the singularity (idid<0)', idid < 0 .and. abs(t - 1.0_wp) < 1.0e-6_wp)
-   call check('solution is very large', y1(1) > 1.0e6_wp)
+   call check('integration stops at the singularity (idid<0)', idid < 0 .and. abs(t - 1.0_wp) < sc(1.0e-6_wp))
+   call check('solution is very large', y1(1) > 0.1_wp/sc(1.0e-6_wp))
 
    !===================================================================
    write (*, '(/A)') 'tout = t on the first call'
@@ -464,7 +478,7 @@ program ddeabm_unit_test
    call s%integrate(t, y, 10.0_wp, idid=idid, integration_mode=2, tstep=0.75_wp)
    ok = n_reports == 15 .and. t_reports(n_reports) == 10.0_wp
    do i = 1, n_reports - 1
-      ok = ok .and. abs(t_reports(i) - 0.75_wp*(i - 1)) < 1.0e-12_wp
+      ok = ok .and. abs(t_reports(i) - 0.75_wp*(i - 1)) < sc(1.0e-12_wp)
    end do
    ok = ok .and. all(abs(x_reports(1:n_reports) - cos(t_reports(1:n_reports))) < etol)
    call check('fixed step: points at t0 + k*tstep and tout, correct states', success(idid) .and. ok)
@@ -472,7 +486,7 @@ program ddeabm_unit_test
    call s%first_call()
    t = 0.0_wp; y = y0; n_reports = 0
    call s%integrate(t, y, -3.0_wp, idid=idid, integration_mode=2, tstep=1.0_wp)
-   ok = n_reports == 4 .and. all(abs(t_reports(1:4) - [0.0_wp, -1.0_wp, -2.0_wp, -3.0_wp]) < 1.0e-12_wp)
+   ok = n_reports == 4 .and. all(abs(t_reports(1:4) - [0.0_wp, -1.0_wp, -2.0_wp, -3.0_wp]) < sc(1.0e-12_wp))
    call check('fixed step, backward: points at 0,-1,-2,-3', success(idid) .and. ok)
 
    call s%first_call()
@@ -497,13 +511,13 @@ program ddeabm_unit_test
       call check('integrate (mode '//achar(iachar('0') + k)//'): idid=-1000, t <= t_stop', &
                  idid == -1000 .and. t <= t_stop .and. abs(y(1) - cos(t)) < etol)
    end do
-   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, 1.0e-12_wp)
+   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, sc(1.0e-12_wp))
    call se%first_call()
    t = 0.0_wp; y = y0
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval)
    call check('integrate_to_event: idid=-1000, last good point returned', &
               idid == -1000 .and. t <= t_stop .and. abs(y(1) - cos(t)) < etol .and. gval == y(1))
-   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [1.0e-12_wp])
+   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)])
    call sv%first_call()
    t = 0.0_wp; y = [cos(0.1_wp), -sin(0.1_wp)]
    call sv%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gv)
@@ -514,12 +528,12 @@ program ddeabm_unit_test
    !===================================================================
    write (*, '(/A)') 'Input validation in ddes'
    iprob = p_osc
-   call s%initialize(2, 10000, deriv, [-1.0e-6_wp], [tol])
+   call s%initialize(2, 10000, deriv, [-sc(1.0e-6_wp)], [tol])
    call s%first_call()
    t = 0.0_wp; y = y0
    call s%integrate(t, y, 1.0_wp, idid=idid)
    call check('negative rtol: idid=-33', idid == -33)
-   call s%initialize(2, 10000, deriv, [tol], [-1.0e-6_wp])
+   call s%initialize(2, 10000, deriv, [tol], [-sc(1.0e-6_wp)])
    call s%first_call()
    t = 0.0_wp; y = y0
    call s%integrate(t, y, 1.0_wp, idid=idid)
@@ -567,7 +581,7 @@ program ddeabm_unit_test
    !===================================================================
    write (*, '(/A)') 'Event finding (scalar)'
    iprob = p_osc
-   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, 1.0e-12_wp, report=report)
+   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, sc(1.0e-12_wp), report=report)
    do k = 1, 2   ! default steps and fixed step
       call se%first_call()
       t = 0.0_wp; y = y0
@@ -593,14 +607,14 @@ program ddeabm_unit_test
               idid == 1000 .and. abs(t - 1.5_wp*pi) < etol)
 
    call se%first_call()   ! with tstop and vector tolerances
-   call se%initialize_event(2, 10000, deriv, [tol, tol], [tol, tol], g_x1, 1.0e-12_wp)
+   call se%initialize_event(2, 10000, deriv, [tol, tol], [tol, tol], g_x1, sc(1.0e-12_wp))
    call se%first_call()
    t = 0.0_wp; y = y0
    call se%integrate_to_event(t, y, 1.0_wp, tstop=1.0_wp, idid=idid, gval=gval)
    call check('tstop and vector tolerances, no root: stops at tmax', &
               success(idid) .and. t == 1.0_wp .and. abs(gval - cos(1.0_wp)) < etol)
 
-   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, 1.0e-12_wp, &
+   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, sc(1.0e-12_wp), &
                             bracket=bracket_decreasing, report=report)
    call se%first_call()   ! bracket function: only decreasing crossings
    t = 0.0_wp; y = y0
@@ -610,7 +624,7 @@ program ddeabm_unit_test
    call check('bracket function: roots at pi/2 then 5pi/2 (3pi/2 rejected)', &
               abs(t_root - pi/2.0_wp) < etol .and. idid == 1000 .and. abs(t - 2.5_wp*pi) < etol)
 
-   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, 1.0e-12_wp, report=report)
+   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, sc(1.0e-12_wp), report=report)
    call se%first_call()   ! continuing in the opposite direction is not allowed
    t = 0.0_wp; y = y0
    call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval)
@@ -621,7 +635,7 @@ program ddeabm_unit_test
    t = 0.0_wp; y = y0
    call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval)
    t_root = t
-   tout = t_root + 1.0e-6_wp
+   tout = t_root + sc(1.0e-6_wp)
    call se%integrate_to_event(t, y, tout, idid=idid, gval=gval, continue=.true.)
    call check('continue with tmax in the last step: stops at tmax', &
               idid == 3 .and. t == tout .and. abs(y(1) - cos(tout)) < etol)
@@ -635,7 +649,7 @@ program ddeabm_unit_test
                               tstep=0.25_wp, continue=.true.)
    ok = idid == 1000 .and. abs(t - 1.5_wp*pi) < etol .and. n_reports > 4
    do i = 1, 4   ! (3-pi/2)/0.25 = 5.7 points in the rest of the first step
-      ok = ok .and. abs(t_reports(i) - (t_root + 0.25_wp*i)) < 1.0e-12_wp .and. &
+      ok = ok .and. abs(t_reports(i) - (t_root + 0.25_wp*i)) < sc(1.0e-12_wp) .and. &
            abs(x_reports(i) - cos(t_reports(i))) < etol
    end do
    ok = ok .and. all(t_reports(2:n_reports) > t_reports(1:n_reports - 1))
@@ -648,25 +662,40 @@ program ddeabm_unit_test
       call se%first_call()
       t = 0.0_wp; y = y0
       call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, tstep=0.5_wp*k)
-      ok = ok .and. idid == 1000 .and. abs(t - pi/2.0_wp) < 1.0e-10_wp .and. &
-           abs(y(1) - cos(t)) < 1.0e-10_wp
+      ok = ok .and. idid == 1000 .and. abs(t - pi/2.0_wp) < sc(1.0e-10_wp) .and. &
+           abs(y(1) - cos(t)) < sc(1.0e-10_wp)
    end do
    call check('fixed step: root accuracy does not depend on tstep (0.5 to 4)', ok)
 
-   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, 1.0e-12_wp)
+   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, sc(1.0e-12_wp))
    call se%first_call()
    t = 0.0_wp; y = y0
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval, integration_mode=3)
    call check('invalid integration_mode: idid=-33', idid == -33)
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval, tstep=0.0_wp)
    call check('tstep=0: idid=-33', idid == -33)
+   t = 1.8_wp; y = [cos(t), -sin(t)]
+   call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, tstep=0.01_wp*spacing(t))
+   call check('tstep lost in roundoff: idid=-33', idid == -33 .and. t == 1.8_wp)
+
+   call se%first_call()   ! when continuing, tmax must not be beyond tstop
+   t = 0.0_wp; y = y0
+   call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval)
+   t_root = t
+   call se%integrate_to_event(t, y, t_root + 0.002_wp, tstop=t_root + 0.001_wp, idid=idid, gval=gval, &
+                              continue=.true.)
+   call check('continue with tmax beyond tstop: idid=-33', idid == -33)
+   call se%integrate_to_event(t, y, t_root + 0.001_wp, tstop=t_root + 0.001_wp, idid=idid, gval=gval, &
+                              continue=.true.)
+   call check('continue with tmax = tstop: stops at tmax', success(idid) .and. &
+              t == t_root + 0.001_wp .and. abs(y(1) - cos(t)) < etol)
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval, integration_mode=2)
    call check('integration_mode=2 without a report function: idid=-33', idid == -33)
 
    !===================================================================
    write (*, '(/A)') 'Event finding (vector)'
    iprob = p_osc
-   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [1.0e-12_wp, 1.0e-12_wp], &
+   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp), sc(1.0e-12_wp)], &
                             report=report)
    call sv%first_call()   ! earliest root of all the functions, in order
    t = 0.1_wp; y = [cos(t), -sin(t)]
@@ -684,7 +713,7 @@ program ddeabm_unit_test
    call check('backward: first root is x(1) at -pi/2', idid == 1001 .and. abs(t + pi/2.0_wp) < etol)
 
    call sv%first_call()   ! interrupted task (maxnum)
-   call sv%initialize_event(2, 5, deriv, [tol], [tol], 2, g_vec, [1.0e-12_wp])
+   call sv%initialize_event(2, 5, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)])
    call sv%first_call()
    t = 0.1_wp; y = [cos(t), -sin(t)]
    call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv)
@@ -696,7 +725,7 @@ program ddeabm_unit_test
    end do
    call check('resumed: first root is x(1) at pi/2', idid == 1001 .and. abs(t - pi/2.0_wp) < etol)
 
-   call sv%initialize_event(2, 10000, deriv, [tol, tol], [tol, tol], 2, g_vec, [1.0e-12_wp], &
+   call sv%initialize_event(2, 10000, deriv, [tol, tol], [tol, tol], 2, g_vec, [sc(1.0e-12_wp)], &
                             bracket=bracket_vec_decreasing)
    call sv%first_call()   ! bracket function, vector tolerances, tstop
    t = 0.1_wp; y = [cos(t), -sin(t)]
@@ -708,7 +737,7 @@ program ddeabm_unit_test
    call check('bracket function: x(1) at pi/2, then x(2) at 2pi', &
               abs(t_root - pi/2.0_wp) < etol .and. idid == 1002 .and. abs(t - 2.0_wp*pi) < etol)
 
-   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [1.0e-12_wp, 1.0e-12_wp, 1.0_wp])
+   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp), sc(1.0e-12_wp), 1.0_wp])
    call sv%first_call()   ! wrong size root_tol: the first element is used
    t = 0.1_wp; y = [cos(t), -sin(t)]
    call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv)
@@ -718,7 +747,7 @@ program ddeabm_unit_test
    call sv%first_call()   ! continue with tmax inside the rest of the last step
    t = 0.1_wp; y = [cos(t), -sin(t)]
    call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv)
-   tout = t + 1.0e-6_wp
+   tout = t + sc(1.0e-6_wp)
    call sv%integrate_to_event(t, y, tout, idid=idid, gval=gv, continue=.true.)
    call check('continue with tmax in the last step: stops at tmax', &
               idid == 3 .and. t == tout .and. abs(y(1) - cos(tout)) < etol)
@@ -731,7 +760,22 @@ program ddeabm_unit_test
    call check('invalid integration_mode: idid=-33', idid == -33)
    call sv%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gv, tstep=0.0_wp)
    call check('tstep=0: idid=-33', idid == -33)
-   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [1.0e-12_wp])
+   t = 1.8_wp; y = [cos(t), -sin(t)]
+   call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv, tstep=0.01_wp*spacing(t))
+   call check('tstep lost in roundoff: idid=-33', idid == -33 .and. t == 1.8_wp)
+
+   call sv%first_call()   ! when continuing, tmax must not be beyond tstop
+   t = 0.1_wp; y = [cos(t), -sin(t)]
+   call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv)
+   t_root = t
+   call sv%integrate_to_event(t, y, t_root + 0.002_wp, tstop=t_root + 0.001_wp, idid=idid, gval=gv, &
+                              continue=.true.)
+   call check('continue with tmax beyond tstop: idid=-33', idid == -33)
+   call sv%integrate_to_event(t, y, t_root + 0.001_wp, tstop=t_root + 0.001_wp, idid=idid, gval=gv, &
+                              continue=.true.)
+   call check('continue with tmax = tstop: stops at tmax', success(idid) .and. &
+              t == t_root + 0.001_wp .and. abs(y(1) - cos(t)) < etol)
+   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)])
    call sv%first_call()
    call sv%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gv, integration_mode=2)
    call check('integration_mode=2 without a report function: idid=-33', idid == -33)

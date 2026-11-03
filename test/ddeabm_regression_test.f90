@@ -9,6 +9,7 @@
 module ddeabm_regression_test_module
 
    use ddeabm_module, wp => ddeabm_rk
+   use, intrinsic :: iso_fortran_env, only: real64
 
    implicit none
 
@@ -21,7 +22,20 @@ module ddeabm_regression_test_module
    real(wp), dimension(10000) :: t_reports = 0.0_wp  !! the reported times
    integer :: n_failed = 0                 !! number of failed checks
 
+   ! tolerances in the tests are specified for real64. for a lower precision
+   ! real kind (REAL32), they are scaled to the same fraction of the available
+   ! digits: x -> x**pw, where pw = log(eps)/log(eps_real64).
+   real(wp), parameter :: pw = merge(log(epsilon(1.0_wp))/log(real(epsilon(1.0_real64), wp)), 1.0_wp, &
+                                     epsilon(1.0_wp) > real(epsilon(1.0_real64), wp))
+
 contains
+
+   elemental function sc(x) result(xs)
+      !! scale a tolerance specified for real64 to the real kind used (see `pw`)
+      real(wp), intent(in) :: x
+      real(wp) :: xs
+      xs = x**pw
+   end function sc
 
    subroutine osc(me, t, x, xdot)
       !! derivative routine: harmonic oscillator
@@ -91,8 +105,8 @@ program ddeabm_regression_test
    integer :: idid, istat, i, k
    logical :: ok
 
-   real(wp), parameter :: tol = 1.0e-10_wp    !! integration tolerance
-   real(wp), parameter :: etol = 1.0e-8_wp    !! tolerance for checking results
+   real(wp), parameter :: tol = 1.0e-10_wp**pw    !! integration tolerance
+   real(wp), parameter :: etol = 1.0e-8_wp**pw    !! tolerance for checking results
    real(wp), dimension(2), parameter :: y0 = [1.0_wp, 0.0_wp]
 
    write (*, '(A)') ''
@@ -114,7 +128,7 @@ program ddeabm_regression_test
 
    !-------------------------------------------------------------------
    write (*, '(/A)') '2. vector events: a function that is zero at t0 does not mask the others'
-   call sv%initialize_event(2, 1000, osc, [tol], [tol], 2, g_vec, [1.0e-12_wp])
+   call sv%initialize_event(2, 1000, osc, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)])
    t_event2 = 0.0_wp   ! g(2) is zero at the initial time
    call sv%first_call()
    t = 0.0_wp; y = y0
@@ -134,7 +148,7 @@ program ddeabm_regression_test
 
    !-------------------------------------------------------------------
    write (*, '(/A)') '4. gval is set when no root is found'
-   call se%initialize_event(2, 1000, osc, [tol], [tol], g_scalar, 1.0e-12_wp)
+   call se%initialize_event(2, 1000, osc, [tol], [tol], g_scalar, sc(1.0e-12_wp))
    call se%first_call()
    t = 0.0_wp; y = y0; gval = -999.0_wp
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval)
@@ -152,7 +166,7 @@ program ddeabm_regression_test
    call check('vector: gval = [cos(1), 1-100]', &
               abs(gv(1) - cos(1.0_wp)) < etol .and. abs(gv(2) - (1.0_wp - 100.0_wp)) < etol)
 
-   call se%initialize_event(2, 5, osc, [tol], [tol], g_scalar, 1.0e-12_wp)
+   call se%initialize_event(2, 5, osc, [tol], [tol], g_scalar, sc(1.0e-12_wp))
    call se%first_call()
    t = 0.0_wp; y = y0; gval = -999.0_wp
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval, tstep=1.0_wp)
@@ -171,7 +185,7 @@ program ddeabm_regression_test
       if (idid /= -1) exit
    end do
    call check('after resuming: success, solution at t=20 is correct', &
-              (idid == 2 .or. idid == 3) .and. t == 20.0_wp .and. abs(y(1) - cos(20.0_wp)) < 1.0e-7_wp)
+              (idid == 2 .or. idid == 3) .and. t == 20.0_wp .and. abs(y(1) - cos(20.0_wp)) < sc(1.0e-7_wp))
 
    ! (start where no solution component is zero, since a pure
    !  relative error test is not possible there: idid=-3)
@@ -186,7 +200,7 @@ program ddeabm_regression_test
       if (idid /= -2) exit
    end do
    call check('after resuming: success, solution at t=1.5 is accurate', &
-              (idid == 2 .or. idid == 3) .and. t == 1.5_wp .and. abs(y(1) - cos(1.5_wp)) < 1.0e-12_wp)
+              (idid == 2 .or. idid == 3) .and. t == 1.5_wp .and. abs(y(1) - cos(1.5_wp)) < sc(1.0e-12_wp))
 
    call s%first_call()   ! restarting resets the tolerances to the user values
    t = 0.5_wp; y = [cos(0.5_wp), -sin(0.5_wp)]
@@ -195,7 +209,7 @@ program ddeabm_regression_test
 
    !-------------------------------------------------------------------
    write (*, '(/A)') '6. continue: the rest of the step after a root is checked'
-   call sv%initialize_event(2, 1000, osc, [tol], [tol], 2, g_vec, [1.0e-12_wp], report=report)
+   call sv%initialize_event(2, 1000, osc, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)], report=report)
    do k = 1, 2   ! fixed step and default steps
       if (k == 1) then
          t_event2 = pi2 + 0.1_wp   ! both roots within one fixed step [0,2]
@@ -250,7 +264,7 @@ program ddeabm_regression_test
    call check('tmax in last step: then g(1) at 3pi/2', idid == 1001 .and. abs(t - 3.0_wp*pi2) < etol)
 
    ! scalar, fixed step: the reporting grid continues from the root:
-   call se%initialize_event(2, 1000, osc, [tol], [tol], g_scalar, 1.0e-12_wp, report=report)
+   call se%initialize_event(2, 1000, osc, [tol], [tol], g_scalar, sc(1.0e-12_wp), report=report)
    call se%first_call()
    t = 0.0_wp; y = y0; n_reports = 0
    call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, integration_mode=2, tstep=0.5_wp)
@@ -261,7 +275,7 @@ program ddeabm_regression_test
    call check('scalar: roots at pi/2 then 3pi/2', abs(t_root - pi2) < etol .and. &
               idid == 1000 .and. abs(t - 3.0_wp*pi2) < etol)
    call check('scalar: first report after continue is at root+tstep', &
-              abs(t_reports(1) - (t_root + 0.5_wp)) < 1.0e-12_wp)
+              abs(t_reports(1) - (t_root + 0.5_wp)) < sc(1.0e-12_wp))
 
    !-------------------------------------------------------------------
    write (*, '(/A)') '7. vector events: the state returned at a root is at the root time'
@@ -287,21 +301,21 @@ program ddeabm_regression_test
    !-------------------------------------------------------------------
    write (*, '(/A)') '9. tolerance and gval sizes'
    ! loose rtol for all components:
-   call s%initialize(2, 1000, osc, [1.0e-1_wp], [1.0e-12_wp])
+   call s%initialize(2, 1000, osc, [sc(1.0e-1_wp)], [sc(1.0e-12_wp)])
    call s%first_call()
    t = 0.0_wp; y = y0
    call s%integrate(t, y, 10.0_wp, idid=idid)
    err1 = abs(y(1) - cos(10.0_wp))
    ! vector rtol with a size-1 atol (previously only rtol(1) was used):
-   call s%initialize(2, 1000, osc, [1.0e-1_wp, 1.0e-12_wp], [1.0e-12_wp])
+   call s%initialize(2, 1000, osc, [sc(1.0e-1_wp), sc(1.0e-12_wp)], [sc(1.0e-12_wp)])
    call s%first_call()
    t = 0.0_wp; y = y0
    call s%integrate(t, y, 10.0_wp, idid=idid)
    err2 = abs(y(1) - cos(10.0_wp))
    write (*, '(A,2(1X,E12.4))') '  errors (scalar rtol=0.1, vector rtol=[0.1,1e-12]):', err1, err2
-   call check('vector rtol with size-1 atol is used', (idid == 2 .or. idid == 3) .and. err2 < err1*1.0e-3_wp)
+   call check('vector rtol with size-1 atol is used', (idid == 2 .or. idid == 3) .and. err2 < err1*sc(1.0e-3_wp))
 
-   call sv%initialize_event(2, 1000, osc, [tol], [tol], 2, g_vec, [1.0e-12_wp])
+   call sv%initialize_event(2, 1000, osc, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)])
    call sv%first_call()
    t = 0.0_wp; y = y0
    call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv(1:1))
