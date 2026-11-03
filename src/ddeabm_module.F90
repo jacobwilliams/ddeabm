@@ -975,6 +975,9 @@ contains
                                             !! point of the previous call). The rest of the integration step
                                             !! in which the previous event was found is checked for events
                                             !! (using interpolation) before integration continues.
+                                            !! Limitation: on that remaining interval, the event function
+                                            !! is ignored (it is zero at the start), so a second root of it
+                                            !! within the same integration step will not be found.
 
       ! local variables:
       real(wp), dimension(:), allocatable :: y1  !! initial state in an interval
@@ -1505,6 +1508,11 @@ contains
                                                 !! point of the previous call). The rest of the integration step
                                                 !! in which the previous event was found is checked for events
                                                 !! (using interpolation) before integration continues.
+                                                !! Limitation: on that remaining interval, the event function(s)
+                                                !! that triggered the previous event are ignored (they are zero
+                                                !! at the start), so a second root of the same function within
+                                                !! the same integration step will not be found. Roots of the
+                                                !! other functions are found.
 
       ! local variables:
       real(wp), dimension(:), allocatable :: g1   !! value of event functions at `t1`
