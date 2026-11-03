@@ -182,8 +182,12 @@ module ddeabm_module
 
       procedure, non_overridable, public :: stop_integration => ddeabm_stop_integration
                 !! user can call this in `df` routine to stop the integration
+      procedure, non_overridable, public :: resume_integration => ddeabm_resume_integration
+                !! call this after an interrupted task (`idid` = -1, -2, -3, -4)
+                !! to continue the integration (equivalent to setting `info(1)=1`)
 
       !support routines:
+      procedure, non_overridable :: set_working_tols
       procedure, non_overridable :: ddeabm
       procedure, non_overridable :: ddes
       procedure, non_overridable :: dhstrt
@@ -205,6 +209,11 @@ module ddeabm_module
                                              !! (used to continue after a root finding)
       real(wp), dimension(:), allocatable :: x_saved !! state of last successful step.  size `(neq)`.
                                                      !! (used to continue after a root finding)
+      real(wp) :: t_resume = 0.0_wp          !! time from which to resume event checking
+                                             !! within the last step (the location of the
+                                             !! last root found)
+      logical :: resume_pending = .false.    !! if the interval `[t_resume, t_saved]` of the
+                                             !! last step has not yet been checked for events
 
       procedure(event_func), pointer :: gfunc => null()  !! event function: g(t,x)=0 at event
 
@@ -244,6 +253,11 @@ module ddeabm_module
                                               !! (used to continue after a root finding)
       real(wp), dimension(:), allocatable :: x_saved !! state of last successful step.  size `(neq)`.
                                                      !! (used to continue after a root finding)
+      real(wp) :: t_resume = 0.0_wp           !! time from which to resume event checking
+                                              !! within the last step (the location of the
+                                              !! last root found)
+      logical :: resume_pending = .false.     !! if the interval `[t_resume, t_saved]` of the
+                                              !! last step has not yet been checked for events
 
       procedure(event_func_vec), pointer :: gfunc => null()  !! event function: g(t,x)=0 at event
 
@@ -379,6 +393,53 @@ contains
 !*****************************************************************************************
 !> author: Jacob Williams
 !
+!  Call this to continue the integration after an interrupted task
+!  (`idid` = -1, -2, -3, or -4). This is equivalent to setting
+!  `info(1) = 1` as described in the [[ddeabm]] documentation.
+!  It has no effect if the previous task was not interrupted.
+!
+!  Note that for `idid=-2` the relaxed tolerances recommended by the
+!  code are retained and used for the remainder of the problem.
+!  For `idid=-3`, the problem must be corrected (a positive `atol`)
+!  by calling `initialize` again, which also restarts the problem.
+
+   subroutine ddeabm_resume_integration(me)
+
+      implicit none
+
+      class(ddeabm_class), intent(inout) :: me
+
+      if (me%info(1) == -1) me%info(1) = 1
+
+   end subroutine ddeabm_resume_integration
+!*****************************************************************************************
+
+!*****************************************************************************************
+!>
+!  Set the working copy of the tolerances (`rtol_tmp`, `atol_tmp`)
+!  which may be modified by [[ddes]].
+!
+!  They are only reset to the user values at the start of a new problem,
+!  so that tolerances increased by the code (`idid=-2`) are retained
+!  if the integration is resumed.
+
+   subroutine set_working_tols(me)
+
+      implicit none
+
+      class(ddeabm_class), intent(inout) :: me
+
+      if (me%info(1) == 0) then
+         me%rtol_tmp = me%rtol
+         me%atol_tmp = me%atol
+      end if
+
+   end subroutine set_working_tols
+!*****************************************************************************************
+
+!*****************************************************************************************
+!> author: Jacob Williams
+!
 !  Call this to indicate that a new problem is being solved.
 !  It sets `info(1) = 0` (see [[ddeabm]] documentation).
 
@@ -394,8 +455,10 @@ contains
       select type (me)
       class is (ddeabm_with_event_class)
          if (allocated(me%x_saved)) deallocate (me%x_saved)
+         me%resume_pending = .false.
       class is (ddeabm_with_event_class_vec)
          if (allocated(me%x_saved)) deallocate (me%x_saved)
+         me%resume_pending = .false.
       end select
 
    end subroutine ddeabm_new_problem
@@ -459,11 +522,24 @@ contains
       allocate (me%wt(neq))
       allocate (me%p(neq))
       allocate (me%phi(neq, 16))
+      ! so that interpolation before the first step is well defined:
+      me%ypout = 0.0_wp
+      me%yp = 0.0_wp
+      me%yy = 0.0_wp
+      me%wt = 0.0_wp
+      me%p = 0.0_wp
+      me%phi = 0.0_wp
 
       !tolerances:
       ! [for now, we are considering these unchangeable, although they do not have to be]
+      ! each of rtol and atol can be size 1 (used for all equations) or size neq.
 
-      vector_tols = size(rtol) == neq .and. size(atol) == neq .and. neq > 1
+      if (size(rtol) /= 1 .and. size(rtol) /= neq) &
+         error stop 'Error in ddeabm_initialize: rtol must be size 1 or neq'
+      if (size(atol) /= 1 .and. size(atol) /= neq) &
+         error stop 'Error in ddeabm_initialize: atol must be size 1 or neq'
+
+      vector_tols = (size(rtol) == neq .or. size(atol) == neq) .and. neq > 1
       me%scalar_tols = .not. vector_tols
 
       if (me%scalar_tols) then
@@ -472,10 +548,19 @@ contains
          me%rtol = rtol(1)
          me%atol = atol(1)
       else
-         allocate (me%rtol(size(rtol))); allocate (me%rtol_tmp(size(rtol)))
-         allocate (me%atol(size(atol))); allocate (me%atol_tmp(size(atol)))
-         me%rtol = rtol
-         me%atol = atol
+         ! a size-1 tolerance is used for all the equations
+         allocate (me%rtol(neq)); allocate (me%rtol_tmp(neq))
+         allocate (me%atol(neq)); allocate (me%atol_tmp(neq))
+         if (size(rtol) == 1) then
+            me%rtol = rtol(1)
+         else
+            me%rtol = rtol
+         end if
+         if (size(atol) == 1) then
+            me%atol = atol(1)
+         else
+            me%atol = atol
+         end if
       end if
 
       !Compute the two and gstr arrays:
@@ -675,7 +760,9 @@ contains
 !
 !  If starting a new problem, must first call `me%first_call()`.
 !
-!@note Currently not using the recommended tols if `idid=-2`.
+!@note After an interrupted task (`idid` = -1, -2, -3, -4), call
+!      `me%resume_integration()` to continue. For `idid=-2`, the
+!      tolerances increased by the code are used from then on.
 
    subroutine ddeabm_wrapper(me, t, y, tout, tstop, idid, integration_mode, tstep)
 
@@ -764,9 +851,7 @@ contains
          me%tstop = 0.0_wp !not used
       end if
 
-      !make a copy of the tols, since the routine might change them:
-      me%rtol_tmp = me%rtol
-      me%atol_tmp = me%atol
+      call me%set_working_tols()
 
       select case (mode)
       case (1)  !normal integration with no reporting
@@ -846,7 +931,9 @@ contains
 !    but no code from that routine was used here.
 !  * [[ddeabm_with_event_wrapper_vec]] -- for vector `g` function
 !
-!@note Currently not using the recommended tols if `idid=-2`.
+!@note After an interrupted task (`idid` = -1, -2, -3, -4), call
+!      `me%resume_integration()` to continue. For `idid=-2`, the
+!      tolerances increased by the code are used from then on.
 
    subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)
 
@@ -870,6 +957,8 @@ contains
                                                               !! `idid=1000` means a root was found.
                                                               !! See [[ddeabm]] for other values.
       real(wp), intent(out)                           :: gval    !! value of the event function `g(t,x)` at the final time `t`
+                                                              !! (not set if the inputs are invalid: `idid=-33`
+                                                              !! before any integration is attempted)
       integer, intent(in), optional :: integration_mode           !! Step mode:
                                                               !! *1* - normal integration from `t` to `tout`,
                                                               !!  no reporting [default].
@@ -883,35 +972,32 @@ contains
                                             !! has found an event, to continue integration to the next event
                                             !! without having to restart the integration. It will not report
                                             !! the initial point (which would have been reported as the last
-                                            !! point of the previous call).
+                                            !! point of the previous call). The rest of the integration step
+                                            !! in which the previous event was found is checked for events
+                                            !! (using interpolation) before integration continues.
 
       ! local variables:
-      real(wp), dimension(:),allocatable :: y1  !! initial state in an interval
-      real(wp), dimension(:),allocatable :: y2  !! final state in an interval
-      real(wp), dimension(:),allocatable :: yc  !! interpolated state at `tc`
+      real(wp), dimension(:), allocatable :: y1  !! initial state in an interval
+      real(wp), dimension(:), allocatable :: y2  !! final state in an interval
+      real(wp), dimension(:), allocatable :: yc  !! interpolated state at `tc`
       real(wp) :: g1          !! value of event function at `t1`
       real(wp) :: g2          !! value of event function at `t2`
       real(wp) :: t1          !! initial time of an interval
       real(wp) :: t2          !! final time of an interval
-      real(wp) :: tzero       !! time where an event occurs in `[t1,t2]`
-      integer :: iflag        !! root finder status flag
-      logical :: first        !! flag for the first step
       integer :: mode         !! local copy of integration_mode
+      logical :: first        !! flag for the first interval
       logical :: fixed_step   !! if using the fixed step size `tstep`
       logical :: last         !! for fixed step size: the last step
-      real(wp) :: dt          !! for fixed step size: actual signed time step
-      real(wp) :: direction   !! direction of integration for
-                            !! fixed step size: `+1: dt>=0`, `-1: dt<0`
       logical :: continuing   !! local copy of optional `continue` argument
+      logical :: found        !! if a root was found (or root finding failed)
+      logical :: done         !! if finished after checking the rest of the last step
+      real(wp) :: dt          !! for fixed step size: actual signed time step
+      real(wp) :: direction   !! direction of integration: `+1: tmax>=t`, `-1: tmax<t`
       real(wp) :: first_dt    !! for fixed step size: the `dt` for the
-                            !! first step  (can differ from `dt` if
-                            !! continuing from a previous event solve)
-      logical :: root_found   !! if a root was found
+                              !! first step  (can differ from `dt` if
+                              !! continuing from a previous event solve)
 
-      ! work arrays:
-      allocate(y1(me%neq))
-      allocate(y2(me%neq))
-      allocate(yc(me%neq))
+      idid = 0
 
       ! optional inputs:
       if (present(integration_mode)) then
@@ -927,33 +1013,7 @@ contains
       else
          continuing = .false.
       end if
-
-      ! if we are reporting the output at a fixed step size:
       fixed_step = present(tstep)
-      if (fixed_step) then
-         direction = sign(1.0_wp, tmax - t)
-         dt = direction*abs(tstep)
-         first_dt = dt
-         last = .false.
-      end if
-
-      if (continuing) then
-         ! if continuing, then we reset the t,y inputs
-         ! to the values from the last successful step
-         ! (note than an event may have been found in the
-         ! last call, so the input values are not correct)
-         if (fixed_step) then
-            ! we need the first step to be from the
-            ! last reported point, not the last
-            ! successful step:
-            first_dt = (t + dt) - me%t_saved
-            ! make sure not a 0 dt or in the wrong direction:
-            if (first_dt == 0.0_wp .or. sign(1.0_wp, first_dt) /= sign(1.0_wp, dt)) first_dt = dt
-         end if
-         t = me%t_saved
-         y = me%x_saved
-         me%info(1) = 1   ! necessary? (does not seem to matter)
-      end if
 
       !check for invalid inputs:
       if (mode /= 1 .and. mode /= 2) then
@@ -968,13 +1028,43 @@ contains
          idid = -33
          return
       end if
-
-      !make sure the event function was set:
       if (.not. associated(me%gfunc)) then
          call report_error('ddeabm_with_event_wrapper', &
                            'the event function GFUNC has not been associated.', 0, 0)
          idid = -33
          return
+      end if
+
+      ! direction of integration (it cannot be changed when continuing):
+      if (continuing) then
+         direction = me%delsgn
+      else
+         direction = sign(1.0_wp, tmax - t)
+      end if
+      if (fixed_step) then
+         dt = direction*abs(tstep)
+         first_dt = dt
+         last = .false.
+      end if
+
+      ! work arrays:
+      allocate (y1(me%neq), y2(me%neq), yc(me%neq))
+
+      if (continuing) then
+         if (me%resume_pending .and. direction*(tmax - me%t_resume) < 0.0_wp) then
+            call report_error('ddeabm_with_event_wrapper', &
+                              'cannot change the direction of integration when continuing.', 0, 0)
+            idid = -33
+            return
+         end if
+         ! if continuing, then we reset the t,y inputs
+         ! to the values from the last successful step
+         ! (note that an event may have been found in the
+         ! last call, so the input values are not at the
+         ! end of the step)
+         t = me%t_saved
+         y = me%x_saved
+         me%info(1) = 1   ! continuation call
       end if
 
       !set info array:
@@ -1004,16 +1094,21 @@ contains
          me%tstop = 0.0_wp !not used
       end if
 
-      !make a copy of the tols, since the routine might change them:
-      me%rtol_tmp = me%rtol
-      me%atol_tmp = me%atol
+      call me%set_working_tols()
 
-      !evaluate the event function at the initial point:
-      first = .true.  !to avoid catching a root at the initial time
-      t1 = t
-      y1 = y
-      call me%gfunc(t1, y1, g1)
-      if (mode == 2 .and. .not. continuing) call me%report(t, y)  !initial point
+      if (continuing .and. me%resume_pending) then
+         ! the last step was only checked for events up to the
+         ! root that was found, so check the rest of it first:
+         call check_rest_of_last_step(done)
+         if (done) return
+      else
+         ! evaluate the event function at the initial point:
+         t1 = t
+         y1 = y
+         call me%gfunc(t1, y1, g1)
+         if (mode == 2 .and. .not. continuing) call me%report(t, y)  !initial point
+      end if
+      first = .true.  ! to ignore a root at the start of the first interval
 
       do
 
@@ -1040,13 +1135,21 @@ contains
                         atol=me%atol_tmp, &
                         idid=idid)
 
-         ! if there was an integration error (see ddeabm or idid codes):
-         if (idid < 0) exit
-
-         !if there was a user-triggered error:
+         !if there was a user-triggered error, return the last good point:
          if (me%error) then
             idid = -1000
-            exit
+            t = t1
+            y = y1
+            gval = g1
+            me%resume_pending = .false.
+            return
+         end if
+
+         ! invalid input (the integration was not advanced):
+         if (idid == -33) then
+            gval = g1
+            me%resume_pending = .false.
+            return
          end if
 
          !save the last successful step in the class:
@@ -1058,68 +1161,30 @@ contains
          y2 = y
          call me%gfunc(t2, y2, g2)
 
-         if (first .and. abs(g1) <= me%tol) then
+         ! check for a root on [t1,t2]. on the first interval, ignore
+         ! a root at the initial time (or at the root where a
+         ! previous call stopped):
+         if (t2 /= t1) then
+            call locate_root(t1, t2, y1, y2, g1, g2, first .and. abs(g1) <= me%tol, found)
+            if (found) return
+         end if
 
-            ! ignore a root at the initial time (first point)
-            ! (or if continuing integration from a previous root)
-
-            ! warning: is this check always sufficient? or
-            !          is it possible for zeroin to have
-            !          converged to a root outside this tol?
-
-         else if (g1*g2 <= 0.0_wp) then ! change in sign of the event function
-
-            root_found = .true.
-
-            ! the user bracket function can impose
-            ! additional constraints on the root, so
-            ! we check that now if it was associated:
-            if (associated(me%bracket)) then
-               root_found = me%bracket(t1, t2, y1, y2, g1, g2)
-            end if
-
-            if (root_found) then
-               ! root somewhere on [t1,t2]
-               ! call the root finder:
-               call root_scalar(root_method_brent, &
-                                fun=zeroin_func, &
-                                ax=t1, &
-                                bx=t2, &
-                                rtol=me%tol, &
-                                ftol=me%tol, &
-                                xzero=tzero, &
-                                fzero=gval, &
-                                iflag=iflag, &
-                                fax=g1, &
-                                fbx=g2)
-               if (iflag == 0) then ! root found at tzero
-                  idid = 1000 ! root found
-                  !evaluate again to get the final state for output:
-                  gval = zeroin_func(tzero)
-                  t = tzero
-                  y = yc
-                  if (mode == 2) call me%report(t, y) ! report this point
-                  return
-               else
-                  ! unlikely to occur since zeroin is
-                  ! "guaranteed" to converge, but just in case:
-                  call report_error('ddeabm_with_event_wrapper', &
-                                    'Error locating root.', 0, 0)
-                  idid = -2000 ! no root is found
-                  return
-               end if
-            end if
-
+         ! an interrupted task (see ddeabm or idid codes):
+         if (idid < 0) then
+            gval = g2
+            me%resume_pending = .false.
+            return
          end if
 
          ! report this point:
          if (mode == 2) call me%report(t, y)
 
          ! integration is finished (see ddeabm or idid codes):
-         if (fixed_step) then
-            if (last) return
-         else
-            if (idid == 2 .or. idid == 3) return
+         if ((fixed_step .and. last) .or. &
+             (.not. fixed_step .and. (idid == 2 .or. idid == 3))) then
+            gval = g2
+            me%resume_pending = .false.
+            return
          end if
 
          ! set up for next step:
@@ -1131,6 +1196,188 @@ contains
       end do
 
    contains
+
+      subroutine locate_root(ta, tb, ya, yb, ga, gb, mask, found)
+
+            !! Check for a root of the event function on `[ta,tb]` and,
+            !! if there is one, locate it.
+            !! If found, the outputs (`t`, `y`, `idid`, `gval`) are set.
+
+         implicit none
+
+         real(wp), intent(in)               :: ta    !! start of the interval
+         real(wp), intent(in)               :: tb    !! end of the interval
+         real(wp), dimension(:), intent(in) :: ya    !! state at `ta`
+         real(wp), dimension(:), intent(in) :: yb    !! state at `tb`
+         real(wp), intent(in)               :: ga    !! event function at `ta`
+         real(wp), intent(in)               :: gb    !! event function at `tb`
+         logical, intent(in)                :: mask  !! if the function is to be ignored
+         logical, intent(out)               :: found !! if a root was found
+                                                     !! (or there was an error locating it)
+
+         real(wp) :: tzero   !! time where an event occurs in `[ta,tb]`
+         real(wp) :: gzero   !! event function value at `tzero`
+         integer :: iflag    !! root finder status flag
+
+         found = .false.
+         if (mask) return
+         if (ga*gb > 0.0_wp) return  ! no change in sign of the event function
+
+         ! the user bracket function can impose
+         ! additional constraints on the root, so
+         ! we check that now if it was associated:
+         if (associated(me%bracket)) then
+            if (.not. me%bracket(ta, tb, ya, yb, ga, gb)) return
+         end if
+
+         ! root somewhere on [ta,tb]
+         ! call the root finder:
+         found = .true.
+         call root_scalar(root_method_brent, &
+                          fun=zeroin_func, &
+                          ax=ta, &
+                          bx=tb, &
+                          rtol=me%tol, &
+                          ftol=me%tol, &
+                          xzero=tzero, &
+                          fzero=gzero, &
+                          iflag=iflag, &
+                          fax=ga, &
+                          fbx=gb)
+         if (iflag == 0) then ! root found at tzero
+            idid = 1000 ! root found
+            !evaluate again to get the final state for output:
+            gval = zeroin_func(tzero)
+            t = tzero
+            y = yc
+            if (mode == 2) call me%report(t, y) ! report this point
+            ! a subsequent call with continue=.true. will
+            ! check the rest of the step from this point:
+            me%t_resume = t
+            me%resume_pending = .true.
+         else
+            ! unlikely to occur since zeroin is
+            ! "guaranteed" to converge, but just in case:
+            call report_error('ddeabm_with_event_wrapper', &
+                              'Error locating root.', 0, 0)
+            idid = -2000 ! no root is found
+            t = tb
+            y = yb
+            gval = gb
+            me%resume_pending = .false.
+         end if
+
+      end subroutine locate_root
+
+      subroutine check_rest_of_last_step(done)
+
+            !! When continuing after a root was found, check the rest of the
+            !! last integration step (`[t_resume, t_saved]`) for events, using
+            !! interpolation. Points on this interval are also reported if necessary.
+            !! On return, if not `done`, the integration continues from the end of
+            !! the last step (`t1`, `y1`, `g1` and `first_dt` are set for that).
+
+         implicit none
+
+         logical, intent(out) :: done !! if finished (a root was found or `tmax` was reached)
+
+         real(wp) :: tend     !! end of the interval to check
+         real(wp) :: tgrid    !! last point on the fixed step grid
+         real(wp) :: tnext    !! next point on the fixed step grid
+         logical :: is_end    !! if `t2` is the end of the interval
+         logical :: first_sub !! if the first subinterval
+         logical :: reached_tmax !! if `tmax` is within the last step
+
+         done = .false.
+
+         ! the end of the interval: the end of the last step,
+         ! or tmax if it is before that:
+         reached_tmax = direction*(me%t_saved - tmax) >= 0.0_wp
+         if (reached_tmax) then
+            tend = tmax
+         else
+            tend = me%t_saved
+         end if
+
+         ! state at the last root found:
+         t1 = me%t_resume
+         call me%interpolate(t1, y1)
+         call me%gfunc(t1, y1, g1)
+         t2 = t1
+         y2 = y1
+         g2 = g1
+         tgrid = t1  ! the fixed step grid starts at the last reported point
+         first_sub = .true.
+
+         do while (t1 /= tend)
+
+            if (fixed_step) then
+               t2 = t1 + dt
+               is_end = direction*(tend - t2) <= 0.0_wp
+               if (is_end) t2 = tend
+            else
+               t2 = tend
+               is_end = .true.
+            end if
+            if (t2 == me%t_saved) then
+               y2 = me%x_saved
+            else
+               call me%interpolate(t2, y2)
+            end if
+            call me%gfunc(t2, y2, g2)
+
+            ! ignore the function if it is zero at the last root:
+            call locate_root(t1, t2, y1, y2, g1, g2, first_sub .and. abs(g1) <= me%tol, found)
+            if (found) then
+               done = .true.
+               return
+            end if
+
+            ! report this point:
+            !  * default steps: the end of the last step (or tmax)
+            !  * fixed step: the points on the fixed step grid (or tmax)
+            if (mode == 2) then
+               if (.not. fixed_step .or. .not. is_end .or. reached_tmax) call me%report(t2, y2)
+            end if
+            if (fixed_step .and. .not. is_end) tgrid = t2
+
+            first_sub = .false.
+            t1 = t2
+            y1 = y2
+            g1 = g2
+            if (is_end) exit
+
+         end do
+
+         if (reached_tmax) then
+            ! finished: tmax is within the last step
+            t = tmax
+            y = y2
+            gval = g2
+            idid = 3
+            me%t_resume = tmax
+            me%resume_pending = direction*(me%t_saved - tmax) > 0.0_wp
+            done = .true.
+            return
+         end if
+
+         ! continue the integration from the end of the last step:
+         t = me%t_saved
+         y = me%x_saved
+         t1 = t
+         y1 = y
+         call me%gfunc(t1, y1, g1)
+         me%resume_pending = .false.
+         if (fixed_step) then
+            ! the first step is to the next point on the fixed step grid:
+            tnext = tgrid + dt
+            do while (direction*(tnext - t) <= 0.0_wp)
+               tnext = tnext + dt
+            end do
+            first_dt = tnext - t
+         end if
+
+      end subroutine check_rest_of_last_step
 
       function zeroin_func(tc) result(g)
 
@@ -1158,13 +1405,38 @@ contains
 !  Interpolation function. Can be used for dense output after a step.
 !  It calls the low-level routine [[dintp]].
 
-   subroutine ddeabm_interp(me, tc, yc)
+   subroutine ddeabm_interp(me, tc, yc, istat)
 
       implicit none
 
       class(ddeabm_class), intent(inout)       :: me
       real(wp), intent(in)                     :: tc  !! point at which solution is desired
       real(wp), dimension(me%neq), intent(out)  :: yc  !! interpolated state at `tc`
+      integer, intent(out), optional           :: istat !! status flag:
+                                                        !!
+                                                        !! * 0 : success
+                                                        !! * -1 : no integration step is available
+                                                        !!   to interpolate (`yc` is set to the
+                                                        !!   current integrator state, which is zero
+                                                        !!   before the first call to `integrate`).
+                                                        !!
+                                                        !! If not present, an error message is
+                                                        !! printed in this case.
+
+      if (present(istat)) istat = 0
+
+      ! the interpolating polynomial is not defined until a step
+      ! has been taken (and the step size must be nonzero):
+      if (me%kold < 1 .or. me%x == me%xold) then
+         yc = me%yy
+         if (present(istat)) then
+            istat = -1
+         else
+            call report_error('ddeabm_interp', &
+                              'no integration step is available for interpolation.', 0, 0)
+         end if
+         return
+      end if
 
       ! interpolate to get the state at tc:
       call dintp(me%x, me%yy, tc, yc, &
@@ -1188,7 +1460,9 @@ contains
 !### See also
 !  * [[ddeabm_with_event_wrapper]] -- for scalar `g` function
 !
-!@note Currently not using the recommended tols if `idid=-2`.
+!@note After an interrupted task (`idid` = -1, -2, -3, -4), call
+!      `me%resume_integration()` to continue. For `idid=-2`, the
+!      tolerances increased by the code are used from then on.
 
    subroutine ddeabm_with_event_wrapper_vec(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)
 
@@ -1212,7 +1486,9 @@ contains
                                                               !! `idid>1000` means a root was found for the
                                                               !! (`idid-1000`)th `g` function.
                                                               !! See [[ddeabm]] for other values.
-      real(wp), dimension(:), intent(out)              :: gval !! value of the event functions `g(t,x)` at the final time `t`
+      real(wp), dimension(:), intent(out)              :: gval !! value of the event functions `g(t,x)` at the final time `t`.
+                                                              !! Must be size `ng` (not set if the inputs are invalid:
+                                                              !! `idid=-33` before any integration is attempted)
       integer, intent(in), optional :: integration_mode !! Step mode:
                                                         !! *1* - normal integration from `t` to `tout`,
                                                         !!  no reporting [default].
@@ -1226,46 +1502,35 @@ contains
                                                 !! has found an event, to continue integration to the next event
                                                 !! without having to restart the integration. It will not report
                                                 !! the initial point (which would have been reported as the last
-                                                !! point of the previous call).
+                                                !! point of the previous call). The rest of the integration step
+                                                !! in which the previous event was found is checked for events
+                                                !! (using interpolation) before integration continues.
 
       ! local variables:
-      real(wp), dimension(:),allocatable :: g1         !! value of event function at `t1`
-      real(wp), dimension(:),allocatable :: g2         !! value of event function at `t2`
-      logical, dimension(:),allocatable :: root_found  !! if a root was found
-      real(wp), dimension(:),allocatable :: y1  !! initial state in an interval
-      real(wp), dimension(:),allocatable :: y2  !! final state in an interval
-      real(wp), dimension(:),allocatable :: yc  !! interpolated state at `tc`
-      real(wp) :: t1              !! initial time of an interval
-      real(wp) :: t2              !! final time of an interval
-      real(wp) :: tzero           !! time where an event occurs in `[t1,t2]`
-      integer :: iflag            !! `root_scalar` status flag
-      logical :: first            !! flag for the first step
-      integer :: mode             !! local copy of integration_mode
-      integer :: i                !! counter
-      integer :: ig               !! `gfunc` to compute
-      real(wp) :: tprev           !! earliest time of root when there are
-                                  !! multiple roots on the integration
-                                  !! step interval
-      logical :: forward          !! if `tmax>=t`
-      logical :: fixed_step       !! if using the fixed step size `tstep`
-      logical :: last             !! for fixed step size: the last step
-      real(wp) :: dt              !! for fixed step size: actual signed time step
-      real(wp) :: direction       !! direction of integration for
-                                  !! fixed step size: `+1: dt>=0`, `-1: dt<0`
-      logical :: continuing       !! local copy of optional `continue` argument
-      real(wp) :: first_dt        !! for fixed step size: the `dt` for the
-                                  !! first step  (can differ from `dt` if
-                                  !! continuing from a previous event solve)
-      character(len=10) :: istr   !! for integer to string conversion
-      integer :: istat            !! for write statement `iostat`
+      real(wp), dimension(:), allocatable :: g1   !! value of event functions at `t1`
+      real(wp), dimension(:), allocatable :: g2   !! value of event functions at `t2`
+      logical, dimension(:), allocatable :: mask  !! event functions to ignore on an interval
+                                                  !! (those that are zero at its start)
+      real(wp), dimension(:), allocatable :: y1   !! initial state in an interval
+      real(wp), dimension(:), allocatable :: y2   !! final state in an interval
+      real(wp), dimension(:), allocatable :: yc   !! interpolated state at `tc`
+      real(wp) :: t1          !! initial time of an interval
+      real(wp) :: t2          !! final time of an interval
+      integer :: mode         !! local copy of integration_mode
+      integer :: ig           !! `gfunc` to compute in `zeroin_func`
+      logical :: first        !! flag for the first interval
+      logical :: fixed_step   !! if using the fixed step size `tstep`
+      logical :: last         !! for fixed step size: the last step
+      logical :: continuing   !! local copy of optional `continue` argument
+      logical :: found        !! if a root was found (or root finding failed)
+      logical :: done         !! if finished after checking the rest of the last step
+      real(wp) :: dt          !! for fixed step size: actual signed time step
+      real(wp) :: direction   !! direction of integration: `+1: tmax>=t`, `-1: tmax<t`
+      real(wp) :: first_dt    !! for fixed step size: the `dt` for the
+                              !! first step  (can differ from `dt` if
+                              !! continuing from a previous event solve)
 
-      ! work arrays:
-      allocate(g1(me%n_g_eqns))
-      allocate(g2(me%n_g_eqns))
-      allocate(root_found(me%n_g_eqns))
-      allocate(y1(me%neq))
-      allocate(y2(me%neq))
-      allocate(yc(me%neq))
+      idid = 0
 
       ! optional inputs:
       if (present(integration_mode)) then
@@ -1281,47 +1546,7 @@ contains
       else
          continuing = .false.
       end if
-
-      !if this is a "forward" (dt>=0) integration
-      forward = tmax >= t
-
-      ! if we are reporting the output at a fixed step size:
       fixed_step = present(tstep)
-      if (fixed_step) then
-         direction = sign(1.0_wp, tmax - t)
-         dt = direction*abs(tstep)
-         first_dt = dt
-         last = .false.
-      end if
-
-      if (continuing) then
-         ! if continuing, then we reset the t,y inputs
-         ! to the values from the last successful step
-         ! (note than an event may have been found in the
-         ! last call, so the input values are not correct)
-         if (fixed_step) then
-            ! we need the first step to be from the
-            ! last reported point, not the last
-            ! successful step:
-            first_dt = (t + dt) - me%t_saved
-
-            ! make sure not a 0 dt or in the wrong direction:
-            if (first_dt == 0.0_wp .or. sign(1.0_wp, first_dt) /= sign(1.0_wp, dt)) first_dt = dt
-            !
-            ! WARNING: this can happen if the previous step was
-            ! larger than t+dt.... in that case, first_dt will be
-            ! the wrong sign (we cannot change the direction of integration)...
-            ! what needs to be done is the interp
-            ! routine should be called to fill in the rest of the
-            ! points until we get past the last step.  TDB !
-            !
-            !... we would also need to check those points for roots...
-            !
-         end if
-         t = me%t_saved
-         y = me%x_saved
-         me%info(1) = 1   ! necessary? (does not seem to matter)
-      end if
 
       !check for invalid inputs:
       if (mode /= 1 .and. mode /= 2) then
@@ -1336,13 +1561,50 @@ contains
          idid = -33
          return
       end if
-
-      !make sure the event function was set:
       if (.not. associated(me%gfunc)) then
          call report_error('ddeabm_with_event_wrapper_vec', &
                            'the event function GFUNC has not been associated.', 0, 0)
          idid = -33
          return
+      end if
+      if (size(gval) /= me%n_g_eqns) then
+         call report_error('ddeabm_with_event_wrapper_vec', &
+                           'gval must have the same size as the number of event functions.', 0, 0)
+         idid = -33
+         return
+      end if
+
+      ! direction of integration (it cannot be changed when continuing):
+      if (continuing) then
+         direction = me%delsgn
+      else
+         direction = sign(1.0_wp, tmax - t)
+      end if
+      if (fixed_step) then
+         dt = direction*abs(tstep)
+         first_dt = dt
+         last = .false.
+      end if
+
+      ! work arrays:
+      allocate (g1(me%n_g_eqns), g2(me%n_g_eqns), mask(me%n_g_eqns))
+      allocate (y1(me%neq), y2(me%neq), yc(me%neq))
+
+      if (continuing) then
+         if (me%resume_pending .and. direction*(tmax - me%t_resume) < 0.0_wp) then
+            call report_error('ddeabm_with_event_wrapper_vec', &
+                              'cannot change the direction of integration when continuing.', 0, 0)
+            idid = -33
+            return
+         end if
+         ! if continuing, then we reset the t,y inputs
+         ! to the values from the last successful step
+         ! (note that an event may have been found in the
+         ! last call, so the input values are not at the
+         ! end of the step)
+         t = me%t_saved
+         y = me%x_saved
+         me%info(1) = 1   ! continuation call
       end if
 
       !set info array:
@@ -1372,16 +1634,21 @@ contains
          me%tstop = 0.0_wp !not used
       end if
 
-      !make a copy of the tols, since the routine might change them:
-      me%rtol_tmp = me%rtol
-      me%atol_tmp = me%atol
+      call me%set_working_tols()
 
-      !evaluate the event function at the initial point:
-      first = .true.  !to avoid catching a root at the initial time
-      t1 = t
-      y1 = y
-      call me%gfunc(t1, y1, g1)  ! compute all the g functions
-      if (mode == 2 .and. .not. continuing) call me%report(t, y)  !initial point
+      if (continuing .and. me%resume_pending) then
+         ! the last step was only checked for events up to the
+         ! root that was found, so check the rest of it first:
+         call check_rest_of_last_step(done)
+         if (done) return
+      else
+         ! evaluate the event functions at the initial point:
+         t1 = t
+         y1 = y
+         call me%gfunc(t1, y1, g1)  ! compute all the g functions
+         if (mode == 2 .and. .not. continuing) call me%report(t, y)  !initial point
+      end if
+      first = .true.  ! to ignore a root at the start of the first interval
 
       do
 
@@ -1408,13 +1675,21 @@ contains
                         atol=me%atol_tmp, &
                         idid=idid)
 
-         ! if there was an integration error (see ddeabm or idid codes):
-         if (idid < 0) exit
-
-         !if there was a user-triggered error:
+         !if there was a user-triggered error, return the last good point:
          if (me%error) then
             idid = -1000
-            exit
+            t = t1
+            y = y1
+            gval = g1
+            me%resume_pending = .false.
+            return
+         end if
+
+         ! invalid input (the integration was not advanced):
+         if (idid == -33) then
+            gval = g1
+            me%resume_pending = .false.
+            return
          end if
 
          !save the last successful step in the class:
@@ -1426,111 +1701,31 @@ contains
          y2 = y
          call me%gfunc(t2, y2, g2)
 
-         if (first .and. any(abs(g1) <= me%tol)) then
+         ! check for a root on [t1,t2]. on the first interval, ignore
+         ! the functions that are zero at the initial time
+         ! (or at the root where a previous call stopped):
+         if (t2 /= t1) then
+            mask = first .and. abs(g1) <= me%tol
+            call locate_root(t1, t2, y1, y2, g1, g2, mask, found)
+            if (found) return
+         end if
 
-            ! ignore a root at the initial time (first point)
-            ! (or if continuing integration from a previous root)
-
-            ! warning: is this check always sufficient? or
-            !          is it possible for zeroin to have
-            !          converged to a root outside this tol?
-
-         else if (any(g1*g2 <= 0.0_wp)) then ! change in sign of the event function
-
-            ! find the one(s) with sign change:
-            do i = 1, me%n_g_eqns
-               root_found(i) = g1(i)*g2(i) <= 0.0_wp
-            end do
-            ! the user bracket function can impose
-            ! additional constraints on the root, so
-            ! we check that now if it was associated:
-            if (associated(me%bracket)) then
-               do i = 1, me%n_g_eqns
-                  if (root_found(i)) then
-                     root_found(i) = me%bracket(i, t1, t2, y1, y2, g1(i), g2(i))
-                  end if
-               end do
-            end if
-
-            if (any(root_found)) then
-               ! root somewhere on [t1,t2]
-
-               ! have to check all the functions where this is true,
-               ! and select the one with the earlier root.
-
-               ! initialize. goal is to find the earliest
-               ! one (in direction of integration):
-               if (forward) then
-                  tprev = huge(1.0_wp)
-               else
-                  tprev = -huge(1.0_wp)
-               end if
-               idid = -2000 ! if no root is found
-
-               do i = 1, me%n_g_eqns
-                  if (.not. root_found(i)) cycle
-
-                  ! Note: it's possible that zeroing in on one root
-                  ! will cause another earlier root to be detected?
-                  ! This is not currently handled. Only the ones identified
-                  ! by the normal stepping process are considered.
-
-                  ! this func has a root somewhere on [t1,t2]
-
-                  ig = i  ! when calling zeroin, we only need to compute
-                  ! the ith function
-
-                  ! call the root finder:
-                  call root_scalar(root_method_brent, &
-                                   fun=zeroin_func, &
-                                   ax=t1, &
-                                   bx=t2, &
-                                   rtol=me%tol(i), &
-                                   ftol=me%tol(i), &
-                                   xzero=tzero, &
-                                   fzero=gval(i), &
-                                   iflag=iflag, &
-                                   fax=g1(i), &
-                                   fbx=g2(i))
-                  if (iflag == 0) then !root found at tzero
-                     if ((forward .and. tzero < tprev) .or. (.not. forward .and. tzero > tprev)) then
-                        ! this is an earlier root so use it
-                        idid = 1000 + ig  ! root found
-                        t = tzero
-                        y = yc
-                        tprev = t
-                     end if
-                  else
-                     ! unlikely to occur since zeroin is
-                     ! "guaranteed" to converge, but just in case:
-                     write (istr, '(I10)', iostat=istat) i
-                     call report_error('ddeabm_with_event_wrapper_vec', &
-                                       'Error locating root for function '// &
-                                       trim(adjustl(istr)), 0, 0)
-                     ! do not reset idid in case another root was found
-                  end if
-               end do
-               ! if no errors, report the root if necessary, then return:
-               if (idid > 0) then
-                  if (mode == 2) call me%report(t, y)
-                  call me%gfunc(t, y, gval) ! compute all funcs for output
-               else
-                  call report_error('ddeabm_with_event_wrapper_vec', &
-                                    'Error locating root.', 0, 0)
-               end if
-               return
-            end if
-
+         ! an interrupted task (see ddeabm or idid codes):
+         if (idid < 0) then
+            gval = g2
+            me%resume_pending = .false.
+            return
          end if
 
          ! report this point:
          if (mode == 2) call me%report(t, y)
 
          ! integration is finished (see ddeabm or idid codes):
-         if (fixed_step) then
-            if (last) return
-         else
-            if (idid == 2 .or. idid == 3) return
+         if ((fixed_step .and. last) .or. &
+             (.not. fixed_step .and. (idid == 2 .or. idid == 3))) then
+            gval = g2
+            me%resume_pending = .false.
+            return
          end if
 
          ! set up for next step:
@@ -1542,6 +1737,227 @@ contains
       end do
 
    contains
+
+      subroutine locate_root(ta, tb, ya, yb, ga, gb, mask, found)
+
+            !! Check for roots of the event functions on `[ta,tb]` and,
+            !! if any, locate the earliest one (in the direction of integration).
+            !! If found, the outputs (`t`, `y`, `idid`, `gval`) are set.
+
+         implicit none
+
+         real(wp), intent(in)               :: ta    !! start of the interval
+         real(wp), intent(in)               :: tb    !! end of the interval
+         real(wp), dimension(:), intent(in) :: ya    !! state at `ta`
+         real(wp), dimension(:), intent(in) :: yb    !! state at `tb`
+         real(wp), dimension(:), intent(in) :: ga    !! event functions at `ta`
+         real(wp), dimension(:), intent(in) :: gb    !! event functions at `tb`
+         logical, dimension(:), intent(in)  :: mask  !! functions to ignore
+         logical, intent(out)               :: found !! if a root was found
+                                                     !! (or there was an error locating it)
+
+         logical, dimension(me%n_g_eqns) :: root_found  !! if a root was found
+         real(wp) :: tzero   !! time where an event occurs in `[ta,tb]`
+         real(wp) :: gzero   !! event function value at `tzero`
+         real(wp) :: tbest   !! earliest root found so far
+         integer :: i        !! counter
+         integer :: ibest    !! function with the earliest root
+         integer :: iflag    !! `root_scalar` status flag
+         integer :: istat    !! for write statement `iostat`
+         character(len=10) :: istr   !! for integer to string conversion
+
+         found = .false.
+
+         ! find the one(s) with sign change:
+         do i = 1, me%n_g_eqns
+            root_found(i) = (.not. mask(i)) .and. ga(i)*gb(i) <= 0.0_wp
+         end do
+         ! the user bracket function can impose
+         ! additional constraints on the root, so
+         ! we check that now if it was associated:
+         if (associated(me%bracket)) then
+            do i = 1, me%n_g_eqns
+               if (root_found(i)) then
+                  root_found(i) = me%bracket(i, ta, tb, ya, yb, ga(i), gb(i))
+               end if
+            end do
+         end if
+         if (.not. any(root_found)) return
+
+         ! root somewhere on [ta,tb]. have to check all the functions
+         ! where this is true, and select the one with the earlier root.
+         found = .true.
+         ibest = 0
+         tbest = tb
+         do i = 1, me%n_g_eqns
+            if (.not. root_found(i)) cycle
+
+            ! Note: it's possible that zeroing in on one root
+            ! will cause another earlier root to be detected?
+            ! This is not currently handled. Only the ones identified
+            ! by the normal stepping process are considered.
+
+            ig = i  ! when calling zeroin, we only need to compute the ith function
+            call root_scalar(root_method_brent, &
+                             fun=zeroin_func, &
+                             ax=ta, &
+                             bx=tb, &
+                             rtol=me%tol(i), &
+                             ftol=me%tol(i), &
+                             xzero=tzero, &
+                             fzero=gzero, &
+                             iflag=iflag, &
+                             fax=ga(i), &
+                             fbx=gb(i))
+            if (iflag == 0) then ! root found at tzero
+               if (ibest == 0 .or. direction*(tzero - tbest) < 0.0_wp) then
+                  ! this is an earlier root so use it
+                  ibest = i
+                  tbest = tzero
+               end if
+            else
+               ! unlikely to occur since zeroin is
+               ! "guaranteed" to converge, but just in case:
+               write (istr, '(I10)', iostat=istat) i
+               call report_error('ddeabm_with_event_wrapper_vec', &
+                                 'Error locating root for function '// &
+                                 trim(adjustl(istr)), 0, 0)
+            end if
+         end do
+
+         if (ibest > 0) then
+            idid = 1000 + ibest  ! root found
+            t = tbest
+            ! state at the root (note: yc is not necessarily at tbest):
+            call me%interpolate(t, y)
+            call me%gfunc(t, y, gval) ! compute all funcs for output
+            if (mode == 2) call me%report(t, y) ! report this point
+            ! a subsequent call with continue=.true. will
+            ! check the rest of the step from this point:
+            me%t_resume = t
+            me%resume_pending = .true.
+         else
+            call report_error('ddeabm_with_event_wrapper_vec', &
+                              'Error locating root.', 0, 0)
+            idid = -2000
+            t = tb
+            y = yb
+            gval = gb
+            me%resume_pending = .false.
+         end if
+
+      end subroutine locate_root
+
+      subroutine check_rest_of_last_step(done)
+
+            !! When continuing after a root was found, check the rest of the
+            !! last integration step (`[t_resume, t_saved]`) for events, using
+            !! interpolation. Points on this interval are also reported if necessary.
+            !! On return, if not `done`, the integration continues from the end of
+            !! the last step (`t1`, `y1`, `g1` and `first_dt` are set for that).
+
+         implicit none
+
+         logical, intent(out) :: done !! if finished (a root was found or `tmax` was reached)
+
+         real(wp) :: tend     !! end of the interval to check
+         real(wp) :: tgrid    !! last point on the fixed step grid
+         real(wp) :: tnext    !! next point on the fixed step grid
+         logical :: is_end    !! if `t2` is the end of the interval
+         logical :: first_sub !! if the first subinterval
+         logical :: reached_tmax !! if `tmax` is within the last step
+
+         done = .false.
+
+         ! the end of the interval: the end of the last step,
+         ! or tmax if it is before that:
+         reached_tmax = direction*(me%t_saved - tmax) >= 0.0_wp
+         if (reached_tmax) then
+            tend = tmax
+         else
+            tend = me%t_saved
+         end if
+
+         ! state at the last root found:
+         t1 = me%t_resume
+         call me%interpolate(t1, y1)
+         call me%gfunc(t1, y1, g1)
+         t2 = t1
+         y2 = y1
+         g2 = g1
+         tgrid = t1  ! the fixed step grid starts at the last reported point
+         first_sub = .true.
+
+         do while (t1 /= tend)
+
+            if (fixed_step) then
+               t2 = t1 + dt
+               is_end = direction*(tend - t2) <= 0.0_wp
+               if (is_end) t2 = tend
+            else
+               t2 = tend
+               is_end = .true.
+            end if
+            if (t2 == me%t_saved) then
+               y2 = me%x_saved
+            else
+               call me%interpolate(t2, y2)
+            end if
+            call me%gfunc(t2, y2, g2)
+
+            ! ignore the function(s) that are zero at the last root:
+            mask = first_sub .and. abs(g1) <= me%tol
+            call locate_root(t1, t2, y1, y2, g1, g2, mask, found)
+            if (found) then
+               done = .true.
+               return
+            end if
+
+            ! report this point:
+            !  * default steps: the end of the last step (or tmax)
+            !  * fixed step: the points on the fixed step grid (or tmax)
+            if (mode == 2) then
+               if (.not. fixed_step .or. .not. is_end .or. reached_tmax) call me%report(t2, y2)
+            end if
+            if (fixed_step .and. .not. is_end) tgrid = t2
+
+            first_sub = .false.
+            t1 = t2
+            y1 = y2
+            g1 = g2
+            if (is_end) exit
+
+         end do
+
+         if (reached_tmax) then
+            ! finished: tmax is within the last step
+            t = tmax
+            y = y2
+            gval = g2
+            idid = 3
+            me%t_resume = tmax
+            me%resume_pending = direction*(me%t_saved - tmax) > 0.0_wp
+            done = .true.
+            return
+         end if
+
+         ! continue the integration from the end of the last step:
+         t = me%t_saved
+         y = me%x_saved
+         t1 = t
+         y1 = y
+         call me%gfunc(t1, y1, g1)
+         me%resume_pending = .false.
+         if (fixed_step) then
+            ! the first step is to the next point on the fixed step grid:
+            tnext = tgrid + dt
+            do while (direction*(tnext - t) <= 0.0_wp)
+               tnext = tnext + dt
+            end do
+            first_dt = tnext - t
+         end if
+
+      end subroutine check_rest_of_last_step
 
       function zeroin_func(tc) result(g)
 
@@ -1987,6 +2403,11 @@ contains
       integer, intent(out)                   :: idid
 
       character(len=16) :: xern3
+
+      ! idid is intent(out), and ddes tests its value (for -33 and -2),
+      ! so it must be defined before calling ddes. Otherwise a stale
+      ! value in the caller's variable can cause a valid call to fail.
+      idid = 0
 
       if (me%error) return  ! if user-triggered error
 
@@ -3101,7 +3522,9 @@ contains
             h = sign(max(absh, fouru*abs(x)), h)
             me%initial_step_size = h ! save it
          case (3)
-            h = sign(abs(me%initial_step_size), h)   ! user specified
+            ! user specified, but not larger than the input h
+            ! (which ddes has limited by tout and tstop)
+            h = sign(min(abs(me%initial_step_size), abs(h)), h)
          case default
             error stop 'invalid value for initial_step_mode'
          end select
