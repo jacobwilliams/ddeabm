@@ -187,6 +187,54 @@ All of the integration methods have an optional argument (`tstep`) to enable a f
 call s%integrate_to_event(t,x,tf,idid=idid,gval=gval,tstep=100.0_wp)
 ```
 
+The event function is also evaluated at the end of each integrator step. The points within a step are computed by interpolation, so `tstep` does not change the steps taken by the integrator.
+
+### Maximum step size
+
+By default, the size of the integration steps is not limited. An optional `max_step_size` argument can be passed to `initialize` (or `initialize_event`) to limit the magnitude of every step. For example, to limit the step size to 60 seconds:
+
+```Fortran
+call s%initialize(n,maxnum=10000,df=twobody,&
+                  rtol=[1.0e-12_wp],atol=[1.0e-12_wp],&
+                  max_step_size=60.0_wp)
+```
+
+This can be useful when the solution has short-lived features that a large step could pass over (for example, two event roots closer together than the step size). Unlike `tstep`, it changes the steps taken by the integrator, so it can increase the number of derivative evaluations.
+
+### Maximum order
+
+DDEABM is a variable-order method. By default, the maximum order is 12. A different maximum order (from 1 to `ddeabm_max_order_limit`, which is 20) can be specified using the optional `max_order` argument to `initialize` (or `initialize_event`):
+
+```Fortran
+call s%initialize(n,maxnum=10000,df=twobody,&
+                  rtol=[1.0e-25_wp],atol=[1.0e-25_wp],&
+                  max_order=16)
+```
+
+A lower maximum order can improve stability on some problems. A higher maximum order is mainly useful for very tight tolerances when the library is compiled with `REAL128`, where it can significantly reduce the number of steps. For the default `REAL64`, a maximum order above 12 makes little difference.
+
+### Continuing after an interrupted integration
+
+The integration is interrupted (and can be continued) when the code returns one of these values of `idid`:
+
+* `-1`: the maximum number of steps (`maxnum`) has been taken.
+* `-2`: the tolerances are too small, and have been increased by the code.
+* `-3`: a solution component is zero and the corresponding absolute tolerance is zero.
+* `-4`: the problem appears to be stiff.
+
+To continue, call `resume_integration` and then call the integration routine again. For example:
+
+```Fortran
+call s%integrate(t,x,tf,idid=idid)
+if (idid == -1) then
+    ! allow another maxnum steps
+    call s%resume_integration()
+    call s%integrate(t,x,tf,idid=idid)
+end if
+```
+
+For `idid=-2`, the increased tolerances are used for the rest of the problem. For `idid=-3`, the problem must first be corrected (by calling `initialize` again with a positive `atol`, which also restarts the integration).
+
 ## Building DDEABM
 
 DDEABM and the test programs will build with any modern Fortran compiler. A [Fortran Package Manager](https://github.com/fortran-lang/fpm) (FPM) manifest file (`fpm.toml`) is included, so that the library and tests cases can be compiled with FPM. For example:

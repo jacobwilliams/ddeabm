@@ -55,9 +55,7 @@ module ddeabm_module
 
    !parameters:
    integer, parameter, public :: ddeabm_default_max_order = 12  !! default maximum order of the method
-   integer, parameter, public :: ddeabm_max_order_limit = 20    !! largest allowed value of the maximum order.
-                                                                !! (in testing, orders above about 17 were never
-                                                                !! selected, even for REAL128 at tol=1e-30)
+   integer, parameter, public :: ddeabm_max_order_limit = 20    !! largest allowed value of the maximum order
    real(wp), parameter :: d1mach2 = huge(1.0_wp)        !! the largest magnitude
    real(wp), parameter :: d1mach4 = epsilon(1.0_wp)     !! the largest relative spacing
 
@@ -511,6 +509,7 @@ contains
       logical :: vector_tols
       integer :: i, j, k
       integer :: kmax !! maximum order of the method
+      character(len=100) :: msg !! error message
 
       !initialize the class:
       call me%destroy()
@@ -518,8 +517,11 @@ contains
       !maximum order of the method:
       kmax = ddeabm_default_max_order
       if (present(max_order)) then
-         if (max_order < 1 .or. max_order > ddeabm_max_order_limit) &
-            error stop 'Error in ddeabm_initialize: max_order must be in the range 1 to ddeabm_max_order_limit'
+         if (max_order < 1 .or. max_order > ddeabm_max_order_limit) then
+            write (msg, '(A,I0,A,I0)') 'Error in ddeabm_initialize: max_order must be in the range 1 to ', &
+               ddeabm_max_order_limit, '. It was ', max_order
+            error stop trim(msg)
+         end if
          kmax = max_order
       end if
       me%max_order = kmax
