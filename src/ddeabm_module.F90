@@ -979,8 +979,7 @@ contains
                                                               !! `idid=1000` means a root was found.
                                                               !! See [[ddeabm]] for other values.
       real(wp), intent(out)                           :: gval    !! value of the event function `g(t,x)` at the final time `t`
-                                                              !! (not set if the inputs are invalid: `idid=-33`
-                                                              !! before any integration is attempted)
+                                                              !! (not set if the inputs are invalid: `idid=-33`)
       integer, intent(in), optional :: integration_mode           !! Step mode:
                                                               !! *1* - normal integration from `t` to `tout`,
                                                               !!  no reporting [default].
@@ -1191,7 +1190,14 @@ contains
             return
          end if
 
-         ! invalid input or an interrupted task (see ddeabm or idid codes).
+         ! invalid input (see ddeabm or idid codes): no integration was
+         ! attempted, so the event function is not evaluated (gval is not set):
+         if (idid == -33) then
+            me%resume_pending = .false.
+            return
+         end if
+
+         ! an interrupted task (idid = -1 to -4, see ddeabm or idid codes).
          ! (in intermediate-output mode, the integration has not advanced)
          if (idid < 0) then
             call me%gfunc(t, y, gval)
@@ -1304,19 +1310,16 @@ contains
             return
          end if
 
-         if (mode == 2) then
-            if (fixed_step) then
-               if (tb == tmax) then
-                  call me%report(tb, yb) ! the last point
-               else if (tn == tb) then
-                  call me%report(tb, yb) ! a grid point at the end of the step
-                  n_grid = n_grid + 1
-               end if
-            else
-               call me%report(tb, yb) ! the end of the integration step (or tmax)
+         ! (tn is only defined if fixed_step)
+         if (fixed_step) then
+            if (tb == tmax) then
+               if (mode == 2) call me%report(tb, yb) ! the last point
+            else if (tn == tb) then
+               if (mode == 2) call me%report(tb, yb) ! a grid point at the end of the step
+               n_grid = n_grid + 1
             end if
-         else if (fixed_step .and. tn == tb .and. tb /= tmax) then
-            n_grid = n_grid + 1
+         else
+            if (mode == 2) call me%report(tb, yb) ! the end of the integration step (or tmax)
          end if
 
       end subroutine process_interval
@@ -1574,7 +1577,7 @@ contains
                                                               !! See [[ddeabm]] for other values.
       real(wp), dimension(:), intent(out)              :: gval !! value of the event functions `g(t,x)` at the final time `t`.
                                                               !! Must be size `ng` (not set if the inputs are invalid:
-                                                              !! `idid=-33` before any integration is attempted)
+                                                              !! `idid=-33`)
       integer, intent(in), optional :: integration_mode !! Step mode:
                                                         !! *1* - normal integration from `t` to `tout`,
                                                         !!  no reporting [default].
@@ -1797,7 +1800,14 @@ contains
             return
          end if
 
-         ! invalid input or an interrupted task (see ddeabm or idid codes).
+         ! invalid input (see ddeabm or idid codes): no integration was
+         ! attempted, so the event function is not evaluated (gval is not set):
+         if (idid == -33) then
+            me%resume_pending = .false.
+            return
+         end if
+
+         ! an interrupted task (idid = -1 to -4, see ddeabm or idid codes).
          ! (in intermediate-output mode, the integration has not advanced)
          if (idid < 0) then
             call me%gfunc(t, y, gval)
@@ -1911,19 +1921,16 @@ contains
             return
          end if
 
-         if (mode == 2) then
-            if (fixed_step) then
-               if (tb == tmax) then
-                  call me%report(tb, yb) ! the last point
-               else if (tn == tb) then
-                  call me%report(tb, yb) ! a grid point at the end of the step
-                  n_grid = n_grid + 1
-               end if
-            else
-               call me%report(tb, yb) ! the end of the integration step (or tmax)
+         ! (tn is only defined if fixed_step)
+         if (fixed_step) then
+            if (tb == tmax) then
+               if (mode == 2) call me%report(tb, yb) ! the last point
+            else if (tn == tb) then
+               if (mode == 2) call me%report(tb, yb) ! a grid point at the end of the step
+               n_grid = n_grid + 1
             end if
-         else if (fixed_step .and. tn == tb .and. tb /= tmax) then
-            n_grid = n_grid + 1
+         else
+            if (mode == 2) call me%report(tb, yb) ! the end of the integration step (or tmax)
          end if
 
       end subroutine process_interval

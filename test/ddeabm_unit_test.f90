@@ -38,6 +38,7 @@ module ddeabm_unit_test_module
    integer :: iprob = p_osc                !! problem to solve
    real(wp) :: t_stop = huge(1.0_wp)       !! for `p_stop`
    integer :: n_feval = 0                  !! number of derivative evaluations
+   integer :: n_geval = 0                  !! number of event function evaluations (`g_x1` and `g_vec`)
    integer :: n_reports = 0                !! number of reported points
    real(wp), dimension(100000) :: t_reports = 0.0_wp  !! the reported times
    real(wp), dimension(100000) :: x_reports = 0.0_wp  !! the first state component at the reported times
@@ -102,6 +103,7 @@ contains
       real(wp), intent(in) :: t
       real(wp), dimension(:), intent(in) :: x
       real(wp), intent(out) :: g
+      n_geval = n_geval + 1
       g = x(1)
    end subroutine g_x1
 
@@ -133,6 +135,7 @@ contains
       real(wp), dimension(:), intent(in) :: x
       real(wp), dimension(:), intent(out) :: g
       integer, intent(in), optional :: ig
+      n_geval = n_geval + 1
       if (present(ig)) then
          g = 0.0_wp
          g(ig) = x(ig)    ! only compute the one requested
@@ -795,6 +798,13 @@ program ddeabm_unit_test
    call check('invalid integration_mode: idid=-33', idid == -33)
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval, tstep=0.0_wp)
    call check('tstep=0: idid=-33', idid == -33)
+   ! input rejected by the integrator: gval is not set, and the event function
+   ! is not evaluated again (only at the initial point, before integrating)
+   call se%first_call()
+   t = 0.0_wp; y = y0; gval = -999.0_wp; n_geval = 0
+   call se%integrate_to_event(t, y, 2.0_wp, tstop=1.0_wp, idid=idid, gval=gval)
+   call check('input rejected by the integrator: idid=-33, gval not set', &
+              idid == -33 .and. gval == -999.0_wp .and. n_geval <= 1 .and. t == 0.0_wp)
    t = 1.8_wp; y = [cos(t), -sin(t)]
    call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, tstep=0.01_wp*spacing(t))
    call check('tstep lost in roundoff: idid=-33', idid == -33 .and. t == 1.8_wp)
@@ -881,6 +891,11 @@ program ddeabm_unit_test
    call check('invalid integration_mode: idid=-33', idid == -33)
    call sv%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gv, tstep=0.0_wp)
    call check('tstep=0: idid=-33', idid == -33)
+   call sv%first_call()   ! input rejected by the integrator: gval is not set
+   t = 0.0_wp; y = y0; gv = -999.0_wp; n_geval = 0
+   call sv%integrate_to_event(t, y, 2.0_wp, tstop=1.0_wp, idid=idid, gval=gv)
+   call check('input rejected by the integrator: idid=-33, gval not set', &
+              idid == -33 .and. all(gv == -999.0_wp) .and. n_geval <= 1 .and. t == 0.0_wp)
    t = 1.8_wp; y = [cos(t), -sin(t)]
    call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv, tstep=0.01_wp*spacing(t))
    call check('tstep lost in roundoff: idid=-33', idid == -33 .and. t == 1.8_wp)
