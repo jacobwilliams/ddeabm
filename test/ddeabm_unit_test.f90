@@ -37,6 +37,7 @@ module ddeabm_unit_test_module
 
    integer :: iprob = p_osc                !! problem to solve
    real(wp) :: t_stop = huge(1.0_wp)       !! for `p_stop`
+   real(wp) :: t_event = 0.0_wp            !! root of the second function in `g_vec_t`
    integer :: n_feval = 0                  !! number of derivative evaluations
    integer :: n_geval = 0                  !! number of event function evaluations (`g_x1` and `g_vec`)
    integer :: n_reports = 0                !! number of reported points
@@ -155,6 +156,17 @@ contains
       g(1) = x(1)
       g(2) = 1.0e6_wp*(t - 1.0_wp)*(t - 1.001_wp)
    end subroutine g_vec_pulse
+
+   subroutine g_vec_t(me, t, x, g, ig)
+      !! vector events: `x(1) = 0` (roots at `pi/2 + k*pi`) and `t = t_event`
+      class(ddeabm_with_event_class_vec), intent(inout) :: me
+      real(wp), intent(in) :: t
+      real(wp), dimension(:), intent(in) :: x
+      real(wp), dimension(:), intent(out) :: g
+      integer, intent(in), optional :: ig
+      g(1) = x(1)
+      g(2) = t - t_event
+   end subroutine g_vec_t
 
    logical function bracket_vec_decreasing(me, ig, t1, t2, x1, x2, g1, g2) result(bracketed)
       !! only accept roots where `g(ig)` is decreasing
@@ -867,6 +879,27 @@ program ddeabm_unit_test
    ok = ok .and. all(t_reports(2:n_reports) > t_reports(1:n_reports - 1))
    call check('continue with smaller tstep: grid from the root, correct states, next root', ok)
 
+   ! issue #17: continue with a fixed step after stopping at a root with the default steps.
+   ! the default steps (loose tolerance) are much larger than tstep, so the points in the
+   ! rest of the last step (after the root) must be interpolated, not skipped:
+   tolk = sc(1.0e-6_wp)
+   call se%initialize_event(2, 100000, deriv, [tolk], [tolk], g_x1, sc(1.0e-12_wp), report=report)
+   call se%first_call()
+   t = 0.0_wp; y = y0
+   call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, integration_mode=2)
+   t_root = t
+   n_reports = 0
+   call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, integration_mode=2, &
+                              tstep=0.01_wp, continue=.true.)
+   ok = abs(t_root - pi/2.0_wp) < 100.0_wp*tolk .and. idid == 1000 .and. &
+        abs(t - 1.5_wp*pi) < 100.0_wp*tolk .and. n_reports > 2
+   do i = 1, n_reports - 1   ! points every tstep from the root (the last one is the next root)
+      ok = ok .and. abs(t_reports(i) - (t_root + 0.01_wp*i)) < sc(1.0e-12_wp)*10.0_wp .and. &
+           abs(x_reports(i) - cos(t_reports(i))) < 100.0_wp*tolk
+   end do
+   call check('issue #17: default steps, then continue with tstep: points every tstep from the root', ok)
+   call se%initialize_event(2, 10000, deriv, [tol], [tol], g_x1, sc(1.0e-12_wp), report=report) ! (restore)
+
    ! the root accuracy does not depend on tstep (the root is located within
    ! an integration step, where the interpolating polynomial is valid):
    ok = .true.
@@ -925,6 +958,29 @@ program ddeabm_unit_test
            abs(gv(idid - 1000)) < etol
    end do
    call check('roots of both functions found in order (pi/2, pi, 3pi/2, 2pi)', ok)
+
+   ! issue #17 (vector): as for the scalar case, and the rest of the last default
+   ! step contains a root of the second function, which must be found:
+   tolk = sc(1.0e-6_wp)
+   t_event = pi/2.0_wp + 0.03_wp
+   call sv%initialize_event(2, 100000, deriv, [tolk], [tolk], 2, g_vec_t, [sc(1.0e-12_wp)], report=report)
+   call sv%first_call()
+   t = 0.0_wp; y = y0
+   call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv, integration_mode=2)
+   t_root = t
+   n_reports = 0
+   call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv, integration_mode=2, &
+                              tstep=0.01_wp, continue=.true.)
+   ok = abs(t_root - pi/2.0_wp) < 100.0_wp*tolk .and. idid == 1002 .and. &
+        abs(t - t_event) < 100.0_wp*tolk .and. n_reports > 1
+   do i = 1, n_reports - 1   ! points every tstep from the root (the last one is the root of g(2))
+      ok = ok .and. abs(t_reports(i) - (t_root + 0.01_wp*i)) < sc(1.0e-12_wp)*10.0_wp .and. &
+           abs(x_reports(i) - cos(t_reports(i))) < 100.0_wp*tolk
+   end do
+   if (ok) ok = abs(t_reports(n_reports) - t_event) < 100.0_wp*tolk
+   call check('issue #17 (vector): points every tstep from the root, then the root of g(2)', ok)
+   call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp), sc(1.0e-12_wp)], &
+                            report=report) ! (restore)
 
    call sv%first_call()   ! backward
    t = -0.1_wp; y = [cos(t), -sin(t)]
