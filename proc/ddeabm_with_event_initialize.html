@@ -1,0 +1,655 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ddeabm_with_event_initialize &ndash; ddeabm</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../sourcefile/ddeabm_module.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ddeabm_with_event_initialize
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-author"><i class="fa fa-pencil"></i> Jacob Williams</li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.4% of total for procedures.">26 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ddeabm_module.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ddeabm_with_event_initialize</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/ddeabm_with_event_initialize.html#src">ddeabm_with_event_initialize</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine ddeabm_with_event_initialize(me, neq, maxnum, df, rtol, atol, g, root_tol, report, bracket, initial_step_mode, initial_step_size, max_step_size, max_order)  
+</h2>
+    
+
+    <p>Initialize <a href="../type/ddeabm_with_event_class.html">ddeabm_with_event_class</a> class,
+  and set the variables that cannot be changed during a problem.</p>
+<h3>See also</h3>
+<ul>
+<li><a href="../proc/ddeabm_initialize.html">ddeabm_initialize</a></li>
+</ul>
+
+    <h3>Type Bound</h3>
+    <p><a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a></p>
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~12"></span>
+              class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-neq~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>neq</strong></td>
+            <td>
+                <p>number of equations to be integrated</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-maxnum~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>maxnum</strong></td>
+            <td>
+                <p>maximum number of integration steps allowed</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-df~3"></span>
+              procedure(<a href='../interface/deriv_func.html'>deriv_func</a>)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>df</strong></td>
+            <td>
+                <p>derivative function <script type="math/tex"> dx/dt </script>
+</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-rtol~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>rtol</strong></td>
+            <td>
+                <p>relative tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-atol~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>atol</strong></td>
+            <td>
+                <p>absolution tolerance for integration (see <a href="../proc/ddeabm.html">ddeabm</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-g~4"></span>
+              procedure(<a href='../interface/event_func.html'>event_func</a>)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>g</strong></td>
+            <td>
+                <p>Event function <script type="math/tex"> g(t,x) </script>. This should be a smooth function
+than can have values <script type="math/tex"> <0 </script> and <script type="math/tex"> \ge 0 </script>.
+When <script type="math/tex"> g=0 </script> (within the tolerance),
+then a root has been located and
+the integration will stop.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-root_tol"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>root_tol</strong></td>
+            <td>
+                <p>tolerance for the root finding</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-report~3"></span>
+              procedure(<a href='../interface/report_func.html'>report_func</a>),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>report</strong></td>
+            <td>
+                <p>reporting function</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bracket~3"></span>
+              procedure(<a href='../interface/bracket_func.html'>bracket_func</a>),
+            </td>
+<td></td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bracket</strong></td>
+            <td>
+                <p>root bracketing function. if not present,
+the default is used.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-initial_step_mode~3"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>initial_step_mode</strong></td>
+            <td>
+                <p>how to choose the initial step <code>h</code>:</p>
+<ol>
+<li>Use <a href="../proc/dhstrt.html">dhstrt</a>.</li>
+<li>Use the older (quicker) algorithm.</li>
+<li>Use the user-specified value <code>initial_step_size</code> (&gt;0).</li>
+</ol>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-initial_step_size~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>initial_step_size</strong></td>
+            <td>
+                <p>for <code>initial_step_mode=3</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_step_size~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>max_step_size</strong></td>
+            <td>
+                <p>maximum step size magnitude (&gt;0).
+If not present, the step size is not limited.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_order~3"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>max_order</strong></td>
+            <td>
+                <p>maximum order of the method
+(<code>1</code> to <code>ddeabm_max_order_limit</code>). If not present,
+<code>ddeabm_default_max_order</code> (12) is used.
+A lower value can improve stability on some problems.
+A higher value can reduce the number of steps for very
+tight tolerances when using higher precision (<code>REAL128</code>).</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~ddeabm_with_event_initialize~~CallsGraph Pages: 1 -->
+<svg id="procddeabm_with_event_initializeCallsGraph" width="641pt" height="26pt"
+ viewBox="0.00 0.00 641.00 26.47" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm_with_event_initialize~~CallsGraph" class="graph" transform="scale(0.83 0.83) rotate(0) translate(4 28)">
+<title>proc~~ddeabm_with_event_initialize~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 771,-28 771,4 -4,4"/>
+<!-- proc~ddeabm_with_event_initialize -->
+<g id="proc~~ddeabm_with_event_initialize~~CallsGraph_node1" class="node">
+<title>proc~ddeabm_with_event_initialize</title>
+<polygon fill="none" stroke="black" points="316,-24 0,-24 0,0 316,0 316,-24"/>
+<text text-anchor="middle" x="158" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_with_event_class%ddeabm_with_event_initialize</text>
+</g>
+<!-- proc~ddeabm_initialize -->
+<g id="proc~~ddeabm_with_event_initialize~~CallsGraph_node2" class="node">
+<title>proc~ddeabm_initialize</title>
+<g id="a_proc~~ddeabm_with_event_initialize~~CallsGraph_node2"><a xlink:href="../proc/ddeabm_initialize.html" xlink:title="ddeabm_class%ddeabm_initialize">
+<polygon fill="#d9534f" stroke="#d9534f" points="544,-24 352,-24 352,0 544,0 544,-24"/>
+<text text-anchor="middle" x="448" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%ddeabm_initialize</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_initialize&#45;&gt;proc~ddeabm_initialize -->
+<g id="proc~~ddeabm_with_event_initialize~~CallsGraph_edge1" class="edge">
+<title>proc~ddeabm_with_event_initialize&#45;&gt;proc~ddeabm_initialize</title>
+<path fill="none" stroke="#000000" d="M316.06,-12C324.67,-12 333.22,-12 341.58,-12"/>
+<polygon fill="#000000" stroke="#000000" points="341.67,-15.5 351.67,-12 341.67,-8.5 341.67,-15.5"/>
+</g>
+<!-- proc~destroy_ddeabm -->
+<g id="proc~~ddeabm_with_event_initialize~~CallsGraph_node3" class="node">
+<title>proc~destroy_ddeabm</title>
+<g id="a_proc~~ddeabm_with_event_initialize~~CallsGraph_node3"><a xlink:href="../proc/destroy_ddeabm.html" xlink:title="ddeabm_class%destroy_ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="767,-24 580,-24 580,0 767,0 767,-24"/>
+<text text-anchor="middle" x="673.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%destroy_ddeabm</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_initialize&#45;&gt;proc~destroy_ddeabm -->
+<g id="proc~~ddeabm_with_event_initialize~~CallsGraph_edge2" class="edge">
+<title>proc~ddeabm_initialize&#45;&gt;proc~destroy_ddeabm</title>
+<path fill="none" stroke="#000000" d="M544.11,-12C552.65,-12 561.32,-12 569.92,-12"/>
+<polygon fill="#000000" stroke="#000000" points="569.97,-15.5 579.97,-12 569.97,-8.5 569.97,-15.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocddeabm_with_event_initializeCallsGraph = svgPanZoom('#procddeabm_with_event_initializeCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">ddeabm_with_event_initialize</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="w"> </span><span class="n">neq</span><span class="p">,</span><span class="w"> </span><span class="n">maxnum</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">rtol</span><span class="p">,</span><span class="w"> </span><span class="n">atol</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                                           </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">root_tol</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="p">,</span><span class="w"> </span><span class="n">bracket</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                                           </span><span class="n">initial_step_mode</span><span class="p">,</span><span class="w"> </span><span class="n">initial_step_size</span><span class="p">,</span><span class="w"> </span><span class="n">max_step_size</span><span class="p">,</span><span class="w"> </span><span class="n">max_order</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">neq</span><span class="w">       </span><span class="c">!! number of equations to be integrated</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">maxnum</span><span class="w">    </span><span class="c">!! maximum number of integration steps allowed</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">deriv_func</span><span class="p">)</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">df</span><span class="w">        </span><span class="c">!! derivative function \( dx/dt \)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol</span><span class="w">      </span><span class="c">!! relative tolerance for integration (see [[ddeabm]])</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">atol</span><span class="w">      </span><span class="c">!! absolution tolerance for integration (see [[ddeabm]])</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">event_func</span><span class="p">)</span><span class="w">                        </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w">         </span><span class="c">!! Event function \( g(t,x) \). This should be a smooth function</span>
+<span class="w">                                                              </span><span class="c">!! than can have values \( &lt;0 \) and \( \ge 0 \).</span>
+<span class="w">                                                              </span><span class="c">!! When \( g=0 \) (within the tolerance),</span>
+<span class="w">                                                              </span><span class="c">!! then a root has been located and</span>
+<span class="w">                                                              </span><span class="c">!! the integration will stop.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                          </span><span class="kd">::</span><span class="w"> </span><span class="n">root_tol</span><span class="w">  </span><span class="c">!! tolerance for the root finding</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">report_func</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">              </span><span class="kd">::</span><span class="w"> </span><span class="n">report</span><span class="w">    </span><span class="c">!! reporting function</span>
+<span class="w">      </span><span class="k">procedure</span><span class="p">(</span><span class="n">bracket_func</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">bracket</span><span class="w">   </span><span class="c">!! root bracketing function. if not present,</span>
+<span class="w">                                                              </span><span class="c">!! the default is used.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="w"> </span><span class="c">!! how to choose the initial step `h`:</span>
+<span class="w">                                                             </span><span class="c">!!</span>
+<span class="w">                                                             </span><span class="c">!! 1. Use [[dhstrt]].</span>
+<span class="w">                                                             </span><span class="c">!! 2. Use the older (quicker) algorithm.</span>
+<span class="w">                                                             </span><span class="c">!! 3. Use the user-specified value `initial_step_size` (&gt;0).</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">initial_step_size</span><span class="w"> </span><span class="c">!! for `initial_step_mode=3`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">max_step_size</span><span class="w"> </span><span class="c">!! maximum step size magnitude (&gt;0).</span>
+<span class="w">                                                             </span><span class="c">!! If not present, the step size is not limited.</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">max_order</span><span class="w"> </span><span class="c">!! maximum order of the method</span>
+<span class="w">                                                         </span><span class="c">!! (`1` to `ddeabm_max_order_limit`). If not present,</span>
+<span class="w">                                                         </span><span class="c">!! `ddeabm_default_max_order` (12) is used.</span>
+<span class="w">                                                         </span><span class="c">!! A lower value can improve stability on some problems.</span>
+<span class="w">                                                         </span><span class="c">!! A higher value can reduce the number of steps for very</span>
+<span class="w">                                                         </span><span class="c">!! tight tolerances when using higher precision (`REAL128`).</span>
+
+<span class="w">      </span><span class="c">!base class initialization:</span>
+<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">initialize</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="w"> </span><span class="n">maxnum</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">rtol</span><span class="p">,</span><span class="w"> </span><span class="n">atol</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="p">,</span><span class="w"> </span><span class="n">initial_step_mode</span><span class="p">,</span><span class="w"> </span><span class="n">initial_step_size</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                         </span><span class="n">max_step_size</span><span class="p">,</span><span class="w"> </span><span class="n">max_order</span><span class="p">)</span>
+
+<span class="w">      </span><span class="c">! saved time and state:</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span><span class="w"> </span><span class="k">deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">)</span>
+
+<span class="w">      </span><span class="c">!event finding variables:</span>
+<span class="w">      </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root_tol</span>
+<span class="w">      </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">g</span>
+
+<span class="w">      </span><span class="c">! bracketing function</span>
+<span class="w">      </span><span class="c">! (if not specified, use the default):</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">bracket</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">bracket</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">null</span><span class="p">()</span>
+<span class="w">      </span><span class="k">end if</span>
+
+<span class="k">   end subroutine </span><span class="n">ddeabm_with_event_initialize</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              ddeabm
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

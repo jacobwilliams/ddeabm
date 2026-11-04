@@ -1,0 +1,1259 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ddeabm_with_event_wrapper &ndash; ddeabm</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../sourcefile/ddeabm_module.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ddeabm_with_event_wrapper
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-author"><i class="fa fa-pencil"></i> Jacob Williams</li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="16.5% of total for procedures.">311 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ddeabm_module.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ddeabm_with_event_wrapper</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/ddeabm_with_event_wrapper.html#src">ddeabm_with_event_wrapper</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine ddeabm_with_event_wrapper(me, t, y, tmax, tstop, idid, gval, integration_mode, tstep, continue)  
+</h2>
+    
+
+    <p>Wrapper routine for <a href="../proc/ddeabm.html">ddeabm</a>, with event finding.
+  It will integrate until <code>g(t,x)=0</code> or <code>t=tmax</code> (whichever comes first).
+  Note that a root at the initial time is ignored (user should check for
+  this manually)</p>
+<p>If starting a new problem, must first call <code>me%first_call()</code>.</p>
+<h3>See also</h3>
+<ul>
+<li>Inspired by <a href="http://www.netlib.no/netlib/ode/sderoot.f">sderoot</a>,
+    but no code from that routine was used here.</li>
+<li><a href="../proc/ddeabm_with_event_wrapper_vec.html">ddeabm_with_event_wrapper_vec</a> -- for vector <code>g</code> function</li>
+</ul>
+<div class="alert alert-info">
+<p class="alert-title h4">Note</p>
+<p>After an interrupted task (<code>idid</code> = -1, -2, -3, -4), call
+      <code>me%resume_integration()</code> to continue. For <code>idid=-2</code>, the
+      tolerances increased by the code are used from then on.</p>
+</div>
+
+    <h3>Type Bound</h3>
+    <p><a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a></p>
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~16"></span>
+              class(<a href='../type/ddeabm_with_event_class.html'>ddeabm_with_event_class</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~6"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>t</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-y~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(me%neq)
+            </td>
+            <td>::</td>
+            <td><strong>y</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tmax"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tmax</strong></td>
+            <td>
+                <p>max time at which a solution is desired.
+(if root not located, it will integrate to <code>tmax</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tstop~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tstop</strong></td>
+            <td>
+                <p>for some problems it may not be permissible to integrate
+past a point <code>tstop</code> because a discontinuity occurs there
+or the solution or its derivative is not defined beyond
+<code>tstop</code>.  when you have declared a <code>tstop</code> point (see <code>info(4)</code>),
+you have told the code not to integrate past <code>tstop</code>.
+in this case any <code>tmax</code> beyond <code>tstop</code> is invalid input.
+[not used if not present]</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-idid~2"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>idid</strong></td>
+            <td>
+                <p>indicator reporting what the code did.
+you must monitor this integer variable to
+decide what action to take next.
+<code>idid=1000</code> means a root was found.
+See <a href="../proc/ddeabm.html">ddeabm</a> for other values.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-gval"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>gval</strong></td>
+            <td>
+                <p>value of the event function <code>g(t,x)</code> at the final time <code>t</code>
+(not set if the inputs are invalid: <code>idid=-33</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-integration_mode~2"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>integration_mode</strong></td>
+            <td>
+                <p>Step mode:
+<em>1</em> - normal integration from <code>t</code> to <code>tout</code>,
+ no reporting [default].
+<em>2</em> - normal integration from <code>t</code> to <code>tout</code>,
+ report each step.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tstep~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tstep</strong></td>
+            <td>
+                <p>Fixed time step to use for reporting and
+evaluation of the event function (the points are
+interpolated within each integrator step). If not
+present, then default integrator steps are used.
+The event function is also evaluated at the end of
+each integrator step.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-continue"></span>
+              logical,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>continue</strong></td>
+            <td>
+                <p>to continue after a previous event location.
+This option can be used after a previous call to this routine
+has found an event, to continue integration to the next event
+without having to restart the integration. It will not report
+the initial point (which would have been reported as the last
+point of the previous call). The rest of the integration step
+in which the previous event was found is checked for events
+(using interpolation) before integration continues.
+Limitation: on that remaining interval, the event function
+is ignored (it is zero at the start), so a second root of it
+within the same integration step will not be found.</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~ddeabm_with_event_wrapper~~CallsGraph Pages: 1 -->
+<svg id="procddeabm_with_event_wrapperCallsGraph" width="641pt" height="149pt"
+ viewBox="0.00 0.00 641.00 149.42" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph" class="graph" transform="scale(0.54 0.54) rotate(0) translate(4 272)">
+<title>proc~~ddeabm_with_event_wrapper~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-272 1180,-272 1180,4 -4,4"/>
+<!-- proc~ddeabm_with_event_wrapper -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node1" class="node">
+<title>proc~ddeabm_with_event_wrapper</title>
+<polygon fill="none" stroke="black" points="316,-148 0,-148 0,-124 316,-124 316,-148"/>
+<text text-anchor="middle" x="158" y="-133.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_with_event_class%ddeabm_with_event_wrapper</text>
+</g>
+<!-- info -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node2" class="node">
+<title>info</title>
+<polygon fill="#777777" stroke="#777777" points="471.5,-268 417.5,-268 417.5,-244 471.5,-244 471.5,-268"/>
+<text text-anchor="middle" x="444.5" y="-253.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">info</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;info -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge1" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;info</title>
+<path fill="none" stroke="#000000" d="M180.44,-148C215.48,-167.26 287.59,-205.39 352,-230 369.88,-236.84 390.34,-242.81 407.36,-247.31"/>
+<polygon fill="#000000" stroke="#000000" points="406.91,-250.8 417.47,-249.91 408.66,-244.02 406.91,-250.8"/>
+</g>
+<!-- proc~ddeabm -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node3" class="node">
+<title>proc~ddeabm</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node3"><a xlink:href="../proc/ddeabm.html" xlink:title="ddeabm_class%ddeabm">
+<polygon fill="#d9534f" stroke="#d9534f" points="515.5,-188 373.5,-188 373.5,-164 515.5,-164 515.5,-188"/>
+<text text-anchor="middle" x="444.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%ddeabm</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~ddeabm -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge2" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~ddeabm</title>
+<path fill="none" stroke="#000000" d="M244.36,-148C281.91,-153.28 325.8,-159.45 362.8,-164.65"/>
+<polygon fill="#000000" stroke="#000000" points="362.65,-168.17 373.04,-166.09 363.62,-161.24 362.65,-168.17"/>
+</g>
+<!-- proc~ddeabm_interp -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node4" class="node">
+<title>proc~ddeabm_interp</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node4"><a xlink:href="../proc/ddeabm_interp.html" xlink:title="ddeabm_class%ddeabm_interp">
+<polygon fill="#d9534f" stroke="#d9534f" points="752,-108 573,-108 573,-84 752,-84 752,-108"/>
+<text text-anchor="middle" x="662.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%ddeabm_interp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~ddeabm_interp -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge3" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~ddeabm_interp</title>
+<path fill="none" stroke="#000000" d="M316.11,-132.21C384.16,-129.51 464.66,-124.89 537,-117 553.94,-115.15 572.07,-112.49 589.11,-109.68"/>
+<polygon fill="#000000" stroke="#000000" points="589.72,-113.12 599,-108.01 588.56,-106.22 589.72,-113.12"/>
+</g>
+<!-- proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node5" class="node">
+<title>proc~report_error</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node5"><a xlink:href="../proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="892.5,-192 816.5,-192 816.5,-168 892.5,-168 892.5,-192"/>
+<text text-anchor="middle" x="854.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge4" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M187.44,-148.03C224.51,-162.99 291.74,-187.7 352,-197 517.43,-222.52 717.04,-200.16 806.33,-187.41"/>
+<polygon fill="#000000" stroke="#000000" points="807.02,-190.85 816.41,-185.94 806.01,-183.92 807.02,-190.85"/>
+</g>
+<!-- proc~set_working_tols -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node6" class="node">
+<title>proc~set_working_tols</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node6"><a xlink:href="../proc/set_working_tols.html" xlink:title="ddeabm_class%set_working_tols">
+<polygon fill="#d9534f" stroke="#d9534f" points="537,-108 352,-108 352,-84 537,-84 537,-108"/>
+<text text-anchor="middle" x="444.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%set_working_tols</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~set_working_tols -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge5" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~set_working_tols</title>
+<path fill="none" stroke="#000000" d="M244.36,-124C276.84,-119.43 314.07,-114.2 347.47,-109.5"/>
+<polygon fill="#000000" stroke="#000000" points="348.29,-112.92 357.71,-108.06 347.32,-105.99 348.29,-112.92"/>
+</g>
+<!-- report -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node7" class="node">
+<title>report</title>
+<polygon fill="#777777" stroke="#777777" points="471.5,-66 417.5,-66 417.5,-42 471.5,-42 471.5,-66"/>
+<text text-anchor="middle" x="444.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;report -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge6" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;report</title>
+<path fill="none" stroke="#000000" d="M194.32,-123.89C232.83,-110.92 296.39,-90.14 352,-75 370.1,-70.07 390.42,-65.33 407.31,-61.6"/>
+<polygon fill="#000000" stroke="#000000" points="408.3,-64.97 417.33,-59.42 406.81,-58.13 408.3,-64.97"/>
+</g>
+<!-- root_scalar -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node8" class="node">
+<title>root_scalar</title>
+<polygon fill="#777777" stroke="#777777" points="480,-24 409,-24 409,0 480,0 480,-24"/>
+<text text-anchor="middle" x="444.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">root_scalar</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;root_scalar -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge7" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;root_scalar</title>
+<path fill="none" stroke="#000000" d="M177.66,-123.86C211.22,-102.54 284.59,-58.21 352,-33 366.88,-27.43 383.7,-23.06 398.82,-19.78"/>
+<polygon fill="#000000" stroke="#000000" points="399.89,-23.13 408.98,-17.68 398.48,-16.28 399.89,-23.13"/>
+</g>
+<!-- proc~ddeabm&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge9" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M515.64,-176.69C598.7,-177.5 734.78,-178.84 806.25,-179.54"/>
+<polygon fill="#000000" stroke="#000000" points="806.28,-183.04 816.32,-179.64 806.35,-176.04 806.28,-183.04"/>
+</g>
+<!-- proc~ddes -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node9" class="node">
+<title>proc~ddes</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node9"><a xlink:href="../proc/ddes.html" xlink:title="ddeabm_class%ddes">
+<polygon fill="#d9534f" stroke="#d9534f" points="724.5,-150 600.5,-150 600.5,-126 724.5,-126 724.5,-150"/>
+<text text-anchor="middle" x="662.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%ddes</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm&#45;&gt;proc~ddes -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge8" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~ddes</title>
+<path fill="none" stroke="#000000" d="M513.84,-163.98C538.18,-159.7 565.63,-154.87 590.2,-150.54"/>
+<polygon fill="#000000" stroke="#000000" points="590.94,-153.97 600.18,-148.79 589.73,-147.07 590.94,-153.97"/>
+</g>
+<!-- proc~ddeabm_interp&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge11" class="edge">
+<title>proc~ddeabm_interp&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M733.31,-108.08C739.86,-110.52 746.2,-113.46 752,-117 772.99,-129.8 767.52,-145.4 788,-159 793.68,-162.77 800.09,-165.91 806.61,-168.5"/>
+<polygon fill="#000000" stroke="#000000" points="805.59,-171.85 816.19,-171.92 807.95,-165.26 805.59,-171.85"/>
+</g>
+<!-- proc~dintp -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node10" class="node">
+<title>proc~dintp</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node10"><a xlink:href="../proc/dintp.html" xlink:title="dintp">
+<polygon fill="#d9534f" stroke="#d9534f" points="881.5,-108 827.5,-108 827.5,-84 881.5,-84 881.5,-108"/>
+<text text-anchor="middle" x="854.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dintp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_interp&#45;&gt;proc~dintp -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge10" class="edge">
+<title>proc~ddeabm_interp&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M752.1,-96C775.18,-96 798.76,-96 817.37,-96"/>
+<polygon fill="#000000" stroke="#000000" points="817.43,-99.5 827.43,-96 817.43,-92.5 817.43,-99.5"/>
+</g>
+<!-- proc~ddes&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge14" class="edge">
+<title>proc~ddes&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M717.95,-150.04C745.95,-156.23 779.74,-163.7 806.58,-169.63"/>
+<polygon fill="#000000" stroke="#000000" points="805.98,-173.08 816.5,-171.82 807.49,-166.25 805.98,-173.08"/>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dintp -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge12" class="edge">
+<title>proc~ddes&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M717.95,-125.96C749.98,-118.88 789.59,-110.13 817.7,-103.91"/>
+<polygon fill="#000000" stroke="#000000" points="818.49,-107.32 827.5,-101.75 816.98,-100.49 818.49,-107.32"/>
+</g>
+<!-- proc~dsteps -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node11" class="node">
+<title>proc~dsteps</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node11"><a xlink:href="../proc/dsteps.html" xlink:title="ddeabm_class%dsteps">
+<polygon fill="#d9534f" stroke="#d9534f" points="921,-150 788,-150 788,-126 921,-126 921,-150"/>
+<text text-anchor="middle" x="854.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%dsteps</text>
+</a>
+</g>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dsteps -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge13" class="edge">
+<title>proc~ddes&#45;&gt;proc~dsteps</title>
+<path fill="none" stroke="#000000" d="M724.66,-138C741.53,-138 760.03,-138 777.63,-138"/>
+<polygon fill="#000000" stroke="#000000" points="777.86,-141.5 787.86,-138 777.86,-134.5 777.86,-141.5"/>
+</g>
+<!-- proc~dhstrt -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node12" class="node">
+<title>proc~dhstrt</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node12"><a xlink:href="../proc/dhstrt.html" xlink:title="ddeabm_class%dhstrt">
+<polygon fill="#d9534f" stroke="#d9534f" points="1086,-150 957,-150 957,-126 1086,-126 1086,-150"/>
+<text text-anchor="middle" x="1021.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%dhstrt</text>
+</a>
+</g>
+</g>
+<!-- proc~dsteps&#45;&gt;proc~dhstrt -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge15" class="edge">
+<title>proc~dsteps&#45;&gt;proc~dhstrt</title>
+<path fill="none" stroke="#000000" d="M921.19,-138C929.56,-138 938.17,-138 946.65,-138"/>
+<polygon fill="#000000" stroke="#000000" points="946.92,-141.5 956.92,-138 946.92,-134.5 946.92,-141.5"/>
+</g>
+<!-- proc~dhvnrm -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_node13" class="node">
+<title>proc~dhvnrm</title>
+<g id="a_proc~~ddeabm_with_event_wrapper~~CallsGraph_node13"><a xlink:href="../proc/dhvnrm.html" xlink:title="dhvnrm">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1176,-150 1122,-150 1122,-126 1176,-126 1176,-150"/>
+<text text-anchor="middle" x="1149" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhvnrm</text>
+</a>
+</g>
+</g>
+<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
+<g id="proc~~ddeabm_with_event_wrapper~~CallsGraph_edge16" class="edge">
+<title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
+<path fill="none" stroke="#000000" d="M1086.35,-138C1095.11,-138 1103.84,-138 1111.86,-138"/>
+<polygon fill="#000000" stroke="#000000" points="1111.93,-141.5 1121.93,-138 1111.93,-134.5 1111.93,-141.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocddeabm_with_event_wrapperCallsGraph = svgPanZoom('#procddeabm_with_event_wrapperCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">ddeabm_with_event_wrapper</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">tmax</span><span class="p">,</span><span class="w"> </span><span class="n">tstop</span><span class="p">,</span><span class="w"> </span><span class="n">idid</span><span class="p">,</span><span class="w"> </span><span class="n">gval</span><span class="p">,</span><span class="w"> </span><span class="n">integration_mode</span><span class="p">,</span><span class="w"> </span><span class="n">tstep</span><span class="p">,</span><span class="w"> </span><span class="k">continue</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      class</span><span class="p">(</span><span class="n">ddeabm_with_event_class</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">                         </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">y</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                            </span><span class="kd">::</span><span class="w"> </span><span class="n">tmax</span><span class="w">    </span><span class="c">!! max time at which a solution is desired.</span>
+<span class="w">                                                              </span><span class="c">!! (if root not located, it will integrate to `tmax`)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">tstop</span><span class="w">   </span><span class="c">!! for some problems it may not be permissible to integrate</span>
+<span class="w">                                                              </span><span class="c">!! past a point `tstop` because a discontinuity occurs there</span>
+<span class="w">                                                              </span><span class="c">!! or the solution or its derivative is not defined beyond</span>
+<span class="w">                                                              </span><span class="c">!! `tstop`.  when you have declared a `tstop` point (see `info(4)`),</span>
+<span class="w">                                                              </span><span class="c">!! you have told the code not to integrate past `tstop`.</span>
+<span class="w">                                                              </span><span class="c">!! in this case any `tmax` beyond `tstop` is invalid input.</span>
+<span class="w">                                                              </span><span class="c">!! [not used if not present]</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">                            </span><span class="kd">::</span><span class="w"> </span><span class="n">idid</span><span class="w">    </span><span class="c">!! indicator reporting what the code did.</span>
+<span class="w">                                                              </span><span class="c">!! you must monitor this integer variable to</span>
+<span class="w">                                                              </span><span class="c">!! decide what action to take next.</span>
+<span class="w">                                                              </span><span class="c">!! `idid=1000` means a root was found.</span>
+<span class="w">                                                              </span><span class="c">!! See [[ddeabm]] for other values.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">                           </span><span class="kd">::</span><span class="w"> </span><span class="n">gval</span><span class="w">    </span><span class="c">!! value of the event function `g(t,x)` at the final time `t`</span>
+<span class="w">                                                              </span><span class="c">!! (not set if the inputs are invalid: `idid=-33`)</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">integration_mode</span><span class="w">           </span><span class="c">!! Step mode:</span>
+<span class="w">                                                              </span><span class="c">!! *1* - normal integration from `t` to `tout`,</span>
+<span class="w">                                                              </span><span class="c">!!  no reporting [default].</span>
+<span class="w">                                                              </span><span class="c">!! *2* - normal integration from `t` to `tout`,</span>
+<span class="w">                                                              </span><span class="c">!!  report each step.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tstep</span><span class="w">    </span><span class="c">!! Fixed time step to use for reporting and</span>
+<span class="w">                                             </span><span class="c">!! evaluation of the event function (the points are</span>
+<span class="w">                                             </span><span class="c">!! interpolated within each integrator step). If not</span>
+<span class="w">                                             </span><span class="c">!! present, then default integrator steps are used.</span>
+<span class="w">                                             </span><span class="c">!! The event function is also evaluated at the end of</span>
+<span class="w">                                             </span><span class="c">!! each integrator step.</span>
+<span class="w">      </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="c">!! to continue after a previous event location.</span>
+<span class="w">                                            </span><span class="c">!! This option can be used after a previous call to this routine</span>
+<span class="w">                                            </span><span class="c">!! has found an event, to continue integration to the next event</span>
+<span class="w">                                            </span><span class="c">!! without having to restart the integration. It will not report</span>
+<span class="w">                                            </span><span class="c">!! the initial point (which would have been reported as the last</span>
+<span class="w">                                            </span><span class="c">!! point of the previous call). The rest of the integration step</span>
+<span class="w">                                            </span><span class="c">!! in which the previous event was found is checked for events</span>
+<span class="w">                                            </span><span class="c">!! (using interpolation) before integration continues.</span>
+<span class="w">                                            </span><span class="c">!! Limitation: on that remaining interval, the event function</span>
+<span class="w">                                            </span><span class="c">!! is ignored (it is zero at the start), so a second root of it</span>
+<span class="w">                                            </span><span class="c">!! within the same integration step will not be found.</span>
+
+<span class="w">      </span><span class="c">! local variables:</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">y1</span><span class="w">  </span><span class="c">!! initial state in an interval</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">y2</span><span class="w">  </span><span class="c">!! final state in an interval</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yc</span><span class="w">  </span><span class="c">!! interpolated state at `tc`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g1</span><span class="w">          </span><span class="c">!! value of event function at `t1`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">g2</span><span class="w">          </span><span class="c">!! value of event function at `t2`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t1</span><span class="w">          </span><span class="c">!! initial time of an interval</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t2</span><span class="w">          </span><span class="c">!! final time of an interval</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mode</span><span class="w">         </span><span class="c">!! local copy of integration_mode</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">first</span><span class="w">        </span><span class="c">!! flag for the first interval</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fixed_step</span><span class="w">   </span><span class="c">!! if reporting at the fixed step size `tstep`</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">continuing</span><span class="w">   </span><span class="c">!! local copy of optional `continue` argument</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">resuming</span><span class="w">     </span><span class="c">!! if the rest of the last step must be checked first</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">found</span><span class="w">        </span><span class="c">!! if a root was found (or root finding failed)</span>
+<span class="w">      </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">done</span><span class="w">         </span><span class="c">!! if finished after checking the rest of the last step</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dt</span><span class="w">          </span><span class="c">!! for fixed step size: actual signed time step</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">direction</span><span class="w">   </span><span class="c">!! direction of integration: `+1: tmax&gt;=t`, `-1: tmax&lt;t`</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t_anchor</span><span class="w">    </span><span class="c">!! for fixed step size: start of the reporting grid</span>
+<span class="w">      </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_grid</span><span class="w">       </span><span class="c">!! for fixed step size: number of grid points reported after `t_anchor`</span>
+
+<span class="w">      </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">      </span><span class="c">! optional inputs:</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">integration_mode</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">integration_mode</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c">!default</span>
+<span class="w">      </span><span class="k">end if</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="k">continue</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="w">         </span><span class="c">! if there has not yet been a successful</span>
+<span class="w">         </span><span class="c">! step yet, then proceed as normal without</span>
+<span class="w">         </span><span class="c">! continuing. Otherwise, enable continue mode.</span>
+<span class="w">         </span><span class="n">continuing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">continue</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">allocated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="p">))</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">continuing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">      </span><span class="k">end if</span>
+<span class="k">      </span><span class="n">resuming</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continuing</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span>
+<span class="w">      </span><span class="n">fixed_step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">present</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span>
+
+<span class="w">      </span><span class="c">!check for invalid inputs:</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="s1">'integration_mode must be 1 or 2.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">         </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">         </span><span class="k">return</span>
+<span class="k">      end if</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">((</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="s1">'REPORT procedure must be associated for integration_mode=2.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">         </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">         </span><span class="k">return</span>
+<span class="k">      end if</span>
+<span class="k">      if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="s1">'the event function GFUNC has not been associated.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">         </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">         </span><span class="k">return</span>
+<span class="k">      end if</span>
+<span class="w">      </span><span class="c">! direction of integration (it cannot be changed when continuing):</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">delsgn</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="w"> </span><span class="n">tmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">      </span><span class="k">end if</span>
+
+<span class="w">      </span><span class="c">! the fixed step reporting grid starts at the initial point,</span>
+<span class="w">      </span><span class="c">! or at the last root found if continuing from one:</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resuming</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">t_anchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_resume</span>
+<span class="w">      </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">t_anchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">t_anchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">      </span><span class="k">end if</span>
+<span class="k">      </span><span class="n">n_grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resuming</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">         </span><span class="c">! (the rest of the last step may be processed using interpolation</span>
+<span class="w">         </span><span class="c">! only, so these are checked here rather than by ddes)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_resume</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'cannot change the direction of integration when continuing.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tstop</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tstop</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_resume</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tstop</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                                 </span><span class="s1">'tmax is beyond tstop. these instructions conflict.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">               </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">               </span><span class="k">return</span>
+<span class="k">            end if</span>
+<span class="k">         end if</span>
+<span class="k">      end if</span>
+
+<span class="k">      if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">         </span><span class="c">! the step must advance the time everywhere on the interval</span>
+<span class="w">         </span><span class="c">! (it is not lost in roundoff), and the number of points</span>
+<span class="w">         </span><span class="c">! must not overflow the counter:</span>
+<span class="w">         </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">tstep</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t_anchor</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">t_anchor</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">tmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">tmax</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">             </span><span class="nb">abs</span><span class="p">(</span><span class="n">tmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_anchor</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">*</span><span class="kt">real</span><span class="p">(</span><span class="nb">huge</span><span class="p">(</span><span class="n">n_grid</span><span class="p">),</span><span class="w"> </span><span class="n">wp</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'tstep is too small (or zero) to advance the time.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+<span class="k">      end if</span>
+
+<span class="w">      </span><span class="c">! work arrays:</span>
+<span class="w">      </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">y1</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="w"> </span><span class="n">y2</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">),</span><span class="w"> </span><span class="n">yc</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">))</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">         </span><span class="c">! if continuing, then we reset the t,y inputs</span>
+<span class="w">         </span><span class="c">! to the values from the last successful step</span>
+<span class="w">         </span><span class="c">! (note that an event may have been found in the</span>
+<span class="w">         </span><span class="c">! last call, so the input values are not at the</span>
+<span class="w">         </span><span class="c">! end of the step)</span>
+<span class="w">         </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span>
+<span class="w">         </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span>
+<span class="w">         </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">   </span><span class="c">! continuation call</span>
+<span class="w">      </span><span class="k">end if</span>
+
+<span class="w">      </span><span class="c">!set info array:</span>
+
+<span class="w">      </span><span class="c">!info(1) is set when ddeabm_new_problem is called</span>
+
+<span class="w">      </span><span class="c">!info(2)</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">scalar_tols</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="k">end if</span>
+
+<span class="w">      </span><span class="c">!info(3): intermediate-output mode: return after each integration step.</span>
+<span class="w">      </span><span class="c">! the event is checked on each step, since the interpolating</span>
+<span class="w">      </span><span class="c">! polynomial is only valid on the last step. If using a fixed</span>
+<span class="w">      </span><span class="c">! step size, the reported points are interpolated within each step.</span>
+<span class="w">      </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">      </span><span class="c">!info(4)</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">tstop</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="n">me</span><span class="p">%</span><span class="n">tstop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tstop</span>
+<span class="w">      </span><span class="k">else</span>
+<span class="k">         </span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="n">me</span><span class="p">%</span><span class="n">tstop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="c">!not used</span>
+<span class="w">      </span><span class="k">end if</span>
+
+<span class="k">      call </span><span class="n">me</span><span class="p">%</span><span class="n">set_working_tols</span><span class="p">()</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resuming</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">         </span><span class="c">! the last step was only checked for events up to the</span>
+<span class="w">         </span><span class="c">! root that was found, so check the rest of it first:</span>
+<span class="w">         </span><span class="k">call </span><span class="n">check_rest_of_last_step</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">done</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">      else</span>
+<span class="w">         </span><span class="c">! evaluate the event function at the initial point:</span>
+<span class="w">         </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">         </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">g1</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">continuing</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">  </span><span class="c">!initial point</span>
+<span class="w">      </span><span class="k">end if</span>
+<span class="k">      </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">  </span><span class="c">! to ignore a root at the start of the first interval</span>
+
+<span class="w">      </span><span class="k">do</span>
+
+<span class="w">         </span><span class="c">! take one step in the direction of tmax:</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">ddeabm</span><span class="p">(</span><span class="n">neq</span><span class="o">=</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">tout</span><span class="o">=</span><span class="n">tmax</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">info</span><span class="o">=</span><span class="n">me</span><span class="p">%</span><span class="n">info</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">rtol</span><span class="o">=</span><span class="n">me</span><span class="p">%</span><span class="n">rtol_tmp</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">atol</span><span class="o">=</span><span class="n">me</span><span class="p">%</span><span class="n">atol_tmp</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                        </span><span class="n">idid</span><span class="o">=</span><span class="n">idid</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">!if there was a user-triggered error, return the last good point:</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1000</span>
+<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t1</span>
+<span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y1</span>
+<span class="w">            </span><span class="n">gval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g1</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! invalid input (see ddeabm or idid codes): no integration was</span>
+<span class="w">         </span><span class="c">! attempted, so the event function is not evaluated (gval is not set):</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! an interrupted task (idid = -1 to -4, see ddeabm or idid codes).</span>
+<span class="w">         </span><span class="c">! (in intermediate-output mode, the integration has not advanced)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">gval</span><span class="p">)</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">!save the last successful step in the class:</span>
+<span class="w">         </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">         </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+
+<span class="w">         </span><span class="c">!evaluate event function at new point:</span>
+<span class="w">         </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">         </span><span class="n">y2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">g2</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! check for a root on [t1,t2] and report the points. on the first</span>
+<span class="w">         </span><span class="c">! interval, ignore a root at the initial time (or at the root</span>
+<span class="w">         </span><span class="c">! where a previous call stopped):</span>
+<span class="w">         </span><span class="k">call </span><span class="n">process_interval</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">g1</span><span class="p">,</span><span class="w"> </span><span class="n">g2</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+
+<span class="w">         </span><span class="c">! integration is finished (see ddeabm or idid codes):</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">idid</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">gval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! set up for next step:</span>
+<span class="w">         </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="n">g1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span>
+<span class="w">         </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span>
+<span class="w">         </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2</span>
+
+<span class="w">      </span><span class="k">end do</span>
+
+<span class="k">   contains</span>
+
+<span class="k">      subroutine </span><span class="n">process_interval</span><span class="p">(</span><span class="n">ta</span><span class="p">,</span><span class="w"> </span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">ya</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="p">,</span><span class="w"> </span><span class="n">gb</span><span class="p">,</span><span class="w"> </span><span class="n">mask</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">)</span>
+
+<span class="w">            </span><span class="c">!! Check for roots of the event function on `[ta,tb]`</span>
+<span class="w">            </span><span class="c">!! (which must be within the last integration step), and</span>
+<span class="w">            </span><span class="c">!! report the points on the interval (if `mode=2`).</span>
+<span class="w">            </span><span class="c">!!</span>
+<span class="w">            </span><span class="c">!! If using a fixed step size, the interval is divided at the points on</span>
+<span class="w">            </span><span class="c">!! the fixed step grid (using interpolation), so that the event function</span>
+<span class="w">            </span><span class="c">!! is evaluated at least every `tstep`, and each subinterval is checked</span>
+<span class="w">            </span><span class="c">!! in order.</span>
+<span class="w">            </span><span class="c">!!</span>
+<span class="w">            </span><span class="c">!! If a root is found, the outputs (`t`, `y`, `idid`, `gval`) are set.</span>
+
+<span class="w">         </span><span class="k">implicit none</span>
+
+<span class="k">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">ta</span><span class="w">    </span><span class="c">!! start of the interval</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">tb</span><span class="w">    </span><span class="c">!! end of the interval</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ya</span><span class="w">    </span><span class="c">!! state at `ta`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yb</span><span class="w">    </span><span class="c">!! state at `tb`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">ga</span><span class="w">    </span><span class="c">!! event function at `ta`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">gb</span><span class="w">    </span><span class="c">!! event function at `tb`</span>
+<span class="w">         </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">mask</span><span class="w">  </span><span class="c">!! if the function is to be ignored on the first subinterval</span>
+<span class="w">         </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">found</span><span class="w"> </span><span class="c">!! if a root was found</span>
+<span class="w">                                                     </span><span class="c">!! (or there was an error locating it)</span>
+
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tl</span><span class="w">                     </span><span class="c">!! start of the current subinterval</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tn</span><span class="w">                     </span><span class="c">!! next point on the fixed step grid</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yl</span><span class="w">  </span><span class="c">!! state at `tl`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">neq</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yn</span><span class="w">  </span><span class="c">!! state at `tn`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gl</span><span class="p">,</span><span class="w"> </span><span class="n">gn</span><span class="w">  </span><span class="c">!! event function at `tl` and `tn`</span>
+<span class="w">         </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="c">!! mask for the current subinterval</span>
+
+<span class="w">         </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tb</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ta</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+
+<span class="k">         </span><span class="n">tl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ta</span>
+<span class="w">         </span><span class="n">yl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ya</span>
+<span class="w">         </span><span class="n">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ga</span>
+<span class="w">         </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mask</span>
+
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! subintervals ending at the grid points in (ta,tb), before tmax:</span>
+<span class="w">            </span><span class="k">do</span>
+<span class="k">               </span><span class="n">tn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_anchor</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">real</span><span class="p">(</span><span class="n">n_grid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">wp</span><span class="p">)</span><span class="o">*</span><span class="n">dt</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tn</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tl</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="c">! (should not happen) skip points not after tl</span>
+<span class="w">                  </span><span class="n">n_grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_grid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="k">cycle</span>
+<span class="k">               end if</span>
+<span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tn</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tb</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">tn</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tmax</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">               call </span><span class="n">me</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">tn</span><span class="p">,</span><span class="w"> </span><span class="n">yn</span><span class="p">)</span>
+<span class="w">               </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">tn</span><span class="p">,</span><span class="w"> </span><span class="n">yn</span><span class="p">,</span><span class="w"> </span><span class="n">gn</span><span class="p">)</span>
+<span class="w">               </span><span class="k">call </span><span class="n">locate_root</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span><span class="w"> </span><span class="n">tn</span><span class="p">,</span><span class="w"> </span><span class="n">yl</span><span class="p">,</span><span class="w"> </span><span class="n">yn</span><span class="p">,</span><span class="w"> </span><span class="n">gl</span><span class="p">,</span><span class="w"> </span><span class="n">gn</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">)</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                  call </span><span class="n">root_located</span><span class="p">()</span>
+<span class="w">                  </span><span class="k">return</span>
+<span class="k">               end if</span>
+<span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">tn</span><span class="p">,</span><span class="w"> </span><span class="n">yn</span><span class="p">)</span>
+<span class="w">               </span><span class="n">n_grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_grid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">               </span><span class="n">tl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tn</span>
+<span class="w">               </span><span class="n">yl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yn</span>
+<span class="w">               </span><span class="n">gl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gn</span>
+<span class="w">               </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! the last subinterval (or the whole interval):</span>
+<span class="w">         </span><span class="k">call </span><span class="n">locate_root</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span><span class="w"> </span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">yl</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">,</span><span class="w"> </span><span class="n">gl</span><span class="p">,</span><span class="w"> </span><span class="n">gb</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">root_located</span><span class="p">()</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! (tn is only defined if fixed_step)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fixed_step</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">tb</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">tmax</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">)</span><span class="w"> </span><span class="c">! the last point</span>
+<span class="w">            </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">tn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">tb</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">               if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">)</span><span class="w"> </span><span class="c">! a grid point at the end of the step</span>
+<span class="w">               </span><span class="n">n_grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_grid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">         else</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">)</span><span class="w"> </span><span class="c">! the end of the integration step (or tmax)</span>
+<span class="w">         </span><span class="k">end if</span>
+
+<span class="k">      end subroutine </span><span class="n">process_interval</span>
+
+<span class="w">      </span><span class="k">subroutine </span><span class="n">root_located</span><span class="p">()</span>
+
+<span class="w">            </span><span class="c">!! A root (or an error locating it) was found by `locate_root`:</span>
+<span class="w">            </span><span class="c">!! report it, and set up for continuing from it.</span>
+
+<span class="w">         </span><span class="k">implicit none</span>
+
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="c">! a root was found</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">report</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="c">! report the root</span>
+<span class="w">            </span><span class="c">! a subsequent call with continue=.true. will</span>
+<span class="w">            </span><span class="c">! check the rest of the step from this point:</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">t_resume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">         </span><span class="k">end if</span>
+
+<span class="k">      end subroutine </span><span class="n">root_located</span>
+
+<span class="w">      </span><span class="k">subroutine </span><span class="n">locate_root</span><span class="p">(</span><span class="n">ta</span><span class="p">,</span><span class="w"> </span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">ya</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="p">,</span><span class="w"> </span><span class="n">gb</span><span class="p">,</span><span class="w"> </span><span class="n">mask</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">)</span>
+
+<span class="w">            </span><span class="c">!! Check for a root of the event function on `[ta,tb]` and,</span>
+<span class="w">            </span><span class="c">!! if there is one, locate it.</span>
+<span class="w">            </span><span class="c">!! If found, the outputs (`t`, `y`, `idid`, `gval`) are set.</span>
+
+<span class="w">         </span><span class="k">implicit none</span>
+
+<span class="k">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">ta</span><span class="w">    </span><span class="c">!! start of the interval</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">tb</span><span class="w">    </span><span class="c">!! end of the interval</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ya</span><span class="w">    </span><span class="c">!! state at `ta`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yb</span><span class="w">    </span><span class="c">!! state at `tb`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">ga</span><span class="w">    </span><span class="c">!! event function at `ta`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">gb</span><span class="w">    </span><span class="c">!! event function at `tb`</span>
+<span class="w">         </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">mask</span><span class="w">  </span><span class="c">!! if the function is to be ignored</span>
+<span class="w">         </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">               </span><span class="kd">::</span><span class="w"> </span><span class="n">found</span><span class="w"> </span><span class="c">!! if a root was found</span>
+<span class="w">                                                     </span><span class="c">!! (or there was an error locating it)</span>
+
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tzero</span><span class="w">   </span><span class="c">!! time where an event occurs in `[ta,tb]`</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">gzero</span><span class="w">   </span><span class="c">!! event function value at `tzero`</span>
+<span class="w">         </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iflag</span><span class="w">    </span><span class="c">!! root finder status flag</span>
+
+<span class="w">         </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mask</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="n">ga</span><span class="o">*</span><span class="n">gb</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w">  </span><span class="c">! no change in sign of the event function</span>
+
+<span class="w">         </span><span class="c">! the user bracket function can impose</span>
+<span class="w">         </span><span class="c">! additional constraints on the root, so</span>
+<span class="w">         </span><span class="c">! we check that now if it was associated:</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">bracket</span><span class="p">(</span><span class="n">ta</span><span class="p">,</span><span class="w"> </span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="n">ya</span><span class="p">,</span><span class="w"> </span><span class="n">yb</span><span class="p">,</span><span class="w"> </span><span class="n">ga</span><span class="p">,</span><span class="w"> </span><span class="n">gb</span><span class="p">))</span><span class="w"> </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! root somewhere on [ta,tb]</span>
+<span class="w">         </span><span class="c">! call the root finder:</span>
+<span class="w">         </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">         </span><span class="k">call </span><span class="n">root_scalar</span><span class="p">(</span><span class="n">root_method_brent</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">fun</span><span class="o">=</span><span class="n">zeroin_func</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">ax</span><span class="o">=</span><span class="n">ta</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">bx</span><span class="o">=</span><span class="n">tb</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">rtol</span><span class="o">=</span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">ftol</span><span class="o">=</span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">xzero</span><span class="o">=</span><span class="n">tzero</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">fzero</span><span class="o">=</span><span class="n">gzero</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">iflag</span><span class="o">=</span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">fax</span><span class="o">=</span><span class="n">ga</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                          </span><span class="n">fbx</span><span class="o">=</span><span class="n">gb</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">iflag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="c">! root found at tzero</span>
+<span class="w">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="c">! root found</span>
+<span class="w">            </span><span class="c">!evaluate again to get the final state for output:</span>
+<span class="w">            </span><span class="n">gval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeroin_func</span><span class="p">(</span><span class="n">tzero</span><span class="p">)</span>
+<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tzero</span>
+<span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yc</span>
+<span class="w">         </span><span class="k">else</span>
+<span class="w">            </span><span class="c">! unlikely to occur since zeroin is</span>
+<span class="w">            </span><span class="c">! "guaranteed" to converge, but just in case:</span>
+<span class="w">            </span><span class="k">call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm_with_event_wrapper'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'Error locating root.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">2000</span><span class="w"> </span><span class="c">! no root is found</span>
+<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tb</span>
+<span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yb</span>
+<span class="w">            </span><span class="n">gval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gb</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="w">         </span><span class="k">end if</span>
+
+<span class="k">      end subroutine </span><span class="n">locate_root</span>
+
+<span class="w">      </span><span class="k">subroutine </span><span class="n">check_rest_of_last_step</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+
+<span class="w">            </span><span class="c">!! When continuing after a root was found, check the rest of the</span>
+<span class="w">            </span><span class="c">!! last integration step (`[t_resume, t_saved]`) for events, using</span>
+<span class="w">            </span><span class="c">!! interpolation. Points on this interval are also reported if necessary.</span>
+<span class="w">            </span><span class="c">!! On return, if not `done`, the integration continues from the end of</span>
+<span class="w">            </span><span class="c">!! the last step (`t1`, `y1`, `g1` are set for that).</span>
+
+<span class="w">         </span><span class="k">implicit none</span>
+
+<span class="k">         </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="c">!! if finished (a root was found or `tmax` was reached)</span>
+
+<span class="w">         </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">reached_tmax</span><span class="w"> </span><span class="c">!! if `tmax` is within the last step</span>
+
+<span class="w">         </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+
+<span class="w">         </span><span class="c">! the interval is from the last root to the end of the</span>
+<span class="w">         </span><span class="c">! last step, or to tmax if it is before that:</span>
+<span class="w">         </span><span class="n">reached_tmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tmax</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">         </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_resume</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">)</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">g1</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">reached_tmax</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span>
+<span class="w">            </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">)</span>
+<span class="w">         </span><span class="k">else</span>
+<span class="k">            </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span>
+<span class="w">            </span><span class="n">y2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span>
+<span class="w">         </span><span class="k">end if</span>
+<span class="k">         call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">g2</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! ignore the function if it is zero at the last root:</span>
+<span class="w">         </span><span class="k">call </span><span class="n">process_interval</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">g1</span><span class="p">,</span><span class="w"> </span><span class="n">g2</span><span class="p">,</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tol</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">)</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="n">reached_tmax</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="c">! finished: tmax is within the last step</span>
+<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span>
+<span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2</span>
+<span class="w">            </span><span class="n">gval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span>
+<span class="w">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">t_resume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmax</span>
+<span class="w">            </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="o">*</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tmax</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0_wp</span>
+<span class="w">            </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+
+<span class="w">         </span><span class="c">! continue the integration from the end of the last step:</span>
+<span class="w">         </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">t_saved</span>
+<span class="w">         </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">x_saved</span>
+<span class="w">         </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span>
+<span class="w">         </span><span class="n">y1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y2</span>
+<span class="w">         </span><span class="n">g1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g2</span>
+<span class="w">         </span><span class="n">me</span><span class="p">%</span><span class="n">resume_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+
+<span class="w">      </span><span class="k">end subroutine </span><span class="n">check_rest_of_last_step</span>
+
+<span class="w">      </span><span class="k">function </span><span class="n">zeroin_func</span><span class="p">(</span><span class="n">tc</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c">!! evaluate the g function at `tc`</span>
+<span class="w">        </span><span class="c">!! using interpolation ([[dintp]]).</span>
+
+<span class="w">         </span><span class="k">implicit none</span>
+
+<span class="k">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">tc</span><span class="w">  </span><span class="c">!! current time</span>
+<span class="w">         </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w">             </span><span class="kd">::</span><span class="w"> </span><span class="n">g</span><span class="w">   </span><span class="c">!! value of event function</span>
+
+<span class="w">         </span><span class="c">! interpolate to get the state at tc:</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">interpolate</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="w"> </span><span class="n">yc</span><span class="p">)</span>
+
+<span class="w">         </span><span class="c">! user defined event function:</span>
+<span class="w">         </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">gfunc</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="w"> </span><span class="n">yc</span><span class="p">,</span><span class="w"> </span><span class="n">g</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">end function </span><span class="n">zeroin_func</span>
+
+<span class="w">   </span><span class="k">end subroutine </span><span class="n">ddeabm_with_event_wrapper</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              ddeabm
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

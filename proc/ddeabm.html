@@ -1,0 +1,1175 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Modern Fortran Implementation of the DDEABM Adams-Bashforth-Moulton ODE Solver">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ddeabm &ndash; ddeabm</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">ddeabm </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../sourcefile/ddeabm_module.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ddeabm
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.8% of total for procedures.">34 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ddeabm_module.F90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ddeabm_module.f90.html'>ddeabm_module.F90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ddeabm_module.html'>ddeabm_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ddeabm</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/ddeabm.html#src">ddeabm</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine ddeabm(me, neq, t, y, tout, info, rtol, atol, idid)  
+</h2>
+    
+
+    <p>solve an initial value problem in ordinary differential
+  equations using an adams-bashforth method.</p>
+<p>subroutine ddeabm uses the adams-bashforth-moulton
+  predictor-corrector formulas of orders one through twelve to
+  integrate a system of neq first order ordinary differential
+  equations of the form <code>du/dx = df(x,u)</code>
+  when the vector <code>y(*)</code> of initial values for <code>u(*)</code> at <code>x=t</code> is given.
+  the subroutine integrates from <code>t</code> to <code>tout</code>. it is easy to continue the
+  integration to get results at additional <code>tout</code>.  this is the interval
+  mode of operation.  it is also easy for the routine to return with
+  the solution at each intermediate step on the way to <code>tout</code>.  this is
+  the intermediate-output mode of operation.</p>
+<p>ddeabm is primarily designed to solve non-stiff and
+  mildly stiff differential equations when derivative evaluations
+  are expensive, high accuracy results are needed or answers at
+  many specific points are required. ddeabm attempts to discover
+  when it is not suitable for the task posed.</p>
+<p><strong>quantities which are used as input items are:</strong>
+    <code>neq, t, y(*), tout, info(*), rtol, atol</code></p>
+<p><strong>quantities which may be altered by the code are:</strong>
+    <code>t, y(*), info(1), rtol, atol, idid</code></p>
+<h3>Description of the arguments to ddeabm (an overview)</h3>
+<p>the parameters are</p>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="n">neq</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="n">differential</span>
+<span class="w">         </span><span class="n">equations</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">integrated</span><span class="o">.</span>
+
+<span class="w">  </span><span class="n">t</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">double</span><span class="w"> </span><span class="n">precision</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">independent</span>
+<span class="w">       </span><span class="n">variable</span><span class="o">.</span>
+
+<span class="w">  </span><span class="n">y</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">double</span><span class="w"> </span><span class="n">precision</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">solution</span>
+<span class="w">          </span><span class="n">components</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">t</span><span class="o">.</span>
+
+<span class="w">  </span><span class="n">tout</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">double</span><span class="w"> </span><span class="n">precision</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">solution</span><span class="w"> </span><span class="k">is</span>
+<span class="w">          </span><span class="n">desired</span><span class="o">.</span>
+
+<span class="w">  </span><span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">integrate</span><span class="w"> </span><span class="n">the</span>
+<span class="w">         </span><span class="n">differential</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">tout</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">an</span>
+<span class="w">         </span><span class="n">answer</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">tout</span><span class="o">.</span><span class="w">  </span><span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">used</span>
+<span class="w">         </span><span class="n">to</span><span class="w"> </span><span class="n">communicate</span><span class="w"> </span><span class="n">exactly</span><span class="w"> </span><span class="n">how</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span>
+<span class="w">         </span><span class="n">carried</span><span class="w"> </span><span class="n">out</span><span class="o">.</span>
+
+<span class="w">  </span><span class="n">rtol</span><span class="p">,</span><span class="w"> </span><span class="n">atol</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">double</span><span class="w"> </span><span class="n">precision</span><span class="w"> </span><span class="n">quantities</span><span class="w"> </span><span class="n">represent</span>
+<span class="w">                </span><span class="n">relative</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">absolute</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">tolerances</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">you</span>
+<span class="w">                </span><span class="n">provide</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">indicate</span><span class="w"> </span><span class="n">how</span><span class="w"> </span><span class="n">accurately</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">wish</span><span class="w"> </span><span class="n">the</span>
+<span class="w">                </span><span class="n">solution</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">computed</span><span class="o">.</span><span class="w">  </span><span class="n">you</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">choose</span><span class="w"> </span><span class="n">them</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span>
+<span class="w">                </span><span class="n">both</span><span class="w"> </span><span class="n">scalars</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">both</span><span class="w"> </span><span class="n">vectors</span><span class="o">.</span>
+
+<span class="w">  </span><span class="n">idid</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">scalar</span><span class="w"> </span><span class="n">quantity</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">indicator</span><span class="w"> </span><span class="n">reporting</span><span class="w"> </span><span class="n">what</span>
+<span class="w">         </span><span class="n">the</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">did</span><span class="o">.</span><span class="w">  </span><span class="n">you</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">monitor</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">to</span>
+<span class="w">         </span><span class="n">decide</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">take</span><span class="w"> </span><span class="n">next</span><span class="o">.</span>
+</code></pre></div>
+
+<h3>input -- what to do on the first call to ddeabm</h3>
+<p>the first call of the code is defined to be the start of each new
+   problem.  read through the descriptions of all the following items,
+   provide sufficient storage space for designated arrays, set
+   appropriate variables for the initialization of the problem, and
+   give information about how you want the problem to be solved.</p>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nx">neq</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">number</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">differential</span><span class="w"> </span><span class="nx">equations</span><span class="p">.</span>
+<span class="w">         </span><span class="p">(</span><span class="nx">neq</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="w">  </span><span class="nx">t</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">initial</span><span class="w"> </span><span class="nx">point</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">integration</span><span class="p">.</span>
+<span class="w">         </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">variable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="nx">because</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span>
+<span class="w">         </span><span class="nx">changes</span><span class="w"> </span><span class="nx">its</span><span class="w"> </span><span class="nx">value</span><span class="p">.</span>
+
+<span class="w">  </span><span class="nx">y</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">vector</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">initial</span><span class="w"> </span><span class="nx">values</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">neq</span><span class="w"> </span><span class="nx">solution</span>
+<span class="w">         </span><span class="nx">components</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">initial</span><span class="w"> </span><span class="nx">point</span><span class="p">.</span><span class="w">  </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">dimension</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="nx">at</span>
+<span class="w">         </span><span class="nx">least</span><span class="w"> </span><span class="nx">neq</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">calling</span><span class="w"> </span><span class="nx">program</span><span class="p">.</span>
+
+<span class="w">  </span><span class="nx">tout</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">first</span><span class="w"> </span><span class="nx">point</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">solution</span>
+<span class="w">         </span><span class="k">is</span><span class="w"> </span><span class="nx">desired</span><span class="p">.</span><span class="w">  </span><span class="nx">you</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">take</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span>
+<span class="w">         </span><span class="nx">will</span><span class="w"> </span><span class="nx">evaluate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">derivative</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="k">and</span>
+<span class="w">         </span><span class="k">return</span><span class="p">.</span><span class="w"> </span><span class="nx">integration</span><span class="w"> </span><span class="nx">either</span><span class="w"> </span><span class="nx">forward</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="p">(</span><span class="nx">tout</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="k">or</span>
+<span class="w">         </span><span class="nx">backward</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="p">(</span><span class="nx">tout</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">permitted</span><span class="p">.</span>
+
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">advances</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="nx">using</span>
+<span class="w">         </span><span class="nx">step</span><span class="w"> </span><span class="nx">sizes</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">automatically</span><span class="w"> </span><span class="nx">selected</span><span class="w"> </span><span class="nx">so</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">to</span>
+<span class="w">         </span><span class="nx">achieve</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">desired</span><span class="w"> </span><span class="nx">accuracy</span><span class="p">.</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">wish</span><span class="p">,</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">will</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">its</span><span class="w"> </span><span class="nx">derivative</span><span class="w"> </span><span class="nx">following</span>
+<span class="w">         </span><span class="nx">each</span><span class="w"> </span><span class="nx">intermediate</span><span class="w"> </span><span class="nx">step</span><span class="w"> </span><span class="p">(</span><span class="nx">intermediate</span><span class="o">-</span><span class="nx">output</span><span class="w"> </span><span class="nx">mode</span><span class="p">)</span><span class="w"> </span><span class="nx">so</span><span class="w"> </span><span class="nx">that</span>
+<span class="w">         </span><span class="nx">you</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">monitor</span><span class="w"> </span><span class="nx">them</span><span class="p">,</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">still</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">provide</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="k">in</span>
+<span class="w">         </span><span class="nx">accord</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">basic</span><span class="w"> </span><span class="nx">aim</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="p">.</span>
+
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">first</span><span class="w"> </span><span class="nx">step</span><span class="w"> </span><span class="nx">taken</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">critical</span><span class="w"> </span><span class="nx">one</span>
+<span class="w">         </span><span class="nx">because</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">reflect</span><span class="w"> </span><span class="nx">how</span><span class="w"> </span><span class="nx">fast</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">changes</span><span class="w"> </span><span class="nx">near</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">initial</span><span class="w"> </span><span class="nx">point</span><span class="p">.</span><span class="w">  </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">automatically</span><span class="w"> </span><span class="nx">selects</span><span class="w"> </span><span class="nx">an</span>
+<span class="w">         </span><span class="nx">initial</span><span class="w"> </span><span class="nx">step</span><span class="w"> </span><span class="nx">size</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">practically</span><span class="w"> </span><span class="nx">always</span><span class="w"> </span><span class="nx">suitable</span><span class="w"> </span><span class="k">for</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">problem</span><span class="p">.</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">using</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">fact</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">step</span>
+<span class="w">         </span><span class="nx">past</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">first</span><span class="w"> </span><span class="nx">step</span><span class="p">,</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">could</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">necessary</span><span class="p">,</span>
+<span class="w">         </span><span class="nx">restrict</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">length</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">initial</span><span class="w"> </span><span class="nx">step</span><span class="w"> </span><span class="nx">size</span><span class="p">.</span>
+
+<span class="w">         </span><span class="k">for</span><span class="w"> </span><span class="nx">some</span><span class="w"> </span><span class="nx">problems</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">may</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">permissible</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">integrate</span>
+<span class="w">         </span><span class="nx">past</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">point</span><span class="w"> </span><span class="nx">tstop</span><span class="w"> </span><span class="nx">because</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">discontinuity</span><span class="w"> </span><span class="nx">occurs</span><span class="w"> </span><span class="nx">there</span>
+<span class="w">         </span><span class="k">or</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">its</span><span class="w"> </span><span class="nx">derivative</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="nx">beyond</span>
+<span class="w">         </span><span class="nx">tstop</span><span class="p">.</span><span class="w">  </span><span class="nx">when</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">declared</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">tstop</span><span class="w"> </span><span class="nx">point</span><span class="w"> </span><span class="p">(</span><span class="nx">see</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+<span class="w">         </span><span class="nx">you</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">told</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">integrate</span><span class="w"> </span><span class="nx">past</span><span class="w"> </span><span class="nx">tstop</span><span class="p">.</span>
+<span class="w">         </span><span class="k">in</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="nx">any</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="nx">beyond</span><span class="w"> </span><span class="nx">tstop</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">invalid</span><span class="w"> </span><span class="nx">input</span><span class="p">.</span>
+
+<span class="w">  </span><span class="nx">info</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">info</span><span class="w"> </span><span class="nx">array</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">give</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">more</span><span class="w"> </span><span class="nx">details</span><span class="w"> </span><span class="nx">about</span>
+<span class="w">         </span><span class="nx">how</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">problem</span><span class="w"> </span><span class="nx">solved</span><span class="p">.</span><span class="w">  </span><span class="nx">this</span><span class="w"> </span><span class="nx">array</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">be</span>
+<span class="w">         </span><span class="nx">dimensioned</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">length</span><span class="w"> </span><span class="mi">4</span><span class="p">.</span><span class="w">  </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">respond</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">of</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">following</span><span class="w"> </span><span class="nx">items</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">arranged</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">questions</span><span class="p">.</span><span class="w">  </span><span class="nx">the</span>
+<span class="w">         </span><span class="nx">simplest</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">corresponds</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">answering</span><span class="w"> </span><span class="nx">all</span>
+<span class="w">         </span><span class="nx">questions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">yes</span><span class="w"> </span><span class="p">,</span><span class="nx">i</span><span class="p">.</span><span class="nx">e</span><span class="p">.</span><span class="w"> </span><span class="nx">setting</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">entries</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">info</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>
+
+<span class="w">    </span><span class="nx">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">parameter</span><span class="w"> </span><span class="nx">enables</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">initialize</span>
+<span class="w">           </span><span class="nx">itself</span><span class="p">.</span><span class="w">  </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">indicate</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">every</span>
+<span class="w">           </span><span class="nx">new</span><span class="w"> </span><span class="nx">problem</span><span class="p">.</span>
+
+<span class="w">        </span><span class="o">****</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">first</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">problem</span><span class="w"> </span><span class="o">...</span>
+<span class="w">              </span><span class="nx">yes</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">               </span><span class="nx">no</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">applicable</span><span class="w"> </span><span class="nx">here</span><span class="p">.</span>
+<span class="w">                     </span><span class="nx">see</span><span class="w"> </span><span class="nx">below</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">continuation</span><span class="w"> </span><span class="nx">calls</span><span class="p">.</span><span class="w">  </span><span class="o">****</span>
+
+<span class="w">    </span><span class="nx">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">how</span><span class="w"> </span><span class="nx">much</span><span class="w"> </span><span class="nx">accuracy</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">solution</span>
+<span class="w">           </span><span class="k">is</span><span class="w"> </span><span class="nx">specified</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">tolerances</span><span class="w"> </span><span class="nx">rtol</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">atol</span><span class="p">.</span>
+<span class="w">           </span><span class="nx">the</span><span class="w"> </span><span class="nx">simplest</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">take</span><span class="w"> </span><span class="nx">them</span><span class="w"> </span><span class="nx">both</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">scalars</span><span class="p">.</span>
+<span class="w">           </span><span class="nx">to</span><span class="w"> </span><span class="nx">obtain</span><span class="w"> </span><span class="nx">more</span><span class="w"> </span><span class="nx">flexibility</span><span class="p">,</span><span class="w"> </span><span class="nx">they</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">both</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">vectors</span><span class="p">.</span>
+<span class="w">           </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">told</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="kd">choice</span><span class="p">.</span>
+
+<span class="w">        </span><span class="o">****</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">both</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">tolerances</span><span class="w"> </span><span class="nx">rtol</span><span class="p">,</span><span class="w"> </span><span class="nx">atol</span><span class="w"> </span><span class="nx">scalars</span><span class="w"> </span><span class="o">...</span>
+<span class="w">              </span><span class="nx">yes</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                     </span><span class="k">and</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="nx">scalars</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">both</span><span class="w"> </span><span class="nx">rtol</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">atol</span>
+<span class="w">               </span><span class="nx">no</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                     </span><span class="k">and</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="nx">arrays</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">both</span><span class="w"> </span><span class="nx">rtol</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">atol</span><span class="w"> </span><span class="o">****</span>
+
+<span class="w">    </span><span class="nx">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">integrates</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">direction</span>
+<span class="w">           </span><span class="nx">of</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">steps</span><span class="p">.</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">wish</span><span class="p">,</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">the</span>
+<span class="w">           </span><span class="nx">computed</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">derivative</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">next</span>
+<span class="w">           </span><span class="nx">intermediate</span><span class="w"> </span><span class="nx">step</span><span class="w"> </span><span class="p">(</span><span class="nx">the</span><span class="w"> </span><span class="nx">intermediate</span><span class="o">-</span><span class="nx">output</span><span class="w"> </span><span class="nx">mode</span><span class="p">)</span><span class="w"> </span><span class="k">or</span>
+<span class="w">           </span><span class="nx">tout</span><span class="p">,</span><span class="w"> </span><span class="nx">whichever</span><span class="w"> </span><span class="nx">comes</span><span class="w"> </span><span class="nx">first</span><span class="p">.</span><span class="w">  </span><span class="nx">this</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">good</span><span class="w"> </span><span class="nx">way</span><span class="w"> </span><span class="nx">to</span>
+<span class="w">           </span><span class="nx">proceed</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">see</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">behavior</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="p">.</span>
+<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">solutions</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">great</span><span class="w"> </span><span class="nx">many</span><span class="w"> </span><span class="nx">specific</span>
+<span class="w">           </span><span class="nx">tout</span><span class="w"> </span><span class="nx">points</span><span class="p">,</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="nx">compute</span><span class="w"> </span><span class="nx">them</span><span class="w"> </span><span class="nx">efficiently</span><span class="p">.</span>
+
+<span class="w">        </span><span class="o">****</span><span class="w"> </span><span class="nx">do</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="nx">at</span>
+<span class="w">             </span><span class="nx">tout</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">next</span><span class="w"> </span><span class="nx">intermediate</span><span class="w"> </span><span class="nx">step</span><span class="p">)</span><span class="w"> </span><span class="o">...</span>
+<span class="w">              </span><span class="nx">yes</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">               </span><span class="nx">no</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">****</span>
+
+<span class="w">    </span><span class="nx">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">handle</span><span class="w"> </span><span class="nx">solutions</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">great</span><span class="w"> </span><span class="nx">many</span><span class="w"> </span><span class="nx">specific</span>
+<span class="w">           </span><span class="nx">values</span><span class="w"> </span><span class="nx">tout</span><span class="w"> </span><span class="nx">efficiently</span><span class="p">,</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">may</span><span class="w"> </span><span class="nx">integrate</span><span class="w"> </span><span class="nx">past</span>
+<span class="w">           </span><span class="nx">tout</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">interpolate</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">obtain</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">tout</span><span class="p">.</span>
+<span class="w">           </span><span class="nx">sometimes</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">possible</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">integrate</span><span class="w"> </span><span class="nx">beyond</span><span class="w"> </span><span class="nx">some</span>
+<span class="w">           </span><span class="nx">point</span><span class="w"> </span><span class="nx">tstop</span><span class="w"> </span><span class="nx">because</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">equation</span><span class="w"> </span><span class="nx">changes</span><span class="w"> </span><span class="nx">there</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="k">is</span>
+<span class="w">           </span><span class="k">not</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="nx">past</span><span class="w"> </span><span class="nx">tstop</span><span class="p">.</span><span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">tell</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span>
+<span class="w">           </span><span class="k">not</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">go</span><span class="w"> </span><span class="nx">past</span><span class="p">.</span>
+
+<span class="w">        </span><span class="o">****</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">integration</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">carried</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="nx">without</span><span class="w"> </span><span class="nx">any</span>
+<span class="w">             </span><span class="nx">restrictions</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">independent</span><span class="w"> </span><span class="nx">variable</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">...</span>
+<span class="w">              </span><span class="nx">yes</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)=</span><span class="mi">0</span>
+<span class="w">               </span><span class="nx">no</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">info</span><span class="p">(</span><span class="mi">4</span><span class="p">)=</span><span class="mi">1</span>
+<span class="w">                     </span><span class="k">and</span><span class="w"> </span><span class="nx">define</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">stopping</span><span class="w"> </span><span class="nx">point</span><span class="w"> </span><span class="nx">me</span><span class="o">%</span><span class="nx">tstop</span><span class="w"> </span><span class="o">****</span>
+
+<span class="w">  </span><span class="nx">rtol</span><span class="p">,</span><span class="w"> </span><span class="nx">atol</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">assign</span><span class="w"> </span><span class="nx">relative</span><span class="w"> </span><span class="p">(</span><span class="nx">rtol</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">absolute</span><span class="w"> </span><span class="p">(</span><span class="nx">atol</span><span class="p">)</span>
+<span class="w">         </span><span class="nx">error</span><span class="w"> </span><span class="nx">tolerances</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">tell</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">how</span><span class="w"> </span><span class="nx">accurately</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">computed</span><span class="p">.</span><span class="w">  </span><span class="nx">they</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="k">as</span>
+<span class="w">         </span><span class="nx">program</span><span class="w"> </span><span class="nx">variables</span><span class="w"> </span><span class="nx">because</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">may</span><span class="w"> </span><span class="nx">change</span><span class="w"> </span><span class="nx">them</span><span class="p">.</span><span class="w">  </span><span class="nx">you</span>
+<span class="w">         </span><span class="nx">have</span><span class="w"> </span><span class="nx">two</span><span class="w"> </span><span class="nx">choices</span><span class="w"> </span><span class="o">--</span>
+<span class="w">              </span><span class="nx">both</span><span class="w"> </span><span class="nx">rtol</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">atol</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">scalars</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="nx">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)=</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">              </span><span class="nx">both</span><span class="w"> </span><span class="nx">rtol</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">atol</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">vectors</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="nx">info</span><span class="p">(</span><span class="mi">2</span><span class="p">)=</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">         </span><span class="k">in</span><span class="w"> </span><span class="nx">either</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="nx">must</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">non</span><span class="o">-</span><span class="nx">negative</span><span class="p">.</span>
+
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">tolerances</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">used</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">local</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">test</span>
+<span class="w">         </span><span class="nx">at</span><span class="w"> </span><span class="nx">each</span><span class="w"> </span><span class="nx">step</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">requires</span><span class="w"> </span><span class="nx">roughly</span><span class="w"> </span><span class="nx">that</span>
+<span class="w">                 </span><span class="nx">abs</span><span class="p">(</span><span class="nx">local</span><span class="w"> </span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nx">rtol</span><span class="o">*</span><span class="nx">abs</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span><span class="o">+</span><span class="nx">atol</span>
+<span class="w">         </span><span class="k">for</span><span class="w"> </span><span class="nx">each</span><span class="w"> </span><span class="nx">vector</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span>
+<span class="w">         </span><span class="p">(</span><span class="nx">more</span><span class="w"> </span><span class="nx">specifically</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">euclidean</span><span class="w"> </span><span class="nx">norm</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">used</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">measure</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">size</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">vectors</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">uses</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">magnitude</span>
+<span class="w">         </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">beginning</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">step</span><span class="p">.)</span>
+
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">(</span><span class="nx">global</span><span class="p">)</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">difference</span><span class="w"> </span><span class="nx">between</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">         </span><span class="nx">solution</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">initial</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">problem</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">computed</span>
+<span class="w">         </span><span class="nx">approximation</span><span class="p">.</span><span class="w">  </span><span class="nx">practically</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">present</span><span class="w"> </span><span class="nx">day</span><span class="w"> </span><span class="nx">codes</span><span class="p">,</span>
+<span class="w">         </span><span class="nx">including</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">one</span><span class="p">,</span><span class="w"> </span><span class="nx">control</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">local</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">each</span><span class="w"> </span><span class="nx">step</span>
+<span class="w">         </span><span class="k">and</span><span class="w"> </span><span class="nx">do</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">even</span><span class="w"> </span><span class="nx">attempt</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">control</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">global</span><span class="w"> </span><span class="nx">error</span>
+<span class="w">         </span><span class="nx">directly</span><span class="p">.</span><span class="w">  </span><span class="nx">roughly</span><span class="w"> </span><span class="nx">speaking</span><span class="p">,</span><span class="w"> </span><span class="nx">they</span><span class="w"> </span><span class="nx">produce</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">y</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span>
+<span class="w">         </span><span class="nx">which</span><span class="w"> </span><span class="nx">satisfies</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">differential</span><span class="w"> </span><span class="nx">equations</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">a</span>
+<span class="w">         </span><span class="nx">residual</span><span class="w"> </span><span class="nx">r</span><span class="p">(</span><span class="nx">t</span><span class="p">),</span><span class="w"> </span><span class="nx">dy</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="o">/</span><span class="nx">dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">df</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="nx">y</span><span class="p">(</span><span class="nx">t</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="p">(</span><span class="nx">t</span><span class="p">),</span>
+<span class="w">         </span><span class="k">and</span><span class="p">,</span><span class="w"> </span><span class="nx">almost</span><span class="w"> </span><span class="nx">always</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">bounded</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">error</span>
+<span class="w">         </span><span class="nx">tolerances</span><span class="p">.</span><span class="w">  </span><span class="nx">usually</span><span class="p">,</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">always</span><span class="p">,</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="nx">accuracy</span><span class="w"> </span><span class="nx">of</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">computed</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">comparable</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">tolerances</span><span class="p">.</span><span class="w"> </span><span class="nx">this</span>
+<span class="w">         </span><span class="nx">code</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="nx">usually</span><span class="p">,</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">always</span><span class="p">,</span><span class="w"> </span><span class="nx">deliver</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">more</span><span class="w"> </span><span class="nx">accurate</span>
+<span class="w">         </span><span class="nx">solution</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">reduce</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">tolerances</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">integrate</span><span class="w"> </span><span class="nx">again</span><span class="p">.</span>
+<span class="w">         </span><span class="nx">by</span><span class="w"> </span><span class="nx">comparing</span><span class="w"> </span><span class="nx">two</span><span class="w"> </span><span class="nx">such</span><span class="w"> </span><span class="nx">solutions</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">get</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">fairly</span>
+<span class="w">         </span><span class="nx">reliable</span><span class="w"> </span><span class="nx">idea</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span>
+<span class="w">         </span><span class="nx">bigger</span><span class="w"> </span><span class="nx">tolerances</span><span class="p">.</span>
+
+<span class="w">         </span><span class="nx">setting</span><span class="w"> </span><span class="nx">atol</span><span class="p">=</span><span class="m m-Double">0.0</span><span class="nx">_wp</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">pure</span><span class="w"> </span><span class="nx">relative</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">on</span>
+<span class="w">         </span><span class="nx">that</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span><span class="w"> </span><span class="nx">setting</span><span class="w"> </span><span class="nx">rtol</span><span class="p">=</span><span class="mi">0</span><span class="p">.</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">pure</span><span class="w"> </span><span class="nx">absolute</span>
+<span class="w">         </span><span class="nx">error</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span><span class="w">  </span><span class="nx">a</span><span class="w"> </span><span class="nx">mixed</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">non</span><span class="o">-</span><span class="nx">zero</span>
+<span class="w">         </span><span class="nx">rtol</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">atol</span><span class="w"> </span><span class="nx">corresponds</span><span class="w"> </span><span class="nx">roughly</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">relative</span><span class="w"> </span><span class="nx">error</span>
+<span class="w">         </span><span class="nx">test</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">component</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">much</span><span class="w"> </span><span class="nx">bigger</span><span class="w"> </span><span class="nx">than</span><span class="w"> </span><span class="nx">atol</span>
+<span class="w">         </span><span class="k">and</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">absolute</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">component</span>
+<span class="w">         </span><span class="k">is</span><span class="w"> </span><span class="nx">smaller</span><span class="w"> </span><span class="nx">than</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="nx">atol</span><span class="p">.</span>
+
+<span class="w">         </span><span class="nx">proper</span><span class="w"> </span><span class="nx">selection</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">absolute</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">control</span><span class="w"> </span><span class="nx">parameters</span>
+<span class="w">         </span><span class="nx">atol</span><span class="w">  </span><span class="nx">requires</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">some</span><span class="w"> </span><span class="nx">idea</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">scale</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span>
+<span class="w">         </span><span class="nx">solution</span><span class="w"> </span><span class="nx">components</span><span class="p">.</span><span class="w">  </span><span class="nx">to</span><span class="w"> </span><span class="nx">acquire</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">information</span><span class="w"> </span><span class="nx">may</span><span class="w"> </span><span class="nx">mean</span>
+<span class="w">         </span><span class="nx">that</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">solve</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">problem</span><span class="w"> </span><span class="nx">more</span><span class="w"> </span><span class="nx">than</span><span class="w"> </span><span class="nx">once</span><span class="p">.</span><span class="w"> </span><span class="k">in</span>
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">absence</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">scale</span><span class="w"> </span><span class="nx">information</span><span class="p">,</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">ask</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">some</span>
+<span class="w">         </span><span class="nx">relative</span><span class="w"> </span><span class="nx">accuracy</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="p">(</span><span class="nx">by</span><span class="w"> </span><span class="nx">setting</span><span class="w">  </span><span class="nx">rtol</span>
+<span class="w">         </span><span class="nx">values</span><span class="w"> </span><span class="nx">non</span><span class="o">-</span><span class="nx">zero</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">perhaps</span><span class="w"> </span><span class="nx">impose</span><span class="w"> </span><span class="nx">extremely</span><span class="w"> </span><span class="nx">small</span>
+<span class="w">         </span><span class="nx">absolute</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">tolerances</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">protect</span><span class="w"> </span><span class="nx">against</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">danger</span><span class="w"> </span><span class="nx">of</span>
+<span class="w">         </span><span class="nx">a</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">component</span><span class="w"> </span><span class="nx">becoming</span><span class="w"> </span><span class="nx">zero</span><span class="p">.</span>
+
+<span class="w">         </span><span class="nx">the</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">attempt</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">compute</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">solution</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">an</span>
+<span class="w">         </span><span class="nx">accuracy</span><span class="w"> </span><span class="nx">unreasonable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">machine</span><span class="w"> </span><span class="nx">being</span><span class="w"> </span><span class="nx">used</span><span class="p">.</span><span class="w">  </span><span class="nx">it</span><span class="w"> </span><span class="nx">will</span>
+<span class="w">         </span><span class="nx">advise</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">ask</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">too</span><span class="w"> </span><span class="nx">much</span><span class="w"> </span><span class="nx">accuracy</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">inform</span>
+<span class="w">         </span><span class="nx">you</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">maximum</span><span class="w"> </span><span class="nx">accuracy</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">believes</span><span class="w"> </span><span class="nx">possible</span><span class="p">.</span>
+</code></pre></div>
+
+<h3>output -- after any return from ddeabm</h3>
+<p>the principal aim of the code is to return a computed solution at
+   tout, although it is also possible to obtain intermediate results
+   along the way.  to find out whether the code achieved its goal
+   or if the integration process was interrupted before the task was
+   completed, you must check the idid parameter.</p>
+<div class="codehilite"><pre><span></span><code>  t -- the solution was successfully advanced to the
+         output value of t.
+
+  y(*) -- contains the computed solution approximation at t.
+         you may also be interested in the approximate derivative
+         of the solution at t.  it is contained in me%ypout.
+
+  idid -- reports what the code did
+
+                     *** task completed ***
+               reported by positive values of idid
+
+         idid = 1 -- a step was successfully taken in the
+                   intermediate-output mode.  the code has not
+                   yet reached tout.
+
+         idid = 2 -- the integration to tout was successfully
+                   completed (t=tout) by stepping exactly to tout.
+
+         idid = 3 -- the integration to tout was successfully
+                   completed (t=tout) by stepping past tout.
+                   y(*) is obtained by interpolation.
+
+                     *** task interrupted ***
+               reported by negative values of idid
+
+         idid = -1 -- a large amount of work has been expended.
+                   (maxnum steps attempted)
+
+         idid = -2 -- the error tolerances are too stringent.
+
+         idid = -3 -- the local error test cannot be satisfied
+                   because you specified a zero component in atol
+                   and the corresponding computed solution
+                   component is zero.  thus, a pure relative error
+                   test is impossible for this component.
+
+         idid = -4 -- the problem appears to be stiff.
+
+         idid = -5,-6,-7,..,-32  -- not applicable for this code
+                   but used by other members of depac or possible
+                   future extensions.
+
+                     *** task terminated ***
+               reported by the value of idid=-33
+
+         idid = -33 -- the code has encountered trouble from which
+                   it cannot recover.  a message is printed
+                   explaining the trouble and control is returned
+                   to the calling program. for example, this occurs
+                   when invalid input is detected.
+
+  rtol, atol -- these quantities remain unchanged except when
+         idid = -2.  in this case, the error tolerances have been
+         increased by the code to values which are estimated to be
+         appropriate for continuing the integration.  however, the
+         reported solution at t was obtained using the input values
+         of rtol and atol.
+</code></pre></div>
+
+<h3>input -- what to do to continue the integration (calls after the first)</h3>
+<p>this code is organized so that subsequent calls to continue the
+  integration involve little (if any) additional effort on your
+  part. you must monitor the <code>idid</code> parameter in order to determine
+  what to do next.</p>
+<p>recalling that the principal task of the code is to integrate
+  from <code>t</code> to <code>tout</code> (the interval mode), usually all you will need
+  to do is specify a new <code>tout</code> upon reaching the current <code>tout</code>.</p>
+<p>do not alter any quantity not specifically permitted below,
+  in particular do not alter <code>neq</code>, <code>t</code>, <code>y(*)</code>, the internal work variables
+  or the differential equation in subroutine <code>df</code>. any such alteration
+  constitutes a new problem and must be treated as such, i.e.
+  you must start afresh.</p>
+<p>you cannot change from vector to scalar error control or vice
+  versa (<code>info(2)</code>) but you can change the size of the entries of
+  <code>rtol</code>, <code>atol</code>.  increasing a tolerance makes the equation easier
+  to integrate.  decreasing a tolerance will make the equation
+  harder to integrate and should generally be avoided.</p>
+<p>you can switch from the intermediate-output mode to the
+  interval mode (<code>info(3)</code>) or vice versa at any time.</p>
+<p>if it has been necessary to prevent the integration from going
+  past a point tstop (<code>info(4)</code>), keep in mind that the
+  code will not integrate to any <code>tout</code> beyond the currently
+  specified <code>tstop</code>.  once <code>tstop</code> has been reached you must change
+  the value of <code>tstop</code> or set <code>info(4)=0</code>.  you may change <code>info(4)</code>
+  or <code>tstop</code> at any time but you must supply the value of <code>tstop</code>
+  whenever you set <code>info(4)=1</code>.</p>
+<p>the parameter <code>info(1)</code> is used by the code to indicate the
+  beginning of a new problem and to indicate whether integration
+  is to be continued.  you must input the value <code>info(1)=0</code>
+  when starting a new problem.  you must input the value
+  <code>info(1)=1</code> if you wish to continue after an interrupted task.
+  do not set <code>info(1)=0</code> on a continuation call unless you
+  want the code to restart at the current <code>t</code>.</p>
+<div class="codehilite"><pre><span></span><code>                     *** following a completed task ***
+     if
+         idid = 1, call the code again to continue the integration
+                 another step in the direction of tout.
+
+         idid = 2 or 3, define a new tout and call the code again.
+                 tout must be different from t. you cannot change
+                 the direction of integration without restarting.
+
+                     *** following an interrupted task ***
+                 to show the code that you realize the task was
+                 interrupted and that you want to continue, you
+                 must take appropriate action and reset info(1) = 1
+     if
+         idid = -1, the code has attempted maxnum steps.
+                 if you want to continue, set info(1) = 1 and
+                 call the code again. an additional maxnum steps
+                 will be allowed.
+
+         idid = -2, the error tolerances rtol, atol have been
+                 increased to values the code estimates appropriate
+                 for continuing.  you may want to change them
+                 yourself.  if you are sure you want to continue
+                 with relaxed error tolerances, set info(1)=1 and
+                 call the code again.
+
+         idid = -3, a solution component is zero and you set the
+                 corresponding component of atol to zero.  if you
+                 are sure you want to continue, you must first
+                 alter the error criterion to use positive values
+                 for those components of atol corresponding to zero
+                 solution components, then set info(1)=1 and call
+                 the code again.
+
+         idid = -4, the problem appears to be stiff.  it is very
+                 inefficient to solve such problems with ddeabm.
+                 the code ddebdf in depac handles this task
+                 efficiently.  if you are absolutely sure you want
+                 to continue with ddeabm, set info(1)=1 and call
+                 the code again.
+
+                     *** following a terminated task ***
+     if
+         idid = -33, you cannot continue the solution of this
+                 problem.  an attempt to do so will result in your
+                 run being terminated.
+</code></pre></div>
+
+<h3>Authors</h3>
+<ul>
+<li>L. F. Shampine</li>
+<li>H. A. Watts</li>
+<li>M. K. Gordon</li>
+</ul>
+<h3>Reference</h3>
+<ul>
+<li>L. F. Shampine, H. A. Watts, "DEPAC - Design of a user oriented package of ode solvers",
+    Report SAND79-2374, Sandia Laboratories, 1979.</li>
+</ul>
+<h3>History</h3>
+<ul>
+<li>820301  date written</li>
+<li>890531  changed all specific intrinsics to generic.  (wrb)</li>
+<li>890831  modified array declarations.  (wrb)</li>
+<li>891006  cosmetic changes to prologue.  (wrb)</li>
+<li>891024  changed references from dvnorm to dhvnrm.  (wrb)</li>
+<li>891024  revision date from version 3.2</li>
+<li>891214  prologue converted to version 4.0 format.  (bab)</li>
+<li>900510  convert xerrwv calls to xermsg calls.  (rwc)</li>
+<li>920501  reformatted the references section.  (wrb)</li>
+<li>July, 2014 : Major refactoring into modern Fortran (jw)</li>
+<li>December, 2015 : Additional refactoring (jw)</li>
+</ul>
+
+    <h3>Type Bound</h3>
+    <p><a href='../type/ddeabm_class.html'>ddeabm_class</a></p>
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-me~19"></span>
+              class(<a href='../type/ddeabm_class.html'>ddeabm_class</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-neq~5"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>neq</strong></td>
+            <td>
+                <p>the number of (first order) differential
+equations to be integrated. (neq &gt;= 1)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~8"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>t</strong></td>
+            <td>
+                <p>value of the independent variable.
+on input, set it to the initial point of
+the integration. the code changes its value.
+on output, the solution was successfully
+advanced to the output value of t.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-y~4"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(neq)
+            </td>
+            <td>::</td>
+            <td><strong>y</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tout~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tout</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-info~2"></span>
+              integer,
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(4)
+            </td>
+            <td>::</td>
+            <td><strong>info</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-rtol~5"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>rtol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-atol~5"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>atol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-idid~4"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>idid</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~ddeabm~~CallsGraph Pages: 1 -->
+<svg id="procddeabmCallsGraph" width="641pt" height="101pt"
+ viewBox="0.00 0.00 641.00 101.30" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm~~CallsGraph" class="graph" transform="scale(0.87 0.87) rotate(0) translate(4 112)">
+<title>proc~~ddeabm~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 730,-112 730,4 -4,4"/>
+<!-- proc~ddeabm -->
+<g id="proc~~ddeabm~~CallsGraph_node1" class="node">
+<title>proc~ddeabm</title>
+<polygon fill="none" stroke="black" points="142,-87 0,-87 0,-63 142,-63 142,-87"/>
+<text text-anchor="middle" x="71" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_class%ddeabm</text>
+</g>
+<!-- proc~ddes -->
+<g id="proc~~ddeabm~~CallsGraph_node2" class="node">
+<title>proc~ddes</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node2"><a xlink:href="../proc/ddes.html" xlink:title="ddeabm_class%ddes">
+<polygon fill="#d9534f" stroke="#d9534f" points="302,-67 178,-67 178,-43 302,-43 302,-67"/>
+<text text-anchor="middle" x="240" y="-52.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%ddes</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm&#45;&gt;proc~ddes -->
+<g id="proc~~ddeabm~~CallsGraph_edge1" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~ddes</title>
+<path fill="none" stroke="#000000" d="M142.34,-66.58C150.7,-65.57 159.25,-64.55 167.63,-63.55"/>
+<polygon fill="#000000" stroke="#000000" points="168.23,-67 177.75,-62.34 167.4,-60.05 168.23,-67"/>
+</g>
+<!-- proc~report_error -->
+<g id="proc~~ddeabm~~CallsGraph_node3" class="node">
+<title>proc~report_error</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node3"><a xlink:href="../proc/report_error.html" xlink:title="report_error">
+<polygon fill="#d9534f" stroke="#d9534f" points="442.5,-108 366.5,-108 366.5,-84 442.5,-84 442.5,-108"/>
+<text text-anchor="middle" x="404.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">report_error</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm~~CallsGraph_edge2" class="edge">
+<title>proc~ddeabm&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M142.3,-79.45C206.71,-83.53 300.3,-89.46 356.21,-93"/>
+<polygon fill="#000000" stroke="#000000" points="356,-96.5 366.2,-93.64 356.44,-89.51 356,-96.5"/>
+</g>
+<!-- proc~ddes&#45;&gt;proc~report_error -->
+<g id="proc~~ddeabm~~CallsGraph_edge5" class="edge">
+<title>proc~ddes&#45;&gt;proc~report_error</title>
+<path fill="none" stroke="#000000" d="M288.88,-67.08C310.21,-72.46 335.27,-78.78 356.5,-84.14"/>
+<polygon fill="#000000" stroke="#000000" points="355.72,-87.55 366.27,-86.61 357.43,-80.77 355.72,-87.55"/>
+</g>
+<!-- proc~dintp -->
+<g id="proc~~ddeabm~~CallsGraph_node4" class="node">
+<title>proc~dintp</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node4"><a xlink:href="../proc/dintp.html" xlink:title="dintp">
+<polygon fill="#d9534f" stroke="#d9534f" points="431.5,-66 377.5,-66 377.5,-42 431.5,-42 431.5,-66"/>
+<text text-anchor="middle" x="404.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dintp</text>
+</a>
+</g>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dintp -->
+<g id="proc~~ddeabm~~CallsGraph_edge3" class="edge">
+<title>proc~ddes&#45;&gt;proc~dintp</title>
+<path fill="none" stroke="#000000" d="M302.43,-54.62C324.27,-54.49 348.15,-54.34 367.21,-54.22"/>
+<polygon fill="#000000" stroke="#000000" points="367.28,-57.72 377.26,-54.16 367.23,-50.72 367.28,-57.72"/>
+</g>
+<!-- proc~dsteps -->
+<g id="proc~~ddeabm~~CallsGraph_node5" class="node">
+<title>proc~dsteps</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node5"><a xlink:href="../proc/dsteps.html" xlink:title="ddeabm_class%dsteps">
+<polygon fill="#d9534f" stroke="#d9534f" points="471,-24 338,-24 338,0 471,0 471,-24"/>
+<text text-anchor="middle" x="404.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%dsteps</text>
+</a>
+</g>
+</g>
+<!-- proc~ddes&#45;&gt;proc~dsteps -->
+<g id="proc~~ddeabm~~CallsGraph_edge4" class="edge">
+<title>proc~ddes&#45;&gt;proc~dsteps</title>
+<path fill="none" stroke="#000000" d="M286.7,-42.91C305.81,-37.85 328.19,-31.93 348.22,-26.63"/>
+<polygon fill="#000000" stroke="#000000" points="349.37,-29.94 358.15,-24 347.58,-23.18 349.37,-29.94"/>
+</g>
+<!-- proc~dhstrt -->
+<g id="proc~~ddeabm~~CallsGraph_node6" class="node">
+<title>proc~dhstrt</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node6"><a xlink:href="../proc/dhstrt.html" xlink:title="ddeabm_class%dhstrt">
+<polygon fill="#d9534f" stroke="#d9534f" points="636,-24 507,-24 507,0 636,0 636,-24"/>
+<text text-anchor="middle" x="571.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%dhstrt</text>
+</a>
+</g>
+</g>
+<!-- proc~dsteps&#45;&gt;proc~dhstrt -->
+<g id="proc~~ddeabm~~CallsGraph_edge6" class="edge">
+<title>proc~dsteps&#45;&gt;proc~dhstrt</title>
+<path fill="none" stroke="#000000" d="M471.19,-12C479.56,-12 488.17,-12 496.65,-12"/>
+<polygon fill="#000000" stroke="#000000" points="496.92,-15.5 506.92,-12 496.92,-8.5 496.92,-15.5"/>
+</g>
+<!-- proc~dhvnrm -->
+<g id="proc~~ddeabm~~CallsGraph_node7" class="node">
+<title>proc~dhvnrm</title>
+<g id="a_proc~~ddeabm~~CallsGraph_node7"><a xlink:href="../proc/dhvnrm.html" xlink:title="dhvnrm">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="726,-24 672,-24 672,0 726,0 726,-24"/>
+<text text-anchor="middle" x="699" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dhvnrm</text>
+</a>
+</g>
+</g>
+<!-- proc~dhstrt&#45;&gt;proc~dhvnrm -->
+<g id="proc~~ddeabm~~CallsGraph_edge7" class="edge">
+<title>proc~dhstrt&#45;&gt;proc~dhvnrm</title>
+<path fill="none" stroke="#000000" d="M636.35,-12C645.11,-12 653.84,-12 661.86,-12"/>
+<polygon fill="#000000" stroke="#000000" points="661.93,-15.5 671.93,-12 661.93,-8.5 661.93,-15.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocddeabmCallsGraph = svgPanZoom('#procddeabmCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~ddeabm~~CalledByGraph Pages: 1 -->
+<svg id="procddeabmCalledByGraph" width="550pt" height="116pt"
+ viewBox="0.00 0.00 550.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~ddeabm~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>proc~~ddeabm~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 546,-112 546,4 -4,4"/>
+<!-- proc~ddeabm -->
+<g id="proc~~ddeabm~~CalledByGraph_node1" class="node">
+<title>proc~ddeabm</title>
+<polygon fill="none" stroke="black" points="542,-66 400,-66 400,-42 542,-42 542,-66"/>
+<text text-anchor="middle" x="471" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50">ddeabm_class%ddeabm</text>
+</g>
+<!-- proc~ddeabm_with_event_wrapper -->
+<g id="proc~~ddeabm~~CalledByGraph_node2" class="node">
+<title>proc~ddeabm_with_event_wrapper</title>
+<g id="a_proc~~ddeabm~~CalledByGraph_node2"><a xlink:href="../proc/ddeabm_with_event_wrapper.html" xlink:title="ddeabm_with_event_class%ddeabm_with_event_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="340,-108 24,-108 24,-84 340,-84 340,-108"/>
+<text text-anchor="middle" x="182" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_class%ddeabm_with_event_wrapper</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper&#45;&gt;proc~ddeabm -->
+<g id="proc~~ddeabm~~CalledByGraph_edge1" class="edge">
+<title>proc~ddeabm_with_event_wrapper&#45;&gt;proc~ddeabm</title>
+<path fill="none" stroke="#000000" d="M298.57,-83.99C320.35,-81.33 342.9,-78.31 364,-75 376.92,-72.97 390.67,-70.49 403.83,-67.96"/>
+<polygon fill="#000000" stroke="#000000" points="404.62,-71.37 413.76,-66.01 403.28,-64.5 404.62,-71.37"/>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec -->
+<g id="proc~~ddeabm~~CalledByGraph_node3" class="node">
+<title>proc~ddeabm_with_event_wrapper_vec</title>
+<g id="a_proc~~ddeabm~~CalledByGraph_node3"><a xlink:href="../proc/ddeabm_with_event_wrapper_vec.html" xlink:title="ddeabm_with_event_class_vec%ddeabm_with_event_wrapper_vec">
+<polygon fill="#d9534f" stroke="#d9534f" points="364,-66 0,-66 0,-42 364,-42 364,-66"/>
+<text text-anchor="middle" x="182" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_with_event_class_vec%ddeabm_with_event_wrapper_vec</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~ddeabm -->
+<g id="proc~~ddeabm~~CalledByGraph_edge2" class="edge">
+<title>proc~ddeabm_with_event_wrapper_vec&#45;&gt;proc~ddeabm</title>
+<path fill="none" stroke="#000000" d="M364.35,-54C373.06,-54 381.57,-54 389.74,-54"/>
+<polygon fill="#000000" stroke="#000000" points="389.89,-57.5 399.89,-54 389.89,-50.5 389.89,-57.5"/>
+</g>
+<!-- proc~ddeabm_wrapper -->
+<g id="proc~~ddeabm~~CalledByGraph_node4" class="node">
+<title>proc~ddeabm_wrapper</title>
+<g id="a_proc~~ddeabm~~CalledByGraph_node4"><a xlink:href="../proc/ddeabm_wrapper.html" xlink:title="ddeabm_class%ddeabm_wrapper">
+<polygon fill="#d9534f" stroke="#d9534f" points="278,-24 86,-24 86,0 278,0 278,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ddeabm_class%ddeabm_wrapper</text>
+</a>
+</g>
+</g>
+<!-- proc~ddeabm_wrapper&#45;&gt;proc~ddeabm -->
+<g id="proc~~ddeabm~~CalledByGraph_edge3" class="edge">
+<title>proc~ddeabm_wrapper&#45;&gt;proc~ddeabm</title>
+<path fill="none" stroke="#000000" d="M278.07,-21.58C305.83,-24.77 336.19,-28.64 364,-33 376.92,-35.03 390.67,-37.51 403.83,-40.04"/>
+<polygon fill="#000000" stroke="#000000" points="403.28,-43.5 413.76,-41.99 404.62,-36.63 403.28,-43.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">   </span><span class="k">subroutine </span><span class="n">ddeabm</span><span class="p">(</span><span class="n">me</span><span class="p">,</span><span class="w"> </span><span class="n">neq</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">tout</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="p">,</span><span class="w"> </span><span class="n">rtol</span><span class="p">,</span><span class="w"> </span><span class="n">atol</span><span class="p">,</span><span class="w"> </span><span class="n">idid</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">implicit none</span>
+
+<span class="k">      class</span><span class="p">(</span><span class="n">ddeabm_class</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                    </span><span class="kd">::</span><span class="w"> </span><span class="n">neq</span><span class="w">    </span><span class="c">!! the number of (first order) differential</span>
+<span class="w">                                                    </span><span class="c">!! equations to be integrated. (neq &gt;= 1)</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">                </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w">      </span><span class="c">!! value of the independent variable.</span>
+<span class="w">                                                    </span><span class="c">!! on input, set it to the initial point of</span>
+<span class="w">                                                    </span><span class="c">!! the integration. the code changes its value.</span>
+<span class="w">                                                    </span><span class="c">!! on output, the solution was successfully</span>
+<span class="w">                                                    </span><span class="c">!! advanced to the output value of t.</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">neq</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">y</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">tout</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">info</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">rtol</span>
+<span class="w">      </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">atol</span>
+<span class="w">      </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">                   </span><span class="kd">::</span><span class="w"> </span><span class="n">idid</span>
+
+<span class="w">      </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">xern3</span>
+
+<span class="w">      </span><span class="c">! idid is intent(out), and ddes tests its value (for -33 and -2),</span>
+<span class="w">      </span><span class="c">! so it must be defined before calling ddes. Otherwise a stale</span>
+<span class="w">      </span><span class="c">! value in the caller's variable can cause a valid call to fail.</span>
+<span class="w">      </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w">  </span><span class="c">! if user-triggered error</span>
+
+<span class="w">      </span><span class="c">! check for an apparent infinite loop</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">icount</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tprev</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            write</span><span class="w"> </span><span class="p">(</span><span class="n">xern3</span><span class="p">,</span><span class="w"> </span><span class="s1">'(1pe15.6)'</span><span class="p">)</span><span class="w"> </span><span class="n">t</span>
+<span class="w">            </span><span class="k">call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'an apparent infinite loop has been detected.  '</span><span class="o">//</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'you have made repeated calls at t = '</span><span class="o">//</span><span class="n">xern3</span><span class="o">//</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">' and the integration has not advanced.  check the '</span><span class="o">//</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'way you have set parameters for the call to the '</span><span class="o">//</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                              </span><span class="s1">'code, particularly info(1).'</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="w">            </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">         end if</span>
+<span class="k">      end if</span>
+
+<span class="w">      </span><span class="c">!make sure the deriv function was set:</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">df</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">         call </span><span class="n">report_error</span><span class="p">(</span><span class="s1">'ddeabm'</span><span class="p">,</span><span class="w"> </span><span class="s1">'the derivative function DF '</span><span class="o">//</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                           </span><span class="s1">' has not been associated.'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">         </span><span class="n">idid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">33</span>
+<span class="w">         </span><span class="k">return</span>
+<span class="k">      end if</span>
+
+<span class="k">      </span><span class="n">me</span><span class="p">%</span><span class="n">tprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span>
+
+<span class="w">      </span><span class="k">call </span><span class="n">me</span><span class="p">%</span><span class="n">ddes</span><span class="p">(</span><span class="n">neq</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">tout</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="p">,</span><span class="w"> </span><span class="n">rtol</span><span class="p">,</span><span class="w"> </span><span class="n">atol</span><span class="p">,</span><span class="w"> </span><span class="n">idid</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">ypout</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">yp</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">yy</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">beta</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">psi</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">sig</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">gi</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">eps</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">xold</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">hold</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">told</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">delsgn</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">tstop</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">twou</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">fouru</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">phase1</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">nornd</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">stiff</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">intout</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">kord</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">kold</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">init</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">ksteps</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                   </span><span class="n">me</span><span class="p">%</span><span class="n">kle4</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">iquit</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">kprev</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">ivc</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">iv</span><span class="p">,</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">kgi</span><span class="p">)</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="p">%</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="c">! user-triggered error</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idid</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">icount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">tprev</span><span class="p">)</span><span class="w"> </span><span class="n">me</span><span class="p">%</span><span class="n">icount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="w">   </span><span class="k">end subroutine </span><span class="n">ddeabm</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              ddeabm
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
