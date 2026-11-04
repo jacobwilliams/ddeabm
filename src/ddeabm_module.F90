@@ -1022,17 +1022,17 @@ contains
                                                               !! `idid=1000` means a root was found.
                                                               !! See [[ddeabm]] for other values.
       real(wp), intent(out)                           :: gval    !! value of the event function `g(t,x)` at the final time `t`
-                                                              !! (not set if the inputs are invalid: `idid=-33`
-                                                              !! before any integration is attempted)
+                                                              !! (not set if the inputs are invalid: `idid=-33`)
       integer, intent(in), optional :: integration_mode           !! Step mode:
                                                               !! *1* - normal integration from `t` to `tout`,
                                                               !!  no reporting [default].
                                                               !! *2* - normal integration from `t` to `tout`,
                                                               !!  report each step.
-      real(wp), intent(in), optional :: tstep    !! Fixed time step to use for reporting
-                                             !! (the points are interpolated). If not present,
-                                             !! then default integrator steps are reported.
-                                             !! The event function is always checked on
+      real(wp), intent(in), optional :: tstep    !! Fixed time step to use for reporting and
+                                             !! evaluation of the event function (the points are
+                                             !! interpolated within each integrator step). If not
+                                             !! present, then default integrator steps are used.
+                                             !! The event function is also evaluated at the end of
                                              !! each integrator step.
       logical, intent(in), optional :: continue !! to continue after a previous event location.
                                             !! This option can be used after a previous call to this routine
@@ -1233,7 +1233,14 @@ contains
             return
          end if
 
-         ! invalid input or an interrupted task (see ddeabm or idid codes).
+         ! invalid input (see ddeabm or idid codes): no integration was
+         ! attempted, so the event function is not evaluated (gval is not set):
+         if (idid == -33) then
+            me%resume_pending = .false.
+            return
+         end if
+
+         ! an interrupted task (idid = -1 to -4, see ddeabm or idid codes).
          ! (in intermediate-output mode, the integration has not advanced)
          if (idid < 0) then
             call me%gfunc(t, y, gval)
@@ -1275,9 +1282,15 @@ contains
 
       subroutine process_interval(ta, tb, ya, yb, ga, gb, mask, found)
 
-            !! Check for a root of the event function on `[ta,tb]`
+            !! Check for roots of the event function on `[ta,tb]`
             !! (which must be within the last integration step), and
             !! report the points on the interval (if `mode=2`).
+            !!
+            !! If using a fixed step size, the interval is divided at the points on
+            !! the fixed step grid (using interpolation), so that the event function
+            !! is evaluated at least every `tstep`, and each subinterval is checked
+            !! in order.
+            !!
             !! If a root is found, the outputs (`t`, `y`, `idid`, `gval`) are set.
 
          implicit none
@@ -1288,77 +1301,88 @@ contains
          real(wp), dimension(:), intent(in) :: yb    !! state at `tb`
          real(wp), intent(in)               :: ga    !! event function at `ta`
          real(wp), intent(in)               :: gb    !! event function at `tb`
-         logical, intent(in)                :: mask  !! if the function is to be ignored
+         logical, intent(in)                :: mask  !! if the function is to be ignored on the first subinterval
          logical, intent(out)               :: found !! if a root was found
                                                      !! (or there was an error locating it)
+
+         real(wp) :: tl                     !! start of the current subinterval
+         real(wp) :: tn                     !! next point on the fixed step grid
+         real(wp), dimension(me%neq) :: yl  !! state at `tl`
+         real(wp), dimension(me%neq) :: yn  !! state at `tn`
+         real(wp) :: gl, gn  !! event function at `tl` and `tn`
+         logical :: m  !! mask for the current subinterval
 
          found = .false.
          if (tb == ta) return
 
-         call locate_root(ta, tb, ya, yb, ga, gb, mask, found)
-         if (found) then
-            if (idid > 0) then ! a root was found
-               if (mode == 2) then
-                  if (fixed_step) call report_grid(ta, t, .false.)  ! points before the root
-                  call me%report(t, y) ! report the root
+         tl = ta
+         yl = ya
+         gl = ga
+         m = mask
+
+         if (fixed_step) then
+            ! subintervals ending at the grid points in (ta,tb), before tmax:
+            do
+               tn = t_anchor + real(n_grid + 1, wp)*dt
+               if (direction*(tn - tl) <= 0.0_wp) then
+                  ! (should not happen) skip points not after tl
+                  n_grid = n_grid + 1
+                  cycle
                end if
-               ! a subsequent call with continue=.true. will
-               ! check the rest of the step from this point:
-               me%t_resume = t
-               me%resume_pending = .true.
-            end if
+               if (direction*(tn - tb) >= 0.0_wp .or. direction*(tn - tmax) >= 0.0_wp) exit
+               call me%interpolate(tn, yn)
+               call me%gfunc(tn, yn, gn)
+               call locate_root(tl, tn, yl, yn, gl, gn, m, found)
+               if (found) then
+                  call root_located()
+                  return
+               end if
+               if (mode == 2) call me%report(tn, yn)
+               n_grid = n_grid + 1
+               tl = tn
+               yl = yn
+               gl = gn
+               m = .false.
+            end do
+         end if
+
+         ! the last subinterval (or the whole interval):
+         call locate_root(tl, tb, yl, yb, gl, gb, m, found)
+         if (found) then
+            call root_located()
             return
          end if
 
-         if (mode == 2) then
-            if (fixed_step) then
-               call report_grid(ta, tb, .true.)
-               if (tb == tmax) call me%report(tb, yb) ! the last point
-            else
-               call me%report(tb, yb) ! the end of the integration step (or tmax)
+         ! (tn is only defined if fixed_step)
+         if (fixed_step) then
+            if (tb == tmax) then
+               if (mode == 2) call me%report(tb, yb) ! the last point
+            else if (tn == tb) then
+               if (mode == 2) call me%report(tb, yb) ! a grid point at the end of the step
+               n_grid = n_grid + 1
             end if
+         else
+            if (mode == 2) call me%report(tb, yb) ! the end of the integration step (or tmax)
          end if
 
       end subroutine process_interval
 
-      subroutine report_grid(ta, tb, inclusive)
+      subroutine root_located()
 
-            !! Report the points on the fixed step grid in `(ta,tb)`
-            !! (or `(ta,tb]` if `inclusive`), but before `tmax`,
-            !! using interpolation.
+            !! A root (or an error locating it) was found by `locate_root`:
+            !! report it, and set up for continuing from it.
 
          implicit none
 
-         real(wp), intent(in) :: ta        !! start of the interval
-         real(wp), intent(in) :: tb        !! end of the interval
-         logical, intent(in)  :: inclusive !! if `tb` is included
+         if (idid > 0) then ! a root was found
+            if (mode == 2) call me%report(t, y) ! report the root
+            ! a subsequent call with continue=.true. will
+            ! check the rest of the step from this point:
+            me%t_resume = t
+            me%resume_pending = .true.
+         end if
 
-         real(wp) :: tn  !! next point on the grid
-         real(wp), dimension(me%neq) :: yn  !! state at `tn`
-
-         do
-            tn = t_anchor + real(n_grid + 1, wp)*dt
-            if (direction*(tn - ta) <= 0.0_wp) then
-               ! (should not happen) skip points not after ta
-               n_grid = n_grid + 1
-               cycle
-            end if
-            if (inclusive) then
-               if (direction*(tn - tb) > 0.0_wp) exit
-            else
-               if (direction*(tn - tb) >= 0.0_wp) exit
-            end if
-            if (direction*(tn - tmax) >= 0.0_wp) exit ! tmax is reported separately
-            if (tn == me%t_saved) then
-               yn = me%x_saved
-            else
-               call me%interpolate(tn, yn)
-            end if
-            call me%report(tn, yn)
-            n_grid = n_grid + 1
-         end do
-
-      end subroutine report_grid
+      end subroutine root_located
 
       subroutine locate_root(ta, tb, ya, yb, ga, gb, mask, found)
 
@@ -1596,16 +1620,17 @@ contains
                                                               !! See [[ddeabm]] for other values.
       real(wp), dimension(:), intent(out)              :: gval !! value of the event functions `g(t,x)` at the final time `t`.
                                                               !! Must be size `ng` (not set if the inputs are invalid:
-                                                              !! `idid=-33` before any integration is attempted)
+                                                              !! `idid=-33`)
       integer, intent(in), optional :: integration_mode !! Step mode:
                                                         !! *1* - normal integration from `t` to `tout`,
                                                         !!  no reporting [default].
                                                         !! *2* - normal integration from `t` to `tout`,
                                                         !!  report each step.
-      real(wp), intent(in), optional :: tstep !! Fixed time step to use for reporting
-                                              !! (the points are interpolated). If not present,
-                                              !! then default integrator steps are reported.
-                                              !! The event functions are always checked on
+      real(wp), intent(in), optional :: tstep !! Fixed time step to use for reporting and
+                                              !! evaluation of the event functions (the points are
+                                              !! interpolated within each integrator step). If not
+                                              !! present, then default integrator steps are used.
+                                              !! The event functions are also evaluated at the end of
                                               !! each integrator step.
       logical, intent(in), optional :: continue !! to continue after a previous event location.
                                                 !! This option can be used after a previous call to this routine
@@ -1818,7 +1843,14 @@ contains
             return
          end if
 
-         ! invalid input or an interrupted task (see ddeabm or idid codes).
+         ! invalid input (see ddeabm or idid codes): no integration was
+         ! attempted, so the event function is not evaluated (gval is not set):
+         if (idid == -33) then
+            me%resume_pending = .false.
+            return
+         end if
+
+         ! an interrupted task (idid = -1 to -4, see ddeabm or idid codes).
          ! (in intermediate-output mode, the integration has not advanced)
          if (idid < 0) then
             call me%gfunc(t, y, gval)
@@ -1864,6 +1896,12 @@ contains
             !! Check for roots of the event functions on `[ta,tb]`
             !! (which must be within the last integration step), and
             !! report the points on the interval (if `mode=2`).
+            !!
+            !! If using a fixed step size, the interval is divided at the points on
+            !! the fixed step grid (using interpolation), so that the event functions
+            !! is evaluated at least every `tstep`, and each subinterval is checked
+            !! in order.
+            !!
             !! If a root is found, the outputs (`t`, `y`, `idid`, `gval`) are set.
 
          implicit none
@@ -1874,77 +1912,88 @@ contains
          real(wp), dimension(:), intent(in) :: yb    !! state at `tb`
          real(wp), dimension(:), intent(in) :: ga    !! event functions at `ta`
          real(wp), dimension(:), intent(in) :: gb    !! event functions at `tb`
-         logical, dimension(:), intent(in)  :: mask  !! functions to ignore
+         logical, dimension(:), intent(in)  :: mask  !! functions to ignore on the first subinterval
          logical, intent(out)               :: found !! if a root was found
                                                      !! (or there was an error locating it)
+
+         real(wp) :: tl                     !! start of the current subinterval
+         real(wp) :: tn                     !! next point on the fixed step grid
+         real(wp), dimension(me%neq) :: yl  !! state at `tl`
+         real(wp), dimension(me%neq) :: yn  !! state at `tn`
+         real(wp), dimension(me%n_g_eqns) :: gl, gn  !! event functions at `tl` and `tn`
+         logical, dimension(me%n_g_eqns) :: m  !! mask for the current subinterval
 
          found = .false.
          if (tb == ta) return
 
-         call locate_root(ta, tb, ya, yb, ga, gb, mask, found)
-         if (found) then
-            if (idid > 0) then ! a root was found
-               if (mode == 2) then
-                  if (fixed_step) call report_grid(ta, t, .false.)  ! points before the root
-                  call me%report(t, y) ! report the root
+         tl = ta
+         yl = ya
+         gl = ga
+         m = mask
+
+         if (fixed_step) then
+            ! subintervals ending at the grid points in (ta,tb), before tmax:
+            do
+               tn = t_anchor + real(n_grid + 1, wp)*dt
+               if (direction*(tn - tl) <= 0.0_wp) then
+                  ! (should not happen) skip points not after tl
+                  n_grid = n_grid + 1
+                  cycle
                end if
-               ! a subsequent call with continue=.true. will
-               ! check the rest of the step from this point:
-               me%t_resume = t
-               me%resume_pending = .true.
-            end if
+               if (direction*(tn - tb) >= 0.0_wp .or. direction*(tn - tmax) >= 0.0_wp) exit
+               call me%interpolate(tn, yn)
+               call me%gfunc(tn, yn, gn)
+               call locate_root(tl, tn, yl, yn, gl, gn, m, found)
+               if (found) then
+                  call root_located()
+                  return
+               end if
+               if (mode == 2) call me%report(tn, yn)
+               n_grid = n_grid + 1
+               tl = tn
+               yl = yn
+               gl = gn
+               m = .false.
+            end do
+         end if
+
+         ! the last subinterval (or the whole interval):
+         call locate_root(tl, tb, yl, yb, gl, gb, m, found)
+         if (found) then
+            call root_located()
             return
          end if
 
-         if (mode == 2) then
-            if (fixed_step) then
-               call report_grid(ta, tb, .true.)
-               if (tb == tmax) call me%report(tb, yb) ! the last point
-            else
-               call me%report(tb, yb) ! the end of the integration step (or tmax)
+         ! (tn is only defined if fixed_step)
+         if (fixed_step) then
+            if (tb == tmax) then
+               if (mode == 2) call me%report(tb, yb) ! the last point
+            else if (tn == tb) then
+               if (mode == 2) call me%report(tb, yb) ! a grid point at the end of the step
+               n_grid = n_grid + 1
             end if
+         else
+            if (mode == 2) call me%report(tb, yb) ! the end of the integration step (or tmax)
          end if
 
       end subroutine process_interval
 
-      subroutine report_grid(ta, tb, inclusive)
+      subroutine root_located()
 
-            !! Report the points on the fixed step grid in `(ta,tb)`
-            !! (or `(ta,tb]` if `inclusive`), but before `tmax`,
-            !! using interpolation.
+            !! A root (or an error locating it) was found by `locate_root`:
+            !! report it, and set up for continuing from it.
 
          implicit none
 
-         real(wp), intent(in) :: ta        !! start of the interval
-         real(wp), intent(in) :: tb        !! end of the interval
-         logical, intent(in)  :: inclusive !! if `tb` is included
+         if (idid > 0) then ! a root was found
+            if (mode == 2) call me%report(t, y) ! report the root
+            ! a subsequent call with continue=.true. will
+            ! check the rest of the step from this point:
+            me%t_resume = t
+            me%resume_pending = .true.
+         end if
 
-         real(wp) :: tn  !! next point on the grid
-         real(wp), dimension(me%neq) :: yn  !! state at `tn`
-
-         do
-            tn = t_anchor + real(n_grid + 1, wp)*dt
-            if (direction*(tn - ta) <= 0.0_wp) then
-               ! (should not happen) skip points not after ta
-               n_grid = n_grid + 1
-               cycle
-            end if
-            if (inclusive) then
-               if (direction*(tn - tb) > 0.0_wp) exit
-            else
-               if (direction*(tn - tb) >= 0.0_wp) exit
-            end if
-            if (direction*(tn - tmax) >= 0.0_wp) exit ! tmax is reported separately
-            if (tn == me%t_saved) then
-               yn = me%x_saved
-            else
-               call me%interpolate(tn, yn)
-            end if
-            call me%report(tn, yn)
-            n_grid = n_grid + 1
-         end do
-
-      end subroutine report_grid
+      end subroutine root_located
 
       subroutine locate_root(ta, tb, ya, yb, ga, gb, mask, found)
 

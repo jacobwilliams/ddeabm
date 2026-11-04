@@ -38,6 +38,7 @@ module ddeabm_unit_test_module
    integer :: iprob = p_osc                !! problem to solve
    real(wp) :: t_stop = huge(1.0_wp)       !! for `p_stop`
    integer :: n_feval = 0                  !! number of derivative evaluations
+   integer :: n_geval = 0                  !! number of event function evaluations (`g_x1` and `g_vec`)
    integer :: n_reports = 0                !! number of reported points
    real(wp), dimension(100000) :: t_reports = 0.0_wp  !! the reported times
    real(wp), dimension(100000) :: x_reports = 0.0_wp  !! the first state component at the reported times
@@ -102,6 +103,7 @@ contains
       real(wp), intent(in) :: t
       real(wp), dimension(:), intent(in) :: x
       real(wp), intent(out) :: g
+      n_geval = n_geval + 1
       g = x(1)
    end subroutine g_x1
 
@@ -133,6 +135,7 @@ contains
       real(wp), dimension(:), intent(in) :: x
       real(wp), dimension(:), intent(out) :: g
       integer, intent(in), optional :: ig
+      n_geval = n_geval + 1
       if (present(ig)) then
          g = 0.0_wp
          g(ig) = x(ig)    ! only compute the one requested
@@ -140,6 +143,18 @@ contains
          g = x(1:2)
       end if
    end subroutine g_vec
+
+   subroutine g_vec_pulse(me, t, x, g, ig)
+      !! vector events: `x(1) = 0` (roots at `pi/2 + k*pi`), and a function
+      !! with two close roots at `t = 1` and `t = 1.001` (see `g_pulse`)
+      class(ddeabm_with_event_class_vec), intent(inout) :: me
+      real(wp), intent(in) :: t
+      real(wp), dimension(:), intent(in) :: x
+      real(wp), dimension(:), intent(out) :: g
+      integer, intent(in), optional :: ig
+      g(1) = x(1)
+      g(2) = 1.0e6_wp*(t - 1.0_wp)*(t - 1.001_wp)
+   end subroutine g_vec_pulse
 
    logical function bracket_vec_decreasing(me, ig, t1, t2, x1, x2, g1, g2) result(bracketed)
       !! only accept roots where `g(ig)` is decreasing
@@ -596,6 +611,38 @@ program ddeabm_unit_test
    call check('events, max_step_size < root separation: second root at t=1.001', &
               idid == 1000 .and. abs(t - 1.001_wp) < etol)
 
+   ! tstep: the event function is evaluated at least every tstep (as documented),
+   ! so close roots within one integration step are found:
+   do k = 1, 2   ! without and with reporting
+      call se%initialize_event(2, 100000, deriv, [tol], [tol], g_pulse, sc(1.0e-12_wp), report=report)
+      call se%first_call()
+      t = 0.0_wp; y = y0; n_reports = 0
+      call se%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gval, tstep=4.0e-4_wp, integration_mode=k)
+      t_root = t
+      call se%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gval, tstep=4.0e-4_wp, integration_mode=k, &
+                                 continue=.true.)
+      ok = abs(t_root - 1.0_wp) < etol .and. idid == 1000 .and. abs(t - 1.001_wp) < etol
+      if (k == 2) then   ! grid points every tstep, then the root, then the grid continues from the root
+         ok = ok .and. n_reports > 2
+         if (ok) ok = all(t_reports(2:n_reports) > t_reports(1:n_reports - 1)) .and. &
+                      abs(t_reports(n_reports) - 1.001_wp) < etol .and. &
+                      abs(t_reports(n_reports - 1) - (1.0_wp + 4.0e-4_wp*2)) < sc(1.0e-12_wp)
+      end if
+      call check('events, tstep < root separation (mode '//achar(iachar('0') + k)// &
+                 '): roots at t=1 and t=1.001', ok)
+   end do
+   call sv%initialize_event(2, 100000, deriv, [tol], [tol], 2, g_vec_pulse, [sc(1.0e-12_wp)])
+   call sv%first_call()
+   t = 0.0_wp; y = y0
+   call sv%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gv, tstep=4.0e-4_wp)
+   call check('vector events, tstep < root separation: g(2) root at t=1 (before x(1) at pi/2)', &
+              idid == 1002 .and. abs(t - 1.0_wp) < etol)
+   call sv%first_call()
+   t = 0.0_wp; y = y0
+   call sv%integrate_to_event(t, y, 2.0_wp, idid=idid, gval=gv)
+   call check('vector events, no tstep: g(2) roots stepped over, x(1) root at pi/2', &
+              idid == 1001 .and. abs(t - pi/2.0_wp) < etol)
+
    call sv%initialize_event(2, 10000, deriv, [tol], [tol], 2, g_vec, [sc(1.0e-12_wp)], &
                             report=report, max_step_size=hmax)
    call sv%first_call()
@@ -839,6 +886,13 @@ program ddeabm_unit_test
    call check('invalid integration_mode: idid=-33', idid == -33)
    call se%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gval, tstep=0.0_wp)
    call check('tstep=0: idid=-33', idid == -33)
+   ! input rejected by the integrator: gval is not set, and the event function
+   ! is not evaluated again (only at the initial point, before integrating)
+   call se%first_call()
+   t = 0.0_wp; y = y0; gval = -999.0_wp; n_geval = 0
+   call se%integrate_to_event(t, y, 2.0_wp, tstop=1.0_wp, idid=idid, gval=gval)
+   call check('input rejected by the integrator: idid=-33, gval not set', &
+              idid == -33 .and. gval == -999.0_wp .and. n_geval <= 1 .and. t == 0.0_wp)
    t = 1.8_wp; y = [cos(t), -sin(t)]
    call se%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gval, tstep=0.01_wp*spacing(t))
    call check('tstep lost in roundoff: idid=-33', idid == -33 .and. t == 1.8_wp)
@@ -925,6 +979,11 @@ program ddeabm_unit_test
    call check('invalid integration_mode: idid=-33', idid == -33)
    call sv%integrate_to_event(t, y, 1.0_wp, idid=idid, gval=gv, tstep=0.0_wp)
    call check('tstep=0: idid=-33', idid == -33)
+   call sv%first_call()   ! input rejected by the integrator: gval is not set
+   t = 0.0_wp; y = y0; gv = -999.0_wp; n_geval = 0
+   call sv%integrate_to_event(t, y, 2.0_wp, tstop=1.0_wp, idid=idid, gval=gv)
+   call check('input rejected by the integrator: idid=-33, gval not set', &
+              idid == -33 .and. all(gv == -999.0_wp) .and. n_geval <= 1 .and. t == 0.0_wp)
    t = 1.8_wp; y = [cos(t), -sin(t)]
    call sv%integrate_to_event(t, y, 10.0_wp, idid=idid, gval=gv, tstep=0.01_wp*spacing(t))
    call check('tstep lost in roundoff: idid=-33', idid == -33 .and. t == 1.8_wp)
