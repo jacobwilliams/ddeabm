@@ -890,6 +890,12 @@ contains
          idid = -33
          return
       end if
+      if (.not. allocated(me%rtol_tmp) .or. .not. allocated(me%atol_tmp)) then
+         call report_error('ddeabm_wrapper', &
+                           'the class has not been initialized.', 0, 0)
+         idid = -33
+         return
+      end if
 
       !set info array:
 
@@ -1097,6 +1103,12 @@ contains
       if ((mode == 2) .and. (.not. associated(me%report))) then
          call report_error('ddeabm_with_event_wrapper', &
                            'REPORT procedure must be associated for integration_mode=2.', 0, 0)
+         idid = -33
+         return
+      end if
+      if (.not. allocated(me%rtol_tmp) .or. .not. allocated(me%atol_tmp)) then
+         call report_error('ddeabm_with_event_wrapper', &
+                           'the class has not been initialized.', 0, 0)
          idid = -33
          return
       end if
@@ -1700,6 +1712,12 @@ contains
       if ((mode == 2) .and. (.not. associated(me%report))) then
          call report_error('ddeabm_with_event_wrapper_vec', &
                            'REPORT procedure must be associated for integration_mode=2.', 0, 0)
+         idid = -33
+         return
+      end if
+      if (.not. allocated(me%rtol_tmp) .or. .not. allocated(me%atol_tmp)) then
+         call report_error('ddeabm_with_event_wrapper_vec', &
+                           'the class has not been initialized.', 0, 0)
          idid = -33
          return
       end if
